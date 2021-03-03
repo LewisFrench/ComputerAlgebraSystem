@@ -1,37 +1,52 @@
 package expression;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 
 import Arithmetic.ArithmeticBaseVisitor;
 import Arithmetic.ArithmeticLexer;
 import Arithmetic.ArithmeticParser;
 
 public class BuildAstVisitor extends ArithmeticBaseVisitor<ExpressionNode> {
-
+	LinkedHashMap<String, ExpressionNode> variables;
 	ArrayList<Rule> rules;
 
-	public BuildAstVisitor(ArrayList<Rule> ruleSet) {
+	int depth;
+	
+	public BuildAstVisitor(ArrayList<Rule> ruleSet, int depth) {
 		rules = ruleSet;
+		this.depth = depth;
+	}
+	public BuildAstVisitor(LinkedHashMap<String, ExpressionNode> variables, ArrayList<Rule> rules, int depth) {
+
+		this.variables = variables;
+		this.rules = rules;
+		this.depth = depth;
 	}
 
 	@Override
 	public ExpressionNode visitCompileUnit(ArithmeticParser.CompileUnitContext context) {
-		System.out.println("\n\nAST - CompileUnit: " + context.getText());
-
 		return visit(context.expression());
 
 	}
 
 	@Override
 	public ExpressionNode visitNum(ArithmeticParser.NumContext context) {
-		System.out.println("\nAST Number : " + context.getText());
 		return new NumberNode(Double.valueOf(context.value.getText()));
 	}
 
 	@Override
 	public ExpressionNode visitVar(ArithmeticParser.VarContext context) {
-		System.out.println("\nAST Variable : " + context.getText());
 		return new RuleVariableNode(context.getText());
+	}
+
+	@Override
+	public ExpressionNode visitRuleVariable(ArithmeticParser.RuleVariableContext context) {
+		if (variables.get("$" + context.value.getText()) != null) {
+			return variables.get("$" + context.value.getText());
+		}
+
+		return new RuleVariableNode(context.value.getText());
 	}
 
 	@Override
@@ -41,30 +56,20 @@ public class BuildAstVisitor extends ArithmeticBaseVisitor<ExpressionNode> {
 
 	@Override
 	public ExpressionNode visitUnaryExpression(ArithmeticParser.UnaryExpressionContext context) {
-		System.out.println("\nAST Unary");
 		ExpressionNode node = null;
 		switch (context.op.getType()) {
 		case ArithmeticLexer.OP_ADD:
-			System.out.println("Positive Unary");
 			node = visit(context.expression());
 			break;
 
 		case ArithmeticLexer.OP_SUB:
-			System.out.println("Negative Unary");
 			node = new UnaryNode(visit(context.expression()));
 			break;
 
 		default:
-			System.out.println("Unary Number");
+			break;
 		}
 		return node;
-	}
-
-	@Override
-	public ExpressionNode visitRuleVariable(ArithmeticParser.RuleVariableContext context) {
-		System.out.println("Variable : " + context.value.getText());
-
-		return new RuleVariableNode(context.value.getText());
 	}
 
 	@Override
@@ -74,24 +79,20 @@ public class BuildAstVisitor extends ArithmeticBaseVisitor<ExpressionNode> {
 		NumberNode calculation = null;
 		switch (context.op.getType()) {
 		case ArithmeticLexer.OP_ADD:
-			System.out.println("Addition: ");
 			node = new AdditionNode();
 
 			break;
 
 		case ArithmeticLexer.OP_SUB:
-			System.out.println("Subtractison: ");
 			node = new SubtractionNode();
 
 			break;
 
 		case ArithmeticLexer.OP_MUL:
-			System.out.println("Multiplication: ");
 			node = new MultiplicationNode();
 			break;
 
 		case ArithmeticLexer.OP_DIV:
-			System.out.println("Division: ");
 			node = new DivisionNode();
 			break;
 
@@ -99,14 +100,9 @@ public class BuildAstVisitor extends ArithmeticBaseVisitor<ExpressionNode> {
 			System.out.println("FAIL");
 		}
 
-		System.out.println("VISITING LEFT");
 		node.Left = visit(context.left);
-
-		System.out.println("VISITING RIGHT");
 		node.Right = visit(context.right);
 
-		System.out.println("Visitng Operation : " + node.getClass() + "          :       " + node.Left.toString()
-				+ " ,  " + node.Right.toString());
 		if (node.Left instanceof NumberNode && node.Right instanceof NumberNode && node instanceof AdditionNode) {
 			return new NumberNode(((NumberNode) node.Left).getValue() + ((NumberNode) node.Right).getValue());
 		} else if (node.Left instanceof NumberNode && node.Right instanceof NumberNode
@@ -119,53 +115,93 @@ public class BuildAstVisitor extends ArithmeticBaseVisitor<ExpressionNode> {
 
 	@Override
 	public ExpressionNode visitFunctionExpression(ArithmeticParser.FunctionExpressionContext context) {
-		System.out.println("\nAST Function : " + context.getText());
+		if (this.depth > 400) {
+			return null;
+		}
+		System.out.println("\n\n Visit FUnction " + context.getText() + "\n\n");
+		//System.out.println("Visitng Function : " + context.getText());
+		
+		//System.out.println("\nVisiting function arguments : ");
 		ArrayList<ExpressionNode> arguments = new ArrayList<>();
 		for (int i = 0; i < context.expression().size(); i++) {
-			// HERE - call to a thing that gets the real arguments 
-			// e.g. arguments for additionNode
-			
+			//ExpressionNode n = visit(context.expression(i));
 			arguments.add(visit(context.expression(i)));
-			System.out.println("HERE " + arguments.get(i).getClass());
 		}
-		System.out.println(arguments);
-
+		System.out.println("ARGUMENTS" + arguments);
+		
+		
+		
 		Rule appliedRule = null;
 
 		FunctionNode f = new FunctionNode(context.func.getText(), arguments);
 		if (rules != null) {
 			for (Rule r : rules) {
-				 System.out.println("\nMatching " + context.getText() + " to " +
-				 r.lhs.getText());
-
 				if (((FunctionNode) r.lhsNode).match(f)) {
-					System.out.println("Rule Matched");
+					System.out.println("\n\n"+ context.getText() + "  matched to   " + r.toString());
 					appliedRule = new Rule(r.lhs, r.rhs, r.conditions);
-					System.out.println("\n applied rule set");
 					break;
 				}
 			}
 		}
+		
 		// for safety, maybe convert the function arguments into a separate data
 		// structure, so I don't mess with the FunctionNode
 
+		
+		/*
+		 * 
+		 * Need to transmute : Operations nodes should add their Left and Right into an arrayList
+		 * This couldbe made more efficient
+		 * 
+		 */
+		ArrayList<ExpressionNode> temp = new ArrayList<>();
+		for (ExpressionNode n : arguments) {
+			if (n instanceof FunctionNode) {
+				for (ExpressionNode arg : ((FunctionNode) n).arguments ) {
+					temp.add(arg);
+				}
+			}
+		}
+		
+		//ArrayList<ExpressionNode> temp = new ArrayList<>();
+		for (ExpressionNode arg : arguments) {
+			System.out.println("arg : " + arg.toString());
+			if (arg instanceof OperationNode) {
+				System.out.println("OperationNode");
+				temp.add(((OperationNode)arg).Left);
+				temp.add(((OperationNode)arg).Right);
+			}
+		}
+		
+		
+		
 		if (appliedRule != null) {
-			System.out.println(appliedRule.variables + " " + f.arguments.get(0).getClass());
+
+			arguments = temp;
+			System.out.println(arguments);
 			// Handlea thing that allows for operations to feed into the arguments
-			
-			
-			// Empty ArrayList = {} , call a method for each argument, determines how to get each of the base variables
-			
-			
+
+			// Empty ArrayList = {} , call a method for each argument, determines how to get
+			// each of the base variables
+	
+			System.out.println("\n\nVariables : " + appliedRule.variables);
+			System.out.println(temp);
+			System.out.println("\nApplied Rule "  + appliedRule.toString());
+			System.out.println(appliedRule.variables.keySet());
 			for (String key : appliedRule.variables.keySet()) {
+				System.out.println("-----------------\n" + key);
 				if (appliedRule.variables.get(key) == null) {
-					appliedRule.variables.put(key, arguments.get(0));
+					System.out.println("\n" + key + " is null   " + temp.get(0));
+					appliedRule.variables.put(key, temp.get(0));
 				} else if (appliedRule.variables.get(key) != null) {
+					
 					// variable is implicitly a number
 				}
-				f.arguments.remove(0);
+				temp.remove(0);
+				//arguments.remove(0);
 			}
-
+			System.out.println(appliedRule.variables);
+			//System.out.println("Applied rule variables  :   " + appliedRule.variables);
 			// Handle the conditions.
 			/*
 			 * I need to consider these before the rule is applied. 2 rules can have the
@@ -176,36 +212,23 @@ public class BuildAstVisitor extends ArithmeticBaseVisitor<ExpressionNode> {
 			 * evaluateConditionsVisitor
 			 * 
 			 */
-			System.out.println("\n\n ---------------  Building Condition Nodes  ---------------------- \n\n");
-			ExpressionNode conditionsTest = new BuildConditionsVisitor().visitRuleConditions(appliedRule.conditions);
 
-			System.out.println("\n\n -----------------  Evaluating Condition Tree  -------------------- \n\n");
-			System.out.println("\n\n Conditions Valid : "
-					+ new EvaluateConditionsVisitor(appliedRule.variables).Visit(conditionsTest));
-			// System.out.println(appliedRule.rhsNode.getClass()+ " " +
-			// appliedRule.rhs.getText());
-			System.out.println("\n\n------------------------------------------------------\n\n");
-			appliedRule.rhsNode = new BuildRhsVisitor(appliedRule.variables, rules, 0)
-					.visitCompileUnit(appliedRule.rhs);
+			// Can likely move this first line into the constructor of the Rule object, and
+			// invoke it in the subsequent line using appliedRule.conditionsNode or
+			// something
+			if( appliedRule.conditions!= null) {
+				ExpressionNode conditionsTest = new BuildConditionsVisitor().visitRuleConditions(appliedRule.conditions);
+			}
+			appliedRule.rhsNode = new BuildAstVisitor(appliedRule.variables, rules, this.depth + 1).visitCompileUnit(appliedRule.rhs);
+			System.out.println(appliedRule.rhsNode);
 			return appliedRule.rhsNode;
-			// Should be:
-			// return new
-			// BuildAstVisitor(appliedRule.variables).visitCompileUnit(appliedRule.rhs);
 
 		} else {
-			System.out.println("\n\nNO RULES MATCHED\n\n");
+			//System.out.println("\n\nNO RULES MATCHED to " + f.toString() + "\n\n");
 		}
+		//System.out.println("Returning Function :  " + f.toString());
 		return f;
 
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
 
 }

@@ -19,11 +19,9 @@ abstract class AstVisitor<T>
     public abstract T Visit(ConditionFunctionNode node);
     public abstract T Visit(NotNode node);
     
-    //public abstract T Visit(CompileUnitNode node);
     // Can talk about how this could be more effieint in C#, see bookmark page 
     public T Visit(ExpressionNode node)
     {
-    	System.out.println("Visiting node "+ node.toString());
     	if (node instanceof AdditionNode) {
     	    return Visit((AdditionNode)node);
     	} else if (node instanceof SubtractionNode) {

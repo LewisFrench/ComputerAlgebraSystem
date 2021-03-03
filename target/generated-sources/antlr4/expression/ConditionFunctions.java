@@ -10,14 +10,13 @@ class ConditionFunctionEvaluator {
 		this.variables = variables;
 	}
 
-// Pass in ConditionFunctionNode context.function , visit(context.condition()) or something
+
 	public boolean determineFunction(String functionName, ExpressionNode node) {
 		boolean functionResult = false;
 
 		ConditionFunction conditionFunction = null;
 		switch (functionName) {
 		case "is_Integer":
-			// functionResult = new is_Integer().evaluateConditionFunction(node);
 			conditionFunction = new is_Integer();
 			break;
 		default:
@@ -44,8 +43,6 @@ abstract class ConditionFunction {
 				System.out.println("ERROR - Condition Function didn't process node of correct type");
 				return false;
 			}
-			// return this.function((NumberNode)
-			// variables.get(((RuleVariableNode)node).value));
 		} else {
 			System.out.println("ERROR - Condition Function didn't process node of correct type");
 			return false;
@@ -60,11 +57,10 @@ abstract class ConditionFunction {
 
 class is_Integer extends ConditionFunction {
 
-	String functionDescription = ("Determines if the argument entered is an integer");
+	String functionDescription = ("is_Integer($n)  :  Determines if the argument entered is an integer");
 
 	@Override
 	boolean function(Double value) {
-		System.out.println("CHECKING IS_INTEGER(" + value + ")");
 		return (value == Math.floor(value));
 	}
 
