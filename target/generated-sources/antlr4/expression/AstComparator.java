@@ -13,11 +13,8 @@ abstract class AstComparator<T>
     public abstract T Visit(RuleVariableNode lhsNode, ExpressionNode node);
     public abstract T Visit(VariableNode lhsNode, ExpressionNode node);
     
+
     
-    // Condition Nodes
-    public abstract T Visit(RelopNode lhsNode);
-    public abstract T Visit(ConditionFunctionNode lhsNode);
-    public abstract T Visit(NotNode lhsNode);
     
     // Can talk about how this could be more effieint in C#, see bookmark page 
     public T Visit(ExpressionNode lhsNode, ExpressionNode node)
@@ -45,7 +42,8 @@ abstract class AstComparator<T>
     	} 
     	else if (lhsNode instanceof VariableNode ) {
     		return Visit((VariableNode)lhsNode , node);
-    	} else if (lhsNode instanceof NumberNode ) {
+    	} 
+    	else if (lhsNode instanceof NumberNode ) {
     		return Visit((NumberNode)lhsNode, node);
     	}
     	

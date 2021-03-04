@@ -33,35 +33,34 @@ abstract class ConditionFunction {
 	String functionDescription;
 
 	public boolean evaluateConditionFunction(ExpressionNode node, LinkedHashMap<String, ExpressionNode> variables) {
-		if (node instanceof NumberNode) {
-			return this.function(((NumberNode) node).value);
-		} else if (node instanceof RuleVariableNode) {
-			ExpressionNode n = variables.get(((RuleVariableNode) node).value);
-			if (n instanceof NumberNode) {
-				return this.function(((NumberNode) n).value);
-			} else {
-				System.out.println("ERROR - Condition Function didn't process node of correct type");
-				return false;
-			}
+		if (node instanceof RuleVariableNode) {
+			return this.function(variables.get(((RuleVariableNode) node).getValue()));
 		} else {
-			System.out.println("ERROR - Condition Function didn't process node of correct type");
-			return false;
+			return this.function(node);
 		}
+		//Error handling here or remove entirely and just use function (maybe rename function too)
+		
 
 	}
 
-	abstract boolean function(Double value);
+	abstract boolean function(ExpressionNode node);
 }
 
-// is_integer($n)
 
 class is_Integer extends ConditionFunction {
 
 	String functionDescription = ("is_Integer($n)  :  Determines if the argument entered is an integer");
 
 	@Override
-	boolean function(Double value) {
-		return (value == Math.floor(value));
+	boolean function(ExpressionNode node) {
+		System.out.println("Verifying is_Integer");
+		System.out.println(node.getClass() + "   " + node.toString());
+		if (node instanceof NumberNode) {
+			return (((NumberNode) node).getValue() == Math.floor(((NumberNode) node).getValue()));
+		} else {
+			// Exception here - wrong type of node
+			return false;
+		}
 	}
 
 }

@@ -18,6 +18,8 @@ abstract class AstVisitor<T>
     public abstract T Visit(RelopNode node);
     public abstract T Visit(ConditionFunctionNode node);
     public abstract T Visit(NotNode node);
+    public abstract T Visit(ConditionAndNode node);
+    public abstract T Visit(ConditionOrNode node);
     
     // Can talk about how this could be more effieint in C#, see bookmark page 
     public T Visit(ExpressionNode node)
@@ -54,6 +56,12 @@ abstract class AstVisitor<T>
     	}
     	else if (node instanceof NotNode) {
     		return Visit((NotNode) node);
+    	}
+    	else if (node instanceof ConditionAndNode) {
+    		return Visit((ConditionAndNode)node);
+    	}
+    	else if (node instanceof ConditionOrNode) {
+    		return Visit((ConditionOrNode)node);
     	}
     	
     	

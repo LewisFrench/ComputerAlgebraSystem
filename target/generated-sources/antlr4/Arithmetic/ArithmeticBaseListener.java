@@ -1,5 +1,4 @@
 package Arithmetic;
-
 // Generated from Arithmetic.g4 by ANTLR 4.9.1
 
 import org.antlr.v4.runtime.ParserRuleContext;
@@ -84,6 +83,18 @@ public class ArithmeticBaseListener implements ArithmeticListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitParenthetical(ArithmeticParser.ParentheticalContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterExponential(ArithmeticParser.ExponentialContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitExponential(ArithmeticParser.ExponentialContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
