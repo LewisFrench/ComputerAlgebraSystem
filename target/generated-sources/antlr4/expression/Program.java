@@ -33,8 +33,8 @@ public class Program {
 		//String[] strRules = { "d($A) = 1.01", "d($A + $B) = d($A) + d($B)"  };
 		//String[] strRules = { "d($A + $B) = ($A) + d($B)"  };
 		//String[] strRules = {"d(ln($x)) = d($x) + $x"};
-		//String[] strRules = {"fib(0) = 0" , "fib(1) = 1", "fib($n) = fib($n-1) + fib($n-2)"};
-		String[] strRules = {"test($x, 1, $y) = 3"};
+		String[] strRules = {"fib(0) = 0" , "fib(1) = 1", "fib($n) = fib($n-1) + fib($n-2) if $n>0"};
+		//String[] strRules = {"diff($x) = 1 if $x>1"};
 		
 		
 		
@@ -43,10 +43,11 @@ public class Program {
 		
 		ArrayList<Rule> rules = new ArrayList<>();
 		String[] splitRule = new String[3];
+		
 		for (String rule : strRules) {
-
-			splitRule = rule.split("(=|if)", 3);
-
+			
+			splitRule = rule.split("(=|\\sif\\s)", 3);
+			System.out.println(Arrays.toString(splitRule));
 			ArithmeticParser lhsParser = getParser(splitRule[0]);
 			CompileUnitContext lhsAST = lhsParser.compileUnit();
 			ArithmeticParser rhsParser = getParser(splitRule[1]);
@@ -62,7 +63,7 @@ public class Program {
 			
 		}
 		
-		String expression = "test(3,0,3)";
+		String expression = "test(fib(11))";
 		//String expression = "d(x+y+z)";
 		//String expression = "d(ln(ln(ln(3))))";
 		ArithmeticParser parser = getParser(expression);
