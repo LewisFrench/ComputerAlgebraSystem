@@ -32,12 +32,13 @@ public class BuildAstVisitor extends ArithmeticBaseVisitor<ExpressionNode> {
 
 	@Override
 	public ExpressionNode visitNum(ArithmeticParser.NumContext context) {
+		System.out.println(context.getText());
 		return new NumberNode(Double.valueOf(context.value.getText()));
 	}
 
 	@Override
 	public ExpressionNode visitVar(ArithmeticParser.VarContext context) {
-		return new RuleVariableNode(context.getText());
+		return new VariableNode(context.getText());
 	}
 
 	@Override
@@ -124,6 +125,7 @@ public class BuildAstVisitor extends ArithmeticBaseVisitor<ExpressionNode> {
 		//System.out.println("\nVisiting function arguments : ");
 		ArrayList<ExpressionNode> arguments = new ArrayList<>();
 		for (int i = 0; i < context.expression().size(); i++) {
+			
 			//ExpressionNode n = visit(context.expression(i));
 			arguments.add(visit(context.expression(i)));
 		}
@@ -143,55 +145,13 @@ public class BuildAstVisitor extends ArithmeticBaseVisitor<ExpressionNode> {
 				}
 			}
 		}
-		
-		
-		
-		
-		
-		
-		// for safety, maybe convert the function arguments into a separate data
-		// structure, so I don't mess with the FunctionNode
-
-		
-		/*
-		 * 
-		 * Need to transmute : Operations nodes should add their Left and Right into an arrayList
-		 * This couldbe made more efficient
-		 * 
-		 */
-//		ArrayList<ExpressionNode> temp = new ArrayList<>();
-//		for (ExpressionNode n : arguments) {
-//			if (n instanceof FunctionNode) {
-//				for (ExpressionNode arg : ((FunctionNode) n).arguments ) {
-//					temp.add(arg);
-//				}
-//			}
-//		}
-//		
-//		
-//		
-//	
-//		
-//		// Doesn't work for recursive layers
-//		//ArrayList<ExpressionNode> temp = new ArrayList<>();
-//		for (ExpressionNode arg : arguments) {
-//			if (arg instanceof OperationNode) {
-//				temp.add(((OperationNode)arg).Left);
-//				temp.add(((OperationNode)arg).Right);
-//			}
-//		}
 
 		
 		if (appliedRule != null ) {
 			
-			System.out.println("\n\nEvalutating Tree");
 			EvaluateTree test = new EvaluateTree();
 			boolean compareTest = test.Visit(appliedRule.lhsNode, f);
 			if (compareTest) {
-				System.out.println("Arguments arrayList   :  " + test.arguments + "   "  + appliedRule.variables);
-				System.out.println("\n");
-	
-				
 				for (String key : appliedRule.variables.keySet()) {
 					if (appliedRule.variables.get(key) == null) {
 						appliedRule.variables.put(key, test.arguments.get(0));
@@ -220,8 +180,10 @@ public class BuildAstVisitor extends ArithmeticBaseVisitor<ExpressionNode> {
 				// invoke it in the subsequent line using appliedRule.conditionsNode or
 				// something
 				if( appliedRule.conditions!= null) {
-					ExpressionNode conditionsTest = new BuildConditionsVisitor().visitRuleConditions(appliedRule.conditions);
-				}
+					ExpressionNode conditionsNode = new BuildConditionsVisitor().visitRuleConditions(appliedRule.conditions);
+					boolean conditionsHold = new EvaluateConditionsVisitor(appliedRule.variables).Visit(conditionsNode);
+					System.out.println("\n Conditions hold:  " + conditionsHold);
+				} 
 				appliedRule.rhsNode = new BuildAstVisitor(appliedRule.variables, rules, this.depth + 1).visitCompileUnit(appliedRule.rhs);
 				System.out.println("rhsnode " +appliedRule.rhsNode);
 				return appliedRule.rhsNode;

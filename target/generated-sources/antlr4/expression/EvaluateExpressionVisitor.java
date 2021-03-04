@@ -82,4 +82,16 @@ class EvaluateExpressionVisitor extends AstVisitor<String>
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public String Visit(ConditionAndNode node) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String Visit(ConditionOrNode node) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

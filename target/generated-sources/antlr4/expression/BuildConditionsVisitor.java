@@ -1,9 +1,25 @@
 package expression;
 import Conditions.ConditionsBaseVisitor;
+import Conditions.ConditionsLexer;
 import Conditions.ConditionsParser;
 
 public class BuildConditionsVisitor extends ConditionsBaseVisitor<ExpressionNode> {
 	
+	
+	@Override 
+	public ExpressionNode visitConditionOperation(ConditionsParser.ConditionOperationContext context) {
+		ConditionOperationNode node = null;
+		
+		if (context.op.getType() == ConditionsLexer.OP_AND) {
+			node = new ConditionAndNode();
+		} else if (context.op.getType() == ConditionsLexer.OP_OR) {
+			node = new ConditionOrNode();
+		}
+		node.left = visit(context.left);
+		node.right = visit(context.right);
+		
+		return node;
+	}
 	
 	@Override
 	public ExpressionNode visitRuleConditions(ConditionsParser.RuleConditionsContext context) {
@@ -18,6 +34,10 @@ public class BuildConditionsVisitor extends ConditionsBaseVisitor<ExpressionNode
 		return new NotNode(visit(context.condition()));
 	}
 	
+	@Override
+	public ExpressionNode visitConditionParenthetical(ConditionsParser.ConditionParentheticalContext context) {
+		return visit(context.condition());
+	}
 	
 	@Override
 	public ExpressionNode visitFunction(ConditionsParser.FunctionContext context) {

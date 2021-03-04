@@ -1,5 +1,4 @@
 package Arithmetic;
-
 // Generated from Arithmetic.g4 by ANTLR 4.9.1
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
@@ -18,9 +17,9 @@ public class ArithmeticParser extends Parser {
 	protected static final PredictionContextCache _sharedContextCache =
 		new PredictionContextCache();
 	public static final int
-		T__0=1, T__1=2, OP_ADD=3, OP_SUB=4, OP_MUL=5, OP_DIV=6, RELOP_EQ=7, RELOP_LT=8, 
-		RELOP_GT=9, VARIABLE=10, SCIENTIFIC_NUMBER=11, LPAREN=12, RPAREN=13, POINT=14, 
-		POW=15, WS=16;
+		T__0=1, T__1=2, OP_EXP=3, OP_ADD=4, OP_SUB=5, OP_MUL=6, OP_DIV=7, RELOP_EQ=8, 
+		RELOP_LT=9, RELOP_GT=10, VARIABLE=11, SCIENTIFIC_NUMBER=12, LPAREN=13, 
+		RPAREN=14, POINT=15, POW=16, WS=17;
 	public static final int
 		RULE_compileUnit = 0, RULE_expression = 1;
 	private static String[] makeRuleNames() {
@@ -32,14 +31,14 @@ public class ArithmeticParser extends Parser {
 
 	private static String[] makeLiteralNames() {
 		return new String[] {
-			null, "','", "'$'", "'+'", "'-'", "'*'", "'/'", "'='", "'<'", "'>'", 
-			null, null, "'('", "')'", "'.'", "'^'"
+			null, "','", "'$'", null, "'+'", "'-'", "'*'", "'/'", "'='", "'<'", "'>'", 
+			null, null, "'('", "')'", "'.'"
 		};
 	}
 	private static final String[] _LITERAL_NAMES = makeLiteralNames();
 	private static String[] makeSymbolicNames() {
 		return new String[] {
-			null, null, null, "OP_ADD", "OP_SUB", "OP_MUL", "OP_DIV", "RELOP_EQ", 
+			null, null, null, "OP_EXP", "OP_ADD", "OP_SUB", "OP_MUL", "OP_DIV", "RELOP_EQ", 
 			"RELOP_LT", "RELOP_GT", "VARIABLE", "SCIENTIFIC_NUMBER", "LPAREN", "RPAREN", 
 			"POINT", "POW", "WS"
 		};
@@ -256,6 +255,31 @@ public class ArithmeticParser extends Parser {
 			else return visitor.visitChildren(this);
 		}
 	}
+	public static class ExponentialContext extends ExpressionContext {
+		public ExpressionContext base;
+		public ExpressionContext exponent;
+		public TerminalNode OP_EXP() { return getToken(ArithmeticParser.OP_EXP, 0); }
+		public List<ExpressionContext> expression() {
+			return getRuleContexts(ExpressionContext.class);
+		}
+		public ExpressionContext expression(int i) {
+			return getRuleContext(ExpressionContext.class,i);
+		}
+		public ExponentialContext(ExpressionContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof ArithmeticListener ) ((ArithmeticListener)listener).enterExponential(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof ArithmeticListener ) ((ArithmeticListener)listener).exitExponential(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof ArithmeticVisitor ) return ((ArithmeticVisitor<? extends T>)visitor).visitExponential(this);
+			else return visitor.visitChildren(this);
+		}
+	}
 	public static class OperationContext extends ExpressionContext {
 		public ExpressionContext left;
 		public Token op;
@@ -419,7 +443,7 @@ public class ArithmeticParser extends Parser {
 				break;
 			}
 			_ctx.stop = _input.LT(-1);
-			setState(39);
+			setState(42);
 			_errHandler.sync(this);
 			_alt = getInterpreter().adaptivePredict(_input,3,_ctx);
 			while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
@@ -427,17 +451,30 @@ public class ArithmeticParser extends Parser {
 					if ( _parseListeners!=null ) triggerExitRuleEvent();
 					_prevctx = _localctx;
 					{
-					setState(37);
+					setState(40);
 					_errHandler.sync(this);
 					switch ( getInterpreter().adaptivePredict(_input,2,_ctx) ) {
 					case 1:
 						{
+						_localctx = new ExponentialContext(new ExpressionContext(_parentctx, _parentState));
+						((ExponentialContext)_localctx).base = _prevctx;
+						pushNewRecursionContext(_localctx, _startState, RULE_expression);
+						setState(31);
+						if (!(precpred(_ctx, 8))) throw new FailedPredicateException(this, "precpred(_ctx, 8)");
+						setState(32);
+						match(OP_EXP);
+						setState(33);
+						((ExponentialContext)_localctx).exponent = expression(9);
+						}
+						break;
+					case 2:
+						{
 						_localctx = new OperationContext(new ExpressionContext(_parentctx, _parentState));
 						((OperationContext)_localctx).left = _prevctx;
 						pushNewRecursionContext(_localctx, _startState, RULE_expression);
-						setState(31);
+						setState(34);
 						if (!(precpred(_ctx, 5))) throw new FailedPredicateException(this, "precpred(_ctx, 5)");
-						setState(32);
+						setState(35);
 						((OperationContext)_localctx).op = _input.LT(1);
 						_la = _input.LA(1);
 						if ( !(_la==OP_MUL || _la==OP_DIV) ) {
@@ -448,18 +485,18 @@ public class ArithmeticParser extends Parser {
 							_errHandler.reportMatch(this);
 							consume();
 						}
-						setState(33);
+						setState(36);
 						((OperationContext)_localctx).right = expression(6);
 						}
 						break;
-					case 2:
+					case 3:
 						{
 						_localctx = new OperationContext(new ExpressionContext(_parentctx, _parentState));
 						((OperationContext)_localctx).left = _prevctx;
 						pushNewRecursionContext(_localctx, _startState, RULE_expression);
-						setState(34);
+						setState(37);
 						if (!(precpred(_ctx, 4))) throw new FailedPredicateException(this, "precpred(_ctx, 4)");
-						setState(35);
+						setState(38);
 						((OperationContext)_localctx).op = _input.LT(1);
 						_la = _input.LA(1);
 						if ( !(_la==OP_ADD || _la==OP_SUB) ) {
@@ -470,14 +507,14 @@ public class ArithmeticParser extends Parser {
 							_errHandler.reportMatch(this);
 							consume();
 						}
-						setState(36);
+						setState(39);
 						((OperationContext)_localctx).right = expression(5);
 						}
 						break;
 					}
 					} 
 				}
-				setState(41);
+				setState(44);
 				_errHandler.sync(this);
 				_alt = getInterpreter().adaptivePredict(_input,3,_ctx);
 			}
@@ -504,27 +541,30 @@ public class ArithmeticParser extends Parser {
 	private boolean expression_sempred(ExpressionContext _localctx, int predIndex) {
 		switch (predIndex) {
 		case 0:
-			return precpred(_ctx, 5);
+			return precpred(_ctx, 8);
 		case 1:
+			return precpred(_ctx, 5);
+		case 2:
 			return precpred(_ctx, 4);
 		}
 		return true;
 	}
 
 	public static final String _serializedATN =
-		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\22-\4\2\t\2\4\3\t"+
-		"\3\3\2\3\2\3\3\3\3\3\3\3\3\3\3\3\3\7\3\17\n\3\f\3\16\3\22\13\3\3\3\3\3"+
-		"\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\5\3 \n\3\3\3\3\3\3\3\3\3\3\3"+
-		"\3\3\7\3(\n\3\f\3\16\3+\13\3\3\3\2\3\4\4\2\4\2\4\3\2\5\6\3\2\7\b\2\62"+
-		"\2\6\3\2\2\2\4\37\3\2\2\2\6\7\5\4\3\2\7\3\3\2\2\2\b\t\b\3\1\2\t\n\7\f"+
-		"\2\2\n\13\7\16\2\2\13\20\5\4\3\2\f\r\7\3\2\2\r\17\5\4\3\2\16\f\3\2\2\2"+
-		"\17\22\3\2\2\2\20\16\3\2\2\2\20\21\3\2\2\2\21\23\3\2\2\2\22\20\3\2\2\2"+
-		"\23\24\7\17\2\2\24 \3\2\2\2\25\26\t\2\2\2\26 \5\4\3\t\27\30\7\16\2\2\30"+
-		"\31\5\4\3\2\31\32\7\17\2\2\32 \3\2\2\2\33 \7\f\2\2\34\35\7\4\2\2\35 \7"+
-		"\f\2\2\36 \7\r\2\2\37\b\3\2\2\2\37\25\3\2\2\2\37\27\3\2\2\2\37\33\3\2"+
-		"\2\2\37\34\3\2\2\2\37\36\3\2\2\2 )\3\2\2\2!\"\f\7\2\2\"#\t\3\2\2#(\5\4"+
-		"\3\b$%\f\6\2\2%&\t\2\2\2&(\5\4\3\7\'!\3\2\2\2\'$\3\2\2\2(+\3\2\2\2)\'"+
-		"\3\2\2\2)*\3\2\2\2*\5\3\2\2\2+)\3\2\2\2\6\20\37\')";
+		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\23\60\4\2\t\2\4\3"+
+		"\t\3\3\2\3\2\3\3\3\3\3\3\3\3\3\3\3\3\7\3\17\n\3\f\3\16\3\22\13\3\3\3\3"+
+		"\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\5\3 \n\3\3\3\3\3\3\3\3\3\3"+
+		"\3\3\3\3\3\3\3\3\3\7\3+\n\3\f\3\16\3.\13\3\3\3\2\3\4\4\2\4\2\4\3\2\6\7"+
+		"\3\2\b\t\2\66\2\6\3\2\2\2\4\37\3\2\2\2\6\7\5\4\3\2\7\3\3\2\2\2\b\t\b\3"+
+		"\1\2\t\n\7\r\2\2\n\13\7\17\2\2\13\20\5\4\3\2\f\r\7\3\2\2\r\17\5\4\3\2"+
+		"\16\f\3\2\2\2\17\22\3\2\2\2\20\16\3\2\2\2\20\21\3\2\2\2\21\23\3\2\2\2"+
+		"\22\20\3\2\2\2\23\24\7\20\2\2\24 \3\2\2\2\25\26\t\2\2\2\26 \5\4\3\t\27"+
+		"\30\7\17\2\2\30\31\5\4\3\2\31\32\7\20\2\2\32 \3\2\2\2\33 \7\r\2\2\34\35"+
+		"\7\4\2\2\35 \7\r\2\2\36 \7\16\2\2\37\b\3\2\2\2\37\25\3\2\2\2\37\27\3\2"+
+		"\2\2\37\33\3\2\2\2\37\34\3\2\2\2\37\36\3\2\2\2 ,\3\2\2\2!\"\f\n\2\2\""+
+		"#\7\5\2\2#+\5\4\3\13$%\f\7\2\2%&\t\3\2\2&+\5\4\3\b\'(\f\6\2\2()\t\2\2"+
+		"\2)+\5\4\3\7*!\3\2\2\2*$\3\2\2\2*\'\3\2\2\2+.\3\2\2\2,*\3\2\2\2,-\3\2"+
+		"\2\2-\5\3\2\2\2.,\3\2\2\2\6\20\37*,";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

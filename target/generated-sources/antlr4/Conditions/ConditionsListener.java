@@ -18,17 +18,29 @@ public interface ConditionsListener extends ParseTreeListener {
 	 */
 	void exitRuleConditions(ConditionsParser.RuleConditionsContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code Relop}
+	 * Enter a parse tree produced by the {@code Function}
 	 * labeled alternative in {@link ConditionsParser#condition}.
 	 * @param ctx the parse tree
 	 */
-	void enterRelop(ConditionsParser.RelopContext ctx);
+	void enterFunction(ConditionsParser.FunctionContext ctx);
 	/**
-	 * Exit a parse tree produced by the {@code Relop}
+	 * Exit a parse tree produced by the {@code Function}
 	 * labeled alternative in {@link ConditionsParser#condition}.
 	 * @param ctx the parse tree
 	 */
-	void exitRelop(ConditionsParser.RelopContext ctx);
+	void exitFunction(ConditionsParser.FunctionContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code ConditionParenthetical}
+	 * labeled alternative in {@link ConditionsParser#condition}.
+	 * @param ctx the parse tree
+	 */
+	void enterConditionParenthetical(ConditionsParser.ConditionParentheticalContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code ConditionParenthetical}
+	 * labeled alternative in {@link ConditionsParser#condition}.
+	 * @param ctx the parse tree
+	 */
+	void exitConditionParenthetical(ConditionsParser.ConditionParentheticalContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code Not}
 	 * labeled alternative in {@link ConditionsParser#condition}.
@@ -42,17 +54,29 @@ public interface ConditionsListener extends ParseTreeListener {
 	 */
 	void exitNot(ConditionsParser.NotContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code Function}
+	 * Enter a parse tree produced by the {@code Relop}
 	 * labeled alternative in {@link ConditionsParser#condition}.
 	 * @param ctx the parse tree
 	 */
-	void enterFunction(ConditionsParser.FunctionContext ctx);
+	void enterRelop(ConditionsParser.RelopContext ctx);
 	/**
-	 * Exit a parse tree produced by the {@code Function}
+	 * Exit a parse tree produced by the {@code Relop}
 	 * labeled alternative in {@link ConditionsParser#condition}.
 	 * @param ctx the parse tree
 	 */
-	void exitFunction(ConditionsParser.FunctionContext ctx);
+	void exitRelop(ConditionsParser.RelopContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code ConditionOperation}
+	 * labeled alternative in {@link ConditionsParser#condition}.
+	 * @param ctx the parse tree
+	 */
+	void enterConditionOperation(ConditionsParser.ConditionOperationContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code ConditionOperation}
+	 * labeled alternative in {@link ConditionsParser#condition}.
+	 * @param ctx the parse tree
+	 */
+	void exitConditionOperation(ConditionsParser.ConditionOperationContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code Variable}
 	 * labeled alternative in {@link ConditionsParser#var}.

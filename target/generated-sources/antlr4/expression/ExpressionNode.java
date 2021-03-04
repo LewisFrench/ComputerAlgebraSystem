@@ -147,6 +147,9 @@ class NumberNode extends ExpressionNode {
 
 class VariableNode extends ExpressionNode {
 	public String value;
+	public VariableNode(String value) {
+		this.value = value;
+	}
 
 	public String getValue() {
 		return value;
@@ -155,7 +158,10 @@ class VariableNode extends ExpressionNode {
 	public void setValue(String value) {
 		this.value = value;
 	}
-
+	
+	public String toString() {
+		return this.getValue();
+	}
 	@Override
 	public boolean match(ExpressionNode node) {
 
@@ -179,7 +185,7 @@ class RuleVariableNode extends ExpressionNode {
 	}
 
 	public String toString() {
-		return "$"+value;
+		return value;
 	}
 
 	public String getValue() {
@@ -197,7 +203,6 @@ class RuleVariableNode extends ExpressionNode {
 			return this.getValue() == ((RuleVariableNode) node).getValue();
 		
 		} else {
-			
 			//System.out.println(this.getValue() + "  =  " + node.toString());
 			return true;
 		}
@@ -215,13 +220,34 @@ class RuleVariableNode extends ExpressionNode {
  * 
  */
 
-class ConditionSetNode extends ExpressionNode {
-	public ArrayList<ExpressionNode> conditions;
+class ConditionOperationNode extends ExpressionNode {
 
-	public boolean match(ExpressionNode node) {
-		return true;
+	ExpressionNode left;
+	ExpressionNode right;
+	
+	
+	@Override
+	boolean match(ExpressionNode node) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	
+}
+
+class ConditionAndNode extends ConditionOperationNode {
+	
+	
+	public String toString() {
+		return this.left.toString() + " & " + this.right.toString();
 	}
 }
+
+class ConditionOrNode extends ConditionOperationNode {
+	public String toString() {
+		return this.left.toString() + " | " + this.right.toString();
+	}
+}
+
 
 class RelopNode extends ExpressionNode {
 	ExpressionNode left;
@@ -274,4 +300,16 @@ class NotNode extends ExpressionNode {
 		return true;
 	}
 
+}
+
+
+
+class ConditionParentheticalNode extends ExpressionNode {
+
+	@Override
+	boolean match(ExpressionNode node) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	
 }

@@ -2,6 +2,8 @@ package expression;
 
 import java.util.ArrayList;
 
+
+// Need to change the returns so this method can replace the 'match' methods in ExpressionNode
 public class EvaluateTree extends AstComparator<Boolean> {
 
 	ArrayList<ExpressionNode> arguments;
@@ -123,23 +125,4 @@ public class EvaluateTree extends AstComparator<Boolean> {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
-	@Override
-	public Boolean Visit(ConditionFunctionNode lhsNode) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Boolean Visit(NotNode lhsNode) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Boolean Visit(RelopNode lhsNode) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }

@@ -1,40 +1,25 @@
 grammar Conditions;
 
-
 ruleConditions: condition;
 	
 condition
-	: left = condition op = OP_AND  right = condition #AndCondition
-	| left = condition op = OP_OR right = condition #OrCondition
-    |  left = var relop=(RELOP_GT | RELOP_LT | RELOP_EQ) right =var  #Relop
+	: left = condition op = (OP_AND | OP_OR) right = condition #ConditionOperation
+	| LPAREN condition RPAREN #ConditionParenthetical
 	|  OP_NOT  LPAREN  value = condition RPAREN #Not
+    |  left = var relop=(RELOP_GT | RELOP_LT | RELOP_EQ) right =var  #Relop
 	| function = FUNCTION LPAREN value=var RPAREN #Function
 	;
-
 
 var
    : value = VARIABLE #Variable
    | value = SCIENTIFIC_NUMBER #Number; 
 
-/*
-
-condition
-	: left = condition op = OP_AND  right = condition #AndCondition
-	| left = condition op = OP_OR right = condition #OrCondition
-	|  left = VARIABLE relop=(RELOP_GT | RELOP_LT | RELOP_EQ) right =SCIENTIFIC_NUMBER #Relop
-	|  left = SCIENTIFIC_NUMBER relop=(RELOP_GT | RELOP_LT | RELOP_EQ) right =VARIABLE #Relop
-	| OP_NOT  LPAREN condition RPAREN #Not
-	| function = FUNCTION LPAREN value=VARIABLE RPAREN #Function
-	| VARIABLE #Variable
-	//| value = SCIENTIFIC_NUMBER #Num
-	;
-
-*/
+// Handling is_literal( expression ) 
+// Can handle numbers, variables as per above implementation not anything more complicated e.g. (x + 2 + y)
 
 RELOP_GT: '>';
 RELOP_LT: '<';
 RELOP_EQ: '==';
-
 
 OP_AND: '&';
 OP_OR: '|';

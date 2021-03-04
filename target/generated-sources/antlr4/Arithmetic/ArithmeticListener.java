@@ -1,5 +1,4 @@
 package Arithmetic;
-
 // Generated from Arithmetic.g4 by ANTLR 4.9.1
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 
@@ -78,6 +77,18 @@ public interface ArithmeticListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitParenthetical(ArithmeticParser.ParentheticalContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code Exponential}
+	 * labeled alternative in {@link ArithmeticParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterExponential(ArithmeticParser.ExponentialContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code Exponential}
+	 * labeled alternative in {@link ArithmeticParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitExponential(ArithmeticParser.ExponentialContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code Operation}
 	 * labeled alternative in {@link ArithmeticParser#expression}.

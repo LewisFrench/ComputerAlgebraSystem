@@ -2,6 +2,10 @@ package expression;
 
 import java.util.LinkedHashMap;
 
+
+// Could likely split the AstVisitor into two visitors, one for the expression only nodes, and one for conditionnodes
+// Assuming I don't need them all for the is_literal() implementation
+
 public class EvaluateConditionsVisitor extends AstVisitor<Boolean> {
 
 	LinkedHashMap<String, ExpressionNode> variables;
@@ -83,6 +87,7 @@ public class EvaluateConditionsVisitor extends AstVisitor<Boolean> {
 	public boolean calculateRelop(ExpressionNode left, ExpressionNode right, String relop) {
 		NumberNode l;
 		NumberNode r;
+		System.out.println("Visiting Relop : " + left.toString() + "  " + relop + "  " + right.toString());
 		if (left instanceof RuleVariableNode) {
 			l = (NumberNode) this.variables.get(((RuleVariableNode) left).getValue());
 		} else {
@@ -122,6 +127,18 @@ public class EvaluateConditionsVisitor extends AstVisitor<Boolean> {
 	@Override
 	public Boolean Visit(NotNode node) {
 		return !(Visit(node.innerNode));
+	}
+
+	@Override
+	public Boolean Visit(ConditionAndNode node) {
+		System.out.println("Visiting Condition AND");
+		return (Visit(node.left) && Visit(node.right));
+	}
+
+	@Override
+	public Boolean Visit(ConditionOrNode node) {
+		System.out.println("Visitng Condiition OR");
+		return (Visit(node.left) || Visit(node.right));
 	}
 
 }
