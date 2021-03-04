@@ -29,49 +29,48 @@ import Conditions.ConditionsParser.RuleConditionsContext;
 public class Program {
 
 	public static void main(String[] args) {
-		/*
-		 * String[] strRules = {"sumOfSquares($n, $m, 0, $a) = sumOfSquares(0, $n, $m)",
-		 * "sumOfSquares($n, $m, $a) = sumOfSquares($m,$a)",
-		 * "sumOfSquares($n, $m) = $n*$n + $m*$m" };
-		 * 
-		 */
-		// String[] strRules = { "fib(0)=0", "fib(1)=1", "fib($n)=fib($n-1) + fib($n-2)"
-		// };
-		// String[] strRules = { "func($a, 0) = func($a)" , "func($a) = 4" };
-		// String[] strRules = { "lucas(0) = 2" , "lucas(1) = 1", "lucas($n) =
-		// lucas($n-2) + lucas($n-1)" };
-		//String[] strRules = { "testFunc($n) = 2 + $n if !(is_Integer($n))" };
-		String[] strRules = { "d($x) = 4 if 3 > 2" };
+
+		//String[] strRules = { "d($A) = 1.01", "d($A + $B) = d($A) + d($B)"  };
+		//String[] strRules = { "d($A + $B) = ($A) + d($B)"  };
+		//String[] strRules = {"d(ln($x)) = d($x) + $x"};
+		//String[] strRules = {"fib(0) = 0" , "fib(1) = 1", "fib($n) = fib($n-1) + fib($n-2)"};
+		String[] strRules = {"test($x, 1, $y) = 3"};
+		
+		
+		
+		
+		
+		
 		ArrayList<Rule> rules = new ArrayList<>();
 		String[] splitRule = new String[3];
 		for (String rule : strRules) {
 
 			splitRule = rule.split("(=|if)", 3);
-			for (String s : splitRule) {
-				System.out.println(s);
-			}
+
 			ArithmeticParser lhsParser = getParser(splitRule[0]);
 			CompileUnitContext lhsAST = lhsParser.compileUnit();
 			ArithmeticParser rhsParser = getParser(splitRule[1]);
 			CompileUnitContext rhsAST = rhsParser.compileUnit();
 
-			System.out.println(Arrays.toString(splitRule));
-			ConditionsParser conditionsParser = getConditionsParser(splitRule[2]);
-			RuleConditionsContext conditionsAST = conditionsParser.ruleConditions();
+			if (splitRule.length >2) {
+				ConditionsParser conditionsParser = getConditionsParser(splitRule[2]);
+				RuleConditionsContext conditionsAST = conditionsParser.ruleConditions();
+				rules.add(new Rule(lhsAST, rhsAST, conditionsAST));
+			} else {
+				rules.add(new Rule(lhsAST, rhsAST));
+			}
 			
-			// Muust account for a rule having no condition
-			rules.add(new Rule(lhsAST, rhsAST, conditionsAST));
 		}
-		;
-
-		String expression = "d(ln($x))";
+		
+		String expression = "test(3,0,3)";
+		//String expression = "d(x+y+z)";
+		//String expression = "d(ln(ln(ln(3))))";
 		ArithmeticParser parser = getParser(expression);
 		CompileUnitContext antlrAST = parser.compileUnit();
 
-		ExpressionNode ast = new BuildAstVisitor(rules).visitCompileUnit(antlrAST);
-		System.out.println(ast.toString());
-		System.out.println("\n\nEVALUATING");
+		ExpressionNode ast = new BuildAstVisitor(rules, 0).visitCompileUnit(antlrAST);
 		String value = new EvaluateExpressionVisitor().Visit(ast);
+		System.out.println("\n\n- - - - Evaluated Value - - - -\n\n" + value);
 	
 
 	}
@@ -111,6 +110,13 @@ class Rule {
 		this.lhs = lhs;
 		this.rhs = rhs;
 		this.conditions = conditions;
+		this.variables = new LinkedHashMap<String, ExpressionNode>();
+		this.lhsNode = new BuildLhsVisitor(variables).visitCompileUnit(lhs);
+	}
+	public Rule(CompileUnitContext lhs, CompileUnitContext rhs) {
+		this.lhs = lhs;
+		this.rhs = rhs;
+		this.conditions = null;
 		this.variables = new LinkedHashMap<String, ExpressionNode>();
 		this.lhsNode = new BuildLhsVisitor(variables).visitCompileUnit(lhs);
 	}

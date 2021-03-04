@@ -38,24 +38,20 @@ public class BuildLhsVisitor extends ArithmeticBaseVisitor<ExpressionNode> {
 		NumberNode calculation = null;
 		switch (context.op.getType()) {
 		case ArithmeticLexer.OP_ADD:
-			System.out.println("Addition: ");
 			node = new AdditionNode();
 
 			break;
 
 		case ArithmeticLexer.OP_SUB:
-			System.out.println("Subtractison: ");
 			node = new SubtractionNode();
 
 			break;
 
 		case ArithmeticLexer.OP_MUL:
-			System.out.println("Multiplication: ");
 			node = new MultiplicationNode();
 			break;
 
 		case ArithmeticLexer.OP_DIV:
-			System.out.println("Division: ");
 			node = new DivisionNode();
 			break;
 
@@ -86,7 +82,6 @@ public class BuildLhsVisitor extends ArithmeticBaseVisitor<ExpressionNode> {
 		ExpressionNode node = null;
 		switch (context.op.getType()) {
 		case ArithmeticLexer.OP_ADD:
-			System.out.println("Positive Unary");
 			node = visit(context.expression());
 			break;
 

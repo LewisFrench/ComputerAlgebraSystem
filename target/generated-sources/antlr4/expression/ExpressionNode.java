@@ -38,8 +38,8 @@ abstract class OperationNode extends ExpressionNode {
 
 	@Override
 	public boolean match(ExpressionNode node) {
-		System.out.println("Matching operation  " + node.toString());
-		return true;
+		
+		return node.getClass() == this.getClass();
 	}
 
 }
@@ -47,22 +47,26 @@ abstract class OperationNode extends ExpressionNode {
 class AdditionNode extends OperationNode {
 
 	public String toString() {
-		return ("operation: " + getLeft().toString() + " + " + getRight().toString());
+		return (getLeft().toString() + " + " + getRight().toString());
 	}
 }
 
 class SubtractionNode extends OperationNode {
 	public String toString() {
-		return ("operation: " + getLeft().toString() + " - " + getRight().toString());
+		return ( getLeft().toString() + " - " + getRight().toString());
 	}
 }
 
 class MultiplicationNode extends OperationNode {
-
+	public String toString() {
+		return (getLeft().toString() + " * " + getRight().toString());
+	}
 }
 
 class DivisionNode extends OperationNode {
-
+	public String toString() {
+		return (getLeft().toString() + " / " + getRight().toString());
+	}
 }
 
 class UnaryNode extends ExpressionNode {
@@ -96,21 +100,16 @@ class FunctionNode extends ExpressionNode {
 	}
 
 	public String toString() {
-		return (this.function + "(" + this.arguments.toString() + ")");
+		return (this.function +this.arguments.toString());
 	}
 
 	@Override
 	public boolean match(ExpressionNode node) {
-		System.out.println("Matching Function");
 		boolean match = false;
-
 		if (node.getClass() == this.getClass()) {
 			ArrayList<ExpressionNode> nodeArguments = ((FunctionNode) node).getArguments();
 			if (this.arguments.size() == nodeArguments.size() && this.function.equals(((FunctionNode) node).function)) {
 				for (int i = 0; i < this.arguments.size(); i++) {
-					System.out.println ("--------------------------");
-					System.out.println("\n matching argument : " + this.arguments.get(i).getClass());
-					System.out.println ("--------------------------");
 					if ((this.arguments.get(i).match(nodeArguments.get(i)))) {
 						match = true;
 					}
@@ -180,7 +179,7 @@ class RuleVariableNode extends ExpressionNode {
 	}
 
 	public String toString() {
-		return value;
+		return "$"+value;
 	}
 
 	public String getValue() {
@@ -193,12 +192,16 @@ class RuleVariableNode extends ExpressionNode {
 
 	@Override
 	public boolean match(ExpressionNode node) {
+		System.out.println("matching " + this.toString() + " to " + node.toString());
 		if (node.getClass() == this.getClass()) {
 			return this.getValue() == ((RuleVariableNode) node).getValue();
-		} else if (node instanceof NumberNode) {
+		
+		} else {
+			
+			//System.out.println(this.getValue() + "  =  " + node.toString());
 			return true;
 		}
-		return false;
+		
 
 	}
 	// Method to replace value with number ?
