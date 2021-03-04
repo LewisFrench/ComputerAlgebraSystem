@@ -31,8 +31,16 @@ public class Program {
 	public static void main(String[] args) {
 
 		//String[] strRules = { "d($A) = 1.01", "d($A + $B) = d($A) + d($B)"  };
-		//String[] strRules = { "d($A + $B) = d($A) + d($B)"  };
-		String[] strRules = {"d(ln($x)) = d($x) + $x"};
+		//String[] strRules = { "d($A + $B) = ($A) + d($B)"  };
+		//String[] strRules = {"d(ln($x)) = d($x) + $x"};
+		//String[] strRules = {"fib(0) = 0" , "fib(1) = 1", "fib($n) = fib($n-1) + fib($n-2)"};
+		String[] strRules = {"test($x, 1, $y) = 3"};
+		
+		
+		
+		
+		
+		
 		ArrayList<Rule> rules = new ArrayList<>();
 		String[] splitRule = new String[3];
 		for (String rule : strRules) {
@@ -54,9 +62,9 @@ public class Program {
 			
 		}
 		
-
-		//String expression = "d(x+2)";
-		String expression = "d(ln(ln(ln(3))))";
+		String expression = "test(3,0,3)";
+		//String expression = "d(x+y+z)";
+		//String expression = "d(ln(ln(ln(3))))";
 		ArithmeticParser parser = getParser(expression);
 		CompileUnitContext antlrAST = parser.compileUnit();
 

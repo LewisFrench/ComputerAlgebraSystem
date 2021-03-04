@@ -47,22 +47,26 @@ abstract class OperationNode extends ExpressionNode {
 class AdditionNode extends OperationNode {
 
 	public String toString() {
-		return ("operation: " + getLeft().toString() + " + " + getRight().toString());
+		return (getLeft().toString() + " + " + getRight().toString());
 	}
 }
 
 class SubtractionNode extends OperationNode {
 	public String toString() {
-		return ("operation: " + getLeft().toString() + " - " + getRight().toString());
+		return ( getLeft().toString() + " - " + getRight().toString());
 	}
 }
 
 class MultiplicationNode extends OperationNode {
-
+	public String toString() {
+		return (getLeft().toString() + " * " + getRight().toString());
+	}
 }
 
 class DivisionNode extends OperationNode {
-
+	public String toString() {
+		return (getLeft().toString() + " / " + getRight().toString());
+	}
 }
 
 class UnaryNode extends ExpressionNode {
@@ -175,7 +179,7 @@ class RuleVariableNode extends ExpressionNode {
 	}
 
 	public String toString() {
-		return value;
+		return "$"+value;
 	}
 
 	public String getValue() {

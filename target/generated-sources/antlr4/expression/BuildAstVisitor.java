@@ -144,6 +144,11 @@ public class BuildAstVisitor extends ArithmeticBaseVisitor<ExpressionNode> {
 			}
 		}
 		
+		
+		
+		
+		
+		
 		// for safety, maybe convert the function arguments into a separate data
 		// structure, so I don't mess with the FunctionNode
 
@@ -154,75 +159,74 @@ public class BuildAstVisitor extends ArithmeticBaseVisitor<ExpressionNode> {
 		 * This couldbe made more efficient
 		 * 
 		 */
-		ArrayList<ExpressionNode> temp = new ArrayList<>();
-		for (ExpressionNode n : arguments) {
-			if (n instanceof FunctionNode) {
-				for (ExpressionNode arg : ((FunctionNode) n).arguments ) {
-					temp.add(arg);
-				}
-			}
-		}
-		
-		//ArrayList<ExpressionNode> temp = new ArrayList<>();
-		for (ExpressionNode arg : arguments) {
-			System.out.println("arg : " + arg.toString());
-			if (arg instanceof OperationNode) {
-				System.out.println("OperationNode");
-				temp.add(((OperationNode)arg).Left);
-				temp.add(((OperationNode)arg).Right);
-			}
-		}
-		
-		
-		
-		if (appliedRule != null) {
+//		ArrayList<ExpressionNode> temp = new ArrayList<>();
+//		for (ExpressionNode n : arguments) {
+//			if (n instanceof FunctionNode) {
+//				for (ExpressionNode arg : ((FunctionNode) n).arguments ) {
+//					temp.add(arg);
+//				}
+//			}
+//		}
+//		
+//		
+//		
+//	
+//		
+//		// Doesn't work for recursive layers
+//		//ArrayList<ExpressionNode> temp = new ArrayList<>();
+//		for (ExpressionNode arg : arguments) {
+//			if (arg instanceof OperationNode) {
+//				temp.add(((OperationNode)arg).Left);
+//				temp.add(((OperationNode)arg).Right);
+//			}
+//		}
 
-			arguments = temp;
-			System.out.println(arguments);
-			// Handlea thing that allows for operations to feed into the arguments
-
-			// Empty ArrayList = {} , call a method for each argument, determines how to get
-			// each of the base variables
+		
+		if (appliedRule != null ) {
+			
+			System.out.println("\n\nEvalutating Tree");
+			EvaluateTree test = new EvaluateTree();
+			boolean compareTest = test.Visit(appliedRule.lhsNode, f);
+			if (compareTest) {
+				System.out.println("Arguments arrayList   :  " + test.arguments + "   "  + appliedRule.variables);
+				System.out.println("\n");
 	
-			System.out.println("\n\nVariables : " + appliedRule.variables);
-			System.out.println(temp);
-			System.out.println("\nApplied Rule "  + appliedRule.toString());
-			System.out.println(appliedRule.variables.keySet());
-			for (String key : appliedRule.variables.keySet()) {
-				System.out.println("-----------------\n" + key);
-				if (appliedRule.variables.get(key) == null) {
-					System.out.println("\n" + key + " is null   " + temp.get(0));
-					appliedRule.variables.put(key, temp.get(0));
-				} else if (appliedRule.variables.get(key) != null) {
-					
-					// variable is implicitly a number
+				
+				for (String key : appliedRule.variables.keySet()) {
+					if (appliedRule.variables.get(key) == null) {
+						appliedRule.variables.put(key, test.arguments.get(0));
+						test.arguments.remove(0);
+					} else if (appliedRule.variables.get(key) != null) {
+						
+						// variable is implicitly a number
+					}
+	
+					//arguments.remove(0);
 				}
-				temp.remove(0);
-				//arguments.remove(0);
+				System.out.println("Variables  :  " + appliedRule.variables);
+				//System.out.println("Applied rule variables  :   " + appliedRule.variables);
+				// Handle the conditions.
+				/*
+				 * I need to consider these before the rule is applied. 2 rules can have the
+				 * same LHS but opposing constraints Likely solution: When a matching LHS is
+				 * found, take the variables of that rule into a separate data structure. Fill a
+				 * new LinkedHashMap and use those variables to consider whether the constraints
+				 * hold Create the new AppliedRule object using the boolean returned from the
+				 * evaluateConditionsVisitor
+				 * 
+				 */
+	
+				// Can likely move this first line into the constructor of the Rule object, and
+				// invoke it in the subsequent line using appliedRule.conditionsNode or
+				// something
+				if( appliedRule.conditions!= null) {
+					ExpressionNode conditionsTest = new BuildConditionsVisitor().visitRuleConditions(appliedRule.conditions);
+				}
+				appliedRule.rhsNode = new BuildAstVisitor(appliedRule.variables, rules, this.depth + 1).visitCompileUnit(appliedRule.rhs);
+				System.out.println("rhsnode " +appliedRule.rhsNode);
+				return appliedRule.rhsNode;
+				//return f;
 			}
-			System.out.println(appliedRule.variables);
-			//System.out.println("Applied rule variables  :   " + appliedRule.variables);
-			// Handle the conditions.
-			/*
-			 * I need to consider these before the rule is applied. 2 rules can have the
-			 * same LHS but opposing constraints Likely solution: When a matching LHS is
-			 * found, take the variables of that rule into a separate data structure. Fill a
-			 * new LinkedHashMap and use those variables to consider whether the constraints
-			 * hold Create the new AppliedRule object using the boolean returned from the
-			 * evaluateConditionsVisitor
-			 * 
-			 */
-
-			// Can likely move this first line into the constructor of the Rule object, and
-			// invoke it in the subsequent line using appliedRule.conditionsNode or
-			// something
-			if( appliedRule.conditions!= null) {
-				ExpressionNode conditionsTest = new BuildConditionsVisitor().visitRuleConditions(appliedRule.conditions);
-			}
-			appliedRule.rhsNode = new BuildAstVisitor(appliedRule.variables, rules, this.depth + 1).visitCompileUnit(appliedRule.rhs);
-			System.out.println(appliedRule.rhsNode);
-			return appliedRule.rhsNode;
-
 		} else {
 			//System.out.println("\n\nNO RULES MATCHED to " + f.toString() + "\n\n");
 		}
