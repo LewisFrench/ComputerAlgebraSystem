@@ -28,13 +28,25 @@ public class ConditionsBaseListener implements ConditionsListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterRelop(ConditionsParser.RelopContext ctx) { }
+	@Override public void enterFunction(ConditionsParser.FunctionContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitRelop(ConditionsParser.RelopContext ctx) { }
+	@Override public void exitFunction(ConditionsParser.FunctionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterConditionParenthetical(ConditionsParser.ConditionParentheticalContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitConditionParenthetical(ConditionsParser.ConditionParentheticalContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -52,13 +64,25 @@ public class ConditionsBaseListener implements ConditionsListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterFunction(ConditionsParser.FunctionContext ctx) { }
+	@Override public void enterRelop(ConditionsParser.RelopContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitFunction(ConditionsParser.FunctionContext ctx) { }
+	@Override public void exitRelop(ConditionsParser.RelopContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterConditionOperation(ConditionsParser.ConditionOperationContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitConditionOperation(ConditionsParser.ConditionOperationContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
