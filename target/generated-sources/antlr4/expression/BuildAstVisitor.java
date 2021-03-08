@@ -123,36 +123,62 @@ public class BuildAstVisitor extends ArithmeticBaseVisitor<ExpressionNode> {
 		for (int i = 0; i < context.expression().size(); i++) {
 			arguments.add(visit(context.expression(i)));
 		}
-		
+		boolean conditionsHold = false;
 		Rule appliedRule = null;
-
+		EvaluateTree argumentEvaluator = new EvaluateTree();
 		FunctionNode f = new FunctionNode(context.func.getText(), arguments);
 		if (rules != null) {
 			for (Rule r : rules) {
-				if (((FunctionNode) r.lhsNode).match(f)) {
+				if (argumentEvaluator.Visit(r.lhsNode, f)) {
+				//if (((FunctionNode) r.lhsNode).match(f)) {
 					System.out.println("\n\n"+ context.getText() + "  matched to   " + r.toString());
 					appliedRule = new Rule(r.lhs, r.rhs, r.conditions);
+					System.out.println(argumentEvaluator.arguments);
+					System.out.println(appliedRule.variables);
+					for (String key : appliedRule.variables.keySet()) {
+						if (appliedRule.variables.get(key) == null) {
+							appliedRule.variables.put(key, argumentEvaluator.arguments.get(0));
+							argumentEvaluator.arguments.remove(0);
+						} else if (appliedRule.variables.get(key) != null) {
+							
+							// variable is implicitly a number
+						}
+
+					}
+					
+					if( appliedRule.conditions!= null) {
+						// Check if it's definitely appliedRule.variables and not this.variables
+						ExpressionNode conditionsNode = new BuildConditionsVisitor(appliedRule.variables).visitRuleConditions(appliedRule.conditions);
+						conditionsHold = new EvaluateConditionsVisitor(appliedRule.variables).Visit(conditionsNode);
+					}
+					System.out.println("ConditionsHold");
+					if (conditionsHold || appliedRule.conditions == null) {
+						appliedRule.rhsNode = new BuildAstVisitor(appliedRule.variables, rules, this.depth + 1).visitCompileUnit(appliedRule.rhs);
+						return appliedRule.rhsNode;
+					}
 					break;
+					
 				}
 			}
 		}
 
 		
-		if (appliedRule != null ) {
-			
-			EvaluateTree argumentEvaluator = new EvaluateTree();
-			boolean compareTest = argumentEvaluator.Visit(appliedRule.lhsNode, f);
-			if (compareTest) {
-				for (String key : appliedRule.variables.keySet()) {
-					if (appliedRule.variables.get(key) == null) {
-						appliedRule.variables.put(key, argumentEvaluator.arguments.get(0));
-						argumentEvaluator.arguments.remove(0);
-					} else if (appliedRule.variables.get(key) != null) {
-						
-						// variable is implicitly a number
-					}
-
-				}
+//		if (appliedRule != null ) {
+//			
+//			//EvaluateTree argumentEvaluator = new EvaluateTree();
+//			boolean compareTest = argumentEvaluator.Visit(appliedRule.lhsNode, f);
+//			System.out.println("Rule matches :   "+ compareTest);
+//			if (compareTest) {
+//				for (String key : appliedRule.variables.keySet()) {
+//					if (appliedRule.variables.get(key) == null) {
+//						appliedRule.variables.put(key, argumentEvaluator.arguments.get(0));
+//						argumentEvaluator.arguments.remove(0);
+//					} else if (appliedRule.variables.get(key) != null) {
+//						
+//						// variable is implicitly a number
+//					}
+//
+//				}
 				//System.out.println("Applied rule variables  :   " + appliedRule.variables);
 				// Handle the conditions.
 				/*
@@ -168,19 +194,19 @@ public class BuildAstVisitor extends ArithmeticBaseVisitor<ExpressionNode> {
 				// Can likely move this first line into the constructor of the Rule object, and
 				// invoke it in the subsequent line using appliedRule.conditionsNode or
 				// something
-				boolean conditionsHold = false;
-				if( appliedRule.conditions!= null) {
-					// Check if it's definitely appliedRule.variables and not this.variables
-					ExpressionNode conditionsNode = new BuildConditionsVisitor(appliedRule.variables).visitRuleConditions(appliedRule.conditions);
-					conditionsHold = new EvaluateConditionsVisitor(appliedRule.variables).Visit(conditionsNode);
-				}
-				if (conditionsHold) {
-					appliedRule.rhsNode = new BuildAstVisitor(appliedRule.variables, rules, this.depth + 1).visitCompileUnit(appliedRule.rhs);
-					return appliedRule.rhsNode;
-				}
+//				boolean conditionsHold = false;
+//				if( appliedRule.conditions!= null) {
+//					// Check if it's definitely appliedRule.variables and not this.variables
+//					ExpressionNode conditionsNode = new BuildConditionsVisitor(appliedRule.variables).visitRuleConditions(appliedRule.conditions);
+//					conditionsHold = new EvaluateConditionsVisitor(appliedRule.variables).Visit(conditionsNode);
+//				}
+//				if (conditionsHold || appliedRule.conditions == null) {
+//					appliedRule.rhsNode = new BuildAstVisitor(appliedRule.variables, rules, this.depth + 1).visitCompileUnit(appliedRule.rhs);
+//					return appliedRule.rhsNode;
+//				}
 				//return f;
-			}
-		}
+	//		}
+		//}
 		//System.out.println("Returning Function :  " + f.toString());
 		return f;
 
