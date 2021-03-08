@@ -105,6 +105,7 @@ class Rule {
 	RuleConditionsContext conditions;
 	ExpressionNode lhsNode;
 	ExpressionNode rhsNode;
+	ExpressionNode conditionsNode;
 	LinkedHashMap<String, ExpressionNode> variables;
 
 	public Rule(CompileUnitContext lhs, CompileUnitContext rhs, RuleConditionsContext conditions) {
