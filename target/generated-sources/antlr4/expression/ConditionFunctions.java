@@ -11,8 +11,6 @@ class ConditionFunctionEvaluator {
 	}
 
 	public boolean determineFunction(String functionName, ExpressionNode node) {
-		boolean functionResult = false;
-
 		ConditionFunction conditionFunction = null;
 		switch (functionName) {
 		case "is_number":

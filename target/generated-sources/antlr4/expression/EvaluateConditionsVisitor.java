@@ -2,8 +2,6 @@ package expression;
 
 import java.util.LinkedHashMap;
 
-import Conditions.ConditionsLexer;
-
 // Could likely split the AstVisitor into two visitors, one for the expression only nodes, and one for conditionnodes
 // Assuming I don't need them all for the is_literal() implementation
 
@@ -76,6 +74,9 @@ public class EvaluateConditionsVisitor extends AstVisitor<Boolean> {
 	@Override
 	public Boolean Visit(RuleVariableNode node) {
 		// TODO Auto-generated method stub
+		if (this.variables.get(node.toString()) != null) {
+
+		}
 		return null;
 	}
 
@@ -88,13 +89,29 @@ public class EvaluateConditionsVisitor extends AstVisitor<Boolean> {
 	public boolean calculateRelop(ExpressionNode left, ExpressionNode right, String relop) {
 		NumberNode l;
 		NumberNode r;
+		System.out.println(left.toString() + relop + right.toString());
+		
+//		if (relop == "==") {
+//			return left.match(right);
+//		} else if (relop == "!=") {
+//			return !(left.match(right));
+//		
+//		}
+//		
+//		
+//		
+		
 		if (left instanceof RuleVariableNode) {
-			l = (NumberNode) this.variables.get(((RuleVariableNode) left).getValue());
+			//if (this.variables.get(((RuleVariableNode) left).getValue()) instanceof NumberNode) {
+				l = (NumberNode) this.variables.get(((RuleVariableNode) left).toString());
+			//}
 		} else {
 			l = (NumberNode) left;
 		}
 		if (right instanceof RuleVariableNode) {
-			r = (NumberNode) this.variables.get(((RuleVariableNode) right).getValue());
+			//if (this.variables.get(((RuleVariableNode) left).getValue()) instanceof NumberNode) {
+				r = (NumberNode) this.variables.get(((RuleVariableNode) right).toString());
+			//}
 		} else {
 			r = (NumberNode) right;
 		}
@@ -109,7 +126,7 @@ public class EvaluateConditionsVisitor extends AstVisitor<Boolean> {
 		case ">":
 			relopResult = l.getValue() > r.getValue();
 			break;
-		case "==": 
+		case "==":
 			relopResult = l.getValue() == r.getValue();
 			break;
 		case "!=":

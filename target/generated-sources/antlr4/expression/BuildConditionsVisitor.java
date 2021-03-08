@@ -128,15 +128,14 @@ public class BuildConditionsVisitor extends ConditionsBaseVisitor<ExpressionNode
 		// Should outsource to another method
 		if (node.Left instanceof NumberNode && node.Right instanceof NumberNode && node instanceof AdditionNode) {
 			return new NumberNode(((NumberNode) node.Left).getValue() + ((NumberNode) node.Right).getValue());
-		} else if (node.Left instanceof NumberNode && node.Right instanceof NumberNode
-				&& node instanceof SubtractionNode) {
+		}
+		if (node.Left instanceof NumberNode && node.Right instanceof NumberNode && node instanceof SubtractionNode) {
 			return new NumberNode(((NumberNode) node.Left).getValue() - ((NumberNode) node.Right).getValue());
 		}
 		if (node.Left instanceof NumberNode && node.Right instanceof NumberNode && node instanceof MultiplicationNode) {
 			return new NumberNode(((NumberNode) node.Left).getValue() * ((NumberNode) node.Right).getValue());
-		} else if (node.Left instanceof NumberNode && node.Right instanceof NumberNode
-				&& node instanceof DivisionNode) {
-
+		}
+		if (node.Left instanceof NumberNode && node.Right instanceof NumberNode && node instanceof DivisionNode) {
 			return new NumberNode(((NumberNode) node.Left).getValue() / ((NumberNode) node.Right).getValue());
 		}
 
@@ -155,6 +154,7 @@ public class BuildConditionsVisitor extends ConditionsBaseVisitor<ExpressionNode
 		if (this.variables.get(context.getText()) != null) {
 			return variables.get(context.getText());
 		}
+		System.out.println("TEST");
 		return new RuleVariableNode(context.value.getText());
 	}
 

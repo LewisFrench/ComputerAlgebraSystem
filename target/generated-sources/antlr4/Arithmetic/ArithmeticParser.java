@@ -402,9 +402,9 @@ public class ArithmeticParser extends Parser {
 				_ctx = _localctx;
 				_prevctx = _localctx;
 				setState(26);
-				((RuleVariableContext)_localctx).value = match(T__1);
+				match(T__1);
 				setState(27);
-				match(VARIABLE);
+				((RuleVariableContext)_localctx).value = match(VARIABLE);
 				}
 				break;
 			case 6:

@@ -12,11 +12,12 @@ public class BuildAstVisitor extends ArithmeticBaseVisitor<ExpressionNode> {
 	ArrayList<Rule> rules;
 
 	int depth;
-	
+
 	public BuildAstVisitor(ArrayList<Rule> ruleSet, int depth) {
 		rules = ruleSet;
 		this.depth = depth;
 	}
+
 	public BuildAstVisitor(LinkedHashMap<String, ExpressionNode> variables, ArrayList<Rule> rules, int depth) {
 
 		this.variables = variables;
@@ -77,7 +78,6 @@ public class BuildAstVisitor extends ArithmeticBaseVisitor<ExpressionNode> {
 	public ExpressionNode visitOperation(ArithmeticParser.OperationContext context) {
 
 		OperationNode node = null;
-		NumberNode calculation = null;
 		switch (context.op.getType()) {
 		case ArithmeticLexer.OP_ADD:
 			node = new AdditionNode();
@@ -122,68 +122,38 @@ public class BuildAstVisitor extends ArithmeticBaseVisitor<ExpressionNode> {
 		ArrayList<ExpressionNode> arguments = new ArrayList<>();
 		for (int i = 0; i < context.expression().size(); i++) {
 			arguments.add(visit(context.expression(i)));
-		}
-		
-		Rule appliedRule = null;
 
+		}
+		boolean conditionsHold = false;
+		Rule appliedRule = null;
+		EvaluateTree argumentEvaluator = new EvaluateTree();
 		FunctionNode f = new FunctionNode(context.func.getText(), arguments);
 		if (rules != null) {
 			for (Rule r : rules) {
-				if (((FunctionNode) r.lhsNode).match(f)) {
-					System.out.println("\n\n"+ context.getText() + "  matched to   " + r.toString());
+				if (argumentEvaluator.Visit(r.lhsNode, f)) {
 					appliedRule = new Rule(r.lhs, r.rhs, r.conditions);
-					break;
-				}
-			}
-		}
-
-		
-		if (appliedRule != null ) {
-			
-			EvaluateTree argumentEvaluator = new EvaluateTree();
-			boolean compareTest = argumentEvaluator.Visit(appliedRule.lhsNode, f);
-			if (compareTest) {
-				for (String key : appliedRule.variables.keySet()) {
-					if (appliedRule.variables.get(key) == null) {
-						appliedRule.variables.put(key, argumentEvaluator.arguments.get(0));
-						argumentEvaluator.arguments.remove(0);
-					} else if (appliedRule.variables.get(key) != null) {
-						
-						// variable is implicitly a number
+					for (String key : appliedRule.variables.keySet()) {
+						if (appliedRule.variables.get(key) == null) {
+							appliedRule.variables.put(key, argumentEvaluator.arguments.get(0));
+							argumentEvaluator.arguments.remove(0);
+						}
 					}
-
+					if (appliedRule.conditions != null) {
+						ExpressionNode conditionsNode = new BuildConditionsVisitor(appliedRule.variables)
+								.visitRuleConditions(appliedRule.conditions);
+						conditionsHold = new EvaluateConditionsVisitor(appliedRule.variables).Visit(conditionsNode);
+					}
+					if (conditionsHold || appliedRule.conditions == null) {
+						appliedRule.rhsNode = new BuildAstVisitor(appliedRule.variables, rules, this.depth + 1)
+								.visitCompileUnit(appliedRule.rhs);
+						return appliedRule.rhsNode;
+					}
 				}
-				//System.out.println("Applied rule variables  :   " + appliedRule.variables);
-				// Handle the conditions.
-				/*
-				 * I need to consider these before the rule is applied. 2 rules can have the
-				 * same LHS but opposing constraints Likely solution: When a matching LHS is
-				 * found, take the variables of that rule into a separate data structure. Fill a
-				 * new LinkedHashMap and use those variables to consider whether the constraints
-				 * hold Create the new AppliedRule object using the boolean returned from the
-				 * evaluateConditionsVisitor
-				 * 
-				 */
-	
-				// Can likely move this first line into the constructor of the Rule object, and
-				// invoke it in the subsequent line using appliedRule.conditionsNode or
-				// something
-				boolean conditionsHold = false;
-				if( appliedRule.conditions!= null) {
-					// Check if it's definitely appliedRule.variables and not this.variables
-					ExpressionNode conditionsNode = new BuildConditionsVisitor(appliedRule.variables).visitRuleConditions(appliedRule.conditions);
-					conditionsHold = new EvaluateConditionsVisitor(appliedRule.variables).Visit(conditionsNode);
-				}
-				if (conditionsHold) {
-					appliedRule.rhsNode = new BuildAstVisitor(appliedRule.variables, rules, this.depth + 1).visitCompileUnit(appliedRule.rhs);
-					return appliedRule.rhsNode;
-				}
-				//return f;
 			}
 		}
-		//System.out.println("Returning Function :  " + f.toString());
 		return f;
 
-	}
+		}
 
+	
 }
