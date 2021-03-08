@@ -65,7 +65,7 @@ class MultiplicationNode extends OperationNode {
 
 class DivisionNode extends OperationNode {
 	public String toString() {
-		return (getLeft().toString() + " / " + getRight().toString());
+		return "Division";//(getLeft().toString() + " / " + getRight().toString());
 	}
 }
 

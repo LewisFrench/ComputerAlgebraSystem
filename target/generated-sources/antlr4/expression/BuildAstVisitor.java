@@ -43,11 +43,11 @@ public class BuildAstVisitor extends ArithmeticBaseVisitor<ExpressionNode> {
 
 	@Override
 	public ExpressionNode visitRuleVariable(ArithmeticParser.RuleVariableContext context) {
-		if (variables.get("$" + context.value.getText()) != null) {
-			return variables.get("$" + context.value.getText());
+		if (this.variables.get(context.getText()) != null) {
+			return this.variables.get(context.getText());
 		}
 
-		return new RuleVariableNode(context.value.getText());
+		return new RuleVariableNode(context.getText());
 	}
 
 	@Override
@@ -119,19 +119,10 @@ public class BuildAstVisitor extends ArithmeticBaseVisitor<ExpressionNode> {
 		if (this.depth > 400) {
 			return null;
 		}
-		System.out.println("\n\n Visit FUnction " + context.getText() + "\n\n");
-		//System.out.println("Visitng Function : " + context.getText());
-		
-		//System.out.println("\nVisiting function arguments : ");
 		ArrayList<ExpressionNode> arguments = new ArrayList<>();
 		for (int i = 0; i < context.expression().size(); i++) {
-			
-			//ExpressionNode n = visit(context.expression(i));
 			arguments.add(visit(context.expression(i)));
 		}
-		System.out.println("ARGUMENTS" + arguments);
-		
-		
 		
 		Rule appliedRule = null;
 
@@ -149,21 +140,19 @@ public class BuildAstVisitor extends ArithmeticBaseVisitor<ExpressionNode> {
 		
 		if (appliedRule != null ) {
 			
-			EvaluateTree test = new EvaluateTree();
-			boolean compareTest = test.Visit(appliedRule.lhsNode, f);
+			EvaluateTree argumentEvaluator = new EvaluateTree();
+			boolean compareTest = argumentEvaluator.Visit(appliedRule.lhsNode, f);
 			if (compareTest) {
 				for (String key : appliedRule.variables.keySet()) {
 					if (appliedRule.variables.get(key) == null) {
-						appliedRule.variables.put(key, test.arguments.get(0));
-						test.arguments.remove(0);
+						appliedRule.variables.put(key, argumentEvaluator.arguments.get(0));
+						argumentEvaluator.arguments.remove(0);
 					} else if (appliedRule.variables.get(key) != null) {
 						
 						// variable is implicitly a number
 					}
-	
-					//arguments.remove(0);
+
 				}
-				System.out.println("Variables  :  " + appliedRule.variables);
 				//System.out.println("Applied rule variables  :   " + appliedRule.variables);
 				// Handle the conditions.
 				/*
@@ -179,18 +168,18 @@ public class BuildAstVisitor extends ArithmeticBaseVisitor<ExpressionNode> {
 				// Can likely move this first line into the constructor of the Rule object, and
 				// invoke it in the subsequent line using appliedRule.conditionsNode or
 				// something
+				boolean conditionsHold = false;
 				if( appliedRule.conditions!= null) {
-					ExpressionNode conditionsNode = new BuildConditionsVisitor().visitRuleConditions(appliedRule.conditions);
-					boolean conditionsHold = new EvaluateConditionsVisitor(appliedRule.variables).Visit(conditionsNode);
-					System.out.println("\n Conditions hold:  " + conditionsHold);
-				} 
-				appliedRule.rhsNode = new BuildAstVisitor(appliedRule.variables, rules, this.depth + 1).visitCompileUnit(appliedRule.rhs);
-				System.out.println("rhsnode " +appliedRule.rhsNode);
-				return appliedRule.rhsNode;
+					// Check if it's definitely appliedRule.variables and not this.variables
+					ExpressionNode conditionsNode = new BuildConditionsVisitor(appliedRule.variables).visitRuleConditions(appliedRule.conditions);
+					conditionsHold = new EvaluateConditionsVisitor(appliedRule.variables).Visit(conditionsNode);
+				}
+				if (conditionsHold) {
+					appliedRule.rhsNode = new BuildAstVisitor(appliedRule.variables, rules, this.depth + 1).visitCompileUnit(appliedRule.rhs);
+					return appliedRule.rhsNode;
+				}
 				//return f;
 			}
-		} else {
-			//System.out.println("\n\nNO RULES MATCHED to " + f.toString() + "\n\n");
 		}
 		//System.out.println("Returning Function :  " + f.toString());
 		return f;

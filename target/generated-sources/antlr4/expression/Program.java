@@ -34,7 +34,7 @@ public class Program {
 		//String[] strRules = { "d($A + $B) = ($A) + d($B)"  };
 		//String[] strRules = {"d(ln($x)) = d($x) + $x"};
 		//String[] strRules = {"fib(0) = 0" , "fib(1) = 1", "fib($n) = fib($n-1) + fib($n-2) if $n>0"};
-		String[] strRules = {"d($n) = 2 if is_Integer($n) | ($n > 9 & $n==5.0)"};
+		String[] strRules = {"d($n) = $n if 3 >= $n"};
 		
 		ArrayList<Rule> rules = new ArrayList<>();
 		String[] splitRule = new String[3];
@@ -59,12 +59,11 @@ public class Program {
 		}
 		
 		String expression = "d(3)";
-		//String expression = "d(x+y+z)";
-		//String expression = "d(ln(ln(ln(3))))";
 		ArithmeticParser parser = getParser(expression);
 		CompileUnitContext antlrAST = parser.compileUnit();
 
 		ExpressionNode ast = new BuildAstVisitor(rules, 0).visitCompileUnit(antlrAST);
+		System.out.println(ast.toString() + "  " + ast.getClass());
 		String value = new EvaluateExpressionVisitor().Visit(ast);
 		System.out.println("\n\n- - - - Evaluated Value - - - -\n\n" + value);
 	
