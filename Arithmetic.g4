@@ -9,7 +9,7 @@ expression
    |  left = expression  op = (OP_MUL | OP_DIV) right = expression #Operation
    |  left = expression  op = (OP_ADD | OP_SUB) right = expression #Operation
    |  value = VARIABLE #Var
-   |  value = '$' VARIABLE #RuleVariable
+   |   '$' value = VARIABLE #RuleVariable
    |  value = SCIENTIFIC_NUMBER #Num
    ;
    

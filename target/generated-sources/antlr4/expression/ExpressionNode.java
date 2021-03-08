@@ -185,11 +185,11 @@ class RuleVariableNode extends ExpressionNode {
 	}
 
 	public String toString() {
-		return "$"+value;
+		return "$"+this.value;
 	}
 
 	public String getValue() {
-		return value;
+		return this.value;
 	}
 
 	public void setValue(String value) {

@@ -35,7 +35,6 @@ public class BuildLhsVisitor extends ArithmeticBaseVisitor<ExpressionNode> {
 	public ExpressionNode visitOperation(ArithmeticParser.OperationContext context) {
 	
 		OperationNode node = null;
-		NumberNode calculation = null;
 		switch (context.op.getType()) {
 		case ArithmeticLexer.OP_ADD:
 			node = new AdditionNode();
