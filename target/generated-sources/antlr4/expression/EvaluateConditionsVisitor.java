@@ -2,6 +2,8 @@ package expression;
 
 import java.util.LinkedHashMap;
 
+import Conditions.ConditionsLexer;
+
 
 // Could likely split the AstVisitor into two visitors, one for the expression only nodes, and one for conditionnodes
 // Assuming I don't need them all for the is_literal() implementation
@@ -111,6 +113,11 @@ public class EvaluateConditionsVisitor extends AstVisitor<Boolean> {
 		case "==":
 			relopResult = l.getValue() == r.getValue();
 			break;
+		case "<=":
+			relopResult = l.getValue() <= r.getValue();
+			break;
+		case ">=":
+			relopResult = l.getValue() >= r.getValue();
 		default:
 			// Exception for the weird case
 		}
@@ -119,9 +126,7 @@ public class EvaluateConditionsVisitor extends AstVisitor<Boolean> {
 
 	@Override
 	public Boolean Visit(ConditionFunctionNode node) {
-		boolean test = this.conditionFunctions.determineFunction(node.functionName, node.argument);
-		return test;
-
+		return this.conditionFunctions.determineFunction(node.functionName, node.argument);
 	}
 
 	@Override

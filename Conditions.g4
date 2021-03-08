@@ -8,7 +8,7 @@ condition
 	: left = condition op = (OP_AND | OP_OR) right = condition #ConditionOperation
 	| LPAREN condition RPAREN #ConditionParenthetical
 	|  OP_NOT  LPAREN  value = condition RPAREN #Not
-    |  left = condExpr relop=(RELOP_GT | RELOP_LT | RELOP_EQ) right =condExpr  #Relop
+    |  left = condExpr relop=(RELOP_EQ | RELOP_GT | RELOP_GTE | RELOP_LT | RELOP_LTE) right =condExpr  #Relop
 	| function = VARIABLE LPAREN value=condExpr RPAREN #Function
 	;
 
@@ -21,6 +21,8 @@ condExpr
 RELOP_GT: '>';
 RELOP_LT: '<';
 RELOP_EQ: '==';
+RELOP_GTE: '>=';
+RELOP_LTE: '<=';
 
 OP_AND: '&';
 OP_OR: '|';
