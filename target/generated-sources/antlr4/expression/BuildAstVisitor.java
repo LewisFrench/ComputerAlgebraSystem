@@ -43,11 +43,11 @@ public class BuildAstVisitor extends ArithmeticBaseVisitor<ExpressionNode> {
 
 	@Override
 	public ExpressionNode visitRuleVariable(ArithmeticParser.RuleVariableContext context) {
-		if (variables.get("$" + context.value.getText()) != null) {
-			return variables.get("$" + context.value.getText());
+		if (this.variables.get(context.getText()) != null) {
+			return this.variables.get(context.getText());
 		}
 
-		return new RuleVariableNode(context.value.getText());
+		return new RuleVariableNode(context.getText());
 	}
 
 	@Override
@@ -180,7 +180,9 @@ public class BuildAstVisitor extends ArithmeticBaseVisitor<ExpressionNode> {
 				// invoke it in the subsequent line using appliedRule.conditionsNode or
 				// something
 				if( appliedRule.conditions!= null) {
-					ExpressionNode conditionsNode = new BuildConditionsVisitor().visitRuleConditions(appliedRule.conditions);
+					// Check if it's definitely appliedRule.variables and not this.variables
+					ExpressionNode conditionsNode = new BuildConditionsVisitor(appliedRule.variables).visitRuleConditions(appliedRule.conditions);
+					System.out.println(conditionsNode.getClass());
 					boolean conditionsHold = new EvaluateConditionsVisitor(appliedRule.variables).Visit(conditionsNode);
 					System.out.println("\n Conditions hold:  " + conditionsHold);
 				} 
