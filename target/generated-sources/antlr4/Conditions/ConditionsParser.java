@@ -17,10 +17,10 @@ public class ConditionsParser extends Parser {
 	protected static final PredictionContextCache _sharedContextCache =
 		new PredictionContextCache();
 	public static final int
-		T__0=1, T__1=2, RELOP_GT=3, RELOP_LT=4, RELOP_EQ=5, RELOP_GTE=6, RELOP_LTE=7, 
-		OP_AND=8, OP_OR=9, OP_NOT=10, OP_ADD=11, OP_SUB=12, OP_MUL=13, OP_DIV=14, 
-		VARIABLE=15, SCIENTIFIC_NUMBER=16, LPAREN=17, RPAREN=18, POINT=19, POW=20, 
-		WS=21;
+		T__0=1, T__1=2, RELOP_GT=3, RELOP_LT=4, RELOP_EQ=5, RELOP_NEQ=6, RELOP_GTE=7, 
+		RELOP_LTE=8, OP_AND=9, OP_OR=10, OP_NOT=11, OP_ADD=12, OP_SUB=13, OP_MUL=14, 
+		OP_DIV=15, VARIABLE=16, SCIENTIFIC_NUMBER=17, LPAREN=18, RPAREN=19, POINT=20, 
+		POW=21, WS=22;
 	public static final int
 		RULE_ruleConditions = 0, RULE_condition = 1, RULE_condExpr = 2, RULE_compileUnit = 3, 
 		RULE_expression = 4;
@@ -33,17 +33,18 @@ public class ConditionsParser extends Parser {
 
 	private static String[] makeLiteralNames() {
 		return new String[] {
-			null, "','", "'$'", "'>'", "'<'", "'=='", "'>='", "'<='", "'&'", "'|'", 
-			"'!'", "'+'", "'-'", "'*'", "'/'", null, null, "'('", "')'", "'.'", "'^'"
+			null, "','", "'$'", "'>'", "'<'", "'=='", "'!='", "'>='", "'<='", "'&'", 
+			"'|'", "'!'", "'+'", "'-'", "'*'", "'/'", null, null, "'('", "')'", "'.'", 
+			"'^'"
 		};
 	}
 	private static final String[] _LITERAL_NAMES = makeLiteralNames();
 	private static String[] makeSymbolicNames() {
 		return new String[] {
-			null, null, null, "RELOP_GT", "RELOP_LT", "RELOP_EQ", "RELOP_GTE", "RELOP_LTE", 
-			"OP_AND", "OP_OR", "OP_NOT", "OP_ADD", "OP_SUB", "OP_MUL", "OP_DIV", 
-			"VARIABLE", "SCIENTIFIC_NUMBER", "LPAREN", "RPAREN", "POINT", "POW", 
-			"WS"
+			null, null, null, "RELOP_GT", "RELOP_LT", "RELOP_EQ", "RELOP_NEQ", "RELOP_GTE", 
+			"RELOP_LTE", "OP_AND", "OP_OR", "OP_NOT", "OP_ADD", "OP_SUB", "OP_MUL", 
+			"OP_DIV", "VARIABLE", "SCIENTIFIC_NUMBER", "LPAREN", "RPAREN", "POINT", 
+			"POW", "WS"
 		};
 	}
 	private static final String[] _SYMBOLIC_NAMES = makeSymbolicNames();
@@ -231,6 +232,7 @@ public class ConditionsParser extends Parser {
 			return getRuleContext(CondExprContext.class,i);
 		}
 		public TerminalNode RELOP_EQ() { return getToken(ConditionsParser.RELOP_EQ, 0); }
+		public TerminalNode RELOP_NEQ() { return getToken(ConditionsParser.RELOP_NEQ, 0); }
 		public TerminalNode RELOP_GT() { return getToken(ConditionsParser.RELOP_GT, 0); }
 		public TerminalNode RELOP_GTE() { return getToken(ConditionsParser.RELOP_GTE, 0); }
 		public TerminalNode RELOP_LT() { return getToken(ConditionsParser.RELOP_LT, 0); }
@@ -336,7 +338,7 @@ public class ConditionsParser extends Parser {
 				setState(23);
 				((RelopContext)_localctx).relop = _input.LT(1);
 				_la = _input.LA(1);
-				if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << RELOP_GT) | (1L << RELOP_LT) | (1L << RELOP_EQ) | (1L << RELOP_GTE) | (1L << RELOP_LTE))) != 0)) ) {
+				if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << RELOP_GT) | (1L << RELOP_LT) | (1L << RELOP_EQ) | (1L << RELOP_NEQ) | (1L << RELOP_GTE) | (1L << RELOP_LTE))) != 0)) ) {
 					((RelopContext)_localctx).relop = (Token)_errHandler.recoverInline(this);
 				}
 				else {
@@ -891,28 +893,28 @@ public class ConditionsParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\27T\4\2\t\2\4\3\t"+
+		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\30T\4\2\t\2\4\3\t"+
 		"\3\4\4\t\4\4\5\t\5\4\6\t\6\3\2\3\2\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3"+
 		"\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\5\3\"\n\3\3\3\3\3\3\3\7\3\'\n"+
 		"\3\f\3\16\3*\13\3\3\4\3\4\3\5\3\5\3\6\3\6\3\6\3\6\3\6\3\6\7\6\66\n\6\f"+
 		"\6\16\69\13\6\3\6\3\6\3\6\3\6\3\6\3\6\3\6\3\6\3\6\3\6\3\6\3\6\5\6G\n\6"+
 		"\3\6\3\6\3\6\3\6\3\6\3\6\7\6O\n\6\f\6\16\6R\13\6\3\6\2\4\4\n\7\2\4\6\b"+
-		"\n\2\6\3\2\5\t\3\2\n\13\3\2\r\16\3\2\17\20\2Z\2\f\3\2\2\2\4!\3\2\2\2\6"+
-		"+\3\2\2\2\b-\3\2\2\2\nF\3\2\2\2\f\r\5\4\3\2\r\3\3\2\2\2\16\17\b\3\1\2"+
-		"\17\20\7\23\2\2\20\21\5\4\3\2\21\22\7\24\2\2\22\"\3\2\2\2\23\24\7\f\2"+
-		"\2\24\25\7\23\2\2\25\26\5\4\3\2\26\27\7\24\2\2\27\"\3\2\2\2\30\31\5\6"+
-		"\4\2\31\32\t\2\2\2\32\33\5\6\4\2\33\"\3\2\2\2\34\35\7\21\2\2\35\36\7\23"+
-		"\2\2\36\37\5\6\4\2\37 \7\24\2\2 \"\3\2\2\2!\16\3\2\2\2!\23\3\2\2\2!\30"+
-		"\3\2\2\2!\34\3\2\2\2\"(\3\2\2\2#$\f\7\2\2$%\t\3\2\2%\'\5\4\3\b&#\3\2\2"+
-		"\2\'*\3\2\2\2(&\3\2\2\2()\3\2\2\2)\5\3\2\2\2*(\3\2\2\2+,\5\n\6\2,\7\3"+
-		"\2\2\2-.\5\n\6\2.\t\3\2\2\2/\60\b\6\1\2\60\61\7\21\2\2\61\62\7\23\2\2"+
-		"\62\67\5\n\6\2\63\64\7\3\2\2\64\66\5\n\6\2\65\63\3\2\2\2\669\3\2\2\2\67"+
-		"\65\3\2\2\2\678\3\2\2\28:\3\2\2\29\67\3\2\2\2:;\7\24\2\2;G\3\2\2\2<=\t"+
-		"\4\2\2=G\5\n\6\t>?\7\23\2\2?@\5\n\6\2@A\7\24\2\2AG\3\2\2\2BG\7\21\2\2"+
-		"CD\7\4\2\2DG\7\21\2\2EG\7\22\2\2F/\3\2\2\2F<\3\2\2\2F>\3\2\2\2FB\3\2\2"+
-		"\2FC\3\2\2\2FE\3\2\2\2GP\3\2\2\2HI\f\7\2\2IJ\t\5\2\2JO\5\n\6\bKL\f\6\2"+
-		"\2LM\t\4\2\2MO\5\n\6\7NH\3\2\2\2NK\3\2\2\2OR\3\2\2\2PN\3\2\2\2PQ\3\2\2"+
-		"\2Q\13\3\2\2\2RP\3\2\2\2\b!(\67FNP";
+		"\n\2\6\3\2\5\n\3\2\13\f\3\2\16\17\3\2\20\21\2Z\2\f\3\2\2\2\4!\3\2\2\2"+
+		"\6+\3\2\2\2\b-\3\2\2\2\nF\3\2\2\2\f\r\5\4\3\2\r\3\3\2\2\2\16\17\b\3\1"+
+		"\2\17\20\7\24\2\2\20\21\5\4\3\2\21\22\7\25\2\2\22\"\3\2\2\2\23\24\7\r"+
+		"\2\2\24\25\7\24\2\2\25\26\5\4\3\2\26\27\7\25\2\2\27\"\3\2\2\2\30\31\5"+
+		"\6\4\2\31\32\t\2\2\2\32\33\5\6\4\2\33\"\3\2\2\2\34\35\7\22\2\2\35\36\7"+
+		"\24\2\2\36\37\5\6\4\2\37 \7\25\2\2 \"\3\2\2\2!\16\3\2\2\2!\23\3\2\2\2"+
+		"!\30\3\2\2\2!\34\3\2\2\2\"(\3\2\2\2#$\f\7\2\2$%\t\3\2\2%\'\5\4\3\b&#\3"+
+		"\2\2\2\'*\3\2\2\2(&\3\2\2\2()\3\2\2\2)\5\3\2\2\2*(\3\2\2\2+,\5\n\6\2,"+
+		"\7\3\2\2\2-.\5\n\6\2.\t\3\2\2\2/\60\b\6\1\2\60\61\7\22\2\2\61\62\7\24"+
+		"\2\2\62\67\5\n\6\2\63\64\7\3\2\2\64\66\5\n\6\2\65\63\3\2\2\2\669\3\2\2"+
+		"\2\67\65\3\2\2\2\678\3\2\2\28:\3\2\2\29\67\3\2\2\2:;\7\25\2\2;G\3\2\2"+
+		"\2<=\t\4\2\2=G\5\n\6\t>?\7\24\2\2?@\5\n\6\2@A\7\25\2\2AG\3\2\2\2BG\7\22"+
+		"\2\2CD\7\4\2\2DG\7\22\2\2EG\7\23\2\2F/\3\2\2\2F<\3\2\2\2F>\3\2\2\2FB\3"+
+		"\2\2\2FC\3\2\2\2FE\3\2\2\2GP\3\2\2\2HI\f\7\2\2IJ\t\5\2\2JO\5\n\6\bKL\f"+
+		"\6\2\2LM\t\4\2\2MO\5\n\6\7NH\3\2\2\2NK\3\2\2\2OR\3\2\2\2PN\3\2\2\2PQ\3"+
+		"\2\2\2Q\13\3\2\2\2RP\3\2\2\2\b!(\67FNP";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

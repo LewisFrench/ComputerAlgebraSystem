@@ -4,7 +4,6 @@ import java.util.LinkedHashMap;
 
 import Conditions.ConditionsLexer;
 
-
 // Could likely split the AstVisitor into two visitors, one for the expression only nodes, and one for conditionnodes
 // Assuming I don't need them all for the is_literal() implementation
 
@@ -61,7 +60,7 @@ public class EvaluateConditionsVisitor extends AstVisitor<Boolean> {
 		// (e.g. (x^2) > 1) then do I return true or false?
 
 		// Current solution is ensuring that the value will be a number
-		
+
 		// Will need to outsource this method to handle < , > , == in switch statement
 
 		boolean relopResult = calculateRelop(node.left, node.right, node.relop);
@@ -89,7 +88,6 @@ public class EvaluateConditionsVisitor extends AstVisitor<Boolean> {
 	public boolean calculateRelop(ExpressionNode left, ExpressionNode right, String relop) {
 		NumberNode l;
 		NumberNode r;
-		System.out.println("Visiting Relop : " + left.toString() + "  " + relop + "  " + right.toString());
 		if (left instanceof RuleVariableNode) {
 			l = (NumberNode) this.variables.get(((RuleVariableNode) left).getValue());
 		} else {
@@ -104,14 +102,18 @@ public class EvaluateConditionsVisitor extends AstVisitor<Boolean> {
 		boolean relopResult = false;
 		// Use Constants for the reloperators
 		switch (relop) {
+
 		case "<":
 			relopResult = l.getValue() < r.getValue();
 			break;
 		case ">":
 			relopResult = l.getValue() > r.getValue();
 			break;
-		case "==":
+		case "==": 
 			relopResult = l.getValue() == r.getValue();
+			break;
+		case "!=":
+			relopResult = l.getValue() != r.getValue();
 			break;
 		case "<=":
 			relopResult = l.getValue() <= r.getValue();
@@ -136,13 +138,11 @@ public class EvaluateConditionsVisitor extends AstVisitor<Boolean> {
 
 	@Override
 	public Boolean Visit(ConditionAndNode node) {
-		System.out.println("Visiting Condition AND");
 		return (Visit(node.left) && Visit(node.right));
 	}
 
 	@Override
 	public Boolean Visit(ConditionOrNode node) {
-		System.out.println("Visitng Condiition OR");
 		return (Visit(node.left) || Visit(node.right));
 	}
 

@@ -34,7 +34,7 @@ public class Program {
 		//String[] strRules = { "d($A + $B) = ($A) + d($B)"  };
 		//String[] strRules = {"d(ln($x)) = d($x) + $x"};
 		//String[] strRules = {"fib(0) = 0" , "fib(1) = 1", "fib($n) = fib($n-1) + fib($n-2) if $n>0"};
-		String[] strRules = {"d($n) = $n if ($n+1+2)/2 + ($n*2) > 2+$n"};
+		String[] strRules = {"d($n) = $n if 3 >= $n"};
 		
 		ArrayList<Rule> rules = new ArrayList<>();
 		String[] splitRule = new String[3];
