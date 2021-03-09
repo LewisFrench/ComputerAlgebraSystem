@@ -32,14 +32,14 @@ public class Program {
 
 		//String[] strRules = { "d($A) = 1.01", "d($A + $B) = d($A) + d($B)"  };
 		
-		String[] strRules = { "d($A + $B) = d($A) + d($B)"  };
+		//String[] strRules = { "d($A + $B) = d($A) + d($B)"  };
 		//String[] strRules = {"d(ln($x)) = d($x) + $x"};
 
-		//String[] strRules = {"fib(0) = 0" , "fib(1) = 1", "fib($n) = fib($n-1) + fib($n-2)"};
+		String[] strRules = {"fib(0) = 0" , "fib(1) = 1", "fib($n) = fib($n-1) + fib($n-2)"};
 
-		//String[] strRules = {"fib(0) = 0" , "fib(1) = 1", "fib($n) = fib($n-1) + fib($n-2)"};
+		
 
-		//String[] strRules = {"d($n) = $n if 3 >= $n"};
+		//String[] strRules = {"d($n) = $n if x+2 != $n"};
 		
 		ArrayList<Rule> rules = new ArrayList<>();
 		String[] splitRule = new String[3];
@@ -63,8 +63,8 @@ public class Program {
 			
 		}
 		
-		String expression = "d(a+b+c)";
-		//String expression = "fib(10)";
+		//String expression = "d(x+2)";
+		String expression = "fib(10) + fib(5)";
 		ArithmeticParser parser = getParser(expression);
 		CompileUnitContext antlrAST = parser.compileUnit();
 

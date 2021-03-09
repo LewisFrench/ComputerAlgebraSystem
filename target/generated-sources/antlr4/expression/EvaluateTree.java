@@ -13,7 +13,6 @@ public class EvaluateTree extends AstComparator<Boolean> {
 
 	@Override
 	public Boolean Visit(AdditionNode lhsNode, ExpressionNode node) {
-		System.out.println("\nAddition");
 		if (lhsNode.getClass() == node.getClass()) {
 			boolean l = Visit(lhsNode.Left, ((AdditionNode) node).Left);
 			boolean r = Visit(lhsNode.Right, ((AdditionNode) node).Right);
@@ -24,11 +23,9 @@ public class EvaluateTree extends AstComparator<Boolean> {
 
 	@Override
 	public Boolean Visit(SubtractionNode lhsNode, ExpressionNode node) {
-		System.out.println("Subtraction");
-
 		if (lhsNode.getClass() == node.getClass()) {
 			boolean l = Visit(lhsNode.Left, ((SubtractionNode) node).Left);
-			boolean r = Visit(lhsNode.Left, ((SubtractionNode) node).Right);
+			boolean r = Visit(lhsNode.Right, ((SubtractionNode) node).Right);
 			return l && r;
 		}
 		return false;
@@ -36,10 +33,9 @@ public class EvaluateTree extends AstComparator<Boolean> {
 
 	@Override
 	public Boolean Visit(MultiplicationNode lhsNode, ExpressionNode node) {
-		System.out.println("Multiplication");
 		if (lhsNode.getClass() == node.getClass()) {
 			boolean l = Visit(lhsNode.Left, ((MultiplicationNode) node).Left);
-			boolean r = Visit(lhsNode.Left, ((MultiplicationNode) node).Right);
+			boolean r = Visit(lhsNode.Right, ((MultiplicationNode) node).Right);
 			return l && r;
 		}
 		return false;
@@ -47,10 +43,9 @@ public class EvaluateTree extends AstComparator<Boolean> {
 
 	@Override
 	public Boolean Visit(DivisionNode lhsNode, ExpressionNode node) {
-		System.out.println("Division");
 		if (lhsNode.getClass() == node.getClass()) {
 			boolean l = Visit(lhsNode.Left, ((DivisionNode) node).Left);
-			boolean r = Visit(lhsNode.Left, ((DivisionNode) node).Right);
+			boolean r = Visit(lhsNode.Right, ((DivisionNode) node).Right);
 			return l && r;
 		}
 		return false;
@@ -59,7 +54,6 @@ public class EvaluateTree extends AstComparator<Boolean> {
 
 	@Override
 	public Boolean Visit(NumberNode lhsNode, ExpressionNode node) {
-		System.out.println("NumberNode");
 		if (lhsNode.getClass() == node.getClass()) {
 			if (lhsNode.getValue() == ((NumberNode) node).getValue()) {
 				return true;
@@ -83,7 +77,7 @@ public class EvaluateTree extends AstComparator<Boolean> {
 		boolean argumentsMatch = false;
 		if (lhsNode.getClass() == node.getClass()) {
 			if (lhsNode.arguments.size() == ((FunctionNode) node).arguments.size()) {
-				argumentsMatch = lhsNode.function.equals(((FunctionNode)node).function);
+				argumentsMatch = lhsNode.function.equals(((FunctionNode) node).function);
 				for (int i = 0; i < lhsNode.arguments.size(); i++) {
 					argumentsMatch = argumentsMatch
 							&& Visit(lhsNode.arguments.get(i), ((FunctionNode) node).arguments.get(i));
@@ -103,7 +97,8 @@ public class EvaluateTree extends AstComparator<Boolean> {
 	@Override
 	public Boolean Visit(VariableNode lhsNode, ExpressionNode node) {
 		if (lhsNode.getClass() == node.getClass()) {
-			return (lhsNode.getValue() == ((VariableNode) node).getValue());
+
+			return (lhsNode.getValue().equals(((VariableNode) node).getValue()));
 		}
 		return false;
 	}

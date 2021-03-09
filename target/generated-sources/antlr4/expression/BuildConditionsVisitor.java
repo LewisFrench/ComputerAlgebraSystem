@@ -2,6 +2,7 @@ package expression;
 
 import Conditions.ConditionsBaseVisitor;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
 import Arithmetic.ArithmeticLexer;
@@ -13,7 +14,6 @@ public class BuildConditionsVisitor extends ConditionsBaseVisitor<ExpressionNode
 
 	public BuildConditionsVisitor(LinkedHashMap<String, ExpressionNode> variables) {
 		this.variables = variables;
-		System.out.println(this.variables);
 	}
 
 	@Override
@@ -33,13 +33,11 @@ public class BuildConditionsVisitor extends ConditionsBaseVisitor<ExpressionNode
 
 	@Override
 	public ExpressionNode visitRuleConditions(ConditionsParser.RuleConditionsContext context) {
-		System.out.println("Visit Rule Conditions");
 		return visit(context.condition());
 	}
 
 	@Override
 	public ExpressionNode visitNot(ConditionsParser.NotContext context) {
-		System.out.println("Visiitng Not");
 
 		return new NotNode(visit(context.condition()));
 	}
@@ -58,7 +56,11 @@ public class BuildConditionsVisitor extends ConditionsBaseVisitor<ExpressionNode
 	// something like sin(y) only?
 	@Override
 	public ExpressionNode visitFunction(ConditionsParser.FunctionContext context) {
-		return new ConditionFunctionNode(context.function.getText(), visit(context.condExpr()));
+		ArrayList<ExpressionNode> arguments = new ArrayList<>();
+		for (int i = 0 ; i < context.condExpr().size() ; i ++) {
+			arguments.add(visit(context.condExpr(i)));
+		}
+		return new ConditionFunctionNode(context.function.getText(),arguments);
 	}
 
 	@Override
@@ -70,9 +72,6 @@ public class BuildConditionsVisitor extends ConditionsBaseVisitor<ExpressionNode
 
 	@Override
 	public ExpressionNode visitExpr(ConditionsParser.ExprContext context) {
-
-		System.out.println(context.getText());
-		System.out.println(context.expression().getText());
 		ExpressionNode n = visit(context.expression());
 
 		return n;
@@ -144,7 +143,6 @@ public class BuildConditionsVisitor extends ConditionsBaseVisitor<ExpressionNode
 
 	@Override
 	public ExpressionNode visitNum(ConditionsParser.NumContext context) {
-		System.out.println("\nVisitng Number " + context.getText());
 		return new NumberNode(Double.valueOf(context.getText()));
 	}
 
@@ -154,7 +152,6 @@ public class BuildConditionsVisitor extends ConditionsBaseVisitor<ExpressionNode
 		if (this.variables.get(context.getText()) != null) {
 			return variables.get(context.getText());
 		}
-		System.out.println("TEST");
 		return new RuleVariableNode(context.value.getText());
 	}
 

@@ -273,11 +273,11 @@ class RelopNode extends ExpressionNode {
 
 class ConditionFunctionNode extends ExpressionNode {
 	String functionName;
-	ExpressionNode argument;
+	ArrayList<ExpressionNode> arguments;
 
-	public ConditionFunctionNode(String functionName, ExpressionNode argument) {
+	public ConditionFunctionNode(String functionName, ArrayList<ExpressionNode> arguments) {
 		this.functionName = functionName;
-		this.argument = argument;
+		this.arguments = arguments;
 	}
 
 	@Override
@@ -301,8 +301,6 @@ class NotNode extends ExpressionNode {
 	}
 
 }
-
-
 
 class ConditionParentheticalNode extends ExpressionNode {
 

@@ -12,9 +12,6 @@ abstract class AstComparator<T>
     public abstract T Visit(RuleVariableNode lhsNode, ExpressionNode node);
     public abstract T Visit(VariableNode lhsNode, ExpressionNode node);
     
-
-    
-    
     // Can talk about how this could be more effieint in C#, see bookmark page 
     public T Visit(ExpressionNode lhsNode, ExpressionNode node)
     {
@@ -45,10 +42,7 @@ abstract class AstComparator<T>
     	else if (lhsNode instanceof NumberNode ) {
     		return Visit((NumberNode)lhsNode, node);
     	}
-    	
-    	
-    	
-    	
+
     	else {
     		
     		System.out.println("No expressionNode of suitable type");

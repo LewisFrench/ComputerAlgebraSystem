@@ -1,5 +1,6 @@
 package expression;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
 class ConditionFunctionEvaluator {
@@ -10,7 +11,7 @@ class ConditionFunctionEvaluator {
 		this.variables = variables;
 	}
 
-	public boolean determineFunction(String functionName, ExpressionNode node) {
+	public boolean determineFunction(String functionName, ArrayList<ExpressionNode> arguments) {
 		ConditionFunction conditionFunction = null;
 		switch (functionName) {
 		case "is_number":
@@ -24,30 +25,63 @@ class ConditionFunctionEvaluator {
 		case "is_integer":
 			conditionFunction = new is_integer();
 			break;
+		case "depends":
+			conditionFunction = new depends();
+			break;
 		default:
 			System.out.println("Entered condition function has no match - please check the entered name");
 		}
 
-		if (node instanceof RuleVariableNode) {
-			return conditionFunction.function(variables.get(((RuleVariableNode) node).getValue()));
-		} else {
-			return conditionFunction.function(node);
+		if (conditionFunction != null) {
+			return conditionFunction.function(this.transformRuleVariableArguments(arguments));
 		}
+		return false;
 	}
+	public ArrayList<ExpressionNode> transformRuleVariableArguments(ArrayList<ExpressionNode> arguments){
+		ArrayList<ExpressionNode> transformedArguments = new ArrayList<>();
+		for (ExpressionNode argument: arguments) {
+			if (argument instanceof RuleVariableNode) {
+				if (this.variables.get(((RuleVariableNode)argument).toString()) != null){
+					transformedArguments.add(this.variables.get(((RuleVariableNode)argument).toString()));
+				} else {
+					transformedArguments.add(argument);
+				}
+				
+			} else {
+				transformedArguments.add(argument);
+			}
+		}
+		return transformedArguments;
+	}
+
 }
+
+
+
+
+/**
+ * 
+ * 
+ * 
+ * @author lewis
+ *
+ */
 
 abstract class ConditionFunction {
 	String functionDescription;
 
-	abstract boolean function(ExpressionNode node);
+	abstract boolean function(ArrayList<ExpressionNode> arguments);
 }
 
 class is_literal extends ConditionFunction {
 	String functionDescription = ("is_literal($n)  :  Determines if the argument entered is an variable");
 
 	@Override
-	boolean function(ExpressionNode node) {
-		return (node instanceof VariableNode);
+	boolean function(ArrayList<ExpressionNode> arguments) {
+		if (arguments.size() == 1) {
+			return (arguments.get(0) instanceof VariableNode);
+		}
+		return false;
 	}
 }
 
@@ -55,8 +89,11 @@ class is_number extends ConditionFunction {
 	String functionDescription = ("is_number($n)  :  Determines if the argument entered is an number");
 
 	@Override
-	boolean function(ExpressionNode node) {
-		return (node instanceof NumberNode);
+	boolean function(ArrayList<ExpressionNode> arguments) {
+		if (arguments.size() == 1) {
+			return (arguments.get(0) instanceof NumberNode);
+		}
+		return false;
 	}
 }
 
@@ -65,12 +102,27 @@ class is_integer extends ConditionFunction {
 	String functionDescription = ("is_integer($n)  :  Determines if the argument entered is an integer");
 
 	@Override
-	boolean function(ExpressionNode node) {
-		if (node instanceof NumberNode) {
-			return (((NumberNode) node).getValue() == Math.floor(((NumberNode) node).getValue()));
-		} else {
-			return false;
+	boolean function(ArrayList<ExpressionNode> arguments) {
+		if (arguments.size() == 1) {
+			if (arguments.get(0) instanceof NumberNode) {
+				return (((NumberNode) arguments.get(0)).getValue() == Math.floor(((NumberNode) arguments.get(0)).getValue()));
+			} else {
+				return false;
+			}
 		}
+		return false;
 	}
 
+}
+
+class depends extends ConditionFunction {
+	String functionDescription = "depends($A, $b)  :  Determines if term $A contains any instance of term $b";
+	
+	@Override
+	boolean function(ArrayList<ExpressionNode> arguments) {
+		if (arguments.size() == 2) {
+			return new DependsEvaluator(arguments.get(1)).Visit(arguments.get(0));
+		}
+		return false; // Throw Exception
+	}
 }

@@ -33,7 +33,6 @@ public class BuildAstVisitor extends ArithmeticBaseVisitor<ExpressionNode> {
 
 	@Override
 	public ExpressionNode visitNum(ArithmeticParser.NumContext context) {
-		System.out.println(context.getText());
 		return new NumberNode(Double.valueOf(context.value.getText()));
 	}
 
@@ -124,12 +123,14 @@ public class BuildAstVisitor extends ArithmeticBaseVisitor<ExpressionNode> {
 			arguments.add(visit(context.expression(i)));
 
 		}
-		boolean conditionsHold = false;
+		boolean conditionsHold;
+		
 		Rule appliedRule = null;
 		EvaluateTree argumentEvaluator = new EvaluateTree();
 		FunctionNode f = new FunctionNode(context.func.getText(), arguments);
 		if (rules != null) {
 			for (Rule r : rules) {
+				conditionsHold = false;
 				if (argumentEvaluator.Visit(r.lhsNode, f)) {
 					appliedRule = new Rule(r.lhs, r.rhs, r.conditions);
 					for (String key : appliedRule.variables.keySet()) {
