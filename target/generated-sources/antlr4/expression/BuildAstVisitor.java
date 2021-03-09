@@ -133,12 +133,18 @@ public class BuildAstVisitor extends ArithmeticBaseVisitor<ExpressionNode> {
 				conditionsHold = false;
 				if (argumentEvaluator.Visit(r.lhsNode, f)) {
 					appliedRule = new Rule(r.lhs, r.rhs, r.conditions);
+
+					if (validateArguments(argumentEvaluator)) {
+						System.out.println("Error: Variables with the same identifiers must match");
+					}
 					for (String key : appliedRule.variables.keySet()) {
 						if (appliedRule.variables.get(key) == null) {
 							appliedRule.variables.put(key, argumentEvaluator.arguments.get(0));
 							argumentEvaluator.arguments.remove(0);
-						}
+						} 
 					}
+			
+					
 					if (appliedRule.conditions != null) {
 						ExpressionNode conditionsNode = new BuildConditionsVisitor(appliedRule.variables)
 								.visitRuleConditions(appliedRule.conditions);
@@ -156,5 +162,19 @@ public class BuildAstVisitor extends ArithmeticBaseVisitor<ExpressionNode> {
 
 		}
 
+	
+	public boolean validateArguments(EvaluateTree argumentEvaluator) {
+		ArrayList<String> vars = argumentEvaluator.variables;
+		ArrayList<ExpressionNode> args  = argumentEvaluator.arguments;
+		for (int i = 0 ; i < vars.size() ; i++) {
+			if (i != vars.indexOf(vars.get(i))) {
+				if (argumentEvaluator.Visit(args.get(i), args.get(vars.indexOf(vars.get(i))))) {
+					return false;
+				}
+			}
+		}
+		return true;
+		
+	}
 	
 }
