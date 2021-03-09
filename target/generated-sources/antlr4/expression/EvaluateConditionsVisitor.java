@@ -9,7 +9,7 @@ public class EvaluateConditionsVisitor extends AstVisitor<Boolean> {
 
 	LinkedHashMap<String, ExpressionNode> variables;
 	ConditionFunctionEvaluator conditionFunctions;
-
+	
 	public EvaluateConditionsVisitor(LinkedHashMap<String, ExpressionNode> variables) {
 		this.variables = variables;
 		this.conditionFunctions = new ConditionFunctionEvaluator(this.variables);
@@ -89,17 +89,18 @@ public class EvaluateConditionsVisitor extends AstVisitor<Boolean> {
 	public boolean calculateRelop(ExpressionNode left, ExpressionNode right, String relop) {
 		NumberNode l;
 		NumberNode r;
-		System.out.println(left.toString() + relop + right.toString());
 		
-//		if (relop == "==") {
-//			return left.match(right);
-//		} else if (relop == "!=") {
-//			return !(left.match(right));
-//		
-//		}
-//		
-//		
-//		
+		EvaluateTree treeMatcher = new EvaluateTree();
+		
+		if (relop.equals("==")) {
+			System.out.println("Eval ==");
+			return treeMatcher.Visit(left, right);
+		} else if (relop.equals("!=")) {
+			return !(treeMatcher.Visit(left, right));
+		}
+			
+		// Throw exception if left, right are not instances of ruleVariableNode or NumberNode
+		
 		
 		if (left instanceof RuleVariableNode) {
 			//if (this.variables.get(((RuleVariableNode) left).getValue()) instanceof NumberNode) {
@@ -126,12 +127,12 @@ public class EvaluateConditionsVisitor extends AstVisitor<Boolean> {
 		case ">":
 			relopResult = l.getValue() > r.getValue();
 			break;
-		case "==":
-			relopResult = l.getValue() == r.getValue();
-			break;
-		case "!=":
-			relopResult = l.getValue() != r.getValue();
-			break;
+//		case "==":
+//			relopResult = l.getValue() == r.getValue();
+//			break;
+//		case "!=":
+//			relopResult = l.getValue() != r.getValue();
+//			break;
 		case "<=":
 			relopResult = l.getValue() <= r.getValue();
 			break;
@@ -145,7 +146,7 @@ public class EvaluateConditionsVisitor extends AstVisitor<Boolean> {
 
 	@Override
 	public Boolean Visit(ConditionFunctionNode node) {
-		return this.conditionFunctions.determineFunction(node.functionName, node.argument);
+		return this.conditionFunctions.determineFunction(node.functionName, node.arguments);
 	}
 
 	@Override

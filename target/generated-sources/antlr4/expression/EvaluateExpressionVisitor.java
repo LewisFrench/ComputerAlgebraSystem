@@ -22,7 +22,6 @@ class EvaluateExpressionVisitor extends AstVisitor<String>
     @Override
     public  String Visit(MultiplicationNode node)
     {
-    	System.out.println("MUL");
         return Visit(node.Left) + "*" + Visit(node.Right);
     }
 
