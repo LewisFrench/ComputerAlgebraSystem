@@ -6,9 +6,12 @@ import java.util.ArrayList;
 public class EvaluateTree extends AstComparator<Boolean> {
 
 	ArrayList<ExpressionNode> arguments;
+	ArrayList<String> variables;
+	
 
 	public EvaluateTree() {
 		this.arguments = new ArrayList<>();
+		this.variables = new ArrayList<>();
 	}
 
 	@Override
@@ -82,7 +85,6 @@ public class EvaluateTree extends AstComparator<Boolean> {
 					argumentsMatch = argumentsMatch
 							&& Visit(lhsNode.arguments.get(i), ((FunctionNode) node).arguments.get(i));
 				}
-
 			}
 		}
 		return argumentsMatch;
@@ -91,6 +93,7 @@ public class EvaluateTree extends AstComparator<Boolean> {
 	@Override
 	public Boolean Visit(RuleVariableNode lhsNode, ExpressionNode node) {
 		this.arguments.add(node);
+		this.variables.add(lhsNode.toString());
 		return true;
 	}
 
