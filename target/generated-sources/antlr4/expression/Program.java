@@ -34,7 +34,7 @@ public class Program {
 		
 		//String[] strRules = { "d($A + $B) = d($A) + d($B)"  };
 		//String[] strRules = {"d(ln($x)) = d($x) + $x"};
-		String[] strRules = {"func($x, $y, $x) = $x"};
+		String[] strRules = {"func($x, $y) = $x"};
 		//String[] strRules = {"fib(0) = 0" , "fib(1) = 1", "fib($n) = fib($n-1) + fib($n-2)"};
 
 		
@@ -64,7 +64,7 @@ public class Program {
 		}
 		
 		//String expression = "d(x+2)";
-		String expression = "func(4*u,4*x, 4*u)";
+		String expression = "func(1+a+b, 4)";
 		ArithmeticParser parser = getParser(expression);
 		CompileUnitContext antlrAST = parser.compileUnit();
 

@@ -121,20 +121,19 @@ public class BuildAstVisitor extends ArithmeticBaseVisitor<ExpressionNode> {
 		ArrayList<ExpressionNode> arguments = new ArrayList<>();
 		for (int i = 0; i < context.expression().size(); i++) {
 			arguments.add(visit(context.expression(i)));
-
 		}
 		boolean conditionsHold;
-		
 		Rule appliedRule = null;
 		EvaluateTree argumentEvaluator = new EvaluateTree();
 		FunctionNode f = new FunctionNode(context.func.getText(), arguments);
+		
 		if (rules != null) {
 			for (Rule r : rules) {
 				conditionsHold = false;
 				if (argumentEvaluator.Visit(r.lhsNode, f)) {
 					appliedRule = new Rule(r.lhs, r.rhs, r.conditions);
 
-					if (validateArguments(argumentEvaluator)) {
+					if (!(argumentsValid(argumentEvaluator))) {
 						System.out.println("Error: Variables with the same identifiers must match");
 					}
 					for (String key : appliedRule.variables.keySet()) {
@@ -144,7 +143,6 @@ public class BuildAstVisitor extends ArithmeticBaseVisitor<ExpressionNode> {
 						} 
 					}
 			
-					
 					if (appliedRule.conditions != null) {
 						ExpressionNode conditionsNode = new BuildConditionsVisitor(appliedRule.variables)
 								.visitRuleConditions(appliedRule.conditions);
@@ -162,19 +160,17 @@ public class BuildAstVisitor extends ArithmeticBaseVisitor<ExpressionNode> {
 
 		}
 
-	
-	public boolean validateArguments(EvaluateTree argumentEvaluator) {
+	public boolean argumentsValid(EvaluateTree argumentEvaluator) {
 		ArrayList<String> vars = argumentEvaluator.variables;
 		ArrayList<ExpressionNode> args  = argumentEvaluator.arguments;
 		for (int i = 0 ; i < vars.size() ; i++) {
 			if (i != vars.indexOf(vars.get(i))) {
-				if (argumentEvaluator.Visit(args.get(i), args.get(vars.indexOf(vars.get(i))))) {
+				if (!(argumentEvaluator.Visit(args.get(i), args.get(vars.indexOf(vars.get(i)))))) {
 					return false;
 				}
 			}
 		}
 		return true;
-		
 	}
 	
 }
