@@ -2,6 +2,10 @@ package expression;
 
 import java.util.LinkedHashMap;
 
+import com.sun.corba.se.impl.orbutil.graph.Node;
+
+import Conditions.ConditionsLexer;
+
 // Could likely split the AstVisitor into two visitors, one for the expression only nodes, and one for conditionnodes
 // Assuming I don't need them all for the is_literal() implementation
 
@@ -9,7 +13,7 @@ public class EvaluateConditionsVisitor extends AstVisitor<Boolean> {
 
 	LinkedHashMap<String, ExpressionNode> variables;
 	ConditionFunctionEvaluator conditionFunctions;
-	
+
 	public EvaluateConditionsVisitor(LinkedHashMap<String, ExpressionNode> variables) {
 		this.variables = variables;
 		this.conditionFunctions = new ConditionFunctionEvaluator(this.variables);
@@ -61,7 +65,8 @@ public class EvaluateConditionsVisitor extends AstVisitor<Boolean> {
 
 		// Will need to outsource this method to handle < , > , == in switch statement
 
-		boolean relopResult = calculateRelop(node.left, node.right, node.relop);
+		//boolean relopResult = calculateRelop(node.left, node.right, node.relop);
+		boolean relopResult = calculateRelop(node);
 		return relopResult;
 	}
 
@@ -86,42 +91,45 @@ public class EvaluateConditionsVisitor extends AstVisitor<Boolean> {
 		return null;
 	}
 
-	public boolean calculateRelop(ExpressionNode left, ExpressionNode right, String relop) {
+	//public boolean calculateRelop(ExpressionNode left, ExpressionNode right, String relop) {
+	public boolean calculateRelop(RelopNode relopNode) {
 		NumberNode l;
 		NumberNode r;
-		
+
 		EvaluateTree treeMatcher = new EvaluateTree();
-		
-		if (relop.equals("==")) {
+
+		if (relopNode.relop.equals("==")) {
 			System.out.println("Eval ==");
-			return treeMatcher.Visit(left, right);
-		} else if (relop.equals("!=")) {
-			return !(treeMatcher.Visit(left, right));
-		}
-			
-		// Throw exception if left, right are not instances of ruleVariableNode or NumberNode
-		
-		
-		if (left instanceof RuleVariableNode) {
-			//if (this.variables.get(((RuleVariableNode) left).getValue()) instanceof NumberNode) {
-				l = (NumberNode) this.variables.get(((RuleVariableNode) left).toString());
-			//}
-		} else {
-			l = (NumberNode) left;
-		}
-		if (right instanceof RuleVariableNode) {
-			//if (this.variables.get(((RuleVariableNode) left).getValue()) instanceof NumberNode) {
-				r = (NumberNode) this.variables.get(((RuleVariableNode) right).toString());
-			//}
-		} else {
-			r = (NumberNode) right;
+			return treeMatcher.Visit(relopNode.left, relopNode.right);
+		} else if (relopNode.equals("!=")) {
+			return !(treeMatcher.Visit(relopNode.left, relopNode.right));
 		}
 
+		// Throw exception if left, right are not instances of ruleVariableNode or
+		// NumberNode
+
+		if (relopNode.left instanceof RuleVariableNode) {
+			// if (this.variables.get(((RuleVariableNode) left).getValue()) instanceof
+			// NumberNode) {
+			l = (NumberNode) this.variables.get(((RuleVariableNode) relopNode.left).toString());
+			// }
+		} else {
+			l = (NumberNode) relopNode.left;
+		}
+		if (relopNode.right instanceof RuleVariableNode) {
+			// if (this.variables.get(((RuleVariableNode) left).getValue()) instanceof
+			// NumberNode) {
+			r = (NumberNode) this.variables.get(((RuleVariableNode) relopNode.right).toString());
+			// }
+		} else {
+			r = (NumberNode) relopNode.right;
+		}
+		
 		boolean relopResult = false;
 		// Use Constants for the reloperators
-		switch (relop) {
+		switch (relopNode.relop) {
 
-		case "<":
+		case "<" + ConditionsLexer.RELOP_GT:
 			relopResult = l.getValue() < r.getValue();
 			break;
 		case ">":

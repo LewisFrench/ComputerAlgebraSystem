@@ -126,7 +126,7 @@ public class BuildAstVisitor extends ArithmeticBaseVisitor<ExpressionNode> {
 		Rule appliedRule = null;
 		EvaluateTree argumentEvaluator = new EvaluateTree();
 		FunctionNode f = new FunctionNode(context.func.getText(), arguments);
-		
+
 		if (rules != null) {
 			for (Rule r : rules) {
 				conditionsHold = false;
@@ -140,9 +140,9 @@ public class BuildAstVisitor extends ArithmeticBaseVisitor<ExpressionNode> {
 						if (appliedRule.variables.get(key) == null) {
 							appliedRule.variables.put(key, argumentEvaluator.arguments.get(0));
 							argumentEvaluator.arguments.remove(0);
-						} 
+						}
 					}
-			
+
 					if (appliedRule.conditions != null) {
 						ExpressionNode conditionsNode = new BuildConditionsVisitor(appliedRule.variables)
 								.visitRuleConditions(appliedRule.conditions);
@@ -158,12 +158,12 @@ public class BuildAstVisitor extends ArithmeticBaseVisitor<ExpressionNode> {
 		}
 		return f;
 
-		}
+	}
 
 	public boolean argumentsValid(EvaluateTree argumentEvaluator) {
 		ArrayList<String> vars = argumentEvaluator.variables;
-		ArrayList<ExpressionNode> args  = argumentEvaluator.arguments;
-		for (int i = 0 ; i < vars.size() ; i++) {
+		ArrayList<ExpressionNode> args = argumentEvaluator.arguments;
+		for (int i = 0; i < vars.size(); i++) {
 			if (i != vars.indexOf(vars.get(i))) {
 				if (!(argumentEvaluator.Visit(args.get(i), args.get(vars.indexOf(vars.get(i)))))) {
 					return false;
@@ -172,5 +172,5 @@ public class BuildAstVisitor extends ArithmeticBaseVisitor<ExpressionNode> {
 		}
 		return true;
 	}
-	
+
 }

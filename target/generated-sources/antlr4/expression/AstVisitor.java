@@ -8,7 +8,6 @@ abstract class AstVisitor<T>
     public abstract T Visit(DivisionNode node);
     public abstract T Visit(NumberNode node);
     public abstract T Visit(UnaryNode node); 
-    
     public abstract T Visit(FunctionNode node);
     public abstract T Visit(RuleVariableNode node);
     public abstract T Visit(VariableNode node);

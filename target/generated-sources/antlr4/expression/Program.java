@@ -30,22 +30,21 @@ public class Program {
 
 	public static void main(String[] args) {
 
-		//String[] strRules = { "d($A) = 1.01", "d($A + $B) = d($A) + d($B)"  };
-		
-		//String[] strRules = { "d($A + $B) = d($A) + d($B)"  };
-		//String[] strRules = {"d(ln($x)) = d($x) + $x"};
-		String[] strRules = {"func($x, $y) = $x"};
-		//String[] strRules = {"fib(0) = 0" , "fib(1) = 1", "fib($n) = fib($n-1) + fib($n-2)"};
+		// String[] strRules = { "d($A) = 1.01", "d($A + $B) = d($A) + d($B)" };
 
-		
+		// String[] strRules = { "d($A + $B) = d($A) + d($B)" };
+		// String[] strRules = {"d(ln($x)) = d($x) + $x"};
+		String[] strRules = { "add(succ($x), $y) = succ(add($x, $y))", "add(0, $x) = $x" };
+		// String[] strRules = {"fib(0) = 0" , "fib(1) = 1", "fib($n) = fib($n-1) +
+		// fib($n-2)"};
 
-		//String[] strRules = {"d($n) = $n if x+2 != $n"};
-		
+		// String[] strRules = {"d($n) = $n if x+2 != $n"};
+
 		ArrayList<Rule> rules = new ArrayList<>();
 		String[] splitRule = new String[3];
-		
+
 		for (String rule : strRules) {
-			
+
 			splitRule = rule.split("(=|\\sif\\s)", 3);
 			System.out.println(Arrays.toString(splitRule));
 			ArithmeticParser lhsParser = getParser(splitRule[0]);
@@ -53,18 +52,18 @@ public class Program {
 			ArithmeticParser rhsParser = getParser(splitRule[1]);
 			CompileUnitContext rhsAST = rhsParser.compileUnit();
 
-			if (splitRule.length >2) {
+			if (splitRule.length > 2) {
 				ConditionsParser conditionsParser = getConditionsParser(splitRule[2]);
 				RuleConditionsContext conditionsAST = conditionsParser.ruleConditions();
 				rules.add(new Rule(lhsAST, rhsAST, conditionsAST));
 			} else {
 				rules.add(new Rule(lhsAST, rhsAST));
 			}
-			
+
 		}
-		
-		//String expression = "d(x+2)";
-		String expression = "func(1+a+b, 4)";
+
+		// String expression = "d(x+2)";
+		String expression = "add(succ(succ(0)), succ(succ(0)))";
 		ArithmeticParser parser = getParser(expression);
 		CompileUnitContext antlrAST = parser.compileUnit();
 
@@ -72,7 +71,6 @@ public class Program {
 		System.out.println(ast.toString() + "  " + ast.getClass());
 		String value = new EvaluateExpressionVisitor().Visit(ast);
 		System.out.println("\n\n- - - - Evaluated Value - - - -\n\n" + value);
-	
 
 	}
 
@@ -114,8 +112,9 @@ class Rule {
 		this.conditions = conditions;
 		this.variables = new LinkedHashMap<String, ExpressionNode>();
 		this.lhsNode = new BuildLhsVisitor(variables).visitCompileUnit(lhs);
-		//this.conditionsNode = new BuildConditionsVisitor()
+		// this.conditionsNode = new BuildConditionsVisitor()
 	}
+
 	public Rule(CompileUnitContext lhs, CompileUnitContext rhs) {
 		this.lhs = lhs;
 		this.rhs = rhs;
