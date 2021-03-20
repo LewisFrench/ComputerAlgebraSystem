@@ -9,7 +9,6 @@ abstract class AstComparator<T> {
 
 	public abstract T Visit(DivisionNode lhsNode, ExpressionNode node);
 
-	public abstract T Visit(NumberNode lhsNode, ExpressionNode node);
 
 	public abstract T Visit(UnaryNode lhsNode, ExpressionNode node);
 
@@ -18,6 +17,8 @@ abstract class AstComparator<T> {
 	public abstract T Visit(RuleVariableNode lhsNode, ExpressionNode node);
 
 	public abstract T Visit(VariableNode lhsNode, ExpressionNode node);
+	
+	public abstract T Visit(NumberNode lhsNode, ExpressionNode node);
 
 	// Can talk about how this could be more effieint in C#, see bookmark page
 	public T Visit(ExpressionNode lhsNode, ExpressionNode node) {

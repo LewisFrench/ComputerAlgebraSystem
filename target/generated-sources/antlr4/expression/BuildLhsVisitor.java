@@ -101,6 +101,12 @@ public class BuildLhsVisitor extends ArithmeticBaseVisitor<ExpressionNode> {
 		return new RuleVariableNode(context.value.getText());
 	}
 
+	
+	@Override
+	public ExpressionNode visitVar(ArithmeticParser.VarContext context) {
+		return new VariableNode(context.value.getText());
+	}
+
 	@Override
 	public ExpressionNode visitFunctionExpression(ArithmeticParser.FunctionExpressionContext context) {
 		ArrayList<ExpressionNode> arguments = new ArrayList<>();

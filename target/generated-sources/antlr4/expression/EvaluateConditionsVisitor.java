@@ -97,11 +97,11 @@ public class EvaluateConditionsVisitor extends AstVisitor<Boolean> {
 		NumberNode r;
 
 		EvaluateTree treeMatcher = new EvaluateTree();
-
+		System.out.println(relopNode.relop);
 		if (relopNode.relop.equals("==")) {
 			System.out.println("Eval ==");
 			return treeMatcher.Visit(relopNode.left, relopNode.right);
-		} else if (relopNode.equals("!=")) {
+		} else if (relopNode.relop.equals("!=")) {
 			return !(treeMatcher.Visit(relopNode.left, relopNode.right));
 		}
 
