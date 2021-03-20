@@ -33,12 +33,15 @@ public class BuildAstVisitor extends ArithmeticBaseVisitor<ExpressionNode> {
 
 	@Override
 	public ExpressionNode visitNum(ArithmeticParser.NumContext context) {
-		return new NumberNode(Double.valueOf(context.value.getText()));
+		NumberNode node = new NumberNode(Double.valueOf(context.value.getText()));
+		return rewrite(node);
 	}
 
 	@Override
 	public ExpressionNode visitVar(ArithmeticParser.VarContext context) {
-		return new VariableNode(context.getText());
+
+		VariableNode node = new VariableNode(context.getText());
+		return rewrite(node);
 	}
 
 	@Override
@@ -70,7 +73,7 @@ public class BuildAstVisitor extends ArithmeticBaseVisitor<ExpressionNode> {
 		default:
 			break;
 		}
-		return node;
+		return rewrite(node);
 	}
 
 	@Override
@@ -110,7 +113,7 @@ public class BuildAstVisitor extends ArithmeticBaseVisitor<ExpressionNode> {
 			return new NumberNode(((NumberNode) node.Left).getValue() - ((NumberNode) node.Right).getValue());
 		}
 
-		return node;
+		return rewrite(node);
 	}
 
 	@Override
@@ -122,15 +125,19 @@ public class BuildAstVisitor extends ArithmeticBaseVisitor<ExpressionNode> {
 		for (int i = 0; i < context.expression().size(); i++) {
 			arguments.add(visit(context.expression(i)));
 		}
+
+		FunctionNode node = new FunctionNode(context.func.getText(), arguments);
+		return rewrite(node);
+	}
+
+	public ExpressionNode rewrite(ExpressionNode node) {
 		boolean conditionsHold;
 		Rule appliedRule = null;
 		EvaluateTree argumentEvaluator = new EvaluateTree();
-		FunctionNode f = new FunctionNode(context.func.getText(), arguments);
-
 		if (rules != null) {
 			for (Rule r : rules) {
 				conditionsHold = false;
-				if (argumentEvaluator.Visit(r.lhsNode, f)) {
+				if (argumentEvaluator.Visit(r.lhsNode, node)) {
 					appliedRule = new Rule(r.lhs, r.rhs, r.conditions);
 
 					if (!(argumentsValid(argumentEvaluator))) {
@@ -156,8 +163,7 @@ public class BuildAstVisitor extends ArithmeticBaseVisitor<ExpressionNode> {
 				}
 			}
 		}
-		return f;
-
+		return node;
 	}
 
 	public boolean argumentsValid(EvaluateTree argumentEvaluator) {
