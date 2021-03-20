@@ -38,7 +38,7 @@ abstract class OperationNode extends ExpressionNode {
 
 	@Override
 	public boolean match(ExpressionNode node) {
-		
+
 		return node.getClass() == this.getClass();
 	}
 
@@ -53,7 +53,7 @@ class AdditionNode extends OperationNode {
 
 class SubtractionNode extends OperationNode {
 	public String toString() {
-		return ( getLeft().toString() + " - " + getRight().toString());
+		return (getLeft().toString() + " - " + getRight().toString());
 	}
 }
 
@@ -65,7 +65,7 @@ class MultiplicationNode extends OperationNode {
 
 class DivisionNode extends OperationNode {
 	public String toString() {
-		return "Division";//(getLeft().toString() + " / " + getRight().toString());
+		return "Division";// (getLeft().toString() + " / " + getRight().toString());
 	}
 }
 
@@ -100,7 +100,7 @@ class FunctionNode extends ExpressionNode {
 	}
 
 	public String toString() {
-		return (this.function +this.arguments.toString());
+		return (this.function + this.arguments.toString());
 	}
 
 	@Override
@@ -147,6 +147,7 @@ class NumberNode extends ExpressionNode {
 
 class VariableNode extends ExpressionNode {
 	public String value;
+
 	public VariableNode(String value) {
 		this.value = value;
 	}
@@ -158,10 +159,11 @@ class VariableNode extends ExpressionNode {
 	public void setValue(String value) {
 		this.value = value;
 	}
-	
+
 	public String toString() {
 		return this.getValue();
 	}
+
 	@Override
 	public boolean match(ExpressionNode node) {
 
@@ -185,7 +187,7 @@ class RuleVariableNode extends ExpressionNode {
 	}
 
 	public String toString() {
-		return "$"+this.value;
+		return "$" + this.value;
 	}
 
 	public String getValue() {
@@ -201,12 +203,11 @@ class RuleVariableNode extends ExpressionNode {
 		System.out.println("matching " + this.toString() + " to " + node.toString());
 		if (node.getClass() == this.getClass()) {
 			return this.getValue() == ((RuleVariableNode) node).getValue();
-		
+
 		} else {
-			//System.out.println(this.getValue() + "  =  " + node.toString());
+			// System.out.println(this.getValue() + " = " + node.toString());
 			return true;
 		}
-		
 
 	}
 	// Method to replace value with number ?
@@ -224,19 +225,17 @@ class ConditionOperationNode extends ExpressionNode {
 
 	ExpressionNode left;
 	ExpressionNode right;
-	
-	
+
 	@Override
 	boolean match(ExpressionNode node) {
 		// TODO Auto-generated method stub
 		return false;
 	}
-	
+
 }
 
 class ConditionAndNode extends ConditionOperationNode {
-	
-	
+
 	public String toString() {
 		return this.left.toString() + " & " + this.right.toString();
 	}
@@ -247,7 +246,6 @@ class ConditionOrNode extends ConditionOperationNode {
 		return this.left.toString() + " | " + this.right.toString();
 	}
 }
-
 
 class RelopNode extends ExpressionNode {
 	ExpressionNode left;
@@ -268,7 +266,6 @@ class RelopNode extends ExpressionNode {
 	public boolean match(ExpressionNode node) {
 		return true;
 	}
-
 }
 
 class ConditionFunctionNode extends ExpressionNode {
@@ -284,7 +281,6 @@ class ConditionFunctionNode extends ExpressionNode {
 	public boolean match(ExpressionNode node) {
 		return true;
 	}
-
 }
 
 class NotNode extends ExpressionNode {
@@ -299,7 +295,6 @@ class NotNode extends ExpressionNode {
 	boolean match(ExpressionNode node) {
 		return true;
 	}
-
 }
 
 class ConditionParentheticalNode extends ExpressionNode {
@@ -309,5 +304,5 @@ class ConditionParentheticalNode extends ExpressionNode {
 		// TODO Auto-generated method stub
 		return false;
 	}
-	
+
 }

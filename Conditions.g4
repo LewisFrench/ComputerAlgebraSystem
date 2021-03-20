@@ -8,8 +8,8 @@ condition
 	: left = condition op = (OP_AND | OP_OR) right = condition #ConditionOperation
 	| LPAREN condition RPAREN #ConditionParenthetical
 	|  OP_NOT  LPAREN  value = condition RPAREN #Not
-    |  left = condExpr relop=(RELOP_EQ | RELOP_NEQ | RELOP_GT | RELOP_GTE | RELOP_LT | RELOP_LTE) right =condExpr  #Relop
-	| function = VARIABLE LPAREN arguments=condExpr ( ',' condExpr)* RPAREN #Function
+    |  left = condExpr relop=(RELOP_EQ | RELOP_NEQ | RELOP_GT | RELOP_GTE | RELOP_LT | RELOP_LTE) right =condExpr  #ConditionRelop
+	| function = VARIABLE LPAREN arguments=condExpr ( ',' condExpr)* RPAREN #ConditionFunction
 	;
 
 condExpr
