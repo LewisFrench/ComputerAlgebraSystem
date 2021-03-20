@@ -2,14 +2,19 @@ package expression;
 
 import java.util.LinkedHashMap;
 
+import com.sun.corba.se.impl.orbutil.graph.Node;
+
+import Conditions.ConditionsLexer;
+
+// Could likely split the AstVisitor into two visitors, one for the expression only nodes, and one for conditionnodes
+// Assuming I don't need them all for the is_literal() implementation
+
 public class EvaluateConditionsVisitor extends AstVisitor<Boolean> {
 
 	LinkedHashMap<String, ExpressionNode> variables;
 	ConditionFunctionEvaluator conditionFunctions;
 
 	public EvaluateConditionsVisitor(LinkedHashMap<String, ExpressionNode> variables) {
-		// this.variables = new LinkedHashMap<String, ExpressionNode>();
-		// this.variables.put("$n", new NumberNode(3));
 		this.variables = variables;
 		this.conditionFunctions = new ConditionFunctionEvaluator(this.variables);
 	}
@@ -53,21 +58,15 @@ public class EvaluateConditionsVisitor extends AstVisitor<Boolean> {
 	@Override
 	public Boolean Visit(RelopNode node) {
 
-		System.out.println("VISITING RELOP EVALUATOR");
-		System.out.println(node.left.toString() + node.relop + node.right.toString());
-		System.out.println(this.variables);
-
 		// Interesting talking point: if the variable in the thing isn't comparable
 		// (e.g. (x^2) > 1) then do I return true or false?
 
 		// Current solution is ensuring that the value will be a number
-		System.out.println(
-				"\nRelop\nVariable : " + variables.get(node.left.toString()) + "\nNumber : " + node.right.toString());
+
 		// Will need to outsource this method to handle < , > , == in switch statement
 
-		System.out.println("Visited Relop :  " + node.left.toString() + " " + node.relop + " " + node.right.toString());
-		boolean relopResult = calculateRelop(node.left, node.right, node.relop);
-		System.out.println("Relop Result " + relopResult);
+		//boolean relopResult = calculateRelop(node.left, node.right, node.relop);
+		boolean relopResult = calculateRelop(node);
 		return relopResult;
 	}
 
@@ -80,6 +79,9 @@ public class EvaluateConditionsVisitor extends AstVisitor<Boolean> {
 	@Override
 	public Boolean Visit(RuleVariableNode node) {
 		// TODO Auto-generated method stub
+		if (this.variables.get(node.toString()) != null) {
+
+		}
 		return null;
 	}
 
@@ -89,36 +91,61 @@ public class EvaluateConditionsVisitor extends AstVisitor<Boolean> {
 		return null;
 	}
 
-	public boolean calculateRelop(ExpressionNode left, ExpressionNode right, String relop) {
+	//public boolean calculateRelop(ExpressionNode left, ExpressionNode right, String relop) {
+	public boolean calculateRelop(RelopNode relopNode) {
 		NumberNode l;
 		NumberNode r;
-		if (left instanceof RuleVariableNode) {
-			System.out.println("Left is a rulevariablenode");
-			l = (NumberNode) this.variables.get(((RuleVariableNode) left).getValue());
-		} else {
-			System.out.println("Left is a NumberNode");
-			l = (NumberNode) left;
-		}
-		if (right instanceof RuleVariableNode) {
-			System.out.println("Right is a rulevariablenode");
-			r = (NumberNode) this.variables.get(((RuleVariableNode) right).getValue());
-		} else {
-			System.out.println("Right is a NumberNode");
-			r = (NumberNode) right;
+
+		EvaluateTree treeMatcher = new EvaluateTree();
+		System.out.println(relopNode.relop);
+		if (relopNode.relop.equals("==")) {
+			System.out.println("Eval ==");
+			return treeMatcher.Visit(relopNode.left, relopNode.right);
+		} else if (relopNode.relop.equals("!=")) {
+			return !(treeMatcher.Visit(relopNode.left, relopNode.right));
 		}
 
+		// Throw exception if left, right are not instances of ruleVariableNode or
+		// NumberNode
+
+		if (relopNode.left instanceof RuleVariableNode) {
+			// if (this.variables.get(((RuleVariableNode) left).getValue()) instanceof
+			// NumberNode) {
+			l = (NumberNode) this.variables.get(((RuleVariableNode) relopNode.left).toString());
+			// }
+		} else {
+			l = (NumberNode) relopNode.left;
+		}
+		if (relopNode.right instanceof RuleVariableNode) {
+			// if (this.variables.get(((RuleVariableNode) left).getValue()) instanceof
+			// NumberNode) {
+			r = (NumberNode) this.variables.get(((RuleVariableNode) relopNode.right).toString());
+			// }
+		} else {
+			r = (NumberNode) relopNode.right;
+		}
+		
 		boolean relopResult = false;
 		// Use Constants for the reloperators
-		switch (relop) {
-		case "<":
+		switch (relopNode.relop) {
+
+		case "<" + ConditionsLexer.RELOP_GT:
 			relopResult = l.getValue() < r.getValue();
 			break;
 		case ">":
 			relopResult = l.getValue() > r.getValue();
 			break;
-		case "==":
-			relopResult = l.getValue() == r.getValue();
+//		case "==":
+//			relopResult = l.getValue() == r.getValue();
+//			break;
+//		case "!=":
+//			relopResult = l.getValue() != r.getValue();
+//			break;
+		case "<=":
+			relopResult = l.getValue() <= r.getValue();
 			break;
+		case ">=":
+			relopResult = l.getValue() >= r.getValue();
 		default:
 			// Exception for the weird case
 		}
@@ -127,17 +154,22 @@ public class EvaluateConditionsVisitor extends AstVisitor<Boolean> {
 
 	@Override
 	public Boolean Visit(ConditionFunctionNode node) {
-		System.out.println("Evaluating Function " + node.functionName);
-		boolean test = this.conditionFunctions.determineFunction(node.functionName, node.argument);
-		System.out.println("Function holds " + test);
-		return test;
-
+		return this.conditionFunctions.determineFunction(node.functionName, node.arguments);
 	}
 
 	@Override
 	public Boolean Visit(NotNode node) {
-		System.out.println("Evaluating NOT");
 		return !(Visit(node.innerNode));
+	}
+
+	@Override
+	public Boolean Visit(ConditionAndNode node) {
+		return (Visit(node.left) && Visit(node.right));
+	}
+
+	@Override
+	public Boolean Visit(ConditionOrNode node) {
+		return (Visit(node.left) || Visit(node.right));
 	}
 
 }

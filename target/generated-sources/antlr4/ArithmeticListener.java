@@ -53,6 +53,18 @@ public interface ArithmeticListener extends ParseTreeListener {
 	 */
 	void exitNum(ArithmeticParser.NumContext ctx);
 	/**
+	 * Enter a parse tree produced by the {@code Pow}
+	 * labeled alternative in {@link ArithmeticParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterPow(ArithmeticParser.PowContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code Pow}
+	 * labeled alternative in {@link ArithmeticParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitPow(ArithmeticParser.PowContext ctx);
+	/**
 	 * Enter a parse tree produced by the {@code UnaryExpression}
 	 * labeled alternative in {@link ArithmeticParser#expression}.
 	 * @param ctx the parse tree
@@ -76,18 +88,6 @@ public interface ArithmeticListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitParenthetical(ArithmeticParser.ParentheticalContext ctx);
-	/**
-	 * Enter a parse tree produced by the {@code Exponential}
-	 * labeled alternative in {@link ArithmeticParser#expression}.
-	 * @param ctx the parse tree
-	 */
-	void enterExponential(ArithmeticParser.ExponentialContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code Exponential}
-	 * labeled alternative in {@link ArithmeticParser#expression}.
-	 * @param ctx the parse tree
-	 */
-	void exitExponential(ArithmeticParser.ExponentialContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code Operation}
 	 * labeled alternative in {@link ArithmeticParser#expression}.

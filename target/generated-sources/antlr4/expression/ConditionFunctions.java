@@ -1,5 +1,6 @@
 package expression;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
 class ConditionFunctionEvaluator {
@@ -10,62 +11,118 @@ class ConditionFunctionEvaluator {
 		this.variables = variables;
 	}
 
-// Pass in ConditionFunctionNode context.function , visit(context.condition()) or something
-	public boolean determineFunction(String functionName, ExpressionNode node) {
-		boolean functionResult = false;
-
+	public boolean determineFunction(String functionName, ArrayList<ExpressionNode> arguments) {
 		ConditionFunction conditionFunction = null;
 		switch (functionName) {
-		case "is_Integer":
-			// functionResult = new is_Integer().evaluateConditionFunction(node);
-			conditionFunction = new is_Integer();
+		case "is_number":
+			conditionFunction = new is_number();
+			break;
+
+		case "is_literal":
+			conditionFunction = new is_literal();
+			break;
+
+		case "is_integer":
+			conditionFunction = new is_integer();
+			break;
+		case "depends":
+			conditionFunction = new depends();
 			break;
 		default:
-			System.out.println("Entered condition function has no matched - please check the entered name");
+			System.out.println("Entered condition function has no match - please check the entered name");
 		}
 
-		functionResult = conditionFunction.evaluateConditionFunction(node, this.variables);
-
-		return functionResult;
+		if (conditionFunction != null) {
+			return conditionFunction.function(this.transformRuleVariableArguments(arguments));
+		}
+		return false;
 	}
+	public ArrayList<ExpressionNode> transformRuleVariableArguments(ArrayList<ExpressionNode> arguments){
+		ArrayList<ExpressionNode> transformedArguments = new ArrayList<>();
+		for (ExpressionNode argument: arguments) {
+			if (argument instanceof RuleVariableNode) {
+				if (this.variables.get(((RuleVariableNode)argument).toString()) != null){
+					transformedArguments.add(this.variables.get(((RuleVariableNode)argument).toString()));
+				} else {
+					transformedArguments.add(argument);
+				}
+				
+			} else {
+				transformedArguments.add(argument);
+			}
+		}
+		return transformedArguments;
+	}
+
 }
+
+
+
+
+/**
+ * 
+ * 
+ * 
+ * @author lewis
+ *
+ */
 
 abstract class ConditionFunction {
 	String functionDescription;
 
-	public boolean evaluateConditionFunction(ExpressionNode node, LinkedHashMap<String, ExpressionNode> variables) {
-		if (node instanceof NumberNode) {
-			return this.function(((NumberNode) node).value);
-		} else if (node instanceof RuleVariableNode) {
-			ExpressionNode n = variables.get(((RuleVariableNode) node).value);
-			if (n instanceof NumberNode) {
-				return this.function(((NumberNode) n).value);
-			} else {
-				System.out.println("ERROR - Condition Function didn't process node of correct type");
-				return false;
-			}
-			// return this.function((NumberNode)
-			// variables.get(((RuleVariableNode)node).value));
-		} else {
-			System.out.println("ERROR - Condition Function didn't process node of correct type");
-			return false;
-		}
-
-	}
-
-	abstract boolean function(Double value);
+	abstract boolean function(ArrayList<ExpressionNode> arguments);
 }
 
-// is_integer($n)
-
-class is_Integer extends ConditionFunction {
-
-	String functionDescription = ("Determines if the argument entered is an integer");
+class is_literal extends ConditionFunction {
+	String functionDescription = ("is_literal($n)  :  Determines if the argument entered is an variable");
 
 	@Override
-	boolean function(Double value) {
-		System.out.println("CHECKING IS_INTEGER(" + value + ")");
-		return (value == Math.floor(value));
+	boolean function(ArrayList<ExpressionNode> arguments) {
+		if (arguments.size() == 1) {
+			return (arguments.get(0) instanceof VariableNode);
+		}
+		return false;
+	}
+}
+
+class is_number extends ConditionFunction {
+	String functionDescription = ("is_number($n)  :  Determines if the argument entered is an number");
+
+	@Override
+	boolean function(ArrayList<ExpressionNode> arguments) {
+		if (arguments.size() == 1) {
+			return (arguments.get(0) instanceof NumberNode);
+		}
+		return false;
+	}
+}
+
+class is_integer extends ConditionFunction {
+
+	String functionDescription = ("is_integer($n)  :  Determines if the argument entered is an integer");
+
+	@Override
+	boolean function(ArrayList<ExpressionNode> arguments) {
+		if (arguments.size() == 1) {
+			if (arguments.get(0) instanceof NumberNode) {
+				return (((NumberNode) arguments.get(0)).getValue() == Math.floor(((NumberNode) arguments.get(0)).getValue()));
+			} else {
+				return false;
+			}
+		}
+		return false;
 	}
 
+}
+
+class depends extends ConditionFunction {
+	String functionDescription = "depends($A, $b)  :  Determines if term $A contains any instance of term $b";
+	
+	@Override
+	boolean function(ArrayList<ExpressionNode> arguments) {
+		if (arguments.size() == 2) {
+			return new DependsEvaluator(arguments.get(1)).Visit(arguments.get(0));
+		}
+		return false; // Throw Exception
+	}
 }

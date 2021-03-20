@@ -1,5 +1,4 @@
 package Arithmetic;
-
 // Generated from Arithmetic.g4 by ANTLR 4.9.1
 
 import org.antlr.v4.runtime.ParserRuleContext;

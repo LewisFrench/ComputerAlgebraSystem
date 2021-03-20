@@ -37,6 +37,13 @@ public interface ArithmeticVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitNum(ArithmeticParser.NumContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code Pow}
+	 * labeled alternative in {@link ArithmeticParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitPow(ArithmeticParser.PowContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code UnaryExpression}
 	 * labeled alternative in {@link ArithmeticParser#expression}.
 	 * @param ctx the parse tree
@@ -50,13 +57,6 @@ public interface ArithmeticVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitParenthetical(ArithmeticParser.ParentheticalContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code Exponential}
-	 * labeled alternative in {@link ArithmeticParser#expression}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitExponential(ArithmeticParser.ExponentialContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code Operation}
 	 * labeled alternative in {@link ArithmeticParser#expression}.

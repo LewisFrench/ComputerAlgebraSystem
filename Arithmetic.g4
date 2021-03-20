@@ -4,23 +4,21 @@ compileUnit : expression;
 
 expression
    :  func = VARIABLE LPAREN  arguments =  expression( ',' expression)* RPAREN #FunctionExpression
-   |  base = expression OP_EXP exponent = expression #Exponential
    |  op = (OP_ADD | OP_SUB) expression #UnaryExpression
    |  LPAREN expression RPAREN #Parenthetical
+   |  left = expression  OP_POW right = expression #Pow
    |  left = expression  op = (OP_MUL | OP_DIV) right = expression #Operation
    |  left = expression  op = (OP_ADD | OP_SUB) right = expression #Operation
    |  value = VARIABLE #Var
-   |  '$' value=VARIABLE #RuleVariable
+   |   '$' value = VARIABLE #RuleVariable
    |  value = SCIENTIFIC_NUMBER #Num
    ;
    
-  
-   
-OP_EXP: '^';
 OP_ADD: '+';
 OP_SUB: '-';
 OP_MUL: '*';
 OP_DIV: '/';
+OP_POW: '^';
 
 RELOP_EQ: '=';
 RELOP_LT: '<';
@@ -40,7 +38,7 @@ fragment VALID_ID_CHAR
 
 //The NUMBER part gets its potential sign from "(PLUS | MINUS)* atom" in the expression rule
 SCIENTIFIC_NUMBER
-   : NUMBER (E SIGN? UNSIGNED_INTEGER)?
+   : NUMBER 
    ;
 
 fragment NUMBER
@@ -72,9 +70,6 @@ POINT
    : '.'
    ;
 
-POW
-   : '^'
-   ;
 
 WS
    : [ \r\n\t] + -> skip

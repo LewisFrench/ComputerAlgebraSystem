@@ -30,55 +30,49 @@ public class BuildLhsVisitor extends ArithmeticBaseVisitor<ExpressionNode> {
 	public ExpressionNode visitParenthetical(ArithmeticParser.ParentheticalContext context) {
 		return visit(context.expression());
 	}
-	
+
 	@Override
 	public ExpressionNode visitOperation(ArithmeticParser.OperationContext context) {
-	
+
 		OperationNode node = null;
-		NumberNode calculation = null;
 		switch (context.op.getType()) {
 		case ArithmeticLexer.OP_ADD:
-			System.out.println("Addition: ");
 			node = new AdditionNode();
 
 			break;
 
 		case ArithmeticLexer.OP_SUB:
-			System.out.println("Subtractison: ");
 			node = new SubtractionNode();
 
 			break;
 
 		case ArithmeticLexer.OP_MUL:
-			System.out.println("Multiplication: ");
 			node = new MultiplicationNode();
 			break;
 
 		case ArithmeticLexer.OP_DIV:
-			System.out.println("Division: ");
 			node = new DivisionNode();
 			break;
 
 		default:
 			System.out.println("FAIL");
 		}
-		
+
 		node.Left = visit(context.left);
 
 		node.Right = visit(context.right);
 
-		/*if (node.Left instanceof NumberNode && node.Right instanceof NumberNode && node instanceof AdditionNode) {
-			return new NumberNode(((NumberNode) node.Left).getValue() + ((NumberNode) node.Right).getValue());
-		} else if (node.Left instanceof NumberNode && node.Right instanceof NumberNode
-				&& node instanceof SubtractionNode) {
-			return new NumberNode(((NumberNode) node.Left).getValue() - ((NumberNode) node.Right).getValue());
-		}*/
+		/*
+		 * if (node.Left instanceof NumberNode && node.Right instanceof NumberNode &&
+		 * node instanceof AdditionNode) { return new NumberNode(((NumberNode)
+		 * node.Left).getValue() + ((NumberNode) node.Right).getValue()); } else if
+		 * (node.Left instanceof NumberNode && node.Right instanceof NumberNode && node
+		 * instanceof SubtractionNode) { return new NumberNode(((NumberNode)
+		 * node.Left).getValue() - ((NumberNode) node.Right).getValue()); }
+		 */
 
 		return node;
 	}
-		
-		
-	
 
 	@Override
 	public ExpressionNode visitUnaryExpression(ArithmeticParser.UnaryExpressionContext context) {
@@ -86,7 +80,6 @@ public class BuildLhsVisitor extends ArithmeticBaseVisitor<ExpressionNode> {
 		ExpressionNode node = null;
 		switch (context.op.getType()) {
 		case ArithmeticLexer.OP_ADD:
-			System.out.println("Positive Unary");
 			node = visit(context.expression());
 			break;
 
@@ -106,6 +99,12 @@ public class BuildLhsVisitor extends ArithmeticBaseVisitor<ExpressionNode> {
 		variables.put(context.getText(), null);
 
 		return new RuleVariableNode(context.value.getText());
+	}
+
+	
+	@Override
+	public ExpressionNode visitVar(ArithmeticParser.VarContext context) {
+		return new VariableNode(context.value.getText());
 	}
 
 	@Override

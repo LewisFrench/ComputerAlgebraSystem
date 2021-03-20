@@ -16,12 +16,26 @@ public interface ConditionsVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitRuleConditions(ConditionsParser.RuleConditionsContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code Function}
+	 * Visit a parse tree produced by the {@code ConditionRelop}
 	 * labeled alternative in {@link ConditionsParser#condition}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitFunction(ConditionsParser.FunctionContext ctx);
+	T visitConditionRelop(ConditionsParser.ConditionRelopContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code ConditionFunction}
+	 * labeled alternative in {@link ConditionsParser#condition}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitConditionFunction(ConditionsParser.ConditionFunctionContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code ConditionParenthetical}
+	 * labeled alternative in {@link ConditionsParser#condition}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitConditionParenthetical(ConditionsParser.ConditionParentheticalContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code Not}
 	 * labeled alternative in {@link ConditionsParser#condition}.
@@ -30,38 +44,79 @@ public interface ConditionsVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitNot(ConditionsParser.NotContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code Relop}
+	 * Visit a parse tree produced by the {@code ConditionOperation}
 	 * labeled alternative in {@link ConditionsParser#condition}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitRelop(ConditionsParser.RelopContext ctx);
+	T visitConditionOperation(ConditionsParser.ConditionOperationContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code OrCondition}
-	 * labeled alternative in {@link ConditionsParser#condition}.
+	 * Visit a parse tree produced by the {@code expr}
+	 * labeled alternative in {@link ConditionsParser#condExpr}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitOrCondition(ConditionsParser.OrConditionContext ctx);
+	T visitExpr(ConditionsParser.ExprContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code AndCondition}
-	 * labeled alternative in {@link ConditionsParser#condition}.
+	 * Visit a parse tree produced by {@link ConditionsParser#compileUnit}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitAndCondition(ConditionsParser.AndConditionContext ctx);
+	T visitCompileUnit(ConditionsParser.CompileUnitContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code Variable}
-	 * labeled alternative in {@link ConditionsParser#var}.
+	 * Visit a parse tree produced by the {@code FunctionExpression}
+	 * labeled alternative in {@link ConditionsParser#expression}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitVariable(ConditionsParser.VariableContext ctx);
+	T visitFunctionExpression(ConditionsParser.FunctionExpressionContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code Number}
-	 * labeled alternative in {@link ConditionsParser#var}.
+	 * Visit a parse tree produced by the {@code Var}
+	 * labeled alternative in {@link ConditionsParser#expression}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitNumber(ConditionsParser.NumberContext ctx);
+	T visitVar(ConditionsParser.VarContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code Num}
+	 * labeled alternative in {@link ConditionsParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitNum(ConditionsParser.NumContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code Pow}
+	 * labeled alternative in {@link ConditionsParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitPow(ConditionsParser.PowContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code UnaryExpression}
+	 * labeled alternative in {@link ConditionsParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitUnaryExpression(ConditionsParser.UnaryExpressionContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code Parenthetical}
+	 * labeled alternative in {@link ConditionsParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitParenthetical(ConditionsParser.ParentheticalContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code Operation}
+	 * labeled alternative in {@link ConditionsParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitOperation(ConditionsParser.OperationContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code RuleVariable}
+	 * labeled alternative in {@link ConditionsParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitRuleVariable(ConditionsParser.RuleVariableContext ctx);
 }
