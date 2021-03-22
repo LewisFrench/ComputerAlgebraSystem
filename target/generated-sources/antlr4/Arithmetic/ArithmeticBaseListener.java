@@ -40,25 +40,25 @@ public class ArithmeticBaseListener implements ArithmeticListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterVar(ArithmeticParser.VarContext ctx) { }
+	@Override public void enterVariable(ArithmeticParser.VariableContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitVar(ArithmeticParser.VarContext ctx) { }
+	@Override public void exitVariable(ArithmeticParser.VariableContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterNum(ArithmeticParser.NumContext ctx) { }
+	@Override public void enterNumber(ArithmeticParser.NumberContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitNum(ArithmeticParser.NumContext ctx) { }
+	@Override public void exitNumber(ArithmeticParser.NumberContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -95,6 +95,18 @@ public class ArithmeticBaseListener implements ArithmeticListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitOperation(ArithmeticParser.OperationContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterPower(ArithmeticParser.PowerContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitPower(ArithmeticParser.PowerContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

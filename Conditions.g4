@@ -15,11 +15,12 @@ condition
 condExpr
    : expression #expr;
 
-RELOP_GT: '>';
-RELOP_LT: '<';
+
 RELOP_EQ: '==';
 RELOP_NEQ: '!=';
+RELOP_GT: '>';
 RELOP_GTE: '>=';
+RELOP_LT: '<';
 RELOP_LTE: '<=';
 
 OP_AND: '&';

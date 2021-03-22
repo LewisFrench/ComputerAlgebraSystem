@@ -32,13 +32,13 @@ public class BuildAstVisitor extends ArithmeticBaseVisitor<ExpressionNode> {
 	}
 
 	@Override
-	public ExpressionNode visitNum(ArithmeticParser.NumContext context) {
+	public ExpressionNode visitNumber(ArithmeticParser.NumberContext context) {
 		NumberNode node = new NumberNode(Double.valueOf(context.value.getText()));
 		return rewrite(node);
 	}
 
 	@Override
-	public ExpressionNode visitVar(ArithmeticParser.VarContext context) {
+	public ExpressionNode visitVariable(ArithmeticParser.VariableContext context) {
 
 		VariableNode node = new VariableNode(context.getText());
 		return rewrite(node);

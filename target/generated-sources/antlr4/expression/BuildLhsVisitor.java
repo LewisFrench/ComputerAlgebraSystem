@@ -21,7 +21,7 @@ public class BuildLhsVisitor extends ArithmeticBaseVisitor<ExpressionNode> {
 	}
 
 	@Override
-	public ExpressionNode visitNum(ArithmeticParser.NumContext context) {
+	public ExpressionNode visitNumber(ArithmeticParser.NumberContext context) {
 		this.variables.put(context.value.getText(), new NumberNode(Double.valueOf(context.value.getText())));
 		return new NumberNode(Double.valueOf(context.value.getText()));
 	}
@@ -103,7 +103,7 @@ public class BuildLhsVisitor extends ArithmeticBaseVisitor<ExpressionNode> {
 
 	
 	@Override
-	public ExpressionNode visitVar(ArithmeticParser.VarContext context) {
+	public ExpressionNode visitVariable(ArithmeticParser.VariableContext context) {
 		return new VariableNode(context.value.getText());
 	}
 
