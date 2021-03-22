@@ -250,16 +250,20 @@ class ConditionOrNode extends ConditionOperationNode {
 class RelopNode extends ExpressionNode {
 	ExpressionNode left;
 	ExpressionNode right;
-	String relop;
+	int relop;
+	String relopText;
+	
+	
 
-	public RelopNode(ExpressionNode left, ExpressionNode right, String relop) {
+	public RelopNode(ExpressionNode left, ExpressionNode right, int relop, String relopText) {
 		this.left = left;
 		this.right = right;
 		this.relop = relop;
+		this.relopText = relopText; 
 	}
 
 	public String toString() {
-		return left.toString() + relop + right.toString();
+		return left.toString() + relopText + right.toString();
 	}
 
 	@Override

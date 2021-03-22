@@ -139,17 +139,17 @@ public class BuildAstVisitor extends ArithmeticBaseVisitor<ExpressionNode> {
 				conditionsHold = false;
 				if (argumentEvaluator.Visit(r.lhsNode, node)) {
 					appliedRule = new Rule(r.lhs, r.rhs, r.conditions);
-
+					
 					if (!(argumentsValid(argumentEvaluator))) {
 						System.out.println("Error: Variables with the same identifiers must match");
 					}
+					// TODO : else { here so that arguments that don't match with the rule (with repeating argument variables)
 					for (String key : appliedRule.variables.keySet()) {
 						if (appliedRule.variables.get(key) == null) {
 							appliedRule.variables.put(key, argumentEvaluator.arguments.get(0));
 							argumentEvaluator.arguments.remove(0);
 						}
 					}
-
 					if (appliedRule.conditions != null) {
 						ExpressionNode conditionsNode = new BuildConditionsVisitor(appliedRule.variables)
 								.visitRuleConditions(appliedRule.conditions);
