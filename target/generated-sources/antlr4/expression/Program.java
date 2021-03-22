@@ -6,6 +6,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.Scanner;
 
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CharStreams;
@@ -22,9 +23,9 @@ public class Program {
 
 	public static void main(String[] args) {
 
-		ArrayList<String> strRules = new ArrayList<>();
 		
 		
+		ArrayList<String> strRules = new ArrayList<>();		
 		try {
 		Path path = Paths.get(args[0]);
 		Files.lines(path)
@@ -39,7 +40,7 @@ public class Program {
 		//System.out.println("HEY" + test.toString());
 		
 		//String[] strRules = { "d($A + $B) = d($A) + d($B)" };
-		System.out.println(args[0].toString());
+		//System.out.println(args[0].toString());
 		// String[] strRules = { "diff($A + $B, $x) = diff($A, $x) + diff($B, $x)" };
 		// String[] strRules = {"d(ln($x)) = d($x) + $x"};
 		//String[] strRules = { "add(succ($x), $y) = succ(add($x, $y))", "add(0, $x) = $x" };
@@ -52,7 +53,6 @@ public class Program {
 		for (String rule : strRules) {
 
 			splitRule = rule.split("(=|\\sif\\s)", 3);
-			//System.out.println(Arrays.toString(splitRule));
 			ArithmeticParser lhsParser = getParser(splitRule[0]);
 			CompileUnitContext lhsAST = lhsParser.compileUnit();
 			ArithmeticParser rhsParser = getParser(splitRule[1]);
@@ -67,15 +67,33 @@ public class Program {
 			}
 
 		}
-
-		String expression = "fib(10) + fib(9)";
-		//FOR SCREENSHOT System.out.println("Term: " + expression + "\nRewrite Process:\n");
-		ArithmeticParser parser = getParser(expression);
-		CompileUnitContext antlrAST = parser.compileUnit();
-
-		ExpressionNode ast = new BuildAstVisitor(rules, 0).visitCompileUnit(antlrAST);
-		String value = new EvaluateExpressionVisitor().Visit(ast);
-		System.out.println("\n- - - - Evaluated Value - - - -\n\n" + value);
+		System.out.println("Enter a term:\n");
+		Scanner scanner = new Scanner(System.in);
+		boolean userEnds = false;
+		while (!userEnds) {
+			String term = scanner.nextLine();
+			if (!(term.equals("end"))) {
+				System.out.println("\nTerm: " + term + "\nRewrite Process:\n");
+				ArithmeticParser parser = getParser(term);
+				CompileUnitContext antlrAST = parser.compileUnit();
+	
+				ExpressionNode ast = new BuildAstVisitor(rules, 0).visitCompileUnit(antlrAST);
+				String value = new EvaluateExpressionVisitor().Visit(ast);
+				System.out.println("\n- - - - Evaluated Value - - - -\n" + value+ "\n- - - - - - - - - - - - - - - -\n");
+			} else {
+				userEnds=true;
+			}
+		}
+		scanner.close();
+//		String expression = "diff(x+9, x)";
+//		System.out.println("\nTerm: " + expression + "\nRewrite Process:\n");
+//		ArithmeticParser parser = getParser(expression);
+//		CompileUnitContext antlrAST = parser.compileUnit();
+//
+//		ExpressionNode ast = new BuildAstVisitor(rules, 0).visitCompileUnit(antlrAST);
+//		System.out.println("\nNo more rewrite rules can be appled to term");
+//		String value = new EvaluateExpressionVisitor().Visit(ast);
+//		System.out.println("\n- - - - Evaluated Value - - - -\n\n" + value);
 
 	}
 

@@ -106,6 +106,8 @@ public class BuildAstVisitor extends ArithmeticBaseVisitor<ExpressionNode> {
 		node.Left = visit(context.left);
 		node.Right = visit(context.right);
 
+		
+		// maybe store rewrite node as a variable, and return it if the simplification evaluations below don't add up
 		if (node.Left instanceof NumberNode && node.Right instanceof NumberNode && node instanceof AdditionNode) {
 			return new NumberNode(((NumberNode) node.Left).getValue() + ((NumberNode) node.Right).getValue());
 		} else if (node.Left instanceof NumberNode && node.Right instanceof NumberNode
