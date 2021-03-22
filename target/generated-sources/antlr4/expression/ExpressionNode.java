@@ -1,14 +1,13 @@
 package expression;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 abstract class CompileUnitNode {
 	ExpressionNode expression;
 }
 
-abstract class ExpressionNode {
-	abstract boolean match(ExpressionNode node);
-}
+abstract class ExpressionNode { }
 
 abstract class OperationNode extends ExpressionNode {
 
@@ -36,12 +35,6 @@ abstract class OperationNode extends ExpressionNode {
 		Right = right;
 	}
 
-	@Override
-	public boolean match(ExpressionNode node) {
-
-		return node.getClass() == this.getClass();
-	}
-
 }
 
 class AdditionNode extends OperationNode {
@@ -65,7 +58,7 @@ class MultiplicationNode extends OperationNode {
 
 class DivisionNode extends OperationNode {
 	public String toString() {
-		return "Division";// (getLeft().toString() + " / " + getRight().toString());
+		return (getLeft().toString() + " / " + getRight().toString());
 	}
 }
 
@@ -78,11 +71,6 @@ class UnaryNode extends ExpressionNode {
 
 	public String toString() {
 		return "-" + this.innerNode.toString();
-	}
-
-	@Override
-	public boolean match(ExpressionNode node) {
-		return false;
 	}
 }
 
@@ -100,23 +88,7 @@ class FunctionNode extends ExpressionNode {
 	}
 
 	public String toString() {
-		return (this.function + this.arguments.toString());
-	}
-
-	@Override
-	public boolean match(ExpressionNode node) {
-		boolean match = false;
-		if (node.getClass() == this.getClass()) {
-			ArrayList<ExpressionNode> nodeArguments = ((FunctionNode) node).getArguments();
-			if (this.arguments.size() == nodeArguments.size() && this.function.equals(((FunctionNode) node).function)) {
-				for (int i = 0; i < this.arguments.size(); i++) {
-					if ((this.arguments.get(i).match(nodeArguments.get(i)))) {
-						match = true;
-					}
-				}
-			}
-		}
-		return match;
+		return this.function + Arrays.toString(this.arguments.toArray()).replace("[", "(").replace("]", ")");
 	}
 }
 
@@ -129,14 +101,6 @@ class NumberNode extends ExpressionNode {
 
 	public String toString() {
 		return String.valueOf(value);
-	}
-
-	@Override
-	public boolean match(ExpressionNode node) {
-		if (node.getClass() == this.getClass()) {
-			return ((NumberNode) node).getValue() == this.getValue();
-		}
-		return false;
 	}
 
 	public double getValue() {
@@ -164,19 +128,6 @@ class VariableNode extends ExpressionNode {
 		return this.getValue();
 	}
 
-	@Override
-	public boolean match(ExpressionNode node) {
-
-		if (node.getClass() == this.getClass()) {
-			return this.getValue() == ((VariableNode) node).getValue();
-
-			// Return true for all numberNodes
-		} else if (node.getClass() == new NumberNode(0).getClass()) {
-			return true;
-		} // Does this need to be true for other functionNodes, operation nodes, etc?
-
-		return false;
-	}
 }
 
 class RuleVariableNode extends ExpressionNode {
@@ -198,21 +149,7 @@ class RuleVariableNode extends ExpressionNode {
 		this.value = value;
 	}
 
-	@Override
-	public boolean match(ExpressionNode node) {
-		System.out.println("matching " + this.toString() + " to " + node.toString());
-		if (node.getClass() == this.getClass()) {
-			return this.getValue() == ((RuleVariableNode) node).getValue();
-
-		} else {
-			// System.out.println(this.getValue() + " = " + node.toString());
-			return true;
-		}
-
-	}
-	// Method to replace value with number ?
 }
-
 /*
  * 
  * 
@@ -225,12 +162,6 @@ class ConditionOperationNode extends ExpressionNode {
 
 	ExpressionNode left;
 	ExpressionNode right;
-
-	@Override
-	boolean match(ExpressionNode node) {
-		// TODO Auto-generated method stub
-		return false;
-	}
 
 }
 
@@ -265,11 +196,6 @@ class RelopNode extends ExpressionNode {
 	public String toString() {
 		return left.toString() + relopText + right.toString();
 	}
-
-	@Override
-	public boolean match(ExpressionNode node) {
-		return true;
-	}
 }
 
 class ConditionFunctionNode extends ExpressionNode {
@@ -280,11 +206,11 @@ class ConditionFunctionNode extends ExpressionNode {
 		this.functionName = functionName;
 		this.arguments = arguments;
 	}
-
-	@Override
-	public boolean match(ExpressionNode node) {
-		return true;
+	
+	public String toString() {
+		return this.functionName + Arrays.toString(this.arguments.toArray()).replace("[", "(").replace("]", ")");
 	}
+
 }
 
 class NotNode extends ExpressionNode {
@@ -294,19 +220,12 @@ class NotNode extends ExpressionNode {
 	public NotNode(ExpressionNode innerNode) {
 		this.innerNode = innerNode;
 	}
-
-	@Override
-	boolean match(ExpressionNode node) {
-		return true;
+	public String toString()  {
+		return "!" + this.innerNode.toString();
 	}
+
 }
 
 class ConditionParentheticalNode extends ExpressionNode {
-
-	@Override
-	boolean match(ExpressionNode node) {
-		// TODO Auto-generated method stub
-		return false;
-	}
 
 }

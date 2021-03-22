@@ -20,10 +20,10 @@ public class Program {
 
 		//String[] strRules = { "d($A + $B) = d($A) + d($B)" };
 
-		// String[] strRules = { "d($A + $B) = d($A) + d($B)" };
+		 String[] strRules = { "diff($A + $B, $x) = diff($A, $x) + diff($B, $x)" };
 		// String[] strRules = {"d(ln($x)) = d($x) + $x"};
 		//String[] strRules = { "add(succ($x), $y) = succ(add($x, $y))", "add(0, $x) = $x" };
-		String[] strRules = {"fib(0) = 0" , "fib(1) = 1", "fib($n) = fib($n-1) + fib($n-2) if $n>0"};
+		//String[] strRules = {"fib(0) = 0" , "fib(1) = 1", "fib($n) = fib($n-1) + fib($n-2) if $n>0"};
 
 		//String[] strRules = {"x = z" };
 
@@ -49,14 +49,15 @@ public class Program {
 
 		}
 
-		String expression = "fib(9) + fib(10)";
+		String expression = "diff(x+9, x)";
+		System.out.println("Term: " + expression + "\nRewrite Process:\n");
 		ArithmeticParser parser = getParser(expression);
 		CompileUnitContext antlrAST = parser.compileUnit();
 
 		ExpressionNode ast = new BuildAstVisitor(rules, 0).visitCompileUnit(antlrAST);
 		//System.out.println(ast.toString() + "  " + ast.getClass());
 		String value = new EvaluateExpressionVisitor().Visit(ast);
-		System.out.println("\n\n- - - - Evaluated Value - - - -\n\n" + value);
+		System.out.println("\n- - - - Evaluated Value - - - -\n\n" + value);
 
 	}
 

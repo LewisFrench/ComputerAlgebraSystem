@@ -37,7 +37,7 @@ class EvaluateExpressionVisitor extends AstVisitor<String> {
 
 	@Override
 	public String Visit(FunctionNode node) {
-		return node.function + node.arguments;
+		return node.toString();
 	}
 
 	@Override
