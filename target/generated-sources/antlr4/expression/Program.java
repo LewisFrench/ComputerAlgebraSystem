@@ -1,5 +1,9 @@
 package expression;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
@@ -18,13 +22,28 @@ public class Program {
 
 	public static void main(String[] args) {
 
+		ArrayList<String> strRules = new ArrayList<>();
+		
+		
+		try {
+		Path path = Paths.get(args[0]);
+		Files.lines(path)
+			.map(s->s.trim())
+			.filter(s -> !s.isEmpty())
+			.forEach(strRules::add);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		//System.out.println("HEY" + test.toString());
+		
 		//String[] strRules = { "d($A + $B) = d($A) + d($B)" };
-
-		 String[] strRules = { "diff($A + $B, $x) = diff($A, $x) + diff($B, $x)" };
+		System.out.println(args[0].toString());
+		// String[] strRules = { "diff($A + $B, $x) = diff($A, $x) + diff($B, $x)" };
 		// String[] strRules = {"d(ln($x)) = d($x) + $x"};
 		//String[] strRules = { "add(succ($x), $y) = succ(add($x, $y))", "add(0, $x) = $x" };
 		//String[] strRules = {"fib(0) = 0" , "fib(1) = 1", "fib($n) = fib($n-1) + fib($n-2) if $n>0"};
-
 		//String[] strRules = {"x = z" };
 
 		ArrayList<Rule> rules = new ArrayList<>();
@@ -49,13 +68,12 @@ public class Program {
 
 		}
 
-		String expression = "diff(x+9, x)";
-		System.out.println("Term: " + expression + "\nRewrite Process:\n");
+		String expression = "fib(10) + fib(9)";
+		//FOR SCREENSHOT System.out.println("Term: " + expression + "\nRewrite Process:\n");
 		ArithmeticParser parser = getParser(expression);
 		CompileUnitContext antlrAST = parser.compileUnit();
 
 		ExpressionNode ast = new BuildAstVisitor(rules, 0).visitCompileUnit(antlrAST);
-		//System.out.println(ast.toString() + "  " + ast.getClass());
 		String value = new EvaluateExpressionVisitor().Visit(ast);
 		System.out.println("\n- - - - Evaluated Value - - - -\n\n" + value);
 
