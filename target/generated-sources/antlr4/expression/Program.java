@@ -30,15 +30,14 @@ public class Program {
 
 	public static void main(String[] args) {
 
-		// String[] strRules = { "d($A) = 1.01", "d($A + $B) = d($A) + d($B)" };
+		String[] strRules = { "d($A + $B) = d($A) + d($B)" };
 
 		// String[] strRules = { "d($A + $B) = d($A) + d($B)" };
 		// String[] strRules = {"d(ln($x)) = d($x) + $x"};
 		//String[] strRules = { "add(succ($x), $y) = succ(add($x, $y))", "add(0, $x) = $x" };
-		// String[] strRules = {"fib(0) = 0" , "fib(1) = 1", "fib($n) = fib($n-1) +
-		// fib($n-2)"};
+		 //String[] strRules = {"fib(0) = 0" , "fib(1) = 1", "fib($n) = fib($n-1) + fib($n-2) if $n>0"};
 
-		String[] strRules = {"x = z" };
+		//String[] strRules = {"x = z" };
 
 		ArrayList<Rule> rules = new ArrayList<>();
 		String[] splitRule = new String[3];
@@ -62,8 +61,7 @@ public class Program {
 
 		}
 
-		String expression = "x";
-		//String expression = "add(succ(succ(0)), succ(succ(0)))";
+		String expression = "d(x+4)";
 		ArithmeticParser parser = getParser(expression);
 		CompileUnitContext antlrAST = parser.compileUnit();
 
@@ -112,7 +110,6 @@ class Rule {
 		this.conditions = conditions;
 		this.variables = new LinkedHashMap<String, ExpressionNode>();
 		this.lhsNode = new BuildLhsVisitor(variables).visitCompileUnit(lhs);
-		// this.conditionsNode = new BuildConditionsVisitor()
 	}
 
 	public Rule(CompileUnitContext lhs, CompileUnitContext rhs) {

@@ -2,6 +2,7 @@ package expression;
 
 abstract class AstVisitor<T>
 {
+	// Expression Nodes
     public abstract T Visit(AdditionNode node);
     public abstract T Visit(SubtractionNode node);
     public abstract T Visit(MultiplicationNode node);
@@ -61,13 +62,9 @@ abstract class AstVisitor<T>
     	}
     	else if (node instanceof ConditionOrNode) {
     		return Visit((ConditionOrNode)node);
-    	}
-    	
-    	
-    	
-    	
+    	}	
     	else {
-    		
+    		//Exception 
     		System.out.println("No expressionNode of suitable type");
     		return null;
     	}

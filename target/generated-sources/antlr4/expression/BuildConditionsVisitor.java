@@ -52,10 +52,10 @@ public class BuildConditionsVisitor extends ConditionsBaseVisitor<ExpressionNode
 		return visit(context.condition());
 	}
 
-	// Likely need something here, should I allow user-written functions? or
-	// something like sin(y) only?
+	// Needs looking at - only my functions are allowed
+	// Comparisons to sin($A) etc. ?
 	@Override
-	public ExpressionNode visitFunction(ConditionsParser.FunctionContext context) {
+	public ExpressionNode visitConditionFunction(ConditionsParser.ConditionFunctionContext context) {
 		ArrayList<ExpressionNode> arguments = new ArrayList<>();
 		for (int i = 0; i < context.condExpr().size(); i++) {
 			arguments.add(visit(context.condExpr(i)));
@@ -64,7 +64,7 @@ public class BuildConditionsVisitor extends ConditionsBaseVisitor<ExpressionNode
 	}
 
 	@Override
-	public ExpressionNode visitRelop(ConditionsParser.RelopContext context) {
+	public ExpressionNode visitConditionRelop(ConditionsParser.ConditionRelopContext context) {
 		ExpressionNode left = visit(context.left);
 		ExpressionNode right = visit(context.right);
 		return new RelopNode(left, right, context.relop.getText());
@@ -142,7 +142,7 @@ public class BuildConditionsVisitor extends ConditionsBaseVisitor<ExpressionNode
 	}
 
 	@Override
-	public ExpressionNode visitNum(ConditionsParser.NumContext context) {
+	public ExpressionNode visitNumber(ConditionsParser.NumberContext context) {
 		return new NumberNode(Double.valueOf(context.getText()));
 	}
 
@@ -156,7 +156,7 @@ public class BuildConditionsVisitor extends ConditionsBaseVisitor<ExpressionNode
 	}
 
 	@Override
-	public ExpressionNode visitVar(ConditionsParser.VarContext context) {
+	public ExpressionNode visitVariable(ConditionsParser.VariableContext context) {
 		return new VariableNode(context.value.getText());
 	}
 }

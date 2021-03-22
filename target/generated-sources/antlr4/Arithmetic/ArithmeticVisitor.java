@@ -24,19 +24,19 @@ public interface ArithmeticVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitFunctionExpression(ArithmeticParser.FunctionExpressionContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code Var}
+	 * Visit a parse tree produced by the {@code Variable}
 	 * labeled alternative in {@link ArithmeticParser#expression}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitVar(ArithmeticParser.VarContext ctx);
+	T visitVariable(ArithmeticParser.VariableContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code Num}
+	 * Visit a parse tree produced by the {@code Number}
 	 * labeled alternative in {@link ArithmeticParser#expression}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitNum(ArithmeticParser.NumContext ctx);
+	T visitNumber(ArithmeticParser.NumberContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code UnaryExpression}
 	 * labeled alternative in {@link ArithmeticParser#expression}.
@@ -58,6 +58,13 @@ public interface ArithmeticVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitOperation(ArithmeticParser.OperationContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code Power}
+	 * labeled alternative in {@link ArithmeticParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitPower(ArithmeticParser.PowerContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code RuleVariable}
 	 * labeled alternative in {@link ArithmeticParser#expression}.

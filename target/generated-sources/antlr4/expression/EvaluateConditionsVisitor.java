@@ -97,7 +97,6 @@ public class EvaluateConditionsVisitor extends AstVisitor<Boolean> {
 		NumberNode r;
 
 		EvaluateTree treeMatcher = new EvaluateTree();
-		System.out.println(relopNode.relop);
 		if (relopNode.relop.equals("==")) {
 			System.out.println("Eval ==");
 			return treeMatcher.Visit(relopNode.left, relopNode.right);
@@ -109,18 +108,13 @@ public class EvaluateConditionsVisitor extends AstVisitor<Boolean> {
 		// NumberNode
 
 		if (relopNode.left instanceof RuleVariableNode) {
-			// if (this.variables.get(((RuleVariableNode) left).getValue()) instanceof
-			// NumberNode) {
 			l = (NumberNode) this.variables.get(((RuleVariableNode) relopNode.left).toString());
-			// }
 		} else {
 			l = (NumberNode) relopNode.left;
 		}
 		if (relopNode.right instanceof RuleVariableNode) {
-			// if (this.variables.get(((RuleVariableNode) left).getValue()) instanceof
-			// NumberNode) {
+
 			r = (NumberNode) this.variables.get(((RuleVariableNode) relopNode.right).toString());
-			// }
 		} else {
 			r = (NumberNode) relopNode.right;
 		}

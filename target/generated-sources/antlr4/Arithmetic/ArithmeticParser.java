@@ -17,9 +17,8 @@ public class ArithmeticParser extends Parser {
 	protected static final PredictionContextCache _sharedContextCache =
 		new PredictionContextCache();
 	public static final int
-		T__0=1, T__1=2, OP_ADD=3, OP_SUB=4, OP_MUL=5, OP_DIV=6, RELOP_EQ=7, RELOP_LT=8, 
-		RELOP_GT=9, VARIABLE=10, SCIENTIFIC_NUMBER=11, LPAREN=12, RPAREN=13, POINT=14, 
-		POW=15, WS=16;
+		OP_ADD=1, OP_SUB=2, OP_MUL=3, OP_DIV=4, OP_POW=5, VARIABLE=6, NUMBER=7, 
+		COMMA=8, LPAREN=9, VARIDENTIFIER=10, RPAREN=11, POINT=12, WS=13;
 	public static final int
 		RULE_compileUnit = 0, RULE_expression = 1;
 	private static String[] makeRuleNames() {
@@ -31,16 +30,15 @@ public class ArithmeticParser extends Parser {
 
 	private static String[] makeLiteralNames() {
 		return new String[] {
-			null, "','", "'$'", "'+'", "'-'", "'*'", "'/'", "'='", "'<'", "'>'", 
-			null, null, "'('", "')'", "'.'", "'^'"
+			null, "'+'", "'-'", "'*'", "'/'", "'^'", null, null, "','", "'('", "'$'", 
+			"')'", "'.'"
 		};
 	}
 	private static final String[] _LITERAL_NAMES = makeLiteralNames();
 	private static String[] makeSymbolicNames() {
 		return new String[] {
-			null, null, null, "OP_ADD", "OP_SUB", "OP_MUL", "OP_DIV", "RELOP_EQ", 
-			"RELOP_LT", "RELOP_GT", "VARIABLE", "SCIENTIFIC_NUMBER", "LPAREN", "RPAREN", 
-			"POINT", "POW", "WS"
+			null, "OP_ADD", "OP_SUB", "OP_MUL", "OP_DIV", "OP_POW", "VARIABLE", "NUMBER", 
+			"COMMA", "LPAREN", "VARIDENTIFIER", "RPAREN", "POINT", "WS"
 		};
 	}
 	private static final String[] _SYMBOLIC_NAMES = makeSymbolicNames();
@@ -161,6 +159,10 @@ public class ArithmeticParser extends Parser {
 		public ExpressionContext expression(int i) {
 			return getRuleContext(ExpressionContext.class,i);
 		}
+		public List<TerminalNode> COMMA() { return getTokens(ArithmeticParser.COMMA); }
+		public TerminalNode COMMA(int i) {
+			return getToken(ArithmeticParser.COMMA, i);
+		}
 		public FunctionExpressionContext(ExpressionContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
@@ -176,39 +178,39 @@ public class ArithmeticParser extends Parser {
 			else return visitor.visitChildren(this);
 		}
 	}
-	public static class VarContext extends ExpressionContext {
+	public static class VariableContext extends ExpressionContext {
 		public Token value;
 		public TerminalNode VARIABLE() { return getToken(ArithmeticParser.VARIABLE, 0); }
-		public VarContext(ExpressionContext ctx) { copyFrom(ctx); }
+		public VariableContext(ExpressionContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof ArithmeticListener ) ((ArithmeticListener)listener).enterVar(this);
+			if ( listener instanceof ArithmeticListener ) ((ArithmeticListener)listener).enterVariable(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof ArithmeticListener ) ((ArithmeticListener)listener).exitVar(this);
+			if ( listener instanceof ArithmeticListener ) ((ArithmeticListener)listener).exitVariable(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArithmeticVisitor ) return ((ArithmeticVisitor<? extends T>)visitor).visitVar(this);
+			if ( visitor instanceof ArithmeticVisitor ) return ((ArithmeticVisitor<? extends T>)visitor).visitVariable(this);
 			else return visitor.visitChildren(this);
 		}
 	}
-	public static class NumContext extends ExpressionContext {
+	public static class NumberContext extends ExpressionContext {
 		public Token value;
-		public TerminalNode SCIENTIFIC_NUMBER() { return getToken(ArithmeticParser.SCIENTIFIC_NUMBER, 0); }
-		public NumContext(ExpressionContext ctx) { copyFrom(ctx); }
+		public TerminalNode NUMBER() { return getToken(ArithmeticParser.NUMBER, 0); }
+		public NumberContext(ExpressionContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof ArithmeticListener ) ((ArithmeticListener)listener).enterNum(this);
+			if ( listener instanceof ArithmeticListener ) ((ArithmeticListener)listener).enterNumber(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof ArithmeticListener ) ((ArithmeticListener)listener).exitNum(this);
+			if ( listener instanceof ArithmeticListener ) ((ArithmeticListener)listener).exitNumber(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArithmeticVisitor ) return ((ArithmeticVisitor<? extends T>)visitor).visitNum(this);
+			if ( visitor instanceof ArithmeticVisitor ) return ((ArithmeticVisitor<? extends T>)visitor).visitNumber(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -284,8 +286,34 @@ public class ArithmeticParser extends Parser {
 			else return visitor.visitChildren(this);
 		}
 	}
+	public static class PowerContext extends ExpressionContext {
+		public ExpressionContext left;
+		public ExpressionContext right;
+		public TerminalNode OP_POW() { return getToken(ArithmeticParser.OP_POW, 0); }
+		public List<ExpressionContext> expression() {
+			return getRuleContexts(ExpressionContext.class);
+		}
+		public ExpressionContext expression(int i) {
+			return getRuleContext(ExpressionContext.class,i);
+		}
+		public PowerContext(ExpressionContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof ArithmeticListener ) ((ArithmeticListener)listener).enterPower(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof ArithmeticListener ) ((ArithmeticListener)listener).exitPower(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof ArithmeticVisitor ) return ((ArithmeticVisitor<? extends T>)visitor).visitPower(this);
+			else return visitor.visitChildren(this);
+		}
+	}
 	public static class RuleVariableContext extends ExpressionContext {
 		public Token value;
+		public TerminalNode VARIDENTIFIER() { return getToken(ArithmeticParser.VARIDENTIFIER, 0); }
 		public TerminalNode VARIABLE() { return getToken(ArithmeticParser.VARIABLE, 0); }
 		public RuleVariableContext(ExpressionContext ctx) { copyFrom(ctx); }
 		@Override
@@ -337,11 +365,11 @@ public class ArithmeticParser extends Parser {
 				setState(14);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
-				while (_la==T__0) {
+				while (_la==COMMA) {
 					{
 					{
 					setState(10);
-					match(T__0);
+					match(COMMA);
 					setState(11);
 					expression(0);
 					}
@@ -371,7 +399,7 @@ public class ArithmeticParser extends Parser {
 					consume();
 				}
 				setState(20);
-				expression(7);
+				expression(8);
 				}
 				break;
 			case 3:
@@ -389,11 +417,11 @@ public class ArithmeticParser extends Parser {
 				break;
 			case 4:
 				{
-				_localctx = new VarContext(_localctx);
+				_localctx = new VariableContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
 				setState(25);
-				((VarContext)_localctx).value = match(VARIABLE);
+				((VariableContext)_localctx).value = match(VARIABLE);
 				}
 				break;
 			case 5:
@@ -402,23 +430,23 @@ public class ArithmeticParser extends Parser {
 				_ctx = _localctx;
 				_prevctx = _localctx;
 				setState(26);
-				match(T__1);
+				match(VARIDENTIFIER);
 				setState(27);
 				((RuleVariableContext)_localctx).value = match(VARIABLE);
 				}
 				break;
 			case 6:
 				{
-				_localctx = new NumContext(_localctx);
+				_localctx = new NumberContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
 				setState(28);
-				((NumContext)_localctx).value = match(SCIENTIFIC_NUMBER);
+				((NumberContext)_localctx).value = match(NUMBER);
 				}
 				break;
 			}
 			_ctx.stop = _input.LT(-1);
-			setState(39);
+			setState(42);
 			_errHandler.sync(this);
 			_alt = getInterpreter().adaptivePredict(_input,3,_ctx);
 			while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
@@ -426,17 +454,30 @@ public class ArithmeticParser extends Parser {
 					if ( _parseListeners!=null ) triggerExitRuleEvent();
 					_prevctx = _localctx;
 					{
-					setState(37);
+					setState(40);
 					_errHandler.sync(this);
 					switch ( getInterpreter().adaptivePredict(_input,2,_ctx) ) {
 					case 1:
 						{
+						_localctx = new PowerContext(new ExpressionContext(_parentctx, _parentState));
+						((PowerContext)_localctx).left = _prevctx;
+						pushNewRecursionContext(_localctx, _startState, RULE_expression);
+						setState(31);
+						if (!(precpred(_ctx, 6))) throw new FailedPredicateException(this, "precpred(_ctx, 6)");
+						setState(32);
+						match(OP_POW);
+						setState(33);
+						((PowerContext)_localctx).right = expression(7);
+						}
+						break;
+					case 2:
+						{
 						_localctx = new OperationContext(new ExpressionContext(_parentctx, _parentState));
 						((OperationContext)_localctx).left = _prevctx;
 						pushNewRecursionContext(_localctx, _startState, RULE_expression);
-						setState(31);
+						setState(34);
 						if (!(precpred(_ctx, 5))) throw new FailedPredicateException(this, "precpred(_ctx, 5)");
-						setState(32);
+						setState(35);
 						((OperationContext)_localctx).op = _input.LT(1);
 						_la = _input.LA(1);
 						if ( !(_la==OP_MUL || _la==OP_DIV) ) {
@@ -447,18 +488,18 @@ public class ArithmeticParser extends Parser {
 							_errHandler.reportMatch(this);
 							consume();
 						}
-						setState(33);
+						setState(36);
 						((OperationContext)_localctx).right = expression(6);
 						}
 						break;
-					case 2:
+					case 3:
 						{
 						_localctx = new OperationContext(new ExpressionContext(_parentctx, _parentState));
 						((OperationContext)_localctx).left = _prevctx;
 						pushNewRecursionContext(_localctx, _startState, RULE_expression);
-						setState(34);
+						setState(37);
 						if (!(precpred(_ctx, 4))) throw new FailedPredicateException(this, "precpred(_ctx, 4)");
-						setState(35);
+						setState(38);
 						((OperationContext)_localctx).op = _input.LT(1);
 						_la = _input.LA(1);
 						if ( !(_la==OP_ADD || _la==OP_SUB) ) {
@@ -469,14 +510,14 @@ public class ArithmeticParser extends Parser {
 							_errHandler.reportMatch(this);
 							consume();
 						}
-						setState(36);
+						setState(39);
 						((OperationContext)_localctx).right = expression(5);
 						}
 						break;
 					}
 					} 
 				}
-				setState(41);
+				setState(44);
 				_errHandler.sync(this);
 				_alt = getInterpreter().adaptivePredict(_input,3,_ctx);
 			}
@@ -503,27 +544,30 @@ public class ArithmeticParser extends Parser {
 	private boolean expression_sempred(ExpressionContext _localctx, int predIndex) {
 		switch (predIndex) {
 		case 0:
-			return precpred(_ctx, 5);
+			return precpred(_ctx, 6);
 		case 1:
+			return precpred(_ctx, 5);
+		case 2:
 			return precpred(_ctx, 4);
 		}
 		return true;
 	}
 
 	public static final String _serializedATN =
-		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\22-\4\2\t\2\4\3\t"+
-		"\3\3\2\3\2\3\3\3\3\3\3\3\3\3\3\3\3\7\3\17\n\3\f\3\16\3\22\13\3\3\3\3\3"+
-		"\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\5\3 \n\3\3\3\3\3\3\3\3\3\3\3"+
-		"\3\3\7\3(\n\3\f\3\16\3+\13\3\3\3\2\3\4\4\2\4\2\4\3\2\5\6\3\2\7\b\2\62"+
-		"\2\6\3\2\2\2\4\37\3\2\2\2\6\7\5\4\3\2\7\3\3\2\2\2\b\t\b\3\1\2\t\n\7\f"+
-		"\2\2\n\13\7\16\2\2\13\20\5\4\3\2\f\r\7\3\2\2\r\17\5\4\3\2\16\f\3\2\2\2"+
-		"\17\22\3\2\2\2\20\16\3\2\2\2\20\21\3\2\2\2\21\23\3\2\2\2\22\20\3\2\2\2"+
-		"\23\24\7\17\2\2\24 \3\2\2\2\25\26\t\2\2\2\26 \5\4\3\t\27\30\7\16\2\2\30"+
-		"\31\5\4\3\2\31\32\7\17\2\2\32 \3\2\2\2\33 \7\f\2\2\34\35\7\4\2\2\35 \7"+
-		"\f\2\2\36 \7\r\2\2\37\b\3\2\2\2\37\25\3\2\2\2\37\27\3\2\2\2\37\33\3\2"+
-		"\2\2\37\34\3\2\2\2\37\36\3\2\2\2 )\3\2\2\2!\"\f\7\2\2\"#\t\3\2\2#(\5\4"+
-		"\3\b$%\f\6\2\2%&\t\2\2\2&(\5\4\3\7\'!\3\2\2\2\'$\3\2\2\2(+\3\2\2\2)\'"+
-		"\3\2\2\2)*\3\2\2\2*\5\3\2\2\2+)\3\2\2\2\6\20\37\')";
+		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\17\60\4\2\t\2\4\3"+
+		"\t\3\3\2\3\2\3\3\3\3\3\3\3\3\3\3\3\3\7\3\17\n\3\f\3\16\3\22\13\3\3\3\3"+
+		"\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\5\3 \n\3\3\3\3\3\3\3\3\3\3"+
+		"\3\3\3\3\3\3\3\3\3\7\3+\n\3\f\3\16\3.\13\3\3\3\2\3\4\4\2\4\2\4\3\2\3\4"+
+		"\3\2\5\6\2\66\2\6\3\2\2\2\4\37\3\2\2\2\6\7\5\4\3\2\7\3\3\2\2\2\b\t\b\3"+
+		"\1\2\t\n\7\b\2\2\n\13\7\13\2\2\13\20\5\4\3\2\f\r\7\n\2\2\r\17\5\4\3\2"+
+		"\16\f\3\2\2\2\17\22\3\2\2\2\20\16\3\2\2\2\20\21\3\2\2\2\21\23\3\2\2\2"+
+		"\22\20\3\2\2\2\23\24\7\r\2\2\24 \3\2\2\2\25\26\t\2\2\2\26 \5\4\3\n\27"+
+		"\30\7\13\2\2\30\31\5\4\3\2\31\32\7\r\2\2\32 \3\2\2\2\33 \7\b\2\2\34\35"+
+		"\7\f\2\2\35 \7\b\2\2\36 \7\t\2\2\37\b\3\2\2\2\37\25\3\2\2\2\37\27\3\2"+
+		"\2\2\37\33\3\2\2\2\37\34\3\2\2\2\37\36\3\2\2\2 ,\3\2\2\2!\"\f\b\2\2\""+
+		"#\7\7\2\2#+\5\4\3\t$%\f\7\2\2%&\t\3\2\2&+\5\4\3\b\'(\f\6\2\2()\t\2\2\2"+
+		")+\5\4\3\7*!\3\2\2\2*$\3\2\2\2*\'\3\2\2\2+.\3\2\2\2,*\3\2\2\2,-\3\2\2"+
+		"\2-\5\3\2\2\2.,\3\2\2\2\6\20\37*,";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {
