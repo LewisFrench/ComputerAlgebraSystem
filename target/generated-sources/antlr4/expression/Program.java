@@ -1,7 +1,6 @@
 package expression;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.LinkedHashMap;
 
 import org.antlr.v4.runtime.CharStream;
@@ -15,27 +14,16 @@ import Conditions.ConditionsLexer;
 import Conditions.ConditionsParser;
 import Conditions.ConditionsParser.RuleConditionsContext;
 
-/**
- * Things to do
- * 
- * 
- * 
- * Further abstract class removing repeated code in the BuildXyzVisitors
- * 
- * @author lewis
- *
- */
-
 public class Program {
 
 	public static void main(String[] args) {
 
-		String[] strRules = { "d($A + $B) = d($A) + d($B)" };
+		//String[] strRules = { "d($A + $B) = d($A) + d($B)" };
 
 		// String[] strRules = { "d($A + $B) = d($A) + d($B)" };
 		// String[] strRules = {"d(ln($x)) = d($x) + $x"};
 		//String[] strRules = { "add(succ($x), $y) = succ(add($x, $y))", "add(0, $x) = $x" };
-		 //String[] strRules = {"fib(0) = 0" , "fib(1) = 1", "fib($n) = fib($n-1) + fib($n-2) if $n>0"};
+		String[] strRules = {"fib(0) = 0" , "fib(1) = 1", "fib($n) = fib($n-1) + fib($n-2) if $n>0"};
 
 		//String[] strRules = {"x = z" };
 
@@ -45,7 +33,7 @@ public class Program {
 		for (String rule : strRules) {
 
 			splitRule = rule.split("(=|\\sif\\s)", 3);
-			System.out.println(Arrays.toString(splitRule));
+			//System.out.println(Arrays.toString(splitRule));
 			ArithmeticParser lhsParser = getParser(splitRule[0]);
 			CompileUnitContext lhsAST = lhsParser.compileUnit();
 			ArithmeticParser rhsParser = getParser(splitRule[1]);
@@ -61,12 +49,12 @@ public class Program {
 
 		}
 
-		String expression = "d(x+4)";
+		String expression = "fib(9) + fib(10)";
 		ArithmeticParser parser = getParser(expression);
 		CompileUnitContext antlrAST = parser.compileUnit();
 
 		ExpressionNode ast = new BuildAstVisitor(rules, 0).visitCompileUnit(antlrAST);
-		System.out.println(ast.toString() + "  " + ast.getClass());
+		//System.out.println(ast.toString() + "  " + ast.getClass());
 		String value = new EvaluateExpressionVisitor().Visit(ast);
 		System.out.println("\n\n- - - - Evaluated Value - - - -\n\n" + value);
 

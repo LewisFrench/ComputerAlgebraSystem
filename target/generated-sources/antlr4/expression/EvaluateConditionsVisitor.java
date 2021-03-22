@@ -2,8 +2,6 @@ package expression;
 
 import java.util.LinkedHashMap;
 
-import com.sun.corba.se.impl.orbutil.graph.Node;
-
 import Conditions.ConditionsLexer;
 
 // Could likely split the AstVisitor into two visitors, one for the expression only nodes, and one for conditionnodes
@@ -93,57 +91,55 @@ public class EvaluateConditionsVisitor extends AstVisitor<Boolean> {
 
 	//public boolean calculateRelop(ExpressionNode left, ExpressionNode right, String relop) {
 	public boolean calculateRelop(RelopNode relopNode) {
-		NumberNode l;
-		NumberNode r;
 
+		// Decide equivalence between any two nodes
 		EvaluateTree treeMatcher = new EvaluateTree();
-		if (relopNode.relop.equals("==")) {
+		if (relopNode.relop == ConditionsLexer.RELOP_EQ) {
 			System.out.println("Eval ==");
 			return treeMatcher.Visit(relopNode.left, relopNode.right);
-		} else if (relopNode.relop.equals("!=")) {
+		} else if (relopNode.relop == ConditionsLexer.RELOP_NEQ) {
 			return !(treeMatcher.Visit(relopNode.left, relopNode.right));
 		}
-
-		// Throw exception if left, right are not instances of ruleVariableNode or
-		// NumberNode
-
-		if (relopNode.left instanceof RuleVariableNode) {
-			l = (NumberNode) this.variables.get(((RuleVariableNode) relopNode.left).toString());
-		} else {
-			l = (NumberNode) relopNode.left;
-		}
-		if (relopNode.right instanceof RuleVariableNode) {
-
-			r = (NumberNode) this.variables.get(((RuleVariableNode) relopNode.right).toString());
-		} else {
-			r = (NumberNode) relopNode.right;
-		}
+		
+		// Evaluate greater than, less than for number nodes. 
+		NumberNode l;
+		NumberNode r;
+		l = getNumberNode(relopNode.left);
+		r = getNumberNode(relopNode.right);
 		
 		boolean relopResult = false;
 		// Use Constants for the reloperators
 		switch (relopNode.relop) {
 
-		case "<" + ConditionsLexer.RELOP_GT:
+		case ConditionsLexer.RELOP_LT:
 			relopResult = l.getValue() < r.getValue();
 			break;
-		case ">":
-			relopResult = l.getValue() > r.getValue();
-			break;
-//		case "==":
-//			relopResult = l.getValue() == r.getValue();
-//			break;
-//		case "!=":
-//			relopResult = l.getValue() != r.getValue();
-//			break;
-		case "<=":
+		case ConditionsLexer.RELOP_LTE:
 			relopResult = l.getValue() <= r.getValue();
 			break;
-		case ">=":
+		case ConditionsLexer.RELOP_GT:
+			relopResult = l.getValue() > r.getValue();
+			break;
+		case ConditionsLexer.RELOP_GTE:
 			relopResult = l.getValue() >= r.getValue();
 		default:
 			// Exception for the weird case
 		}
 		return relopResult;
+	}
+	public NumberNode getNumberNode(ExpressionNode node) {
+		if (node instanceof RuleVariableNode) {
+			ExpressionNode value = this.variables.get(((RuleVariableNode) node).toString());
+			if (value instanceof NumberNode) {
+				return (NumberNode) value;
+			}
+			
+		} else if (node instanceof NumberNode) {
+			return (NumberNode) node;
+		}
+		// Exception? - cannot compare the two nodes using > >= < <= operators
+		
+		return null;
 	}
 
 	@Override

@@ -67,7 +67,7 @@ public class BuildConditionsVisitor extends ConditionsBaseVisitor<ExpressionNode
 	public ExpressionNode visitConditionRelop(ConditionsParser.ConditionRelopContext context) {
 		ExpressionNode left = visit(context.left);
 		ExpressionNode right = visit(context.right);
-		return new RelopNode(left, right, context.relop.getText());
+		return new RelopNode(left, right, context.relop.getType(), context.relop.getText());
 	}
 
 	@Override
