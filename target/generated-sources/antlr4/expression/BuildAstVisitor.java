@@ -156,7 +156,9 @@ public class BuildAstVisitor extends ArithmeticBaseVisitor<ExpressionNode> {
 						conditionsHold = new EvaluateConditionsVisitor(appliedRule.variables).Visit(conditionsNode);
 					}
 					if (conditionsHold || appliedRule.conditions == null) {
-						System.out.println("Matched Term " + node.toString() + "\nto rule " + appliedRule.toString());
+						
+						// For getting poster screenshot
+						//System.out.println("Matched Term " + node.toString() + "\nto rule " + appliedRule.toString());
 						appliedRule.rhsNode = new BuildAstVisitor(appliedRule.variables, rules, this.depth + 1)
 								.visitCompileUnit(appliedRule.rhs);
 						return appliedRule.rhsNode;
