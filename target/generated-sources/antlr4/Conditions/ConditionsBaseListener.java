@@ -28,13 +28,25 @@ public class ConditionsBaseListener implements ConditionsListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterFunction(ConditionsParser.FunctionContext ctx) { }
+	@Override public void enterConditionRelop(ConditionsParser.ConditionRelopContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitFunction(ConditionsParser.FunctionContext ctx) { }
+	@Override public void exitConditionRelop(ConditionsParser.ConditionRelopContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterConditionFunction(ConditionsParser.ConditionFunctionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitConditionFunction(ConditionsParser.ConditionFunctionContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -59,18 +71,6 @@ public class ConditionsBaseListener implements ConditionsListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitNot(ConditionsParser.NotContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterRelop(ConditionsParser.RelopContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitRelop(ConditionsParser.RelopContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -124,25 +124,25 @@ public class ConditionsBaseListener implements ConditionsListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterVar(ConditionsParser.VarContext ctx) { }
+	@Override public void enterVariable(ConditionsParser.VariableContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitVar(ConditionsParser.VarContext ctx) { }
+	@Override public void exitVariable(ConditionsParser.VariableContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterNum(ConditionsParser.NumContext ctx) { }
+	@Override public void enterNumber(ConditionsParser.NumberContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitNum(ConditionsParser.NumContext ctx) { }
+	@Override public void exitNumber(ConditionsParser.NumberContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -179,6 +179,18 @@ public class ConditionsBaseListener implements ConditionsListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitOperation(ConditionsParser.OperationContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterPower(ConditionsParser.PowerContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitPower(ConditionsParser.PowerContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

@@ -1,8 +1,15 @@
 package expression;
 
+import java.io.IOException;
+import java.io.UncheckedIOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
+import java.util.Scanner;
 
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CharStreams;
@@ -15,44 +22,38 @@ import Conditions.ConditionsLexer;
 import Conditions.ConditionsParser;
 import Conditions.ConditionsParser.RuleConditionsContext;
 
-/**
- * Things to do
- * 
- * 
- * 
- * Further abstract class removing repeated code in the BuildXyzVisitors
- * 
- * @author lewis
- *
- */
-
 public class Program {
 
 	public static void main(String[] args) {
 
-		// String[] strRules = { "d($A) = 1.01", "d($A + $B) = d($A) + d($B)" };
+		ArrayList<String> strRules = new ArrayList<>();
+		try {
+			Path path = Paths.get(args[0]);
+			Files.lines(path).map(s -> s.trim()).filter(s -> !s.isEmpty()).forEach(strRules::add);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
-		// String[] strRules = { "d($A + $B) = d($A) + d($B)" };
-		// String[] strRules = {"d(ln($x)) = d($x) + $x"};
-		//String[] strRules = { "add(succ($x), $y) = succ(add($x, $y))", "add(0, $x) = $x" };
-		// String[] strRules = {"fib(0) = 0" , "fib(1) = 1", "fib($n) = fib($n-1) +
-		// fib($n-2)"};
-
-		String[] strRules = {"x = z" };
-
+		System.out.println("START");
 		ArrayList<Rule> rules = new ArrayList<>();
-		String[] splitRule = new String[3];
 
 		for (String rule : strRules) {
 
-			splitRule = rule.split("(=|\\sif\\s)", 3);
+			String[] splitRule = splitRuleString(rule);
 			System.out.println(Arrays.toString(splitRule));
+
+			if (splitRule.length <= 1 || splitRule.length > 3) {
+				// throw new RuleFormatException();
+				System.out.println("RuleFormatException");
+			}
 			ArithmeticParser lhsParser = getParser(splitRule[0]);
 			CompileUnitContext lhsAST = lhsParser.compileUnit();
+
 			ArithmeticParser rhsParser = getParser(splitRule[1]);
 			CompileUnitContext rhsAST = rhsParser.compileUnit();
 
-			if (splitRule.length > 2) {
+			if (splitRule.length == 3) {
 				ConditionsParser conditionsParser = getConditionsParser(splitRule[2]);
 				RuleConditionsContext conditionsAST = conditionsParser.ruleConditions();
 				rules.add(new Rule(lhsAST, rhsAST, conditionsAST));
@@ -61,17 +62,35 @@ public class Program {
 			}
 
 		}
+		System.out.println("Enter a term:\n");
+		Scanner scanner = new Scanner(System.in);
+		boolean userEnds = false;
+		while (!userEnds) {
+			String term = scanner.nextLine();
+			if (!(term.equals("end"))) {
+				// System.out.println("\nTerm: " + term + "\nRewrite Process:\n");
+				ArithmeticParser parser = getParser(term);
+				CompileUnitContext antlrAST = parser.compileUnit();
 
-		String expression = "x";
-		//String expression = "add(succ(succ(0)), succ(succ(0)))";
-		ArithmeticParser parser = getParser(expression);
-		CompileUnitContext antlrAST = parser.compileUnit();
+				ExpressionNode ast = new BuildAstVisitor(rules, 0).visitCompileUnit(antlrAST);
+				String value = new EvaluateExpressionVisitor().Visit(ast);
+				System.out
+						.println("\n- - - - Evaluated Value - - - -\n" + value + "\n- - - - - - - - - - - - - - - -\n");
+			} else {
+				userEnds = true;
+			}
+		}
+		scanner.close();
+	}
 
-		ExpressionNode ast = new BuildAstVisitor(rules, 0).visitCompileUnit(antlrAST);
-		System.out.println(ast.toString() + "  " + ast.getClass());
-		String value = new EvaluateExpressionVisitor().Visit(ast);
-		System.out.println("\n\n- - - - Evaluated Value - - - -\n\n" + value);
-
+	private static String[] splitRuleString(String term) {
+		String[] splitByEquals = term.split("=", 2);
+		String[] splitByCondition = splitByEquals[1].split("\\sif\\s", 2);
+		if (splitByCondition.length > 1) {
+			return new String[] { splitByEquals[0], splitByCondition[0], splitByCondition[1] };
+		} else {
+			return new String[] { splitByEquals[0], splitByCondition[0] };
+		}
 	}
 
 	private static ArithmeticParser getParser(String expression) {
@@ -112,7 +131,6 @@ class Rule {
 		this.conditions = conditions;
 		this.variables = new LinkedHashMap<String, ExpressionNode>();
 		this.lhsNode = new BuildLhsVisitor(variables).visitCompileUnit(lhs);
-		// this.conditionsNode = new BuildConditionsVisitor()
 	}
 
 	public Rule(CompileUnitContext lhs, CompileUnitContext rhs) {

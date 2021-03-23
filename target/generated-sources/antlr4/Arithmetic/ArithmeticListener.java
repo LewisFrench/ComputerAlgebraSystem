@@ -30,29 +30,29 @@ public interface ArithmeticListener extends ParseTreeListener {
 	 */
 	void exitFunctionExpression(ArithmeticParser.FunctionExpressionContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code Var}
+	 * Enter a parse tree produced by the {@code Variable}
 	 * labeled alternative in {@link ArithmeticParser#expression}.
 	 * @param ctx the parse tree
 	 */
-	void enterVar(ArithmeticParser.VarContext ctx);
+	void enterVariable(ArithmeticParser.VariableContext ctx);
 	/**
-	 * Exit a parse tree produced by the {@code Var}
+	 * Exit a parse tree produced by the {@code Variable}
 	 * labeled alternative in {@link ArithmeticParser#expression}.
 	 * @param ctx the parse tree
 	 */
-	void exitVar(ArithmeticParser.VarContext ctx);
+	void exitVariable(ArithmeticParser.VariableContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code Num}
+	 * Enter a parse tree produced by the {@code Number}
 	 * labeled alternative in {@link ArithmeticParser#expression}.
 	 * @param ctx the parse tree
 	 */
-	void enterNum(ArithmeticParser.NumContext ctx);
+	void enterNumber(ArithmeticParser.NumberContext ctx);
 	/**
-	 * Exit a parse tree produced by the {@code Num}
+	 * Exit a parse tree produced by the {@code Number}
 	 * labeled alternative in {@link ArithmeticParser#expression}.
 	 * @param ctx the parse tree
 	 */
-	void exitNum(ArithmeticParser.NumContext ctx);
+	void exitNumber(ArithmeticParser.NumberContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code UnaryExpression}
 	 * labeled alternative in {@link ArithmeticParser#expression}.
@@ -89,6 +89,18 @@ public interface ArithmeticListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitOperation(ArithmeticParser.OperationContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code Power}
+	 * labeled alternative in {@link ArithmeticParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterPower(ArithmeticParser.PowerContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code Power}
+	 * labeled alternative in {@link ArithmeticParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitPower(ArithmeticParser.PowerContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code RuleVariable}
 	 * labeled alternative in {@link ArithmeticParser#expression}.

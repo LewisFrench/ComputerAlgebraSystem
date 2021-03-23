@@ -32,13 +32,13 @@ public class BuildAstVisitor extends ArithmeticBaseVisitor<ExpressionNode> {
 	}
 
 	@Override
-	public ExpressionNode visitNum(ArithmeticParser.NumContext context) {
+	public ExpressionNode visitNumber(ArithmeticParser.NumberContext context) {
 		NumberNode node = new NumberNode(Double.valueOf(context.value.getText()));
 		return rewrite(node);
 	}
 
 	@Override
-	public ExpressionNode visitVar(ArithmeticParser.VarContext context) {
+	public ExpressionNode visitVariable(ArithmeticParser.VariableContext context) {
 
 		VariableNode node = new VariableNode(context.getText());
 		return rewrite(node);
@@ -46,7 +46,9 @@ public class BuildAstVisitor extends ArithmeticBaseVisitor<ExpressionNode> {
 
 	@Override
 	public ExpressionNode visitRuleVariable(ArithmeticParser.RuleVariableContext context) {
-		if (this.variables.get(context.getText()) != null) {
+		if (this.depth == 0) {
+			System.out.println("NO RULEVARIABLES IN TERM");
+		
 			return this.variables.get(context.getText());
 		}
 
@@ -106,6 +108,8 @@ public class BuildAstVisitor extends ArithmeticBaseVisitor<ExpressionNode> {
 		node.Left = visit(context.left);
 		node.Right = visit(context.right);
 
+		
+		// maybe store rewrite node as a variable, and return it if the simplification evaluations below don't add up
 		if (node.Left instanceof NumberNode && node.Right instanceof NumberNode && node instanceof AdditionNode) {
 			return new NumberNode(((NumberNode) node.Left).getValue() + ((NumberNode) node.Right).getValue());
 		} else if (node.Left instanceof NumberNode && node.Right instanceof NumberNode
@@ -139,23 +143,26 @@ public class BuildAstVisitor extends ArithmeticBaseVisitor<ExpressionNode> {
 				conditionsHold = false;
 				if (argumentEvaluator.Visit(r.lhsNode, node)) {
 					appliedRule = new Rule(r.lhs, r.rhs, r.conditions);
-
+					
 					if (!(argumentsValid(argumentEvaluator))) {
 						System.out.println("Error: Variables with the same identifiers must match");
 					}
+					// TODO : else { here so that arguments that don't match with the rule (with repeating argument variables)
 					for (String key : appliedRule.variables.keySet()) {
 						if (appliedRule.variables.get(key) == null) {
 							appliedRule.variables.put(key, argumentEvaluator.arguments.get(0));
 							argumentEvaluator.arguments.remove(0);
 						}
 					}
-
 					if (appliedRule.conditions != null) {
 						ExpressionNode conditionsNode = new BuildConditionsVisitor(appliedRule.variables)
 								.visitRuleConditions(appliedRule.conditions);
 						conditionsHold = new EvaluateConditionsVisitor(appliedRule.variables).Visit(conditionsNode);
 					}
 					if (conditionsHold || appliedRule.conditions == null) {
+						
+						// For getting poster screenshot
+						//System.out.println("Matched Term " + node.toString() + "\nto rule " + appliedRule.toString());
 						appliedRule.rhsNode = new BuildAstVisitor(appliedRule.variables, rules, this.depth + 1)
 								.visitCompileUnit(appliedRule.rhs);
 						return appliedRule.rhsNode;
