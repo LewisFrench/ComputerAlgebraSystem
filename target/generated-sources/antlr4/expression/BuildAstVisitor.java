@@ -46,7 +46,9 @@ public class BuildAstVisitor extends ArithmeticBaseVisitor<ExpressionNode> {
 
 	@Override
 	public ExpressionNode visitRuleVariable(ArithmeticParser.RuleVariableContext context) {
-		if (this.variables.get(context.getText()) != null) {
+		if (this.depth == 0) {
+			System.out.println("NO RULEVARIABLES IN TERM");
+		
 			return this.variables.get(context.getText());
 		}
 
