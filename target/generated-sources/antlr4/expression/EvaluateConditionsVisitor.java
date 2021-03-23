@@ -109,8 +109,9 @@ public class EvaluateConditionsVisitor extends AstVisitor<Boolean> {
 		
 		boolean relopResult = false;
 		// Use Constants for the reloperators
+		System.out.println("Relop Numbers : "+ relopNode.left.toString() + relopNode.relopText + relopNode.right.toString());
 		switch (relopNode.relop) {
-
+		
 		case ConditionsLexer.RELOP_LT:
 			relopResult = l.getValue() < r.getValue();
 			break;
@@ -127,6 +128,8 @@ public class EvaluateConditionsVisitor extends AstVisitor<Boolean> {
 		}
 		return relopResult;
 	}
+	
+	// Support for UnaryNode comparisons
 	public NumberNode getNumberNode(ExpressionNode node) {
 		if (node instanceof RuleVariableNode) {
 			ExpressionNode value = this.variables.get(((RuleVariableNode) node).toString());
