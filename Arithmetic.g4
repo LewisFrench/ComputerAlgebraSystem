@@ -21,15 +21,11 @@ OP_DIV: '/';
 OP_POW: '^';
 
 VARIABLE
-   : VALID_ID_START VALID_ID_CHAR*
-   ;
-
-fragment VALID_ID_START
-   : ('a' .. 'z') | ('A' .. 'Z') | '_'
+   : VALID_ID_CHAR+
    ;
 
 fragment VALID_ID_CHAR
-   : VALID_ID_START | ('0' .. '9')
+   : ('a' .. 'z') | ('A' .. 'Z') 
    ;
 
  NUMBER
@@ -40,10 +36,6 @@ fragment UNSIGNED_INTEGER
    : ('0' .. '9')+
    ;
 
-fragment SIGN
-   : ('+' | '-')
-   ;
-   
 COMMA
    : ','
    ;
@@ -51,7 +43,6 @@ COMMA
 LPAREN
    : '('
    ;
-
 
 VARIDENTIFIER
    : '$' 

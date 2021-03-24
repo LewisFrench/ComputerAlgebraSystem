@@ -15,10 +15,6 @@ abstract class OperationNode extends ExpressionNode {
 	public ExpressionNode Right;
 	public String operator;
 
-	public ExpressionNode calculate(ExpressionNode left, ExpressionNode right) {
-		return new NumberNode(3);
-	}
-
 	public ExpressionNode getLeft() {
 		return Left;
 	}
