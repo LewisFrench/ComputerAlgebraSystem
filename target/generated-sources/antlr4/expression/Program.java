@@ -60,7 +60,6 @@ public class Program {
 			} else {
 				rules.add(new Rule(lhsAST, rhsAST));
 			}
-
 		}
 		System.out.println("Enter a term:\n");
 		Scanner scanner = new Scanner(System.in);
