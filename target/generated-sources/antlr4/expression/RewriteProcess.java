@@ -129,37 +129,6 @@ public class RewriteProcess extends AstVisitor<ExpressionNode>{
 	public ExpressionNode Visit(VariableNode node) {
 		return rewrite(node);
 	}
-
-	@Override
-	public ExpressionNode Visit(RelopNode node) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public ExpressionNode Visit(ConditionFunctionNode node) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public ExpressionNode Visit(NotNode node) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public ExpressionNode Visit(ConditionAndNode node) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public ExpressionNode Visit(ConditionOrNode node) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
 	
 	public ExpressionNode rewrite(ExpressionNode node) {
 		boolean conditionsHold;

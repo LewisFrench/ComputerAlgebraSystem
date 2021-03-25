@@ -117,38 +117,4 @@ public class DependsEvaluator extends AstVisitor<Boolean> {
 
 	}
 
-	@Override
-	public Boolean Visit(RelopNode node) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Boolean Visit(ConditionFunctionNode node) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Boolean Visit(NotNode node) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Boolean Visit(ConditionAndNode node) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Boolean Visit(ConditionOrNode node) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
-
-
-
 }

@@ -56,17 +56,6 @@ class ConditionFunctionEvaluator {
 
 }
 
-
-
-
-/**
- * 
- * 
- * 
- * @author lewis
- *
- */
-
 abstract class ConditionFunction {
 	String functionDescription;
 

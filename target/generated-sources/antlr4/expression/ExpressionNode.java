@@ -9,10 +9,7 @@ abstract class CompileUnitNode {
 	
 }
 
-abstract class ExpressionNode {
-	
-	
-	
+public abstract class ExpressionNode {
 }
 
 abstract class OperationNode extends ExpressionNode {
@@ -169,13 +166,7 @@ class RuleVariableNode extends ExpressionNode {
 	}
 
 }
-/*
- * 
- * 
- * Condition Stuff
- * 
- * 
- */
+
 
 class ConditionOperationNode extends ExpressionNode {
 
@@ -245,6 +236,6 @@ class NotNode extends ExpressionNode {
 
 }
 
-class ConditionParentheticalNode extends ExpressionNode {
-
-}
+//class ConditionParentheticalNode extends ExpressionNode {
+//
+//}
