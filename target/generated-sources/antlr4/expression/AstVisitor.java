@@ -3,6 +3,7 @@ package expression;
 abstract class AstVisitor<T>
 {
 	// Expression Nodes
+	public abstract T Visit(PowerNode node);
     public abstract T Visit(AdditionNode node);
     public abstract T Visit(SubtractionNode node);
     public abstract T Visit(MultiplicationNode node);
@@ -13,7 +14,6 @@ abstract class AstVisitor<T>
     public abstract T Visit(RuleVariableNode node);
     public abstract T Visit(VariableNode node);
     
-    
     // Condition Nodes
     public abstract T Visit(RelopNode node);
     public abstract T Visit(ConditionFunctionNode node);
@@ -21,10 +21,12 @@ abstract class AstVisitor<T>
     public abstract T Visit(ConditionAndNode node);
     public abstract T Visit(ConditionOrNode node);
     
-    // Can talk about how this could be more effieint in C#, see bookmark page 
+    // Can talk about how this could be more efficient in C#, see bookmark page 
     public T Visit(ExpressionNode node)
     {
-    	if (node instanceof AdditionNode) {
+    	if (node instanceof PowerNode) {
+    	    return Visit((PowerNode)node);
+    	} else if (node instanceof AdditionNode) {
     	    return Visit((AdditionNode)node);
     	} else if (node instanceof SubtractionNode) {
     	    return Visit((SubtractionNode)node);

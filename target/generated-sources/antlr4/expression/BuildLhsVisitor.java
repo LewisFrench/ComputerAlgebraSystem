@@ -36,6 +36,10 @@ public class BuildLhsVisitor extends ArithmeticBaseVisitor<ExpressionNode> {
 
 		OperationNode node = null;
 		switch (context.op.getType()) {
+
+		case ArithmeticLexer.OP_POW:
+			node = new PowerNode();
+			break;
 		case ArithmeticLexer.OP_ADD:
 			node = new AdditionNode();
 
@@ -101,7 +105,6 @@ public class BuildLhsVisitor extends ArithmeticBaseVisitor<ExpressionNode> {
 		return new RuleVariableNode(context.value.getText());
 	}
 
-	
 	@Override
 	public ExpressionNode visitVariable(ArithmeticParser.VariableContext context) {
 		return new VariableNode(context.value.getText());

@@ -90,18 +90,6 @@ public interface ArithmeticListener extends ParseTreeListener {
 	 */
 	void exitOperation(ArithmeticParser.OperationContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code Power}
-	 * labeled alternative in {@link ArithmeticParser#expression}.
-	 * @param ctx the parse tree
-	 */
-	void enterPower(ArithmeticParser.PowerContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code Power}
-	 * labeled alternative in {@link ArithmeticParser#expression}.
-	 * @param ctx the parse tree
-	 */
-	void exitPower(ArithmeticParser.PowerContext ctx);
-	/**
 	 * Enter a parse tree produced by the {@code RuleVariable}
 	 * labeled alternative in {@link ArithmeticParser#expression}.
 	 * @param ctx the parse tree

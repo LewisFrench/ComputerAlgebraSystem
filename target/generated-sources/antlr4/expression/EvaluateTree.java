@@ -14,6 +14,15 @@ public class EvaluateTree extends AstComparator<Boolean> {
 	}
 
 	@Override
+	public Boolean Visit(PowerNode lhsNode, ExpressionNode node) {
+		if (lhsNode.getClass() == node.getClass()) {
+			boolean l = Visit(lhsNode.Left, ((PowerNode) node).Left);
+			boolean r = Visit(lhsNode.Right, ((PowerNode) node).Right);
+			return l && r;
+		}
+		return false;
+	}
+	@Override
 	public Boolean Visit(AdditionNode lhsNode, ExpressionNode node) {
 		if (lhsNode.getClass() == node.getClass()) {
 			boolean l = Visit(lhsNode.Left, ((AdditionNode) node).Left);

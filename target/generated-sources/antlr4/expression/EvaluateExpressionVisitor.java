@@ -4,6 +4,11 @@ package expression;
 class EvaluateExpressionVisitor extends AstVisitor<String> {
 
 	@Override
+	public String Visit(PowerNode node) {
+		return Visit(node.Left) + "^" + Visit(node.Right);
+	}
+	
+	@Override
 	public String Visit(AdditionNode node) {
 		return Visit(node.Left) + "+" + Visit(node.Right);
 	}

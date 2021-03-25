@@ -100,18 +100,6 @@ public class ArithmeticBaseListener implements ArithmeticListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterPower(ArithmeticParser.PowerContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitPower(ArithmeticParser.PowerContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void enterRuleVariable(ArithmeticParser.RuleVariableContext ctx) { }
 	/**
 	 * {@inheritDoc}

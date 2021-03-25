@@ -59,13 +59,6 @@ public interface ArithmeticVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitOperation(ArithmeticParser.OperationContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code Power}
-	 * labeled alternative in {@link ArithmeticParser#expression}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitPower(ArithmeticParser.PowerContext ctx);
-	/**
 	 * Visit a parse tree produced by the {@code RuleVariable}
 	 * labeled alternative in {@link ArithmeticParser#expression}.
 	 * @param ctx the parse tree

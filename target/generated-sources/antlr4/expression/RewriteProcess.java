@@ -21,6 +21,18 @@ public class RewriteProcess extends AstVisitor<ExpressionNode>{
 		this.rules = rules;
 		this.depth = depth;
 	}
+	@Override
+	public ExpressionNode Visit(PowerNode node) {
+		ExpressionNode rwLeft =  rewrite(Visit(node.Left));
+		ExpressionNode rwRight =  rewrite(Visit(node.Right));
+		node.Left = rwLeft;
+		node.Right = rwRight;
+		if (node.Left instanceof NumberNode && node.Right instanceof NumberNode) {
+			return rewrite(new NumberNode(Math.pow((((NumberNode) node.Left).getValue()) , ((NumberNode) node.Right).getValue())));
+		}
+	
+		return rewrite(node);
+	}
 
 	@Override
 	public ExpressionNode Visit(AdditionNode node) {

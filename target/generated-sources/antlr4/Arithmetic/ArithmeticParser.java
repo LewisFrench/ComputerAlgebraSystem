@@ -267,6 +267,7 @@ public class ArithmeticParser extends Parser {
 		public ExpressionContext expression(int i) {
 			return getRuleContext(ExpressionContext.class,i);
 		}
+		public TerminalNode OP_POW() { return getToken(ArithmeticParser.OP_POW, 0); }
 		public TerminalNode OP_MUL() { return getToken(ArithmeticParser.OP_MUL, 0); }
 		public TerminalNode OP_DIV() { return getToken(ArithmeticParser.OP_DIV, 0); }
 		public TerminalNode OP_ADD() { return getToken(ArithmeticParser.OP_ADD, 0); }
@@ -283,31 +284,6 @@ public class ArithmeticParser extends Parser {
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof ArithmeticVisitor ) return ((ArithmeticVisitor<? extends T>)visitor).visitOperation(this);
-			else return visitor.visitChildren(this);
-		}
-	}
-	public static class PowerContext extends ExpressionContext {
-		public ExpressionContext left;
-		public ExpressionContext right;
-		public TerminalNode OP_POW() { return getToken(ArithmeticParser.OP_POW, 0); }
-		public List<ExpressionContext> expression() {
-			return getRuleContexts(ExpressionContext.class);
-		}
-		public ExpressionContext expression(int i) {
-			return getRuleContext(ExpressionContext.class,i);
-		}
-		public PowerContext(ExpressionContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof ArithmeticListener ) ((ArithmeticListener)listener).enterPower(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof ArithmeticListener ) ((ArithmeticListener)listener).exitPower(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArithmeticVisitor ) return ((ArithmeticVisitor<? extends T>)visitor).visitPower(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -459,15 +435,15 @@ public class ArithmeticParser extends Parser {
 					switch ( getInterpreter().adaptivePredict(_input,2,_ctx) ) {
 					case 1:
 						{
-						_localctx = new PowerContext(new ExpressionContext(_parentctx, _parentState));
-						((PowerContext)_localctx).left = _prevctx;
+						_localctx = new OperationContext(new ExpressionContext(_parentctx, _parentState));
+						((OperationContext)_localctx).left = _prevctx;
 						pushNewRecursionContext(_localctx, _startState, RULE_expression);
 						setState(31);
 						if (!(precpred(_ctx, 6))) throw new FailedPredicateException(this, "precpred(_ctx, 6)");
 						setState(32);
-						match(OP_POW);
+						((OperationContext)_localctx).op = match(OP_POW);
 						setState(33);
-						((PowerContext)_localctx).right = expression(7);
+						((OperationContext)_localctx).right = expression(7);
 						}
 						break;
 					case 2:
