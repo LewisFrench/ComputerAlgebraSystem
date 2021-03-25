@@ -80,12 +80,13 @@ public class BuildConditionsVisitor extends ConditionsBaseVisitor<ExpressionNode
 	@Override
 	public ExpressionNode visitUnaryExpression(ConditionsParser.UnaryExpressionContext context) {
 		ExpressionNode node = null;
+		
 		switch (context.op.getType()) {
-		case ArithmeticLexer.OP_ADD:
+		case ConditionsLexer.OP_ADD:
 			node = visit(context.expression());
 			break;
 
-		case ArithmeticLexer.OP_SUB:
+		case ConditionsLexer.OP_SUB:
 			node = new UnaryNode(visit(context.expression()));
 			break;
 
