@@ -37,7 +37,7 @@ abstract class AstVisitor<T> {
 			return Visit((DivisionNode) node);
 		} else if (node instanceof ParentheticalNode) {
 			return Visit((ParentheticalNode) node);
-		}  else if (node instanceof UnaryNode) {
+		} else if (node instanceof UnaryNode) {
 			return Visit((UnaryNode) node);
 		} else if (node instanceof FunctionNode) {
 			return Visit((FunctionNode) node);

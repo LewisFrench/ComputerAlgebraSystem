@@ -33,7 +33,7 @@ public class BuildAstVisitor extends ArithmeticBaseVisitor<ExpressionNode> {
 
 	@Override
 	public ExpressionNode visitParenthetical(ArithmeticParser.ParentheticalContext context) {
-	
+
 		return new ParentheticalNode(visit(context.expression()));
 	}
 
@@ -86,8 +86,7 @@ public class BuildAstVisitor extends ArithmeticBaseVisitor<ExpressionNode> {
 		}
 
 		node.Left = visit(context.left);
-		node.Right = visit(context.right);		
-
+		node.Right = visit(context.right);
 
 		return node;
 	}
@@ -102,9 +101,5 @@ public class BuildAstVisitor extends ArithmeticBaseVisitor<ExpressionNode> {
 		FunctionNode node = new FunctionNode(context.func.getText(), arguments);
 		return node;
 	}
-
-
-
-
 
 }

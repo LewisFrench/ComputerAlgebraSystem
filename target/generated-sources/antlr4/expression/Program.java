@@ -72,7 +72,8 @@ public class Program {
 				ArithmeticParser parser = getParser(term);
 				CompileUnitContext antlrAST = parser.compileUnit();
 
-				//ExpressionNode ast = new BuildAstVisitor(rules, 0).visitCompileUnit(antlrAST);
+				// ExpressionNode ast = new BuildAstVisitor(rules,
+				// 0).visitCompileUnit(antlrAST);
 				ExpressionNode ast = new BuildAstVisitor().visitCompileUnit(antlrAST);
 				ExpressionNode ast2 = new RewriteProcess(rules, 0).Visit(ast);
 				String value = new EvaluateExpressionVisitor().Visit(ast2);
