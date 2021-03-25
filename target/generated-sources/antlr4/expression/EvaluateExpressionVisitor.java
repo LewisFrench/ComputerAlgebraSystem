@@ -29,6 +29,10 @@ class EvaluateExpressionVisitor extends AstVisitor<String> {
 		// divide by 0 errors
 		return Visit(node.Left) + "/" + Visit(node.Right);
 	}
+	@Override
+	public String Visit(ParentheticalNode node) {
+		return "(" + Visit(node.innerNode) + ")";
+	}
 
 	@Override
 	public String Visit(NumberNode node) {

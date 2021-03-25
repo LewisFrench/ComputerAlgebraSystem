@@ -74,6 +74,15 @@ public class EvaluateTree extends AstComparator<Boolean> {
 	}
 
 	@Override
+	public Boolean Visit(ParentheticalNode lhsNode, ExpressionNode node) {
+		boolean match = false;
+		if (lhsNode.getClass() == node.getClass()) {
+			match = Visit(lhsNode.innerNode, ((ParentheticalNode) node).innerNode);
+
+		}
+		return match;
+	}
+	@Override
 	public Boolean Visit(UnaryNode lhsNode, ExpressionNode node) {
 		boolean match = false;
 		if (lhsNode.getClass() == node.getClass()) {

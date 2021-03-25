@@ -61,7 +61,15 @@ public class DependsEvaluator extends AstVisitor<Boolean> {
 		}
 		return Visit(node.Left) || Visit(node.Right);
 	}
-
+	@Override
+	public Boolean Visit(ParentheticalNode node) {
+		if(node.getClass() == dependency.getClass()) {
+			if (treeMatcher.Visit(node,  dependency)) {
+				return true;
+			}
+		}
+		return Visit(node.innerNode);
+	}
 	@Override
 	public Boolean Visit(NumberNode node) {
 		return node.getClass() == dependency.getClass() && node.getValue() == ((NumberNode) dependency).getValue();
@@ -138,6 +146,8 @@ public class DependsEvaluator extends AstVisitor<Boolean> {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+
 
 
 

@@ -5,9 +5,15 @@ import java.util.Arrays;
 
 abstract class CompileUnitNode {
 	ExpressionNode expression;
+	
+	
 }
 
-abstract class ExpressionNode { }
+abstract class ExpressionNode {
+	
+	
+	
+}
 
 abstract class OperationNode extends ExpressionNode {
 
@@ -61,6 +67,17 @@ class MultiplicationNode extends OperationNode {
 class DivisionNode extends OperationNode {
 	public String toString() {
 		return (getLeft().toString() + " / " + getRight().toString());
+	}
+}
+
+class ParentheticalNode extends ExpressionNode{
+	public ExpressionNode innerNode;
+	
+	public ParentheticalNode(ExpressionNode innerNode) {
+		this.innerNode = innerNode;
+	}
+	public String toString() {
+		return "(" + this.innerNode.toString() + ")";
 	}
 }
 
