@@ -71,8 +71,10 @@ public class Program {
 				ArithmeticParser parser = getParser(term);
 				CompileUnitContext antlrAST = parser.compileUnit();
 
-				ExpressionNode ast = new BuildAstVisitor(rules, 0).visitCompileUnit(antlrAST);
-				String value = new EvaluateExpressionVisitor().Visit(ast);
+				//ExpressionNode ast = new BuildAstVisitor(rules, 0).visitCompileUnit(antlrAST);
+				ExpressionNode ast = new BuildAstVisitor().visitCompileUnit(antlrAST);
+				ExpressionNode ast2 = new RewriteProcess(rules, 0).Visit(ast);
+				String value = new EvaluateExpressionVisitor().Visit(ast2);
 				System.out
 						.println("\n- - - - Evaluated Value - - - -\n" + value + "\n- - - - - - - - - - - - - - - -\n");
 			} else {
