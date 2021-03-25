@@ -170,4 +170,10 @@ public class EvaluateConditionsVisitor extends AstVisitor<Boolean> {
 		return null;
 	}
 
+	@Override
+	public Boolean Visit(ParentheticalNode node) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

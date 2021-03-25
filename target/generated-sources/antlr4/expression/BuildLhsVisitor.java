@@ -28,7 +28,7 @@ public class BuildLhsVisitor extends ArithmeticBaseVisitor<ExpressionNode> {
 
 	@Override
 	public ExpressionNode visitParenthetical(ArithmeticParser.ParentheticalContext context) {
-		return visit(context.expression());
+		return new ParentheticalNode(visit(context.expression()));
 	}
 
 	@Override

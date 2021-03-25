@@ -8,6 +8,7 @@ abstract class AstVisitor<T>
     public abstract T Visit(SubtractionNode node);
     public abstract T Visit(MultiplicationNode node);
     public abstract T Visit(DivisionNode node);
+    public abstract T Visit(ParentheticalNode node);
     public abstract T Visit(NumberNode node);
     public abstract T Visit(UnaryNode node); 
     public abstract T Visit(FunctionNode node);
@@ -42,6 +43,8 @@ abstract class AstVisitor<T>
     		return Visit((RuleVariableNode) node);
     	} else if (node instanceof UnaryNode) {
     		return Visit((UnaryNode) node);
+    	} else if (node instanceof ParentheticalNode) {
+    		return Visit((ParentheticalNode) node);
     	}
     	else if (node instanceof VariableNode) {
     		return Visit((VariableNode) node);

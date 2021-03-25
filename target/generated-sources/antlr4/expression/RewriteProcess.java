@@ -89,6 +89,12 @@ public class RewriteProcess extends AstVisitor<ExpressionNode>{
 	}
 
 	@Override
+	public ExpressionNode Visit(ParentheticalNode node) {
+		node.innerNode = rewrite(Visit(node.innerNode));
+		return rewrite(node);
+	}
+	
+	@Override
 	public ExpressionNode Visit(NumberNode node) {
 		return rewrite(node);
 	}
@@ -207,4 +213,6 @@ public class RewriteProcess extends AstVisitor<ExpressionNode>{
 		}
 		return true;
 	}
+
+
 }
