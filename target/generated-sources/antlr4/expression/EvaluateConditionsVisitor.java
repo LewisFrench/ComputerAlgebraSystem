@@ -95,21 +95,17 @@ public class EvaluateConditionsVisitor extends AstVisitor<Boolean> {
 		// Decide equivalence between any two nodes
 		EvaluateTree treeMatcher = new EvaluateTree();
 		if (relopNode.relop == ConditionsLexer.RELOP_EQ) {
-			System.out.println("Eval ==");
 			return treeMatcher.Visit(relopNode.left, relopNode.right);
 		} else if (relopNode.relop == ConditionsLexer.RELOP_NEQ) {
 			return !(treeMatcher.Visit(relopNode.left, relopNode.right));
 		}
-		
-		// Evaluate greater than, less than for number nodes. 
 		NumberNode l;
 		NumberNode r;
 		l = getNumberNode(relopNode.left);
 		r = getNumberNode(relopNode.right);
 		
 		boolean relopResult = false;
-		// Use Constants for the reloperators
-		System.out.println("Relop Numbers : "+ relopNode.left.toString() + relopNode.relopText + relopNode.right.toString());
+		
 		switch (relopNode.relop) {
 		
 		case ConditionsLexer.RELOP_LT:
@@ -136,9 +132,12 @@ public class EvaluateConditionsVisitor extends AstVisitor<Boolean> {
 			if (value instanceof NumberNode) {
 				return (NumberNode) value;
 			}
-			
 		} else if (node instanceof NumberNode) {
 			return (NumberNode) node;
+		} else if (node instanceof UnaryNode) {
+			if (((UnaryNode)node).innerNode instanceof NumberNode) {
+				return new NumberNode(-1* ((NumberNode)((UnaryNode)node).innerNode).getValue());
+			}
 		}
 		// Exception? - cannot compare the two nodes using > >= < <= operators
 		
