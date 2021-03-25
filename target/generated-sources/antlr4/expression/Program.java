@@ -37,10 +37,10 @@ public class Program {
 
 		System.out.println("START");
 		ArrayList<Rule> rules = new ArrayList<>();
-
+		String[] splitRule;
 		for (String rule : strRules) {
 
-			String[] splitRule = splitRuleString(rule);
+			splitRule = splitRuleString(rule);
 			System.out.println(Arrays.toString(splitRule));
 
 			if (splitRule.length <= 1 || splitRule.length > 3) {
@@ -61,6 +61,7 @@ public class Program {
 				rules.add(new Rule(lhsAST, rhsAST));
 			}
 		}
+
 		System.out.println("Enter a term:\n");
 		Scanner scanner = new Scanner(System.in);
 		boolean userEnds = false;

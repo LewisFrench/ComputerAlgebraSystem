@@ -164,4 +164,10 @@ public class EvaluateConditionsVisitor extends AstVisitor<Boolean> {
 		return (Visit(node.left) || Visit(node.right));
 	}
 
+	@Override
+	public Boolean Visit(PowerNode node) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

@@ -6,7 +6,7 @@ expression
    :  func = VARIABLE LPAREN  arguments =  expression( COMMA expression)* RPAREN #FunctionExpression
    |  op = (OP_ADD | OP_SUB) expression #UnaryExpression
    |  LPAREN expression RPAREN #Parenthetical
-   |  left = expression  OP_POW right = expression #Power
+   |  left = expression  op = OP_POW right = expression #Operation
    |  left = expression  op = (OP_MUL | OP_DIV) right = expression #Operation
    |  left = expression  op = (OP_ADD | OP_SUB) right = expression #Operation
    |  value = VARIABLE #Variable

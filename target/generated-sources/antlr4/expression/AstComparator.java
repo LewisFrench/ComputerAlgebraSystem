@@ -1,6 +1,8 @@
 package expression;
 
 abstract class AstComparator<T> {
+	public abstract T Visit(PowerNode LhsNode, ExpressionNode node);
+	
 	public abstract T Visit(AdditionNode LhsNode, ExpressionNode node);
 
 	public abstract T Visit(SubtractionNode lhsNode, ExpressionNode node);
@@ -8,7 +10,6 @@ abstract class AstComparator<T> {
 	public abstract T Visit(MultiplicationNode lhsNode, ExpressionNode node);
 
 	public abstract T Visit(DivisionNode lhsNode, ExpressionNode node);
-
 
 	public abstract T Visit(UnaryNode lhsNode, ExpressionNode node);
 
@@ -22,7 +23,9 @@ abstract class AstComparator<T> {
 
 	// Can talk about how this could be more effieint in C#, see bookmark page
 	public T Visit(ExpressionNode lhsNode, ExpressionNode node) {
-		if (lhsNode instanceof AdditionNode) {
+		if (lhsNode instanceof PowerNode) {
+			return Visit((PowerNode) lhsNode, node);
+		} else if (lhsNode instanceof AdditionNode) {
 			return Visit((AdditionNode) lhsNode, node);
 		} else if (lhsNode instanceof SubtractionNode) {
 			return Visit((SubtractionNode) lhsNode, node);

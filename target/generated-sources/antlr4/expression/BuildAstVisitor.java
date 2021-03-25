@@ -67,6 +67,9 @@ public class BuildAstVisitor extends ArithmeticBaseVisitor<ExpressionNode> {
 
 		OperationNode node = null;
 		switch (context.op.getType()) {
+		case ArithmeticLexer.OP_POW:
+			node = new PowerNode();
+			break;
 		case ArithmeticLexer.OP_ADD:
 			node = new AdditionNode();
 
@@ -91,22 +94,13 @@ public class BuildAstVisitor extends ArithmeticBaseVisitor<ExpressionNode> {
 
 		node.Left = visit(context.left);
 		node.Right = visit(context.right);		
-		// maybe store rewrite node as a variable, and return it if the simplification evaluations below don't add up
-//		if (node.Left instanceof NumberNode && node.Right instanceof NumberNode && node instanceof AdditionNode) {
-//			return new NumberNode(((NumberNode) node.Left).getValue() + ((NumberNode) node.Right).getValue());
-//		} else if (node.Left instanceof NumberNode && node.Right instanceof NumberNode
-//				&& node instanceof SubtractionNode) {
-//			return new NumberNode(((NumberNode) node.Left).getValue() - ((NumberNode) node.Right).getValue());
-//		}
+
 
 		return node;
 	}
 
 	@Override
 	public ExpressionNode visitFunctionExpression(ArithmeticParser.FunctionExpressionContext context) {
-//		if (this.depth > 400) {
-//			return null;
-//		}
 		ArrayList<ExpressionNode> arguments = new ArrayList<>();
 		for (int i = 0; i < context.expression().size(); i++) {
 			arguments.add(visit(context.expression(i)));

@@ -9,6 +9,15 @@ public class DependsEvaluator extends AstVisitor<Boolean> {
 		this.dependency = dependency;
 	}
 
+	@Override
+	public Boolean Visit(PowerNode node) {
+		if (node.getClass() == dependency.getClass()) {
+			if (treeMatcher.Visit(node, dependency)) {
+				return true;
+			}
+		}
+		return Visit(node.Left) || Visit(node.Right);
+	}
 	// Methods determine if dependency is present in the tree
 	@Override
 	public Boolean Visit(AdditionNode node) {
@@ -129,5 +138,7 @@ public class DependsEvaluator extends AstVisitor<Boolean> {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+
 
 }

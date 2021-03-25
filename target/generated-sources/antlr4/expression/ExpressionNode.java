@@ -33,6 +33,12 @@ abstract class OperationNode extends ExpressionNode {
 
 }
 
+class PowerNode extends OperationNode {
+
+	public String toString() {
+		return (getLeft().toString() + " ^ " + getRight().toString());
+	}
+}
 class AdditionNode extends OperationNode {
 
 	public String toString() {
