@@ -63,17 +63,7 @@ public class BuildLhsVisitor extends ArithmeticBaseVisitor<ExpressionNode> {
 		}
 
 		node.Left = visit(context.left);
-
 		node.Right = visit(context.right);
-
-		/*
-		 * if (node.Left instanceof NumberNode && node.Right instanceof NumberNode &&
-		 * node instanceof AdditionNode) { return new NumberNode(((NumberNode)
-		 * node.Left).getValue() + ((NumberNode) node.Right).getValue()); } else if
-		 * (node.Left instanceof NumberNode && node.Right instanceof NumberNode && node
-		 * instanceof SubtractionNode) { return new NumberNode(((NumberNode)
-		 * node.Left).getValue() - ((NumberNode) node.Right).getValue()); }
-		 */
 
 		return node;
 	}

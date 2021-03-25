@@ -1,6 +1,19 @@
 package expression;
 
-abstract class AstVisitor<T> {
+abstract class ConditionVisitor<T> {
+
+	// Condition Nodes
+	public abstract T Visit(ConditionAndNode node);
+
+	public abstract T Visit(ConditionOrNode node);
+
+	public abstract T Visit(NotNode node);
+
+	public abstract T Visit(RelopNode node);
+
+	public abstract T Visit(ConditionFunctionNode node);
+
+	// Expression Nodes
 	public abstract T Visit(PowerNode node);
 
 	public abstract T Visit(AdditionNode node);
@@ -25,7 +38,17 @@ abstract class AstVisitor<T> {
 
 	// Can talk about how this could be more efficient in C#, see bookmark page
 	public T Visit(ExpressionNode node) {
-		if (node instanceof PowerNode) {
+		if (node instanceof ConditionAndNode) {
+			return Visit((ConditionAndNode) node);
+		} else if (node instanceof ConditionOrNode) {
+			return Visit((ConditionOrNode) node);
+		} else if (node instanceof NotNode) {
+			return Visit((NotNode) node);
+		} else if (node instanceof RelopNode) {
+			return Visit((RelopNode) node);
+		} else if (node instanceof ConditionFunctionNode) {
+			return Visit((ConditionFunctionNode) node);
+		} else if (node instanceof PowerNode) {
 			return Visit((PowerNode) node);
 		} else if (node instanceof AdditionNode) {
 			return Visit((AdditionNode) node);

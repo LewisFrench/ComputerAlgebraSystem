@@ -37,16 +37,17 @@ class ConditionFunctionEvaluator {
 		}
 		return false;
 	}
-	public ArrayList<ExpressionNode> transformRuleVariableArguments(ArrayList<ExpressionNode> arguments){
+
+	public ArrayList<ExpressionNode> transformRuleVariableArguments(ArrayList<ExpressionNode> arguments) {
 		ArrayList<ExpressionNode> transformedArguments = new ArrayList<>();
-		for (ExpressionNode argument: arguments) {
+		for (ExpressionNode argument : arguments) {
 			if (argument instanceof RuleVariableNode) {
-				if (this.variables.get(((RuleVariableNode)argument).toString()) != null){
-					transformedArguments.add(this.variables.get(((RuleVariableNode)argument).toString()));
+				if (this.variables.get(((RuleVariableNode) argument).toString()) != null) {
+					transformedArguments.add(this.variables.get(((RuleVariableNode) argument).toString()));
 				} else {
 					transformedArguments.add(argument);
 				}
-				
+
 			} else {
 				transformedArguments.add(argument);
 			}
@@ -55,17 +56,6 @@ class ConditionFunctionEvaluator {
 	}
 
 }
-
-
-
-
-/**
- * 
- * 
- * 
- * @author lewis
- *
- */
 
 abstract class ConditionFunction {
 	String functionDescription;
@@ -105,7 +95,8 @@ class is_integer extends ConditionFunction {
 	boolean function(ArrayList<ExpressionNode> arguments) {
 		if (arguments.size() == 1) {
 			if (arguments.get(0) instanceof NumberNode) {
-				return (((NumberNode) arguments.get(0)).getValue() == Math.floor(((NumberNode) arguments.get(0)).getValue()));
+				return (((NumberNode) arguments.get(0)).getValue() == Math
+						.floor(((NumberNode) arguments.get(0)).getValue()));
 			} else {
 				return false;
 			}
@@ -117,7 +108,7 @@ class is_integer extends ConditionFunction {
 
 class depends extends ConditionFunction {
 	String functionDescription = "depends($A, $b)  :  Determines if term $A contains any instance of term $b";
-	
+
 	@Override
 	boolean function(ArrayList<ExpressionNode> arguments) {
 		if (arguments.size() == 2) {

@@ -5,14 +5,10 @@ import java.util.Arrays;
 
 abstract class CompileUnitNode {
 	ExpressionNode expression;
-	
-	
+
 }
 
-abstract class ExpressionNode {
-	
-	
-	
+public abstract class ExpressionNode {
 }
 
 abstract class OperationNode extends ExpressionNode {
@@ -45,6 +41,7 @@ class PowerNode extends OperationNode {
 		return (getLeft().toString() + " ^ " + getRight().toString());
 	}
 }
+
 class AdditionNode extends OperationNode {
 
 	public String toString() {
@@ -70,12 +67,13 @@ class DivisionNode extends OperationNode {
 	}
 }
 
-class ParentheticalNode extends ExpressionNode{
+class ParentheticalNode extends ExpressionNode {
 	public ExpressionNode innerNode;
-	
+
 	public ParentheticalNode(ExpressionNode innerNode) {
 		this.innerNode = innerNode;
 	}
+
 	public String toString() {
 		return "(" + this.innerNode.toString() + ")";
 	}
@@ -169,13 +167,6 @@ class RuleVariableNode extends ExpressionNode {
 	}
 
 }
-/*
- * 
- * 
- * Condition Stuff
- * 
- * 
- */
 
 class ConditionOperationNode extends ExpressionNode {
 
@@ -202,14 +193,12 @@ class RelopNode extends ExpressionNode {
 	ExpressionNode right;
 	int relop;
 	String relopText;
-	
-	
 
 	public RelopNode(ExpressionNode left, ExpressionNode right, int relop, String relopText) {
 		this.left = left;
 		this.right = right;
 		this.relop = relop;
-		this.relopText = relopText; 
+		this.relopText = relopText;
 	}
 
 	public String toString() {
@@ -225,7 +214,7 @@ class ConditionFunctionNode extends ExpressionNode {
 		this.functionName = functionName;
 		this.arguments = arguments;
 	}
-	
+
 	public String toString() {
 		return this.functionName + Arrays.toString(this.arguments.toArray()).replace("[", "(").replace("]", ")");
 	}
@@ -239,12 +228,13 @@ class NotNode extends ExpressionNode {
 	public NotNode(ExpressionNode innerNode) {
 		this.innerNode = innerNode;
 	}
-	public String toString()  {
+
+	public String toString() {
 		return "!" + this.innerNode.toString();
 	}
 
 }
 
-class ConditionParentheticalNode extends ExpressionNode {
-
-}
+//class ConditionParentheticalNode extends ExpressionNode {
+//
+//}

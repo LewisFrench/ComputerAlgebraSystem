@@ -7,7 +7,7 @@ class EvaluateExpressionVisitor extends AstVisitor<String> {
 	public String Visit(PowerNode node) {
 		return Visit(node.Left) + "^" + Visit(node.Right);
 	}
-	
+
 	@Override
 	public String Visit(AdditionNode node) {
 		return Visit(node.Left) + "+" + Visit(node.Right);
@@ -29,6 +29,7 @@ class EvaluateExpressionVisitor extends AstVisitor<String> {
 		// divide by 0 errors
 		return Visit(node.Left) + "/" + Visit(node.Right);
 	}
+
 	@Override
 	public String Visit(ParentheticalNode node) {
 		return "(" + Visit(node.innerNode) + ")";
@@ -41,7 +42,7 @@ class EvaluateExpressionVisitor extends AstVisitor<String> {
 
 	@Override
 	public String Visit(UnaryNode node) {
-		return ("-" + String.valueOf(Visit(node.innerNode).toString()));
+		return ("-" + Visit(node.innerNode).toString());
 	}
 
 	@Override
@@ -57,43 +58,7 @@ class EvaluateExpressionVisitor extends AstVisitor<String> {
 
 	@Override
 	public String Visit(VariableNode node) {
-		;
-
 		return node.toString();
 	}
 
-	/*
-	 * 
-	 * Condition Nodes
-	 * 
-	 */
-	@Override
-	public String Visit(RelopNode node) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public String Visit(ConditionFunctionNode node) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public String Visit(NotNode node) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public String Visit(ConditionAndNode node) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public String Visit(ConditionOrNode node) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 }

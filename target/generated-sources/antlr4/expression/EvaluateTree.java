@@ -6,7 +6,6 @@ public class EvaluateTree extends AstComparator<Boolean> {
 
 	ArrayList<ExpressionNode> arguments;
 	ArrayList<String> variables;
-	
 
 	public EvaluateTree() {
 		this.arguments = new ArrayList<>();
@@ -22,6 +21,7 @@ public class EvaluateTree extends AstComparator<Boolean> {
 		}
 		return false;
 	}
+
 	@Override
 	public Boolean Visit(AdditionNode lhsNode, ExpressionNode node) {
 		if (lhsNode.getClass() == node.getClass()) {
@@ -82,6 +82,7 @@ public class EvaluateTree extends AstComparator<Boolean> {
 		}
 		return match;
 	}
+
 	@Override
 	public Boolean Visit(UnaryNode lhsNode, ExpressionNode node) {
 		boolean match = false;
