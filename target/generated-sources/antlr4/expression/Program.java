@@ -26,7 +26,7 @@ public class Program {
 
 	public static void main(String[] args) {
 
-		//ArrayList<String> strRules = new ArrayList<>();
+//		ArrayList<String> strRules = new ArrayList<>();
 //		try {
 //			Path path = Paths.get(args[0]);
 //			Files.lines(path).map(s -> s.trim()).filter(s -> !s.isEmpty()).forEach(strRules::add);
@@ -34,7 +34,7 @@ public class Program {
 //			// TODO Auto-generated catch block
 //			e.printStackTrace();
 //		}
-		String[] strRules = {"diff($A + $B, $x) = diff($A, $x) + diff($B, $x)"};
+		String[] strRules = {"x+(x"};
 		ArrayList<Rule> rules = new ArrayList<>();
 		String[] splitRule;
 		for (String rule : strRules) {
@@ -74,7 +74,7 @@ public class Program {
 				// ExpressionNode ast = new BuildAstVisitor(rules,
 				// 0).visitCompileUnit(antlrAST);
 				ExpressionNode ast = new BuildAstVisitor().visitCompileUnit(antlrAST);
-				ExpressionNode ast2 = new RewriteProcess(rules, 0).Visit(ast);
+				ExpressionNode ast2 = new RewriteProcess(rules).Visit(ast);
 				String value = new EvaluateExpressionVisitor().Visit(ast2);
 				System.out
 						.println("\n- - - - Evaluated Value - - - -\n" + value + "\n- - - - - - - - - - - - - - - -\n");
@@ -86,6 +86,7 @@ public class Program {
 	}
 
 	private static String[] splitRuleString(String term) {
+		
 		String[] splitByEquals = term.split("=", 2);
 		String[] splitByCondition = splitByEquals[1].split("\\sif\\s", 2);
 		if (splitByCondition.length > 1) {
