@@ -24,8 +24,8 @@ public class RewriteProcess extends AstVisitor<ExpressionNode> {
 
 	@Override
 	public ExpressionNode Visit(PowerNode node) {
-		ExpressionNode rwLeft = rewrite(Visit(node.Left));
-		ExpressionNode rwRight = rewrite(Visit(node.Right));
+		ExpressionNode rwLeft = (Visit(node.Left));
+		ExpressionNode rwRight = (Visit(node.Right));
 		node.Left = rwLeft;
 		node.Right = rwRight;
 		if (node.Left instanceof NumberNode && node.Right instanceof NumberNode) {
@@ -38,8 +38,8 @@ public class RewriteProcess extends AstVisitor<ExpressionNode> {
 
 	@Override
 	public ExpressionNode Visit(AdditionNode node) {
-		ExpressionNode rwLeft = rewrite(Visit(node.Left));
-		ExpressionNode rwRight = rewrite(Visit(node.Right));
+		ExpressionNode rwLeft = (Visit(node.Left));
+		ExpressionNode rwRight = (Visit(node.Right));
 		node.Left = rwLeft;
 		node.Right = rwRight;
 		if (node.Left instanceof NumberNode && node.Right instanceof NumberNode) {
@@ -51,8 +51,8 @@ public class RewriteProcess extends AstVisitor<ExpressionNode> {
 
 	@Override
 	public ExpressionNode Visit(SubtractionNode node) {
-		ExpressionNode rwLeft = rewrite(Visit(node.Left));
-		ExpressionNode rwRight = rewrite(Visit(node.Right));
+		ExpressionNode rwLeft = (Visit(node.Left));
+		ExpressionNode rwRight = (Visit(node.Right));
 		node.Left = rwLeft;
 		node.Right = rwRight;
 		if (node.Left instanceof NumberNode && node.Right instanceof NumberNode) {
@@ -64,8 +64,8 @@ public class RewriteProcess extends AstVisitor<ExpressionNode> {
 
 	@Override
 	public ExpressionNode Visit(MultiplicationNode node) {
-		ExpressionNode rwLeft = rewrite(Visit(node.Left));
-		ExpressionNode rwRight = rewrite(Visit(node.Right));
+		ExpressionNode rwLeft = (Visit(node.Left));
+		ExpressionNode rwRight = (Visit(node.Right));
 		node.Left = rwLeft;
 		node.Right = rwRight;
 		if (node.Left instanceof NumberNode && node.Right instanceof NumberNode) {
@@ -78,8 +78,8 @@ public class RewriteProcess extends AstVisitor<ExpressionNode> {
 	@Override
 	public ExpressionNode Visit(DivisionNode node) {
 		// TODO Auto-generated method stub
-		ExpressionNode rwLeft = rewrite(Visit(node.Left));
-		ExpressionNode rwRight = rewrite(Visit(node.Right));
+		ExpressionNode rwLeft = (Visit(node.Left));
+		ExpressionNode rwRight = (Visit(node.Right));
 		node.Left = rwLeft;
 		node.Right = rwRight;
 		if (node.Left instanceof NumberNode && node.Right instanceof NumberNode) {
@@ -134,41 +134,34 @@ public class RewriteProcess extends AstVisitor<ExpressionNode> {
 	public ExpressionNode rewrite(ExpressionNode node) {
 		boolean conditionsHold;
 		Rule appliedRule = null;
-		EvaluateTree argumentEvaluator = new EvaluateTree();
+		EvaluateTree argumentEvaluator;
 		if (rules != null) {
 			for (Rule r : rules) {
+				argumentEvaluator = new EvaluateTree();
+
 				conditionsHold = false;
 				if (argumentEvaluator.Visit(r.lhsNode, node)) {
-					appliedRule = new Rule(r.lhs, r.rhs, r.conditions);
+					
+					if (argumentsValid(argumentEvaluator)) {
+						appliedRule = new Rule(r.lhs, r.rhs, r.conditions);
 
-					if (!(argumentsValid(argumentEvaluator))) {
-						System.out.println("Error: Variables with the same identifiers must match");
-					}
-					// TODO : else { here so that arguments that don't match with the rule (with
-					// repeating argument variables)
-					for (String key : appliedRule.variables.keySet()) {
-						if (appliedRule.variables.get(key) == null) {
-							appliedRule.variables.put(key, argumentEvaluator.arguments.get(0));
-							argumentEvaluator.arguments.remove(0);
+						for (String key : appliedRule.variables.keySet()) {
+							if (appliedRule.variables.get(key) == null) {
+								appliedRule.variables.put(key, argumentEvaluator.arguments.get(0));
+								argumentEvaluator.arguments.remove(0);
+							}
 						}
-					}
-					if (appliedRule.conditions != null) {
-						ExpressionNode conditionsNode = new BuildConditionsVisitor(appliedRule.variables)
-								.visitRuleConditions(appliedRule.conditions);
-						conditionsHold = new EvaluateConditionsVisitor(appliedRule.variables).Visit(conditionsNode);
-					}
-					if (conditionsHold || appliedRule.conditions == null) {
-
-						// For getting poster screenshot
-						// System.out.println("Matched Term " + node.toString() + "\nto rule " +
-						// appliedRule.toString());
-						// appliedRule.rhsNode = new BuildAstVisitor(appliedRule.variables, rules,
-						// this.depth + 1)
-						// .visitCompileUnit(appliedRule.rhs);
-						appliedRule.rhsNode = new RewriteProcess(appliedRule.variables, rules, this.depth + 1)
-								.Visit(new BuildAstVisitor().visitCompileUnit(appliedRule.rhs));
-
-						return appliedRule.rhsNode;
+						if (appliedRule.conditions != null) {
+							ExpressionNode conditionsNode = new BuildConditionsVisitor(appliedRule.variables)
+									.visitRuleConditions(appliedRule.conditions);
+							conditionsHold = new EvaluateConditionsVisitor(appliedRule.variables).Visit(conditionsNode);
+						}
+						if (conditionsHold || appliedRule.conditions == null) {
+							appliedRule.rhsNode = new RewriteProcess(appliedRule.variables, rules, this.depth + 1)
+									.Visit(new BuildAstVisitor().visitCompileUnit(appliedRule.rhs));
+	
+							return appliedRule.rhsNode;
+						}
 					}
 				}
 			}

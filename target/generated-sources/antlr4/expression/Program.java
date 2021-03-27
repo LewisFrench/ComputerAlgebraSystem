@@ -26,16 +26,15 @@ public class Program {
 
 	public static void main(String[] args) {
 
-		ArrayList<String> strRules = new ArrayList<>();
-		try {
-			Path path = Paths.get(args[0]);
-			Files.lines(path).map(s -> s.trim()).filter(s -> !s.isEmpty()).forEach(strRules::add);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		System.out.println("START");
+		//ArrayList<String> strRules = new ArrayList<>();
+//		try {
+//			Path path = Paths.get(args[0]);
+//			Files.lines(path).map(s -> s.trim()).filter(s -> !s.isEmpty()).forEach(strRules::add);
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+		String[] strRules = {"diff($A + $B, $x) = diff($A, $x) + diff($B, $x)"};
 		ArrayList<Rule> rules = new ArrayList<>();
 		String[] splitRule;
 		for (String rule : strRules) {
