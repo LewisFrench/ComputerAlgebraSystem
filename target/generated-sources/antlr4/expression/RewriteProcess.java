@@ -4,22 +4,15 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
 public class RewriteProcess extends AstVisitor<ExpressionNode> {
-	LinkedHashMap<String, ExpressionNode> variables;
+	//LinkedHashMap<String, ExpressionNode> variables;
 	ArrayList<Rule> rules;
+	
+	// Maximum Rule Applications
 
-	int depth;
-
-	public RewriteProcess(ArrayList<Rule> ruleSet, int depth) {
+	public RewriteProcess(ArrayList<Rule> ruleSet) {
 		rules = ruleSet;
-		this.depth = depth;
+		
 
-	}
-
-	public RewriteProcess(LinkedHashMap<String, ExpressionNode> variables, ArrayList<Rule> rules, int depth) {
-
-		this.variables = variables;
-		this.rules = rules;
-		this.depth = depth;
 	}
 
 	@Override
@@ -28,63 +21,46 @@ public class RewriteProcess extends AstVisitor<ExpressionNode> {
 		ExpressionNode rwRight = (Visit(node.Right));
 		node.Left = rwLeft;
 		node.Right = rwRight;
-		if (node.Left instanceof NumberNode && node.Right instanceof NumberNode) {
-			return rewrite(new NumberNode(
-					Math.pow((((NumberNode) node.Left).getValue()), ((NumberNode) node.Right).getValue())));
-		}
 
 		return rewrite(node);
 	}
 
 	@Override
 	public ExpressionNode Visit(AdditionNode node) {
-		ExpressionNode rwLeft = (Visit(node.Left));
-		ExpressionNode rwRight = (Visit(node.Right));
-		node.Left = rwLeft;
-		node.Right = rwRight;
-		if (node.Left instanceof NumberNode && node.Right instanceof NumberNode) {
-			return rewrite(new NumberNode(((NumberNode) node.Left).getValue() + ((NumberNode) node.Right).getValue()));
-		}
+		ExpressionNode visitedLeft = (Visit(node.Left));
+		ExpressionNode visitedRight = (Visit(node.Right));
+		node.Left = visitedLeft;
+		node.Right = visitedRight;
 
 		return rewrite(node);
 	}
 
 	@Override
 	public ExpressionNode Visit(SubtractionNode node) {
-		ExpressionNode rwLeft = (Visit(node.Left));
-		ExpressionNode rwRight = (Visit(node.Right));
-		node.Left = rwLeft;
-		node.Right = rwRight;
-		if (node.Left instanceof NumberNode && node.Right instanceof NumberNode) {
-			return rewrite(new NumberNode(((NumberNode) node.Left).getValue() - ((NumberNode) node.Right).getValue()));
-		}
+		ExpressionNode visitedLeft = (Visit(node.Left));
+		ExpressionNode visitedRight = (Visit(node.Right));
+		node.Left = visitedLeft;
+		node.Right = visitedRight;
 
 		return rewrite(node);
 	}
 
 	@Override
 	public ExpressionNode Visit(MultiplicationNode node) {
-		ExpressionNode rwLeft = (Visit(node.Left));
-		ExpressionNode rwRight = (Visit(node.Right));
-		node.Left = rwLeft;
-		node.Right = rwRight;
-		if (node.Left instanceof NumberNode && node.Right instanceof NumberNode) {
-			return rewrite(new NumberNode(((NumberNode) node.Left).getValue() * ((NumberNode) node.Right).getValue()));
-		}
+		ExpressionNode visitedLeft = (Visit(node.Left));
+		ExpressionNode visitedRight = (Visit(node.Right));
+		node.Left = visitedLeft;
+		node.Right = visitedRight;
 
 		return rewrite(node);
 	}
 
 	@Override
 	public ExpressionNode Visit(DivisionNode node) {
-		// TODO Auto-generated method stub
-		ExpressionNode rwLeft = (Visit(node.Left));
-		ExpressionNode rwRight = (Visit(node.Right));
-		node.Left = rwLeft;
-		node.Right = rwRight;
-		if (node.Left instanceof NumberNode && node.Right instanceof NumberNode) {
-			return rewrite(new NumberNode(((NumberNode) node.Left).getValue() / ((NumberNode) node.Right).getValue()));
-		}
+		ExpressionNode visitedLeft = (Visit(node.Left));
+		ExpressionNode visitedRight = (Visit(node.Right));
+		node.Left = visitedLeft;
+		node.Right = visitedRight;
 
 		return rewrite(node);
 	}
@@ -119,9 +95,7 @@ public class RewriteProcess extends AstVisitor<ExpressionNode> {
 
 	@Override
 	public ExpressionNode Visit(RuleVariableNode node) {
-		if (this.variables.get(node.toString()) != null) {
-			return this.variables.get(node.toString());
-		}
+		System.out.println("EXCEPTION");
 
 		return node;
 	}
@@ -157,10 +131,11 @@ public class RewriteProcess extends AstVisitor<ExpressionNode> {
 							conditionsHold = new EvaluateConditionsVisitor(appliedRule.variables).Visit(conditionsNode);
 						}
 						if (conditionsHold || appliedRule.conditions == null) {
-							appliedRule.rhsNode = new RewriteProcess(appliedRule.variables, rules, this.depth + 1)
-									.Visit(new BuildAstVisitor().visitCompileUnit(appliedRule.rhs));
-	
-							return appliedRule.rhsNode;
+
+							appliedRule.rhsNode = new BuildRhsVisitor(appliedRule.variables).visit(appliedRule.rhs);
+							System.out.println("\nMatch Rule " + appliedRule.toString() + " to node " + node.toString());
+							System.out.println(node.toString() + " --->  " + appliedRule.rhsNode.toString());
+							return Visit(appliedRule.rhsNode);
 						}
 					}
 				}
@@ -170,6 +145,7 @@ public class RewriteProcess extends AstVisitor<ExpressionNode> {
 	}
 
 	public boolean argumentsValid(EvaluateTree argumentEvaluator) {
+		// Maybe validate to check size are equal or something idk what this does 
 		ArrayList<String> vars = argumentEvaluator.variables;
 		ArrayList<ExpressionNode> args = argumentEvaluator.arguments;
 		for (int i = 0; i < vars.size(); i++) {
