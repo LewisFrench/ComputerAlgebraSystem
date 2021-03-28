@@ -1,16 +1,7 @@
 package expression;
 
-import java.io.IOException;
-import java.io.UncheckedIOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.LinkedHashMap;
-import java.util.Scanner;
-
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
@@ -23,70 +14,76 @@ import Conditions.ConditionsParser;
 import Conditions.ConditionsParser.RuleConditionsContext;
 
 public class Program {
-
-	public static void main(String[] args) {
-
-//		ArrayList<String> strRules = new ArrayList<>();
-//		try {
-//			Path path = Paths.get(args[0]);
-//			Files.lines(path).map(s -> s.trim()).filter(s -> !s.isEmpty()).forEach(strRules::add);
-//		} catch (IOException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-		String[] strRules = {"x+(x"};
-		ArrayList<Rule> rules = new ArrayList<>();
-		String[] splitRule;
-		for (String rule : strRules) {
-
-			splitRule = splitRuleString(rule);
-			System.out.println(Arrays.toString(splitRule));
-
-			if (splitRule.length <= 1 || splitRule.length > 3) {
-				// throw new RuleFormatException();
-				System.out.println("RuleFormatException");
-			}
-			ArithmeticParser lhsParser = getParser(splitRule[0]);
-			CompileUnitContext lhsAST = lhsParser.compileUnit();
-
-			ArithmeticParser rhsParser = getParser(splitRule[1]);
-			CompileUnitContext rhsAST = rhsParser.compileUnit();
-
-			if (splitRule.length == 3) {
-				ConditionsParser conditionsParser = getConditionsParser(splitRule[2]);
-				RuleConditionsContext conditionsAST = conditionsParser.ruleConditions();
-				rules.add(new Rule(lhsAST, rhsAST, conditionsAST));
-			} else {
-				rules.add(new Rule(lhsAST, rhsAST));
-			}
-		}
-
-		System.out.println("Enter a term:\n");
-		Scanner scanner = new Scanner(System.in);
-		boolean userEnds = false;
-		while (!userEnds) {
-			String term = scanner.nextLine();
-			if (!(term.equals("end"))) {
-				// System.out.println("\nTerm: " + term + "\nRewrite Process:\n");
-				ArithmeticParser parser = getParser(term);
-				CompileUnitContext antlrAST = parser.compileUnit();
-
-				// ExpressionNode ast = new BuildAstVisitor(rules,
-				// 0).visitCompileUnit(antlrAST);
-				ExpressionNode ast = new BuildAstVisitor().visitCompileUnit(antlrAST);
-				ExpressionNode ast2 = new RewriteProcess(rules).Visit(ast);
-				String value = new EvaluateExpressionVisitor().Visit(ast2);
-				System.out
-						.println("\n- - - - Evaluated Value - - - -\n" + value + "\n- - - - - - - - - - - - - - - -\n");
-			} else {
-				userEnds = true;
-			}
-		}
-		scanner.close();
+	public Program() {
+		
 	}
 
-	private static String[] splitRuleString(String term) {
-		
+	public String Rewrite(ArrayList<String> strRules, String term) {
+		String outputValue = "";
+		ArrayList<Rule> rules = new ArrayList<>();
+		String[] splitRule;
+		try {
+			for (String rule : strRules) {
+				splitRule = splitRuleString(rule);
+				System.out.println(Arrays.toString(splitRule));
+
+				ArithmeticParser lhsParser = getParser(splitRule[0]);
+				CompileUnitContext lhsAST = lhsParser.compileUnit();
+				ArithmeticParser rhsParser = getParser(splitRule[1]);
+				CompileUnitContext rhsAST = rhsParser.compileUnit();
+
+				if (splitRule.length == 3) {
+					ConditionsParser conditionsParser = getConditionsParser(splitRule[2]);
+					RuleConditionsContext conditionsAST = conditionsParser.ruleConditions();
+					rules.add(new Rule(lhsAST, rhsAST, conditionsAST));
+				} else {
+					rules.add(new Rule(lhsAST, rhsAST));
+				}
+			}
+			ArithmeticParser parser = getParser(term);
+			CompileUnitContext antlrAST = parser.compileUnit();
+			ExpressionNode ast = new BuildAstVisitor().visitCompileUnit(antlrAST);
+			ExpressionNode ast2 = new RewriteProcess(rules).Visit(ast);
+			outputValue = new EvaluateExpressionVisitor().Visit(ast2);
+		} catch (Exception e) {
+
+		}
+
+		return outputValue;
+	}
+
+	public static ArrayList<Rule> loadRules(String[] ruleInput) {
+
+		ArrayList<Rule> rules = new ArrayList<>();
+		String[] splitRule;
+		try {
+			for (String rule : ruleInput) {
+				splitRule = splitRuleString(rule);
+				System.out.println(Arrays.toString(splitRule));
+
+				ArithmeticParser lhsParser = getParser(splitRule[0]);
+				CompileUnitContext lhsAST = lhsParser.compileUnit();
+				ArithmeticParser rhsParser = getParser(splitRule[1]);
+				CompileUnitContext rhsAST = rhsParser.compileUnit();
+
+				if (splitRule.length == 3) {
+					ConditionsParser conditionsParser = getConditionsParser(splitRule[2]);
+					RuleConditionsContext conditionsAST = conditionsParser.ruleConditions();
+					rules.add(new Rule(lhsAST, rhsAST, conditionsAST));
+				} else if (splitRule.length == 2) {
+					rules.add(new Rule(lhsAST, rhsAST));
+				} else {
+					System.out.println("Incorrect rule exists");
+				}
+
+			}
+		} catch (Exception e) {
+			System.out.println("Fucked it");
+		}
+		return rules;
+	}
+
+	private static String[] splitRuleString(String term) throws Exception {
 		String[] splitByEquals = term.split("=", 2);
 		String[] splitByCondition = splitByEquals[1].split("\\sif\\s", 2);
 		if (splitByCondition.length > 1) {
@@ -117,40 +114,4 @@ public class Program {
 		parser = new ConditionsParser(tokens);
 		return parser;
 	}
-}
-
-class Rule {
-	CompileUnitContext lhs;
-	CompileUnitContext rhs;
-	RuleConditionsContext conditions;
-	ExpressionNode lhsNode;
-	ExpressionNode rhsNode;
-	ExpressionNode conditionsNode;
-	LinkedHashMap<String, ExpressionNode> variables;
-
-	public Rule(CompileUnitContext lhs, CompileUnitContext rhs, RuleConditionsContext conditions) {
-		this.lhs = lhs;
-		this.rhs = rhs;
-		this.conditions = conditions;
-		this.variables = new LinkedHashMap<String, ExpressionNode>();
-		this.lhsNode = new BuildLhsVisitor(variables).visitCompileUnit(lhs);
-	}
-
-	public Rule(CompileUnitContext lhs, CompileUnitContext rhs) {
-		this.lhs = lhs;
-		this.rhs = rhs;
-		this.conditions = null;
-		this.variables = new LinkedHashMap<String, ExpressionNode>();
-		this.lhsNode = new BuildLhsVisitor(variables).visitCompileUnit(lhs);
-	}
-
-	public String toString() {
-		return (this.lhs.getText() + " = " + this.rhs.getText());
-	}
-
-	public ExpressionNode getLhsNode() {
-		return this.lhsNode;
-
-	}
-
 }
