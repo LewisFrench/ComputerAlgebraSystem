@@ -88,25 +88,25 @@ public class ConditionsBaseListener implements ConditionsListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterExpr(ConditionsParser.ExprContext ctx) { }
+	@Override public void enterCondExpr(ConditionsParser.CondExprContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitExpr(ConditionsParser.ExprContext ctx) { }
+	@Override public void exitCondExpr(ConditionsParser.CondExprContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterCompileUnit(ConditionsParser.CompileUnitContext ctx) { }
+	@Override public void enterRuleTerm(ConditionsParser.RuleTermContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitCompileUnit(ConditionsParser.CompileUnitContext ctx) { }
+	@Override public void exitRuleTerm(ConditionsParser.RuleTermContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -179,18 +179,6 @@ public class ConditionsBaseListener implements ConditionsListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitOperation(ConditionsParser.OperationContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterPower(ConditionsParser.PowerContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitPower(ConditionsParser.PowerContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

@@ -1,5 +1,5 @@
 grammar Conditions;
-import Arithmetic;
+import RuleAlgebra;
 
 
 ruleConditions: condition;
@@ -13,7 +13,8 @@ condition
 	;
 
 condExpr
-   : expression #expr;
+   : expression #Expression;
+   
 
 
 RELOP_EQ: '==';
@@ -26,3 +27,35 @@ RELOP_LTE: '<=';
 OP_AND: '&';
 OP_OR: '|';
 OP_NOT: '!';
+
+VARIABLE
+   : VALID_ID_CHAR+
+   ;
+
+fragment VALID_ID_CHAR
+   : ('a' .. 'z') | ('A' .. 'Z') | '_' 
+   ;
+      
+COMMA
+   : ','
+   ;
+
+LPAREN
+   : '('
+   ;
+
+VARIDENTIFIER
+   : '$' 
+   ;
+
+RPAREN
+   : ')'
+   ;
+
+POINT
+   : '.'
+   ;
+
+WS
+   : [ \r\n\t] + -> skip
+   ;

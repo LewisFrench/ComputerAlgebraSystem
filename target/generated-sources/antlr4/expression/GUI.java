@@ -50,9 +50,7 @@ public class GUI implements ActionListener {
 
 		term = new JLabel("");
 		filePath = new JLabel("");
-
 		result = new JLabel("");
-
 		errorMessage = new JLabel("");
 
 		fileChooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);

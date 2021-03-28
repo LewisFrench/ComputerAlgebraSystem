@@ -2,32 +2,32 @@ package expression;
 
 import java.util.LinkedHashMap;
 
-import Arithmetic.ArithmeticParser.CompileUnitContext;
 import Conditions.ConditionsParser.RuleConditionsContext;
+import RuleAlgebra.RuleAlgebraParser.RuleTermContext;
 
 class Rule {
-	CompileUnitContext lhs;
-	CompileUnitContext rhs;
+	RuleTermContext lhs;
+	RuleTermContext rhs;
 	RuleConditionsContext conditions;
 	ExpressionNode lhsNode;
 	ExpressionNode rhsNode;
 	ExpressionNode conditionsNode;
 	LinkedHashMap<String, ExpressionNode> variables;
 
-	public Rule(CompileUnitContext lhs, CompileUnitContext rhs, RuleConditionsContext conditions) {
+	public Rule(RuleTermContext lhs, RuleTermContext rhs, RuleConditionsContext conditions) {
 		this.lhs = lhs;
 		this.rhs = rhs;
 		this.conditions = conditions;
 		this.variables = new LinkedHashMap<String, ExpressionNode>();
-		this.lhsNode = new BuildLhsVisitor(variables).visitCompileUnit(lhs);
+		this.lhsNode = new BuildLhsVisitor(variables).visit(lhs);
 	}
 
-	public Rule(CompileUnitContext lhs, CompileUnitContext rhs) {
+	public Rule(RuleTermContext lhs, RuleTermContext rhs) {
 		this.lhs = lhs;
 		this.rhs = rhs;
 		this.conditions = null;
 		this.variables = new LinkedHashMap<String, ExpressionNode>();
-		this.lhsNode = new BuildLhsVisitor(variables).visitCompileUnit(lhs);
+		this.lhsNode = new BuildLhsVisitor(variables).visit(lhs);
 	}
 
 	public String toString() {
