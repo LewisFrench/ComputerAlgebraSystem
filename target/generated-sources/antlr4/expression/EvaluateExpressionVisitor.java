@@ -1,7 +1,7 @@
 package expression;
 
 // Make into <expressionNode> and implement solver?
-class EvaluateExpressionVisitor extends AstVisitor<String> {
+class EvaluateExpressionVisitor extends TermVisitor<String> {
 
 	@Override
 	public String Visit(PowerNode node) {
@@ -49,12 +49,12 @@ class EvaluateExpressionVisitor extends AstVisitor<String> {
 	public String Visit(FunctionNode node) {
 		return node.toString();
 	}
-
-	@Override
-	public String Visit(RuleVariableNode node) {
-
-		return node.toString();
-	}
+//
+//	@Override
+//	public String Visit(RuleVariableNode node) {
+//
+//		return node.toString();
+//	}
 
 	@Override
 	public String Visit(VariableNode node) {

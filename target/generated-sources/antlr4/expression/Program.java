@@ -6,12 +6,15 @@ import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 
-import Arithmetic.ArithmeticLexer;
-import Arithmetic.ArithmeticParser;
-import Arithmetic.ArithmeticParser.CompileUnitContext;
+import Algebra.AlgebraLexer;
+import Algebra.AlgebraParser;
+import Algebra.AlgebraParser.TermContext;
 import Conditions.ConditionsLexer;
 import Conditions.ConditionsParser;
 import Conditions.ConditionsParser.RuleConditionsContext;
+import RuleAlgebra.RuleAlgebraLexer;
+import RuleAlgebra.RuleAlgebraParser;
+import RuleAlgebra.RuleAlgebraParser.RuleTermContext;
 
 public class Program {
 	public Program() {
@@ -27,10 +30,10 @@ public class Program {
 				splitRule = splitRuleString(rule);
 				System.out.println(Arrays.toString(splitRule));
 
-				ArithmeticParser lhsParser = getParser(splitRule[0]);
-				CompileUnitContext lhsAST = lhsParser.compileUnit();
-				ArithmeticParser rhsParser = getParser(splitRule[1]);
-				CompileUnitContext rhsAST = rhsParser.compileUnit();
+				RuleAlgebraParser lhsParser = getRuleParser(splitRule[0]);
+				RuleTermContext lhsAST = lhsParser.ruleTerm();
+				RuleAlgebraParser rhsParser = getRuleParser(splitRule[1]);
+				RuleTermContext rhsAST = rhsParser.ruleTerm();
 
 				if (splitRule.length == 3) {
 					ConditionsParser conditionsParser = getConditionsParser(splitRule[2]);
@@ -40,9 +43,9 @@ public class Program {
 					rules.add(new Rule(lhsAST, rhsAST));
 				}
 			}
-			ArithmeticParser parser = getParser(term);
-			CompileUnitContext antlrAST = parser.compileUnit();
-			ExpressionNode ast = new BuildAstVisitor().visitCompileUnit(antlrAST);
+			AlgebraParser parser = getTermParser(term);
+			TermContext antlrAST = parser.term();
+			ExpressionNode ast = new BuildTermVisitor().visitTerm(antlrAST);
 			ExpressionNode ast2 = new RewriteProcess(rules).Visit(ast);
 			outputValue = new EvaluateExpressionVisitor().Visit(ast2);
 		} catch (Exception e) {
@@ -61,10 +64,10 @@ public class Program {
 				splitRule = splitRuleString(rule);
 				System.out.println(Arrays.toString(splitRule));
 
-				ArithmeticParser lhsParser = getParser(splitRule[0]);
-				CompileUnitContext lhsAST = lhsParser.compileUnit();
-				ArithmeticParser rhsParser = getParser(splitRule[1]);
-				CompileUnitContext rhsAST = rhsParser.compileUnit();
+				RuleAlgebraParser lhsParser = getRuleParser(splitRule[0]);
+				RuleTermContext lhsAST = lhsParser.ruleTerm();
+				RuleAlgebraParser rhsParser = getRuleParser(splitRule[1]);
+				RuleTermContext rhsAST = rhsParser.ruleTerm();
 
 				if (splitRule.length == 3) {
 					ConditionsParser conditionsParser = getConditionsParser(splitRule[2]);
@@ -75,10 +78,9 @@ public class Program {
 				} else {
 					System.out.println("Incorrect rule exists");
 				}
-
 			}
 		} catch (Exception e) {
-			System.out.println("Fucked it");
+			System.out.println("Exception here");
 		}
 		return rules;
 	}
@@ -93,17 +95,28 @@ public class Program {
 		}
 	}
 
-	private static ArithmeticParser getParser(String expression) {
+	private static RuleAlgebraParser getRuleParser(String expression) {
 
-		ArithmeticParser parser = null;
+		RuleAlgebraParser parser = null;
 		CharStream input;
 		input = CharStreams.fromString(expression);
-		ArithmeticLexer lexer = new ArithmeticLexer(input);
+		RuleAlgebraLexer lexer = new RuleAlgebraLexer(input);
 		CommonTokenStream tokens = new CommonTokenStream(lexer);
-		parser = new ArithmeticParser(tokens);
+		parser = new RuleAlgebraParser(tokens);
 		return parser;
 	}
 
+	
+	private static AlgebraParser getTermParser(String expression) {
+
+		AlgebraParser parser = null;
+		CharStream input;
+		input = CharStreams.fromString(expression);
+		AlgebraLexer lexer = new AlgebraLexer(input);
+		CommonTokenStream tokens = new CommonTokenStream(lexer);
+		parser = new AlgebraParser(tokens);
+		return parser;
+	}
 	private static ConditionsParser getConditionsParser(String expression) {
 
 		ConditionsParser parser = null;

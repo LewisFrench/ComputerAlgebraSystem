@@ -52,18 +52,17 @@ public interface ConditionsVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitConditionOperation(ConditionsParser.ConditionOperationContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code expr}
-	 * labeled alternative in {@link ConditionsParser#condExpr}.
+	 * Visit a parse tree produced by {@link ConditionsParser#condExpr}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitExpr(ConditionsParser.ExprContext ctx);
+	T visitCondExpr(ConditionsParser.CondExprContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link ConditionsParser#compileUnit}.
+	 * Visit a parse tree produced by {@link ConditionsParser#ruleTerm}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitCompileUnit(ConditionsParser.CompileUnitContext ctx);
+	T visitRuleTerm(ConditionsParser.RuleTermContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code FunctionExpression}
 	 * labeled alternative in {@link ConditionsParser#expression}.
@@ -106,13 +105,6 @@ public interface ConditionsVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitOperation(ConditionsParser.OperationContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code Power}
-	 * labeled alternative in {@link ConditionsParser#expression}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitPower(ConditionsParser.PowerContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code RuleVariable}
 	 * labeled alternative in {@link ConditionsParser#expression}.

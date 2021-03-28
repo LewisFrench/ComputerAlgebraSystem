@@ -3,11 +3,11 @@ package expression;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import Arithmetic.ArithmeticBaseVisitor;
-import Arithmetic.ArithmeticLexer;
-import Arithmetic.ArithmeticParser;
+import RuleAlgebra.RuleAlgebraBaseVisitor;
+import RuleAlgebra.RuleAlgebraLexer;
+import RuleAlgebra.RuleAlgebraParser;
 
-public class BuildRhsVisitor extends ArithmeticBaseVisitor<ExpressionNode> {
+public class BuildRhsVisitor extends RuleAlgebraBaseVisitor<ExpressionNode> {
 	HashMap<String, ExpressionNode> variables;
 
 	public BuildRhsVisitor(HashMap<String, ExpressionNode> variables) {
@@ -15,45 +15,45 @@ public class BuildRhsVisitor extends ArithmeticBaseVisitor<ExpressionNode> {
 	}
 
 	@Override
-	public ExpressionNode visitCompileUnit(ArithmeticParser.CompileUnitContext context) {
+	public ExpressionNode visitRuleTerm(RuleAlgebraParser.RuleTermContext context) {
 		return visit(context.expression());
 
 	}
 
 	@Override
-	public ExpressionNode visitNumber(ArithmeticParser.NumberContext context) {
+	public ExpressionNode visitNumber(RuleAlgebraParser.NumberContext context) {
 		return new NumberNode(Double.valueOf(context.value.getText()));
 	}
 
 	@Override
-	public ExpressionNode visitParenthetical(ArithmeticParser.ParentheticalContext context) {
+	public ExpressionNode visitParenthetical(RuleAlgebraParser.ParentheticalContext context) {
 		return new ParentheticalNode(visit(context.expression()));
 	}
 
 	@Override
-	public ExpressionNode visitOperation(ArithmeticParser.OperationContext context) {
+	public ExpressionNode visitOperation(RuleAlgebraParser.OperationContext context) {
 
 		OperationNode node = null;
 		switch (context.op.getType()) {
 
-		case ArithmeticLexer.OP_POW:
+		case RuleAlgebraLexer.OP_POW:
 			node = new PowerNode();
 			break;
-		case ArithmeticLexer.OP_ADD:
+		case RuleAlgebraLexer.OP_ADD:
 			node = new AdditionNode();
 
 			break;
 
-		case ArithmeticLexer.OP_SUB:
+		case RuleAlgebraLexer.OP_SUB:
 			node = new SubtractionNode();
 
 			break;
 
-		case ArithmeticLexer.OP_MUL:
+		case RuleAlgebraLexer.OP_MUL:
 			node = new MultiplicationNode();
 			break;
 
-		case ArithmeticLexer.OP_DIV:
+		case RuleAlgebraLexer.OP_DIV:
 			node = new DivisionNode();
 			break;
 
@@ -84,14 +84,14 @@ public class BuildRhsVisitor extends ArithmeticBaseVisitor<ExpressionNode> {
 	}
 
 	@Override
-	public ExpressionNode visitUnaryExpression(ArithmeticParser.UnaryExpressionContext context) {
+	public ExpressionNode visitUnaryExpression(RuleAlgebraParser.UnaryExpressionContext context) {
 
 		ExpressionNode node = null;
 		switch (context.op.getType()) {
-		case ArithmeticLexer.OP_ADD:
+		case RuleAlgebraLexer.OP_ADD:
 			node = visit(context.expression());
 			break;
-		case ArithmeticLexer.OP_SUB:
+		case RuleAlgebraLexer.OP_SUB:
 			node = new UnaryNode(visit(context.expression()));
 			break;
 
@@ -102,7 +102,7 @@ public class BuildRhsVisitor extends ArithmeticBaseVisitor<ExpressionNode> {
 	}
 
 	@Override
-	public ExpressionNode visitRuleVariable(ArithmeticParser.RuleVariableContext context) {
+	public ExpressionNode visitRuleVariable(RuleAlgebraParser.RuleVariableContext context) {
 		if (this.variables.get(context.getText()) != null) {
 			return this.variables.get(context.getText());
 		}
@@ -111,12 +111,12 @@ public class BuildRhsVisitor extends ArithmeticBaseVisitor<ExpressionNode> {
 	}
 
 	@Override
-	public ExpressionNode visitVariable(ArithmeticParser.VariableContext context) {
+	public ExpressionNode visitVariable(RuleAlgebraParser.VariableContext context) {
 		return new VariableNode(context.value.getText());
 	}
 
 	@Override
-	public ExpressionNode visitFunctionExpression(ArithmeticParser.FunctionExpressionContext context) {
+	public ExpressionNode visitFunctionExpression(RuleAlgebraParser.FunctionExpressionContext context) {
 		ArrayList<ExpressionNode> arguments = new ArrayList<>();
 		for (int i = 0; i < context.expression().size(); i++) {
 			arguments.add(visit(context.expression(i)));

@@ -5,7 +5,7 @@ import Conditions.ConditionsBaseVisitor;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
-import Arithmetic.ArithmeticLexer;
+import RuleAlgebra.RuleAlgebraLexer;
 import Conditions.ConditionsLexer;
 import Conditions.ConditionsParser;
 
@@ -70,12 +70,12 @@ public class BuildConditionsVisitor extends ConditionsBaseVisitor<ExpressionNode
 		return new RelopNode(left, right, context.relop.getType(), context.relop.getText());
 	}
 
-	@Override
-	public ExpressionNode visitExpr(ConditionsParser.ExprContext context) {
-		ExpressionNode n = visit(context.expression());
-
-		return n;
-	}
+//	@Override
+//	public ExpressionNode (ConditionsParser.ExpressionContext context) {
+//		ExpressionNode n = visit(context.expression());
+//
+//		return n;
+//	}
 
 	@Override
 	public ExpressionNode visitUnaryExpression(ConditionsParser.UnaryExpressionContext context) {

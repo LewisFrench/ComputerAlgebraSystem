@@ -3,7 +3,7 @@ package expression;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
-public class RewriteProcess extends AstVisitor<ExpressionNode> {
+public class RewriteProcess extends TermVisitor<ExpressionNode> {
 	//LinkedHashMap<String, ExpressionNode> variables;
 	ArrayList<Rule> rules;
 	
@@ -93,12 +93,12 @@ public class RewriteProcess extends AstVisitor<ExpressionNode> {
 		return rewrite(node);
 	}
 
-	@Override
-	public ExpressionNode Visit(RuleVariableNode node) {
-		System.out.println("EXCEPTION");
-
-		return node;
-	}
+//	@Override
+//	public ExpressionNode Visit(RuleVariableNode node) {
+//		System.out.println("EXCEPTION");
+//
+//		return node;
+//	}
 
 	@Override
 	public ExpressionNode Visit(VariableNode node) {
@@ -145,6 +145,9 @@ public class RewriteProcess extends AstVisitor<ExpressionNode> {
 	}
 
 	public boolean argumentsValid(EvaluateTree argumentEvaluator) {
+		System.out.println("Checking conditions valid");
+		System.out.println(argumentEvaluator.variables);
+		System.out.println(argumentEvaluator.arguments);
 		// Maybe validate to check size are equal or something idk what this does 
 		ArrayList<String> vars = argumentEvaluator.variables;
 		ArrayList<ExpressionNode> args = argumentEvaluator.arguments;
