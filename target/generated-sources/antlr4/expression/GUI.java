@@ -96,6 +96,8 @@ public class GUI implements ActionListener {
 				ArrayList<Rule> rules = this.getRules(ruleStringList, p);
 				if (rules != null) {
 					ExpressionNode term = p.parseTerm(enterTerm.getText());
+					String output = p.Rewrite(rules, term);
+					result.setText(output);
 				}
 			} catch (FileNotFoundException fnfe) {
 				errorMessage.setText("ERROR FileNotFound: " + fnfe.getMessage());
@@ -106,7 +108,6 @@ public class GUI implements ActionListener {
 			} catch (Exception ex) {
 				errorMessage.setText(ex.getMessage());
 			}
-
 		}
 	}
 
@@ -119,14 +120,13 @@ public class GUI implements ActionListener {
 				if (rule != null) {
 					rules.add(rule);
 				}
-
 			}
 			return rules;
 		} catch (ParseCancellationException pce) {
 			errorMessage.setText(pce.getMessage());
 		} catch (Exception ex) {
 			errorMessage.setText(ex.getMessage());
-		} 
+		}
 		return null;
 
 	}

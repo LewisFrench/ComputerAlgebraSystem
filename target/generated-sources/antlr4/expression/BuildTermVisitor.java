@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import Algebra.AlgebraBaseVisitor;
 import Algebra.AlgebraLexer;
 import Algebra.AlgebraParser;
+import RuleAlgebra.RuleAlgebraLexer;
 
 public class BuildTermVisitor extends AlgebraBaseVisitor<ExpressionNode> {
 
@@ -53,28 +54,29 @@ public class BuildTermVisitor extends AlgebraBaseVisitor<ExpressionNode> {
 
 	@Override
 	public ExpressionNode visitOperation(AlgebraParser.OperationContext context) {
-
+		ExpressionNode left = visit(context.left);
+		ExpressionNode right = visit(context.right);
 		OperationNode node = null;
 		switch (context.op.getType()) {
-		case AlgebraLexer.OP_POW:
-			node = new PowerNode();
+		case RuleAlgebraLexer.OP_POW:
+			node = new PowerNode(left, right);
 			break;
-		case AlgebraLexer.OP_ADD:
-			node = new AdditionNode();
-
-			break;
-
-		case AlgebraLexer.OP_SUB:
-			node = new SubtractionNode();
+		case RuleAlgebraLexer.OP_ADD:
+			node = new AdditionNode(left, right);
 
 			break;
 
-		case AlgebraLexer.OP_MUL:
-			node = new MultiplicationNode();
+		case RuleAlgebraLexer.OP_SUB:
+			node = new SubtractionNode(left, right);
+
 			break;
 
-		case AlgebraLexer.OP_DIV:
-			node = new DivisionNode();
+		case RuleAlgebraLexer.OP_MUL:
+			node = new MultiplicationNode(left, right);
+			break;
+
+		case RuleAlgebraLexer.OP_DIV:
+			node = new DivisionNode(left, right);
 			break;
 
 		default:

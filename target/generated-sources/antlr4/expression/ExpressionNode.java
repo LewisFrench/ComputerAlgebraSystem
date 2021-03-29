@@ -17,6 +17,8 @@ abstract class OperationNode extends ExpressionNode {
 	public ExpressionNode Right;
 	public String operator;
 
+
+	
 	public ExpressionNode getLeft() {
 		return Left;
 	}
@@ -37,6 +39,12 @@ abstract class OperationNode extends ExpressionNode {
 
 class PowerNode extends OperationNode {
 
+	public PowerNode(ExpressionNode Left, ExpressionNode Right) {
+		this.Left = Left;
+		this.Right = Right;
+		
+	}
+
 	public String toString() {
 		return (getLeft().toString() + " ^ " + getRight().toString());
 	}
@@ -44,24 +52,47 @@ class PowerNode extends OperationNode {
 
 class AdditionNode extends OperationNode {
 
+	public AdditionNode(ExpressionNode Left, ExpressionNode Right) {
+		this.Left = Left;
+		this.Right = Right;
+		
+	}
+
 	public String toString() {
 		return (getLeft().toString() + " + " + getRight().toString());
 	}
 }
 
 class SubtractionNode extends OperationNode {
+	public SubtractionNode(ExpressionNode Left, ExpressionNode Right) {
+		this.Left = Left;
+		this.Right = Right;
+		
+	}
 	public String toString() {
 		return (getLeft().toString() + " - " + getRight().toString());
 	}
 }
 
 class MultiplicationNode extends OperationNode {
+	public MultiplicationNode(ExpressionNode Left, ExpressionNode Right) {
+		this.Left = Left;
+		this.Right = Right;
+		
+	}
+
 	public String toString() {
 		return (getLeft().toString() + " * " + getRight().toString());
 	}
 }
 
 class DivisionNode extends OperationNode {
+	public DivisionNode(ExpressionNode Left, ExpressionNode Right) {
+		this.Left = Left;
+		this.Right = Right;
+		
+	}
+
 	public String toString() {
 		return (getLeft().toString() + " / " + getRight().toString());
 	}

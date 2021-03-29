@@ -19,19 +19,25 @@ class Rule {
 //		this.rhs = rhs;
 		this.lhsNode = lhsNode;
 		this.rhsNode = rhsNode;
-		this.variables = new LinkedHashMap<String, ExpressionNode>();
+		FetchRuleVariables f = new FetchRuleVariables();
+		ExpressionNode test = f.Visit(lhsNode);
+		this.variables = f.variables;
 		this.conditions = null;
 		this.conditionsNode = null;
-		//this.lhsNode = new BuildLhsVisitor(variables).visit(lhs);
+		// this.lhsNode = new BuildLhsVisitor(variables).visit(lhs);
 	}
+
 	public Rule(ExpressionNode lhsNode, ExpressionNode rhsNode, RuleConditionsContext conditions) {
 //		this.lhs = lhs;
 //		this.rhs = rhs;
 		this.lhsNode = lhsNode;
 		this.rhsNode = rhsNode;
 		this.conditions = conditions;
-		this.variables = new LinkedHashMap<String, ExpressionNode>();
-		//this.lhsNode = new BuildLhsVisitor(variables).visit(lhs);
+		FetchRuleVariables f = new FetchRuleVariables();
+		ExpressionNode test = f.Visit(lhsNode);
+		this.variables = f.variables;
+
+		// this.lhsNode = new BuildLhsVisitor(variables).visit(lhs);
 	}
 //	public Rule(RuleTermContext lhs, RuleTermContext rhs, RuleConditionsContext conditions) {
 //		this.lhs = lhs;
@@ -40,7 +46,7 @@ class Rule {
 //		this.variables = new LinkedHashMap<String, ExpressionNode>();
 //		this.lhsNode = new BuildLhsVisitor(variables).visit(lhs);
 //	}
-	
+
 //	public Rule(RuleTermContext lhs, RuleTermContext rhs) {
 //		this.lhs = lhs;
 //		this.rhs = rhs;
@@ -60,6 +66,10 @@ class Rule {
 	public ExpressionNode getLhsNode() {
 		return this.lhsNode;
 
+	}
+
+	public ExpressionNode getRhsNode() {
+		return this.rhsNode;
 	}
 
 }

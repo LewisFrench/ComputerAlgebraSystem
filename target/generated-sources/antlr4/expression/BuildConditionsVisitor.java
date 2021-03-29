@@ -99,24 +99,29 @@ public class BuildConditionsVisitor extends ConditionsBaseVisitor<ExpressionNode
 	@Override
 	public ExpressionNode visitOperation(ConditionsParser.OperationContext context) {
 		OperationNode node = null;
-
+		ExpressionNode left = visit(context.left);
+		ExpressionNode right = visit(context.right);
 		switch (context.op.getType()) {
 		case ConditionsLexer.OP_ADD:
-			node = new AdditionNode();
+		case RuleAlgebraLexer.OP_POW:
+			node = new PowerNode(left, right);
+			break;
+		case RuleAlgebraLexer.OP_ADD:
+			node = new AdditionNode(left, right);
 
 			break;
 
-		case ConditionsLexer.OP_SUB:
-			node = new SubtractionNode();
+		case RuleAlgebraLexer.OP_SUB:
+			node = new SubtractionNode(left, right);
 
 			break;
 
-		case ConditionsLexer.OP_MUL:
-			node = new MultiplicationNode();
+		case RuleAlgebraLexer.OP_MUL:
+			node = new MultiplicationNode(left, right);
 			break;
 
-		case ConditionsLexer.OP_DIV:
-			node = new DivisionNode();
+		case RuleAlgebraLexer.OP_DIV:
+			node = new DivisionNode(left, right);
 			break;
 
 		default:

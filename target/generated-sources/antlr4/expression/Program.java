@@ -2,7 +2,6 @@ package expression;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.IllegalFormatException;
 import java.util.LinkedHashMap;
 
 import org.antlr.v4.runtime.CharStream;
@@ -33,9 +32,14 @@ public class Program {
 		String outputValue = "";
 		try {
 			ExpressionNode ast2 = new RewriteProcess(rules).Visit(termAst);
-			outputValue = new EvaluateExpressionVisitor().Visit(ast2);
+			System.out.println("Output: " + ast2.toString());
+			ExpressionNode simplified = new SimplifyNumericalOperations().Visit(ast2);
+
+			System.out.println(simplified.toString());
+			outputValue = new EvaluateExpressionVisitor().Visit(simplified);
+			return outputValue;
 		} catch (Exception e) {
-			System.out.println("Rewrite Error Thrown");
+			System.out.println("Rewrite Error Thrown: " + e.getMessage());
 		}
 
 		return outputValue;
@@ -66,7 +70,7 @@ public class Program {
 
 			// Catch format exception here
 			splitRule = splitRuleString(ruleInput);
-			
+
 			System.out.println(Arrays.deepToString(splitRule));
 			RuleAlgebraParser lhsParser = getRuleParser(splitRule[0]);
 			RuleAlgebraParser rhsParser = getRuleParser(splitRule[1]);
@@ -74,26 +78,39 @@ public class Program {
 			// See if I can get an exception going here, my be difficult
 			RuleTermContext lhs = lhsParser.ruleTerm();
 			RuleTermContext rhs = rhsParser.ruleTerm();
+			BuildLhsVisitor lhsVisitor = new BuildLhsVisitor(new LinkedHashMap<String, ExpressionNode>());
+			ExpressionNode lhsNode = lhsVisitor.visitRuleTerm(lhs);
 
-			ExpressionNode lhsNode = new BuildLhsVisitor(new LinkedHashMap<String, ExpressionNode>())
-					.visitRuleTerm(lhs);
 			ExpressionNode rhsNode = new BuildRhsVisitor().visitRuleTerm(rhs);
 
+			
+		
+			
 			// Check rulevariables correlate : throw exception if not
 			// if (! ruleVariablesCorrelate( lhsNode, rhsNode) { throw exception };
 
 			if (splitRule.length == 3) {
 				ConditionsParser conditionsParser = getConditionsParser(splitRule[2]);
 				RuleConditionsContext conditionsAST = conditionsParser.ruleConditions();
-
 				r = (new Rule(lhsNode, rhsNode, conditionsAST));
+				r.variables = lhsVisitor.variables;
 			} else if (splitRule.length == 2) {
 				r = (new Rule(lhsNode, rhsNode));
+				r.variables = lhsVisitor.variables;
 			} else {
 
 				// Throw exception here
 				System.out.println("Incorrect rule exists");
 			}
+			
+			FetchRuleVariables f = new FetchRuleVariables();
+			f.Visit(rhsNode);
+			if (!(r.variables.keySet().containsAll(f.variables.keySet()))){
+				throw new Exception("A rule contains rule variables that don't correspond from LHS to RHS");
+			}
+			
+			
+			
 		} catch (ParseCancellationException pce) {
 			throw new ParseCancellationException("Syntax error: Check the structure of your rules");
 		} catch (Exception ex) {

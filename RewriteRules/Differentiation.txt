@@ -1,4 +1,4 @@
-diff($A, $x) = 0 if!(depends($A, $x))
+diff($A, $x) = 0 : !(depends($A, $x))
 diff($x, $x) = 1 : is_literal($x)
 diff(($A), $x) = diff($A, $x)
 diff($x^$A,$x) = diff($A*$x, $x)

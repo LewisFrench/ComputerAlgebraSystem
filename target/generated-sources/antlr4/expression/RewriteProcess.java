@@ -4,45 +4,41 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
 public class RewriteProcess extends TermVisitor<ExpressionNode> {
-	//LinkedHashMap<String, ExpressionNode> variables;
+	// LinkedHashMap<String, ExpressionNode> variables;
 	ArrayList<Rule> rules;
-	
+	int ruleApplicationLimit = 10;
+	int ruleApplicationCount = 0;
 	// Maximum Rule Applications
 
 	public RewriteProcess(ArrayList<Rule> ruleSet) {
 		rules = ruleSet;
-		
 
 	}
 
 	@Override
 	public ExpressionNode Visit(PowerNode node) {
-		ExpressionNode rwLeft = (Visit(node.Left));
-		ExpressionNode rwRight = (Visit(node.Right));
-		node.Left = rwLeft;
-		node.Right = rwRight;
+		ExpressionNode visitedLeft = (Visit(node.Left));
+		ExpressionNode visitedRight = (Visit(node.Right));
+		// node.Left = rwLeft;
+		// node.Right = rwRight;
 
-		return rewrite(node);
+		return rewrite(new PowerNode(visitedLeft, visitedRight));
 	}
 
 	@Override
 	public ExpressionNode Visit(AdditionNode node) {
 		ExpressionNode visitedLeft = (Visit(node.Left));
 		ExpressionNode visitedRight = (Visit(node.Right));
-		node.Left = visitedLeft;
-		node.Right = visitedRight;
 
-		return rewrite(node);
+		return rewrite(new AdditionNode(visitedLeft, visitedRight));
 	}
 
 	@Override
 	public ExpressionNode Visit(SubtractionNode node) {
 		ExpressionNode visitedLeft = (Visit(node.Left));
 		ExpressionNode visitedRight = (Visit(node.Right));
-		node.Left = visitedLeft;
-		node.Right = visitedRight;
 
-		return rewrite(node);
+		return rewrite(new SubtractionNode(visitedLeft, visitedRight));
 	}
 
 	@Override
@@ -52,7 +48,7 @@ public class RewriteProcess extends TermVisitor<ExpressionNode> {
 		node.Left = visitedLeft;
 		node.Right = visitedRight;
 
-		return rewrite(node);
+		return rewrite(new MultiplicationNode(visitedLeft, visitedRight));
 	}
 
 	@Override
@@ -62,13 +58,13 @@ public class RewriteProcess extends TermVisitor<ExpressionNode> {
 		node.Left = visitedLeft;
 		node.Right = visitedRight;
 
-		return rewrite(node);
+		return rewrite(new DivisionNode(visitedLeft, visitedRight));
 	}
 
 	@Override
 	public ExpressionNode Visit(ParentheticalNode node) {
-		node.innerNode = rewrite(Visit(node.innerNode));
-		return rewrite(node);
+
+		return rewrite(new ParentheticalNode(Visit(node.innerNode)));
 	}
 
 	@Override
@@ -78,19 +74,19 @@ public class RewriteProcess extends TermVisitor<ExpressionNode> {
 
 	@Override
 	public ExpressionNode Visit(UnaryNode node) {
-		node.innerNode = rewrite(node.innerNode);
+		return rewrite(new UnaryNode(Visit(node.innerNode)));
 
-		return rewrite(node);
 	}
 
 	@Override
 	public ExpressionNode Visit(FunctionNode node) {
+		ArrayList<ExpressionNode> arguments = new ArrayList<>();
 		for (int i = 0; i < node.getArguments().size(); i++) {
-			node.arguments.set(i, rewrite(Visit(node.arguments.get(i))));
+			arguments.add(Visit(node.arguments.get(i)));
 
 		}
 
-		return rewrite(node);
+		return rewrite(new FunctionNode(node.function, arguments));
 	}
 
 //	@Override
@@ -106,50 +102,62 @@ public class RewriteProcess extends TermVisitor<ExpressionNode> {
 	}
 
 	public ExpressionNode rewrite(ExpressionNode node) {
-		boolean conditionsHold;
-		Rule appliedRule = null;
+
+		if (this.ruleApplicationLimit <= this.ruleApplicationCount && !(ruleApplicationLimit == 0)) {
+			System.out.println("Rule application limit reached");
+			return node;
+		}
 		EvaluateTree argumentEvaluator;
 		if (rules != null) {
 			for (Rule r : rules) {
+
+				boolean conditionsHold = false;
 				argumentEvaluator = new EvaluateTree();
 
-				conditionsHold = false;
-				if (argumentEvaluator.Visit(r.lhsNode, node)) {
-					
-					if (argumentsValid(argumentEvaluator)) {
-						//appliedRule = new Rule(r.lhs, r.rhs, r.conditions);
-						LinkedHashMap<String, ExpressionNode> appliedRuleVariables = new LinkedHashMap<String, ExpressionNode>();
-						for (String key : r.variables.keySet()) {
-							if (appliedRuleVariables.get(key) == null) {
-								appliedRuleVariables.put(key, argumentEvaluator.arguments.get(0));
-								argumentEvaluator.arguments.remove(0);
-							}
-						}
-						
-						if (appliedRule.conditions != null) {
-							ExpressionNode conditionsNode = new BuildConditionsVisitor(appliedRule.variables)
-									.visitRuleConditions(appliedRule.conditions);
-							conditionsHold = new EvaluateConditionsVisitor(appliedRule.variables).Visit(conditionsNode);
-						}
-						if (conditionsHold || appliedRule.conditions == null) {
+				boolean ruleMatches = argumentEvaluator.Visit(r.lhsNode, node);
 
-							//appliedRule.rhsNode = new BuildRhsVisitor(appliedRule.variables).visit(appliedRule.rhs);
-							System.out.println("\nMatch Rule " + appliedRule.toString() + " to node " + node.toString());
-							System.out.println(node.toString() + " --->  " + appliedRule.rhsNode.toString());
-							return Visit(appliedRule.rhsNode);
+				if (ruleMatches) {
+
+					boolean validArguments = argumentsValid(argumentEvaluator);
+
+					if (validArguments) {
+
+						this.ruleApplicationCount++;
+
+						LinkedHashMap<String, ExpressionNode> newRuleVariables = new LinkedHashMap<String, ExpressionNode>();
+						for (int i = 0; i < argumentEvaluator.variables.size(); i++) {
+							newRuleVariables.put(argumentEvaluator.variables.get(i),
+									argumentEvaluator.arguments.get(i));
 						}
+
+						if (r.conditions != null) {
+							ExpressionNode conditionsNode = new BuildConditionsVisitor(newRuleVariables)
+									.visitRuleConditions(r.conditions);
+							conditionsHold = new EvaluateConditionsVisitor(r.variables).Visit(conditionsNode);
+						}
+
+						if (conditionsHold || r.conditions == null) {
+							System.out.println("\napply rule " + r.toString() + " to  " + node.toString());
+							ExpressionNode substituted = new SubstituteRuleVariables(newRuleVariables).Visit(r.rhsNode);
+
+							ExpressionNode solved = new SimplifyNumericalOperations().Visit(substituted);
+
+							return Visit(solved);
+						}
+
 					}
 				}
+
 			}
+
 		}
+
 		return node;
+
 	}
 
-	public boolean argumentsValid(EvaluateTree argumentEvaluator) {
-		System.out.println("Checking conditions valid");
-		System.out.println(argumentEvaluator.variables);
-		System.out.println(argumentEvaluator.arguments);
-		// Maybe validate to check size are equal or something idk what this does 
+	public static boolean argumentsValid(EvaluateTree argumentEvaluator) {
+		// Maybe validate to check size are equal or something idk what this does
 		ArrayList<String> vars = argumentEvaluator.variables;
 		ArrayList<ExpressionNode> args = argumentEvaluator.arguments;
 		for (int i = 0; i < vars.size(); i++) {
