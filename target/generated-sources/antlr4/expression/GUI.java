@@ -18,6 +18,8 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import org.antlr.v4.runtime.misc.ParseCancellationException;
+
 public class GUI implements ActionListener {
 	JFileChooser fileChooser;
 	JButton openFileButton;
@@ -33,9 +35,10 @@ public class GUI implements ActionListener {
 
 	JLabel errorMessage;
 
-	public static void main(String[] args) {
-		new GUI();
-	}
+//	public static void main(String[] args) {
+//		new GUI();
+//
+//	}
 
 	public GUI() {
 		JFrame frame = new JFrame();
@@ -47,7 +50,7 @@ public class GUI implements ActionListener {
 		openFileButton = new JButton("Load Rules");
 		enterTerm = new JTextField("", 30);
 		beginRewriteButton = new JButton("Apply Rewrite Rules");
-
+		Program p = new Program();
 		term = new JLabel("");
 		filePath = new JLabel("");
 		result = new JLabel("");
@@ -85,25 +88,47 @@ public class GUI implements ActionListener {
 			}
 		}
 		if (e.getSource() == beginRewriteButton) {
+			errorMessage.setText("");
+			Program p = new Program();
 			try {
-				Program p = new Program();
+
 				ArrayList<String> ruleStringList = readRules(fileChooser.getSelectedFile());
-				ArrayList<Rule>rules = new ArrayList<>();
-				for (String ruleString : ruleStringList) {
-					Rule rule = p.parseRules(ruleString);
-					if (rule != null) {
-						rules.add(rule);
-					}
+				ArrayList<Rule> rules = this.getRules(ruleStringList, p);
+				if (rules != null) {
+					ExpressionNode term = p.parseTerm(enterTerm.getText());
 				}
-				//ArrayList<Rule> ruleObjects = p.generateRules(rules);
-				for (Rule rule: rules) {
-					System.out.println("Rule : " + rule.toString());
-				}
-				//result.setText("Output:  " + readRules(r, enterTerm.getText()));
-			} catch (FileNotFoundException ex) {
-				errorMessage.setText("ERROR: " + ex.getMessage());
+			} catch (FileNotFoundException fnfe) {
+				errorMessage.setText("ERROR FileNotFound: " + fnfe.getMessage());
+			} catch (NullPointerException npe) {
+				errorMessage.setText("ERROR NullPointer: " + npe.getMessage());
+			} catch (ParseCancellationException pce) {
+				errorMessage.setText(pce.getMessage());
+			} catch (Exception ex) {
+				errorMessage.setText(ex.getMessage());
 			}
+
 		}
+	}
+
+	public ArrayList<Rule> getRules(ArrayList<String> ruleStringList, Program p) throws Exception {
+		try {
+			ArrayList<Rule> rules = new ArrayList<Rule>();
+			for (String ruleString : ruleStringList) {
+
+				Rule rule = p.parseRule(ruleString);
+				if (rule != null) {
+					rules.add(rule);
+				}
+
+			}
+			return rules;
+		} catch (ParseCancellationException pce) {
+			errorMessage.setText(pce.getMessage());
+		} catch (Exception ex) {
+			errorMessage.setText(ex.getMessage());
+		} 
+		return null;
+
 	}
 
 //	public static String applyRewrite(ArrayList<String> rules, String term) {
@@ -123,16 +148,22 @@ public class GUI implements ActionListener {
 		result.setText(output);
 	}
 
-	public static ArrayList<String> readRules(File f) throws FileNotFoundException {
-		ArrayList<String> ruleStrings = new ArrayList<>();
-		Scanner s = new Scanner(f);
-		while (s.hasNextLine()) {
-			ruleStrings.add(s.nextLine());
-		}
-		// System.out.println("Rules: " + ruleStrings.toString());
-		s.close();
-		return ruleStrings;
+	public static ArrayList<String> readRules(File f) throws FileNotFoundException, Exception {
 
+		ArrayList<String> ruleStrings = new ArrayList<>();
+		try {
+			Scanner s = new Scanner(f);
+			while (s.hasNextLine()) {
+				ruleStrings.add(s.nextLine());
+			}
+			// System.out.println("Rules: " + ruleStrings.toString());
+			s.close();
+			return ruleStrings;
+		} catch (NullPointerException npe) {
+			throw new FileNotFoundException("Rules file does not exist");
+		} catch (Exception ex) {
+			throw new Exception(ex.getMessage());
+		}
 	}
 
 }

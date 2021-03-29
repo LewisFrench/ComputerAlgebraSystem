@@ -106,6 +106,7 @@ public class BuildRhsVisitor extends RuleAlgebraBaseVisitor<ExpressionNode> {
 //		if (this.variables.get(context.getText()) != null) {
 //			return this.variables.get(context.getText());
 //		}
+		
 		return new RuleVariableNode(context.value.getText());
 	}
 

@@ -1,6 +1,6 @@
 grammar RuleAlgebra;
 
-ruleTerm : expression;
+ruleTerm : expression EOF;
 
 expression
    :  func = VARIABLE LPAREN  arguments =  expression( COMMA expression)* RPAREN #FunctionExpression
