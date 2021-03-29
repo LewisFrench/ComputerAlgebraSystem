@@ -21,7 +21,7 @@ abstract class TermVisitor<T> {
 
 	public abstract T Visit(NumberNode node);
 
-	//public abstract T Visit(RuleVariableNode node);
+	// public abstract T Visit(RuleVariableNode node);
 
 	// Can talk about how this could be more efficient in C#, see bookmark page
 	public T Visit(ExpressionNode node) {

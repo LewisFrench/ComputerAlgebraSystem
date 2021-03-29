@@ -10,9 +10,9 @@ import RuleAlgebra.RuleAlgebraParser;
 public class BuildRhsVisitor extends RuleAlgebraBaseVisitor<ExpressionNode> {
 	HashMap<String, ExpressionNode> variables;
 
-	public BuildRhsVisitor(HashMap<String, ExpressionNode> variables) {
-		this.variables = variables;
-	}
+//	public BuildRhsVisitor(HashMap<String, ExpressionNode> variables) {
+//		this.variables = variables;
+//	}
 
 	@Override
 	public ExpressionNode visitRuleTerm(RuleAlgebraParser.RuleTermContext context) {
@@ -32,54 +32,36 @@ public class BuildRhsVisitor extends RuleAlgebraBaseVisitor<ExpressionNode> {
 
 	@Override
 	public ExpressionNode visitOperation(RuleAlgebraParser.OperationContext context) {
-
+		ExpressionNode left = visit(context.left);
+		ExpressionNode right = visit(context.right);
 		OperationNode node = null;
 		switch (context.op.getType()) {
 
 		case RuleAlgebraLexer.OP_POW:
-			node = new PowerNode();
+			node = new PowerNode(left, right);
 			break;
 		case RuleAlgebraLexer.OP_ADD:
-			node = new AdditionNode();
+			node = new AdditionNode(left, right);
 
 			break;
 
 		case RuleAlgebraLexer.OP_SUB:
-			node = new SubtractionNode();
+			node = new SubtractionNode(left, right);
 
 			break;
 
 		case RuleAlgebraLexer.OP_MUL:
-			node = new MultiplicationNode();
+			node = new MultiplicationNode(left, right);
 			break;
 
 		case RuleAlgebraLexer.OP_DIV:
-			node = new DivisionNode();
+			node = new DivisionNode(left, right);
 			break;
 
 		default:
 			System.out.println("FAIL");
 		}
-
-		node.Left = visit(context.left);
-		node.Right = visit(context.right);
-		if (node instanceof AdditionNode && node.Left instanceof NumberNode && node.Right instanceof NumberNode) {
-			return new NumberNode(((NumberNode)node.Left).getValue() +((NumberNode)node.Right).getValue() );
-		}
-		if (node instanceof SubtractionNode && node.Left instanceof NumberNode && node.Right instanceof NumberNode) {
-			return new NumberNode(((NumberNode)node.Left).getValue() -((NumberNode)node.Right).getValue() );
-		}
-		if (node instanceof MultiplicationNode && node.Left instanceof NumberNode && node.Right instanceof NumberNode) {
-			return new NumberNode(((NumberNode)node.Left).getValue() * ((NumberNode)node.Right).getValue() );
-		}
-		if (node instanceof SubtractionNode && node.Left instanceof NumberNode && node.Right instanceof NumberNode) {
-			return new NumberNode(((NumberNode)node.Left).getValue() /((NumberNode)node.Right).getValue() );
-		}
-		if (node instanceof PowerNode && node.Left instanceof NumberNode && node.Right instanceof NumberNode) {
-			return new NumberNode(((NumberNode)node.Left).getValue() /((NumberNode)node.Right).getValue() );
-		}
-		
-		
+	
 		return node;
 	}
 
@@ -103,10 +85,9 @@ public class BuildRhsVisitor extends RuleAlgebraBaseVisitor<ExpressionNode> {
 
 	@Override
 	public ExpressionNode visitRuleVariable(RuleAlgebraParser.RuleVariableContext context) {
-		if (this.variables.get(context.getText()) != null) {
-			return this.variables.get(context.getText());
-		}
-		// THROW EXCEPTION
+//		if (this.variables.get(context.getText()) != null) {
+//			return this.variables.get(context.getText());
+//		}
 		return new RuleVariableNode(context.value.getText());
 	}
 

@@ -1,5 +1,5 @@
-diff($A, $x) = 0 if !(depends($A, $x))
-diff($x, $x) = 1 if is_literal($x)
+diff($A, $x) = 0 : !(depends($A, $x))
+diff($x, $x) = 1 : is_literal($x)
 diff(($A), $x) = diff($A, $x)
 diff($x^$A,$x) = diff($A*$x, $x)
 diff($A+$B, $x) = diff($A, $x) + diff($B, $x)

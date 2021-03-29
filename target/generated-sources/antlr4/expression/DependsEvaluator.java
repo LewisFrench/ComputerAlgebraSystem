@@ -18,6 +18,7 @@ public class DependsEvaluator extends TermVisitor<Boolean> {
 		}
 		return Visit(node.Left) || Visit(node.Right);
 	}
+
 	// Methods determine if dependency is present in the tree
 	@Override
 	public Boolean Visit(AdditionNode node) {
@@ -61,15 +62,17 @@ public class DependsEvaluator extends TermVisitor<Boolean> {
 		}
 		return Visit(node.Left) || Visit(node.Right);
 	}
+
 	@Override
 	public Boolean Visit(ParentheticalNode node) {
-		if(node.getClass() == dependency.getClass()) {
-			if (treeMatcher.Visit(node,  dependency)) {
+		if (node.getClass() == dependency.getClass()) {
+			if (treeMatcher.Visit(node, dependency)) {
 				return true;
 			}
 		}
 		return Visit(node.innerNode);
 	}
+
 	@Override
 	public Boolean Visit(NumberNode node) {
 		return node.getClass() == dependency.getClass() && node.getValue() == ((NumberNode) dependency).getValue();

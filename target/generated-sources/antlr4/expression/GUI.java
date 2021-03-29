@@ -18,6 +18,8 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import org.antlr.v4.runtime.misc.ParseCancellationException;
+
 public class GUI implements ActionListener {
 	JFileChooser fileChooser;
 	JButton openFileButton;
@@ -33,9 +35,10 @@ public class GUI implements ActionListener {
 
 	JLabel errorMessage;
 
-	public static void main(String[] args) {
-		new GUI();
-	}
+//	public static void main(String[] args) {
+//		new GUI();
+//
+//	}
 
 	public GUI() {
 		JFrame frame = new JFrame();
@@ -47,7 +50,7 @@ public class GUI implements ActionListener {
 		openFileButton = new JButton("Load Rules");
 		enterTerm = new JTextField("", 30);
 		beginRewriteButton = new JButton("Apply Rewrite Rules");
-
+		Program p = new Program();
 		term = new JLabel("");
 		filePath = new JLabel("");
 		result = new JLabel("");
@@ -85,40 +88,82 @@ public class GUI implements ActionListener {
 			}
 		}
 		if (e.getSource() == beginRewriteButton) {
+			errorMessage.setText("");
+			Program p = new Program();
 			try {
-				ArrayList<String> r = readRules(fileChooser.getSelectedFile());
-				result.setText("Output:  " + applyRewrite(r, enterTerm.getText()));
-			} catch (FileNotFoundException ex) {
-				errorMessage.setText("ERROR: " + ex.getMessage());
+
+				ArrayList<String> ruleStringList = readRules(fileChooser.getSelectedFile());
+				ArrayList<Rule> rules = this.getRules(ruleStringList, p);
+				if (rules != null) {
+					ExpressionNode term = p.parseTerm(enterTerm.getText());
+					String output = p.Rewrite(rules, term);
+					result.setText(output);
+				}
+			} catch (FileNotFoundException fnfe) {
+				errorMessage.setText("ERROR FileNotFound: " + fnfe.getMessage());
+			} catch (NullPointerException npe) {
+				errorMessage.setText("ERROR NullPointer: " + npe.getMessage());
+			} catch (ParseCancellationException pce) {
+				errorMessage.setText(pce.getMessage());
+			} catch (Exception ex) {
+				errorMessage.setText(ex.getMessage());
 			}
 		}
 	}
 
-	public static String applyRewrite(ArrayList<String> rules, String term) {
+	public ArrayList<Rule> getRules(ArrayList<String> ruleStringList, Program p) throws Exception {
 		try {
-			Program p = new Program();
-			return p.Rewrite(rules, term);
-		} catch (Exception e) {
-			System.out.println("Fucked it in GUI");
-			return "";
+			ArrayList<Rule> rules = new ArrayList<Rule>();
+			for (String ruleString : ruleStringList) {
+
+				Rule rule = p.parseRule(ruleString);
+				if (rule != null) {
+					rules.add(rule);
+				}
+			}
+			return rules;
+		} catch (ParseCancellationException pce) {
+			errorMessage.setText(pce.getMessage());
+		} catch (Exception ex) {
+			errorMessage.setText(ex.getMessage());
 		}
+		return null;
 
 	}
+
+//	public static String applyRewrite(ArrayList<String> rules, String term) {
+//		try {
+//			Program p = new Program();
+//			ArrayList<Rule> ruleObjects = p.generateRules(rules);
+//			//return p.generateRules(rules);
+//			//return p.Rewrite(rules, term);
+//		} catch (Exception e) {
+//			System.out.println("Fucked it in GUI");
+//			return "";
+//		}
+//		return "output goes here";
+//	}
 
 	public void setOutput(String output) {
 		result.setText(output);
 	}
 
-	public static ArrayList<String> readRules(File f) throws FileNotFoundException {
-		ArrayList<String> ruleStrings = new ArrayList<>();
-		Scanner s = new Scanner(f);
-		while (s.hasNextLine()) {
-			ruleStrings.add(s.nextLine());
-		}
-		System.out.println("Rules: " + ruleStrings.toString());
-		s.close();
-		return ruleStrings;
+	public static ArrayList<String> readRules(File f) throws FileNotFoundException, Exception {
 
+		ArrayList<String> ruleStrings = new ArrayList<>();
+		try {
+			Scanner s = new Scanner(f);
+			while (s.hasNextLine()) {
+				ruleStrings.add(s.nextLine());
+			}
+			// System.out.println("Rules: " + ruleStrings.toString());
+			s.close();
+			return ruleStrings;
+		} catch (NullPointerException npe) {
+			throw new FileNotFoundException("Rules file does not exist");
+		} catch (Exception ex) {
+			throw new Exception(ex.getMessage());
+		}
 	}
 
 }

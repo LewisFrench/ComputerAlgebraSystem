@@ -63,7 +63,7 @@ public class EvaluateConditionsVisitor extends ConditionVisitor<Boolean> {
 
 		// Will need to outsource this method to handle < , > , == in switch statement
 
-		//boolean relopResult = calculateRelop(node.left, node.right, node.relop);
+		// boolean relopResult = calculateRelop(node.left, node.right, node.relop);
 		boolean relopResult = calculateRelop(node);
 		return relopResult;
 	}
@@ -89,7 +89,8 @@ public class EvaluateConditionsVisitor extends ConditionVisitor<Boolean> {
 		return null;
 	}
 
-	//public boolean calculateRelop(ExpressionNode left, ExpressionNode right, String relop) {
+	// public boolean calculateRelop(ExpressionNode left, ExpressionNode right,
+	// String relop) {
 	public boolean calculateRelop(RelopNode relopNode) {
 
 		// Decide equivalence between any two nodes
@@ -103,11 +104,11 @@ public class EvaluateConditionsVisitor extends ConditionVisitor<Boolean> {
 		NumberNode r;
 		l = getNumberNode(relopNode.left);
 		r = getNumberNode(relopNode.right);
-		
+
 		boolean relopResult = false;
-		
+
 		switch (relopNode.relop) {
-		
+
 		case ConditionsLexer.RELOP_LT:
 			relopResult = l.getValue() < r.getValue();
 			break;
@@ -124,7 +125,7 @@ public class EvaluateConditionsVisitor extends ConditionVisitor<Boolean> {
 		}
 		return relopResult;
 	}
-	
+
 	// Support for UnaryNode comparisons
 	public NumberNode getNumberNode(ExpressionNode node) {
 		if (node instanceof RuleVariableNode) {
@@ -135,12 +136,12 @@ public class EvaluateConditionsVisitor extends ConditionVisitor<Boolean> {
 		} else if (node instanceof NumberNode) {
 			return (NumberNode) node;
 		} else if (node instanceof UnaryNode) {
-			if (((UnaryNode)node).innerNode instanceof NumberNode) {
-				return new NumberNode(-1* ((NumberNode)((UnaryNode)node).innerNode).getValue());
+			if (((UnaryNode) node).innerNode instanceof NumberNode) {
+				return new NumberNode(-1 * ((NumberNode) ((UnaryNode) node).innerNode).getValue());
 			}
 		}
 		// Exception? - cannot compare the two nodes using > >= < <= operators
-		
+
 		return null;
 	}
 

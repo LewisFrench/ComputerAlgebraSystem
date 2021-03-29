@@ -45,11 +45,9 @@ abstract class RuleTermVisitor<T> {
 			return Visit((VariableNode) node);
 		} else if (node instanceof NumberNode) {
 			return Visit((NumberNode) node);
-		}
-		else if (node instanceof RuleVariableNode) {
+		} else if (node instanceof RuleVariableNode) {
 			return Visit((RuleVariableNode) node);
-		}
-		else {
+		} else {
 			// Exception
 			System.out.println("No expressionNode of suitable type");
 			return null;

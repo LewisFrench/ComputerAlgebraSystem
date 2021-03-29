@@ -1,6 +1,6 @@
 grammar Algebra;
 
-term : expression;
+term : expression EOF;
 
 expression
    :  func = VARIABLE LPAREN  arguments =  expression( COMMA expression)* RPAREN #FunctionExpression
@@ -9,7 +9,7 @@ expression
    |  left = expression  op = OP_POW right = expression #Operation
    |  left = expression  op = (OP_MUL | OP_DIV) right = expression #Operation
    |  left = expression  op = (OP_ADD | OP_SUB) right = expression #Operation
-   |  value = VARIABLE #Variable
+   |  value = VARIABLE  #Variable
    |  value = NUMBER #Number
    ;
    
