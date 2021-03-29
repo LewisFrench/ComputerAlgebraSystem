@@ -86,24 +86,38 @@ public class GUI implements ActionListener {
 		}
 		if (e.getSource() == beginRewriteButton) {
 			try {
-				ArrayList<String> r = readRules(fileChooser.getSelectedFile());
-				result.setText("Output:  " + applyRewrite(r, enterTerm.getText()));
+				Program p = new Program();
+				ArrayList<String> ruleStringList = readRules(fileChooser.getSelectedFile());
+				ArrayList<Rule>rules = new ArrayList<>();
+				for (String ruleString : ruleStringList) {
+					Rule rule = p.parseRules(ruleString);
+					if (rule != null) {
+						rules.add(rule);
+					}
+				}
+				//ArrayList<Rule> ruleObjects = p.generateRules(rules);
+				for (Rule rule: rules) {
+					System.out.println("Rule : " + rule.toString());
+				}
+				//result.setText("Output:  " + readRules(r, enterTerm.getText()));
 			} catch (FileNotFoundException ex) {
 				errorMessage.setText("ERROR: " + ex.getMessage());
 			}
 		}
 	}
 
-	public static String applyRewrite(ArrayList<String> rules, String term) {
-		try {
-			Program p = new Program();
-			return p.Rewrite(rules, term);
-		} catch (Exception e) {
-			System.out.println("Fucked it in GUI");
-			return "";
-		}
-
-	}
+//	public static String applyRewrite(ArrayList<String> rules, String term) {
+//		try {
+//			Program p = new Program();
+//			ArrayList<Rule> ruleObjects = p.generateRules(rules);
+//			//return p.generateRules(rules);
+//			//return p.Rewrite(rules, term);
+//		} catch (Exception e) {
+//			System.out.println("Fucked it in GUI");
+//			return "";
+//		}
+//		return "output goes here";
+//	}
 
 	public void setOutput(String output) {
 		result.setText(output);
@@ -115,7 +129,7 @@ public class GUI implements ActionListener {
 		while (s.hasNextLine()) {
 			ruleStrings.add(s.nextLine());
 		}
-		System.out.println("Rules: " + ruleStrings.toString());
+		// System.out.println("Rules: " + ruleStrings.toString());
 		s.close();
 		return ruleStrings;
 

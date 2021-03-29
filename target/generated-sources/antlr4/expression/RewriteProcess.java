@@ -117,14 +117,15 @@ public class RewriteProcess extends TermVisitor<ExpressionNode> {
 				if (argumentEvaluator.Visit(r.lhsNode, node)) {
 					
 					if (argumentsValid(argumentEvaluator)) {
-						appliedRule = new Rule(r.lhs, r.rhs, r.conditions);
-
-						for (String key : appliedRule.variables.keySet()) {
-							if (appliedRule.variables.get(key) == null) {
-								appliedRule.variables.put(key, argumentEvaluator.arguments.get(0));
+						//appliedRule = new Rule(r.lhs, r.rhs, r.conditions);
+						LinkedHashMap<String, ExpressionNode> appliedRuleVariables = new LinkedHashMap<String, ExpressionNode>();
+						for (String key : r.variables.keySet()) {
+							if (appliedRuleVariables.get(key) == null) {
+								appliedRuleVariables.put(key, argumentEvaluator.arguments.get(0));
 								argumentEvaluator.arguments.remove(0);
 							}
 						}
+						
 						if (appliedRule.conditions != null) {
 							ExpressionNode conditionsNode = new BuildConditionsVisitor(appliedRule.variables)
 									.visitRuleConditions(appliedRule.conditions);
@@ -132,7 +133,7 @@ public class RewriteProcess extends TermVisitor<ExpressionNode> {
 						}
 						if (conditionsHold || appliedRule.conditions == null) {
 
-							appliedRule.rhsNode = new BuildRhsVisitor(appliedRule.variables).visit(appliedRule.rhs);
+							//appliedRule.rhsNode = new BuildRhsVisitor(appliedRule.variables).visit(appliedRule.rhs);
 							System.out.println("\nMatch Rule " + appliedRule.toString() + " to node " + node.toString());
 							System.out.println(node.toString() + " --->  " + appliedRule.rhsNode.toString());
 							return Visit(appliedRule.rhsNode);

@@ -10,9 +10,9 @@ import RuleAlgebra.RuleAlgebraParser;
 public class BuildRhsVisitor extends RuleAlgebraBaseVisitor<ExpressionNode> {
 	HashMap<String, ExpressionNode> variables;
 
-	public BuildRhsVisitor(HashMap<String, ExpressionNode> variables) {
-		this.variables = variables;
-	}
+//	public BuildRhsVisitor(HashMap<String, ExpressionNode> variables) {
+//		this.variables = variables;
+//	}
 
 	@Override
 	public ExpressionNode visitRuleTerm(RuleAlgebraParser.RuleTermContext context) {
@@ -103,10 +103,9 @@ public class BuildRhsVisitor extends RuleAlgebraBaseVisitor<ExpressionNode> {
 
 	@Override
 	public ExpressionNode visitRuleVariable(RuleAlgebraParser.RuleVariableContext context) {
-		if (this.variables.get(context.getText()) != null) {
-			return this.variables.get(context.getText());
-		}
-		// THROW EXCEPTION
+//		if (this.variables.get(context.getText()) != null) {
+//			return this.variables.get(context.getText());
+//		}
 		return new RuleVariableNode(context.value.getText());
 	}
 
