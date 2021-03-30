@@ -52,11 +52,12 @@ public interface ConditionsVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitConditionOperation(ConditionsParser.ConditionOperationContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link ConditionsParser#condExpr}.
+	 * Visit a parse tree produced by the {@code expr}
+	 * labeled alternative in {@link ConditionsParser#condExpr}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitCondExpr(ConditionsParser.CondExprContext ctx);
+	T visitExpr(ConditionsParser.ExprContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link ConditionsParser#ruleTerm}.
 	 * @param ctx the parse tree

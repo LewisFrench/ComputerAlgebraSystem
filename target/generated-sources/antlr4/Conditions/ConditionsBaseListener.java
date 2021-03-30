@@ -88,13 +88,13 @@ public class ConditionsBaseListener implements ConditionsListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterCondExpr(ConditionsParser.CondExprContext ctx) { }
+	@Override public void enterExpr(ConditionsParser.ExprContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitCondExpr(ConditionsParser.CondExprContext ctx) { }
+	@Override public void exitExpr(ConditionsParser.ExprContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

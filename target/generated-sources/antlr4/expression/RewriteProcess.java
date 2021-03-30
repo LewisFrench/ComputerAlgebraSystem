@@ -130,13 +130,20 @@ public class RewriteProcess extends TermVisitor<ExpressionNode> {
 									argumentEvaluator.arguments.get(i));
 						}
 
-						if (r.conditions != null) {
-							ExpressionNode conditionsNode = new BuildConditionsVisitor(newRuleVariables)
-									.visitRuleConditions(r.conditions);
-							conditionsHold = new EvaluateConditionsVisitor(r.variables).Visit(conditionsNode);
+						if (r.conditionsNode != null) {
+							System.out.println("\n Checking Conditions: " + r.conditionsNode.toString()  + "\n");
+							ExpressionNode substitutedConditions = new SubstituteConditionRuleVariables(newRuleVariables).Visit(r.conditionsNode);
+							System.out.println(substitutedConditions.toString());
+							ExpressionNode simplified = new SimplifyConditionNumericalExpressions().Visit(substitutedConditions);
+							System.out.println(simplified.toString());
+							conditionsHold = new EvaluateConditionsVisitor(newRuleVariables).Visit(simplified);
+							System.out.println("Conditions hold : "  + conditionsHold);
+							//ExpressionNode conditionsNode = new BuildConditionsVisitor(newRuleVariables)
+							//		.visitRuleConditions(r.conditions);
+							//conditionsHold = new EvaluateConditionsVisitor(r.variables).Visit(conditionsNode);
 						}
 
-						if (conditionsHold || r.conditions == null) {
+						if (conditionsHold || r.conditionsNode == null) {
 							System.out.println("\napply rule " + r.toString() + " to  " + node.toString());
 							ExpressionNode substituted = new SubstituteRuleVariables(newRuleVariables).Visit(r.rhsNode);
 

@@ -78,15 +78,17 @@ public interface ConditionsListener extends ParseTreeListener {
 	 */
 	void exitConditionOperation(ConditionsParser.ConditionOperationContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link ConditionsParser#condExpr}.
+	 * Enter a parse tree produced by the {@code expr}
+	 * labeled alternative in {@link ConditionsParser#condExpr}.
 	 * @param ctx the parse tree
 	 */
-	void enterCondExpr(ConditionsParser.CondExprContext ctx);
+	void enterExpr(ConditionsParser.ExprContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link ConditionsParser#condExpr}.
+	 * Exit a parse tree produced by the {@code expr}
+	 * labeled alternative in {@link ConditionsParser#condExpr}.
 	 * @param ctx the parse tree
 	 */
-	void exitCondExpr(ConditionsParser.CondExprContext ctx);
+	void exitExpr(ConditionsParser.ExprContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link ConditionsParser#ruleTerm}.
 	 * @param ctx the parse tree

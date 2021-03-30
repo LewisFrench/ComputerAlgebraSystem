@@ -64,13 +64,22 @@ public class SimplifyNumericalOperations extends TermVisitor<ExpressionNode> {
 
 	@Override
 	public ExpressionNode Visit(ParentheticalNode node) {
-		return new ParentheticalNode(Visit(node.innerNode));
-
+		ExpressionNode innerNode = Visit(node.innerNode);
+		if (innerNode instanceof NumberNode) {
+			return ((NumberNode)innerNode);
+		}
+		return new ParentheticalNode(innerNode);
 	}
 
 	@Override
 	public ExpressionNode Visit(UnaryNode node) {
-		return new UnaryNode(Visit(node.innerNode));
+		
+		ExpressionNode innerNode = Visit(node.innerNode);
+		if (innerNode instanceof NumberNode) {
+			double invertedValue = (((NumberNode)innerNode).getValue()) * -1;
+			return new NumberNode(invertedValue);
+		}
+		return new UnaryNode(innerNode);
 	}
 
 	@Override
