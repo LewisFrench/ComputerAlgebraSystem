@@ -12,21 +12,24 @@ import Conditions.ConditionsParser;
 public class BuildConditionsVisitor extends ConditionsBaseVisitor<ExpressionNode> {
 	LinkedHashMap<String, ExpressionNode> variables;
 
-	public BuildConditionsVisitor(LinkedHashMap<String, ExpressionNode> variables) {
-		this.variables = variables;
+//	public BuildConditionsVisitor(LinkedHashMap<String, ExpressionNode> variables) {
+//		this.variables = variables;
+//	}
+
+	public BuildConditionsVisitor() {
+
 	}
 
 	@Override
 	public ExpressionNode visitConditionOperation(ConditionsParser.ConditionOperationContext context) {
 		ConditionOperationNode node = null;
-
+		ExpressionNode left = visit(context.left);
+		ExpressionNode right = visit(context.right);
 		if (context.op.getType() == ConditionsLexer.OP_AND) {
-			node = new ConditionAndNode();
+			node = new ConditionAndNode(left, right);
 		} else if (context.op.getType() == ConditionsLexer.OP_OR) {
-			node = new ConditionOrNode();
+			node = new ConditionOrNode(left, right);
 		}
-		node.left = visit(context.left);
-		node.right = visit(context.right);
 
 		return node;
 	}
@@ -70,13 +73,6 @@ public class BuildConditionsVisitor extends ConditionsBaseVisitor<ExpressionNode
 		return new RelopNode(left, right, context.relop.getType(), context.relop.getText());
 	}
 
-//	@Override
-//	public ExpressionNode (ConditionsParser.ExpressionContext context) {
-//		ExpressionNode n = visit(context.expression());
-//
-//		return n;
-//	}
-
 	@Override
 	public ExpressionNode visitUnaryExpression(ConditionsParser.UnaryExpressionContext context) {
 		ExpressionNode node = null;
@@ -91,7 +87,7 @@ public class BuildConditionsVisitor extends ConditionsBaseVisitor<ExpressionNode
 			break;
 
 		default:
-			break;
+			return node;
 		}
 		return node;
 	}
@@ -102,49 +98,59 @@ public class BuildConditionsVisitor extends ConditionsBaseVisitor<ExpressionNode
 		ExpressionNode left = visit(context.left);
 		ExpressionNode right = visit(context.right);
 		switch (context.op.getType()) {
-		case ConditionsLexer.OP_ADD:
-		case RuleAlgebraLexer.OP_POW:
+		case ConditionsLexer.OP_POW:
 			node = new PowerNode(left, right);
 			break;
-		case RuleAlgebraLexer.OP_ADD:
+		case ConditionsLexer.OP_ADD:
 			node = new AdditionNode(left, right);
 
 			break;
 
-		case RuleAlgebraLexer.OP_SUB:
+		case ConditionsLexer.OP_SUB:
 			node = new SubtractionNode(left, right);
 
 			break;
 
-		case RuleAlgebraLexer.OP_MUL:
+		case ConditionsLexer.OP_MUL:
 			node = new MultiplicationNode(left, right);
 			break;
 
-		case RuleAlgebraLexer.OP_DIV:
+		case ConditionsLexer.OP_DIV:
 			node = new DivisionNode(left, right);
 			break;
 
 		default:
 			System.out.println("FAIL");
 		}
-		node.Left = visit(context.left);
-		node.Right = visit(context.right);
+//		node.Left = visit(context.left);
+//		node.Right = visit(context.right);
 
 		// Should outsource to another method, simplifyOperation?
-		if (node.Left instanceof NumberNode && node.Right instanceof NumberNode && node instanceof AdditionNode) {
-			return new NumberNode(((NumberNode) node.Left).getValue() + ((NumberNode) node.Right).getValue());
-		}
-		if (node.Left instanceof NumberNode && node.Right instanceof NumberNode && node instanceof SubtractionNode) {
-			return new NumberNode(((NumberNode) node.Left).getValue() - ((NumberNode) node.Right).getValue());
-		}
-		if (node.Left instanceof NumberNode && node.Right instanceof NumberNode && node instanceof MultiplicationNode) {
-			return new NumberNode(((NumberNode) node.Left).getValue() * ((NumberNode) node.Right).getValue());
-		}
-		if (node.Left instanceof NumberNode && node.Right instanceof NumberNode && node instanceof DivisionNode) {
-			return new NumberNode(((NumberNode) node.Left).getValue() / ((NumberNode) node.Right).getValue());
-		}
+//		if (node.Left instanceof NumberNode && node.Right instanceof NumberNode && node instanceof AdditionNode) {
+//			return new NumberNode(((NumberNode) node.Left).getValue() + ((NumberNode) node.Right).getValue());
+//		}
+//		if (node.Left instanceof NumberNode && node.Right instanceof NumberNode && node instanceof SubtractionNode) {
+//			return new NumberNode(((NumberNode) node.Left).getValue() - ((NumberNode) node.Right).getValue());
+//		}
+//		if (node.Left instanceof NumberNode && node.Right instanceof NumberNode && node instanceof MultiplicationNode) {
+//			return new NumberNode(((NumberNode) node.Left).getValue() * ((NumberNode) node.Right).getValue());
+//		}
+//		if (node.Left instanceof NumberNode && node.Right instanceof NumberNode && node instanceof DivisionNode) {
+//			return new NumberNode(((NumberNode) node.Left).getValue() / ((NumberNode) node.Right).getValue());
+//		}
 
 		return node;
+	}
+
+	public ExpressionNode visitFunctionExpression(ConditionsParser.FunctionExpressionContext context) {
+		ArrayList<ExpressionNode> arguments = new ArrayList<>();
+		for (int i = 0; i < context.expression().size(); i++) {
+			arguments.add(visit(context.expression(i)));
+		}
+
+		FunctionNode f = new FunctionNode(context.func.getText(), arguments);
+		return f;
+
 	}
 
 	@Override
@@ -155,9 +161,9 @@ public class BuildConditionsVisitor extends ConditionsBaseVisitor<ExpressionNode
 	@Override
 	public ExpressionNode visitRuleVariable(ConditionsParser.RuleVariableContext context) {
 
-		if (this.variables.get(context.getText()) != null) {
-			return variables.get(context.getText());
-		}
+//		if (this.variables.get(context.getText()) != null) {
+//			return variables.get(context.getText());
+//		}
 		return new RuleVariableNode(context.value.getText());
 	}
 

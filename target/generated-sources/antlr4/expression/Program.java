@@ -29,6 +29,9 @@ public class Program {
 	}
 
 	public String Rewrite(ArrayList<Rule> rules, ExpressionNode termAst) {
+		for (Rule r : rules) {
+			System.out.println(r);
+		}
 		String outputValue = "";
 		try {
 			ExpressionNode ast2 = new RewriteProcess(rules).Visit(termAst);
@@ -90,15 +93,18 @@ public class Program {
 			// if (! ruleVariablesCorrelate( lhsNode, rhsNode) { throw exception };
 
 			if (splitRule.length == 3) {
+				
 				ConditionsParser conditionsParser = getConditionsParser(splitRule[2]);
-				RuleConditionsContext conditionsAST = conditionsParser.ruleConditions();
-				r = (new Rule(lhsNode, rhsNode, conditionsAST));
+				RuleConditionsContext conditions = conditionsParser.ruleConditions();
+				ExpressionNode conditionsNode = new BuildConditionsVisitor().visit(conditions);
+				// check contains all variables here too (LHS --> Condition)
+				
+				r = (new Rule(lhsNode, rhsNode, conditionsNode));
 				r.variables = lhsVisitor.variables;
 			} else if (splitRule.length == 2) {
 				r = (new Rule(lhsNode, rhsNode));
 				r.variables = lhsVisitor.variables;
 			} else {
-
 				// Throw exception here
 				System.out.println("Incorrect rule exists");
 			}
@@ -172,18 +178,27 @@ public class Program {
 		return termAst;
 	}
 
-	private static ConditionsParser getConditionsParser(String expression) {
+	private static ConditionsParser getConditionsParser(String expression) throws ParseCancellationException, Exception {
 
 		ConditionsParser parser = null;
 		CharStream input;
-		input = CharStreams.fromString(expression);
-		ConditionsLexer lexer = new ConditionsLexer(input);
-		lexer.addErrorListener(ThrowingErrorListener.INSTANCE);
-		lexer.removeErrorListeners();
-		CommonTokenStream tokens = new CommonTokenStream(lexer);
-		parser = new ConditionsParser(tokens);
-		parser.removeErrorListeners();
-		parser.addErrorListener(ThrowingErrorListener.INSTANCE);
+		try {
+			input = CharStreams.fromString(expression);
+			
+			ConditionsLexer lexer = new ConditionsLexer(input);
+			lexer.addErrorListener(ThrowingErrorListener.INSTANCE);
+			lexer.removeErrorListeners();
+			CommonTokenStream tokens = new CommonTokenStream(lexer);
+			
+			parser = new ConditionsParser(tokens);
+			parser.removeErrorListeners();
+			parser.addErrorListener(ThrowingErrorListener.INSTANCE);
+		} catch (ParseCancellationException pce) {
+			throw new ParseCancellationException("Syntax error: Please check the syntax of your algebraic term");
+		} catch (Exception e) {
+			throw new Exception("Error when parsing algebraic term");
+		}
+		
 		return parser;
 	}
 }

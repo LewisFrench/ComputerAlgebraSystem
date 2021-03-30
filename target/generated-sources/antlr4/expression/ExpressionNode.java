@@ -207,13 +207,20 @@ class ConditionOperationNode extends ExpressionNode {
 }
 
 class ConditionAndNode extends ConditionOperationNode {
-
+	public ConditionAndNode(ExpressionNode left, ExpressionNode right) {
+		this.left = left;
+		this.right = right;
+	}
 	public String toString() {
 		return this.left.toString() + " & " + this.right.toString();
 	}
 }
 
 class ConditionOrNode extends ConditionOperationNode {
+	public ConditionOrNode(ExpressionNode left, ExpressionNode right) {
+		this.left = left;
+		this.right = right;
+	}
 	public String toString() {
 		return this.left.toString() + " | " + this.right.toString();
 	}
@@ -244,6 +251,9 @@ class ConditionFunctionNode extends ExpressionNode {
 	public ConditionFunctionNode(String functionName, ArrayList<ExpressionNode> arguments) {
 		this.functionName = functionName;
 		this.arguments = arguments;
+	}
+	public ArrayList<ExpressionNode> getArguments(){
+		return this.arguments;
 	}
 
 	public String toString() {

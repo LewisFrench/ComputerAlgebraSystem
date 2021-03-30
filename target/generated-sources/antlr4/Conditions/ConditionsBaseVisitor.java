@@ -59,7 +59,7 @@ public class ConditionsBaseVisitor<T> extends AbstractParseTreeVisitor<T> implem
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitCondExpr(ConditionsParser.CondExprContext ctx) { return visitChildren(ctx); }
+	@Override public T visitExpr(ConditionsParser.ExprContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *

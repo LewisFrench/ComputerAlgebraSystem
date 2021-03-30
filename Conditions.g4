@@ -2,7 +2,7 @@ grammar Conditions;
 import RuleAlgebra;
 
 
-ruleConditions: condition;
+ruleConditions: condition EOF;
 	
 condition
 	: left = condition op = (OP_AND | OP_OR) right = condition #ConditionOperation
@@ -12,10 +12,9 @@ condition
 	| function = VARIABLE LPAREN arguments=condExpr ( ',' condExpr)* RPAREN #ConditionFunction
 	;
 
-condExpr
-   : expression #Expression;
-   
 
+condExpr
+   : expression #expr;
 
 RELOP_EQ: '==';
 RELOP_NEQ: '!=';
