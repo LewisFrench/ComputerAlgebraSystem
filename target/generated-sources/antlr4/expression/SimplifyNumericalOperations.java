@@ -64,13 +64,13 @@ public class SimplifyNumericalOperations extends TermVisitor<ExpressionNode> {
 
 	@Override
 	public ExpressionNode Visit(ParentheticalNode node) {
-		return new ParentheticalNode(Visit(node));
+		return new ParentheticalNode(Visit(node.innerNode));
 
 	}
 
 	@Override
 	public ExpressionNode Visit(UnaryNode node) {
-		return new UnaryNode(Visit(node));
+		return new UnaryNode(Visit(node.innerNode));
 	}
 
 	@Override
