@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
 public class SubstituteConditionRuleVariables extends ConditionVisitor<ExpressionNode>{
-	LinkedHashMap<String, ExpressionNode> ruleVariables = new LinkedHashMap<>();
+	LinkedHashMap<String, ExpressionNode> ruleVariables;
 	
 	
 	public SubstituteConditionRuleVariables(LinkedHashMap<String, ExpressionNode> ruleVariables) {
@@ -39,13 +39,14 @@ public class SubstituteConditionRuleVariables extends ConditionVisitor<Expressio
 
 	@Override
 	public ExpressionNode Visit(ConditionFunctionNode node) {
+		
+		System.out.println("Visitng correct node");
 		ArrayList<ExpressionNode> arguments = new ArrayList<>();
 		for (int i = 0; i < node.getArguments().size(); i++) {
 			arguments.add(Visit(node.arguments.get(i)));
-
 		}
 
-		return new FunctionNode(node.functionName, arguments);
+		return new ConditionFunctionNode(node.functionName, arguments);
 	}
 	
 	@Override

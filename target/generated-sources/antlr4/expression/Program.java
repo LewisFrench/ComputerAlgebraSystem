@@ -28,21 +28,25 @@ public class Program {
 		GUI g = new GUI();
 	}
 
-	public String Rewrite(ArrayList<Rule> rules, ExpressionNode termAst) {
+	public String Rewrite(ArrayList<Rule> rules, ExpressionNode termAst, int ruleApplicationLimit) {
+		System.out.println("\n Rule application Limit : " + ruleApplicationLimit);
 		for (Rule r : rules) {
 			System.out.println(r);
 		}
 		String outputValue = "";
 		try {
-			ExpressionNode ast2 = new RewriteProcess(rules).Visit(termAst);
+			ExpressionNode ast2 = new RewriteProcess(rules, ruleApplicationLimit).Visit(termAst);
 			System.out.println("Output: " + ast2.toString());
 			ExpressionNode simplified = new SimplifyNumericalOperations().Visit(ast2);
 
 			System.out.println(simplified.toString());
 			outputValue = new EvaluateExpressionVisitor().Visit(simplified);
 			return outputValue;
+			
+			// Catch different type of exceptions here, determine if I can customise the error messages. 
+				// if not - evaluate that I would've liked to dedicate more time to determining the causes of every issue, but time constraints. 
 		} catch (Exception e) {
-			System.out.println("Rewrite Error Thrown: " + e.getMessage());
+			System.out.println("Rewrite Error Thrown: " + e.getMessage() + "  " + e.toString());
 		}
 
 		return outputValue;
@@ -54,6 +58,11 @@ public class Program {
 		if (splitByEquals.length != 2) {
 			throw new Exception("All rules must contain a '=' symbol");
 		}
+		
+		if (splitByEquals[0].replaceAll(" ","").equals(null) || splitByEquals[0].replaceAll(" ","").equals("")) {
+			throw new Exception("Rules must have symbols on their either side of the '=' ");
+		}
+		System.out.println("currently ok");
 		String[] splitByCondition = splitByEquals[1].split(":", 2);
 		if (splitByCondition.length > 1) {
 			System.out.println("RuleHasConditions");
@@ -65,6 +74,7 @@ public class Program {
 
 	public Rule parseRule(String ruleInput) throws ParseCancellationException, Exception {
 		Rule r = null;
+		System.out.println("Rule: " + ruleInput);
 		if (ruleInput.replaceAll(" ", "").equals("") || ruleInput.equals(null)) {
 			throw new Exception("File contains no rules");
 		}
@@ -97,10 +107,21 @@ public class Program {
 				ConditionsParser conditionsParser = getConditionsParser(splitRule[2]);
 				RuleConditionsContext conditions = conditionsParser.ruleConditions();
 				ExpressionNode conditionsNode = new BuildConditionsVisitor().visit(conditions);
+				System.out.println("\nSHOULD BE CONDITIONNODE" +conditionsNode.getClass());
 				// check contains all variables here too (LHS --> Condition)
 				
+				
 				r = (new Rule(lhsNode, rhsNode, conditionsNode));
+				//System.out.println()
 				r.variables = lhsVisitor.variables;
+				
+				
+				FetchConditionRuleVariables fCond = new FetchConditionRuleVariables();
+				fCond.Visit(conditionsNode);
+				System.out.println("\nCondition node test: " + r.variables + "  " + fCond.variables);
+				if (!(r.variables.keySet().containsAll(fCond.variables.keySet()))){
+					throw new Exception("Condition contains a rule variable that isn't present in the LHS of a rule");
+				}
 			} else if (splitRule.length == 2) {
 				r = (new Rule(lhsNode, rhsNode));
 				r.variables = lhsVisitor.variables;
@@ -132,8 +153,9 @@ public class Program {
 		input = CharStreams.fromString(expression);
 		try {
 			RuleAlgebraLexer lexer = new RuleAlgebraLexer(input);
-			lexer.addErrorListener(ThrowingErrorListener.INSTANCE);
 			lexer.removeErrorListeners();
+			lexer.addErrorListener(ThrowingErrorListener.INSTANCE);
+			
 
 			CommonTokenStream tokens = new CommonTokenStream(lexer);
 
@@ -160,8 +182,9 @@ public class Program {
 			input = CharStreams.fromString(expression);
 
 			AlgebraLexer lexer = new AlgebraLexer(input);
-			lexer.addErrorListener(ThrowingErrorListener.INSTANCE);
 			lexer.removeErrorListeners();
+			lexer.addErrorListener(ThrowingErrorListener.INSTANCE);
+			
 			CommonTokenStream tokens = new CommonTokenStream(lexer);
 
 			AlgebraParser parser = new AlgebraParser(tokens);
@@ -186,8 +209,9 @@ public class Program {
 			input = CharStreams.fromString(expression);
 			
 			ConditionsLexer lexer = new ConditionsLexer(input);
-			lexer.addErrorListener(ThrowingErrorListener.INSTANCE);
 			lexer.removeErrorListeners();
+			lexer.addErrorListener(ThrowingErrorListener.INSTANCE);
+			
 			CommonTokenStream tokens = new CommonTokenStream(lexer);
 			
 			parser = new ConditionsParser(tokens);

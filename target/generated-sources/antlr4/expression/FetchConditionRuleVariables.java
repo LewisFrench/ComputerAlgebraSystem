@@ -1,17 +1,56 @@
 package expression;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 
-public class SimplifyNumericalOperations extends TermVisitor<ExpressionNode> {
+public class FetchConditionRuleVariables extends ConditionVisitor<ExpressionNode> {
+	LinkedHashMap<String, ExpressionNode> variables = new LinkedHashMap<>();
+
+	public FetchConditionRuleVariables() {
+	}
+
+	@Override
+	public ExpressionNode Visit(ConditionAndNode node) {
+		ExpressionNode left = Visit(node.left);
+		ExpressionNode right = Visit(node.right);
+		return new ConditionAndNode(left, right);
+	}
+
+	@Override
+	public ExpressionNode Visit(ConditionOrNode node) {
+		ExpressionNode left = Visit(node.left);
+		ExpressionNode right = Visit(node.right);
+		return new ConditionOrNode(left, right);
+	}
+
+	@Override
+	public ExpressionNode Visit(NotNode node) {
+		return new NotNode(Visit(node.innerNode));
+	}
+
+	@Override
+	public ExpressionNode Visit(RelopNode node) {
+		ExpressionNode left = Visit(node.left);
+		ExpressionNode right = Visit(node.right);
+		return new RelopNode(left, right, node.relop, node.relopText);
+	}
+
+	@Override
+	public ExpressionNode Visit(ConditionFunctionNode node) {
+		ArrayList<ExpressionNode> arguments = new ArrayList<>();
+		for (int i = 0; i < node.getArguments().size(); i++) {
+			arguments.add(Visit(node.arguments.get(i)));
+
+		}
+
+		return new ConditionFunctionNode(node.functionName, arguments);
+	}
 
 	@Override
 	public ExpressionNode Visit(PowerNode node) {
 		ExpressionNode left = Visit(node.Left);
 		ExpressionNode right = Visit(node.Right);
 
-		if (left instanceof NumberNode && right instanceof NumberNode) {
-			return new NumberNode(Math.pow(((NumberNode) node.Left).getValue(), ((NumberNode) node.Right).getValue()));
-		}
 		return new PowerNode(left, right);
 	}
 
@@ -20,10 +59,6 @@ public class SimplifyNumericalOperations extends TermVisitor<ExpressionNode> {
 		ExpressionNode left = Visit(node.Left);
 		ExpressionNode right = Visit(node.Right);
 
-		if (left instanceof NumberNode && right instanceof NumberNode) {
-			return new NumberNode(((NumberNode) left).getValue() + ((NumberNode) right).getValue());
-		}
-
 		return new AdditionNode(left, right);
 	}
 
@@ -31,10 +66,6 @@ public class SimplifyNumericalOperations extends TermVisitor<ExpressionNode> {
 	public ExpressionNode Visit(SubtractionNode node) {
 		ExpressionNode left = Visit(node.Left);
 		ExpressionNode right = Visit(node.Right);
-
-		if (left instanceof NumberNode && right instanceof NumberNode) {
-			return new NumberNode(((NumberNode) left).getValue() - ((NumberNode) right).getValue());
-		}
 		return new SubtractionNode(left, right);
 	}
 
@@ -42,11 +73,6 @@ public class SimplifyNumericalOperations extends TermVisitor<ExpressionNode> {
 	public ExpressionNode Visit(MultiplicationNode node) {
 		ExpressionNode left = Visit(node.Left);
 		ExpressionNode right = Visit(node.Right);
-
-		if (left instanceof NumberNode && right instanceof NumberNode) {
-			return new NumberNode(((NumberNode) left).getValue() * ((NumberNode) right).getValue());
-		}
-
 		return new MultiplicationNode(left, right);
 	}
 
@@ -55,9 +81,6 @@ public class SimplifyNumericalOperations extends TermVisitor<ExpressionNode> {
 		ExpressionNode left = Visit(node.Left);
 		ExpressionNode right = Visit(node.Right);
 
-		if (left instanceof NumberNode && right instanceof NumberNode) {
-			return new NumberNode(((NumberNode) left).getValue() / ((NumberNode) right).getValue());
-		}
 		return new DivisionNode(left, right);
 	}
 
@@ -65,17 +88,17 @@ public class SimplifyNumericalOperations extends TermVisitor<ExpressionNode> {
 	public ExpressionNode Visit(ParentheticalNode node) {
 		ExpressionNode innerNode = Visit(node.innerNode);
 		if (innerNode instanceof NumberNode) {
-			return ((NumberNode)innerNode);
+			return ((NumberNode) innerNode);
 		}
 		return new ParentheticalNode(innerNode);
 	}
 
 	@Override
 	public ExpressionNode Visit(UnaryNode node) {
-		
+
 		ExpressionNode innerNode = Visit(node.innerNode);
 		if (innerNode instanceof NumberNode) {
-			double invertedValue = (((NumberNode)innerNode).getValue()) * -1;
+			double invertedValue = (((NumberNode) innerNode).getValue()) * -1;
 			return new NumberNode(invertedValue);
 		}
 		return new UnaryNode(innerNode);
@@ -102,15 +125,9 @@ public class SimplifyNumericalOperations extends TermVisitor<ExpressionNode> {
 		return node;
 	}
 
-//	@Override
-//	public ExpressionNode Visit(RuleVariableNode node) {
-//		System.out.println("\nVISITING RULEVARLABLENODE " + node.toString() + "  " + this.variables);
-//		if (this.variables.get(node.toString())!= null) {
-//			System.out.println("Returning " + this.variables.get(node.toString()) + this.variables.get(node.toString()).getClass());
-//			return this.variables.get(node.toString());
-//		}
-//		// Exception
-//		return node;
-//	}
-
+	@Override
+	public ExpressionNode Visit(RuleVariableNode node) {
+		this.variables.put(node.toString(), null);
+		return node;
+	}
 }

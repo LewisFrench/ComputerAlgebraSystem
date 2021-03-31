@@ -98,9 +98,9 @@ public class DependsEvaluator extends TermVisitor<Boolean> {
 			}
 		}
 
-		boolean argumentMatch = false;
+		boolean argumentMatch = true;
 		for (ExpressionNode argument : node.arguments) {
-			argumentMatch = argumentMatch || Visit(argument);
+			argumentMatch = argumentMatch && Visit(argument);
 		}
 		return argumentMatch;
 	}

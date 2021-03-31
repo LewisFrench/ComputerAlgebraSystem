@@ -8,13 +8,23 @@ condition
 	: left = condition op = (OP_AND | OP_OR) right = condition #ConditionOperation
 	| LPAREN condition RPAREN #ConditionParenthetical
 	|  OP_NOT  LPAREN  value = condition RPAREN #Not
-    |  left = condExpr relop=(RELOP_EQ | RELOP_NEQ | RELOP_GT | RELOP_GTE | RELOP_LT | RELOP_LTE) right =condExpr  #ConditionRelop
-	| function = VARIABLE LPAREN arguments=condExpr ( ',' condExpr)* RPAREN #ConditionFunction
+    |  left = expression relop=(RELOP_EQ | RELOP_NEQ | RELOP_GT | RELOP_GTE | RELOP_LT | RELOP_LTE) right =expression  #ConditionRelop
+	| function = CONDITION_VARIABLE LPAREN arguments= expression ( ',' expression)* RPAREN #ConditionFunction
 	;
 
+expression
+   :  func = VARIABLE LPAREN  arguments =  expression( COMMA expression)* RPAREN #FunctionExpression
+   |  op = (OP_ADD | OP_SUB) expression #UnaryExpression
+   |  LPAREN expression RPAREN #Parenthetical
+   |  left = expression  op = OP_POW right = expression #Operation
+   |  left = expression  op = (OP_MUL | OP_DIV) right = expression #Operation
+   |  left = expression  op = (OP_ADD | OP_SUB) right = expression #Operation
+   |  value = VARIABLE  #Variable
+   | VARIDENTIFIER value = VARIABLE #RuleVariable
+   |  value = NUMBER #Number
+   ;
+   
 
-condExpr
-   : expression #expr;
 
 RELOP_EQ: '==';
 RELOP_NEQ: '!=';
@@ -27,13 +37,22 @@ OP_AND: '&';
 OP_OR: '|';
 OP_NOT: '!';
 
-VARIABLE
-   : VALID_ID_CHAR+
+CONDITION_VARIABLE
+   : '_'VALID_CONDITION_CHAR+
    ;
 
-fragment VALID_ID_CHAR
+fragment VALID_CONDITION_CHAR
    : ('a' .. 'z') | ('A' .. 'Z') | '_' 
    ;
+   
+VARIABLE
+   : VALID_CONDITION_CHAR+
+   ;
+
+fragment VALID_CHAR
+   : ('a' .. 'z') | ('A' .. 'Z')  
+   ;
+      
       
 COMMA
    : ','
