@@ -45,10 +45,7 @@ public class GUI implements ActionListener {
 //	}
 
 	public GUI() {
-		
-		
-		
-		
+				
 		JFrame frame = new JFrame();
 		fileChooser = new JFileChooser(".");
 		fileChooser.setCurrentDirectory(new java.io.File("./RewriteRules"));
@@ -118,12 +115,14 @@ public class GUI implements ActionListener {
 						String output = p.Rewrite(rules, term, ruleApplicationLimit);
 						result.setText(output);
 					} else {
-						String output = p.Rewrite(rules, term, 0);
+						String output = p.Rewrite(rules, term, Integer.MAX_VALUE-1);
 						result.setText(output);
 					}
 				}
+			}catch (StackOverflowError soe) {
+				errorMessage.setText(soe.getLocalizedMessage());
 			}catch (NumberFormatException nfe) {
-				errorMessage.setText("Rule Application Limit must be an integer value");
+				errorMessage.setText("Please select a valid integer below " + Integer.MAX_VALUE + " as the rule application limit");
 			} catch (FileNotFoundException fnfe) {
 				errorMessage.setText("ERROR FileNotFound: " + fnfe.getMessage());
 			} catch (NullPointerException npe) {

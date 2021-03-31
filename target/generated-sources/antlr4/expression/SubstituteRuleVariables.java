@@ -11,7 +11,7 @@ public class SubstituteRuleVariables extends RuleTermVisitor<ExpressionNode> {
 	}
 	
 	@Override
-	public ExpressionNode Visit(PowerNode node) {
+	public ExpressionNode Visit(PowerNode node) throws Exception {
 		ExpressionNode left =  Visit(node.Left);
 		ExpressionNode right =  Visit(node.Right);
 
@@ -22,7 +22,7 @@ public class SubstituteRuleVariables extends RuleTermVisitor<ExpressionNode> {
 	}
 
 	@Override
-	public ExpressionNode Visit(AdditionNode node) {
+	public ExpressionNode Visit(AdditionNode node) throws Exception {
 		ExpressionNode left =  Visit(node.Left);
 		ExpressionNode right =  Visit(node.Right);
 		
@@ -34,7 +34,7 @@ public class SubstituteRuleVariables extends RuleTermVisitor<ExpressionNode> {
 	}
 
 	@Override
-	public ExpressionNode Visit(SubtractionNode node) {
+	public ExpressionNode Visit(SubtractionNode node) throws Exception {
 		ExpressionNode left =  Visit(node.Left);
 		ExpressionNode right =  Visit(node.Right);
 
@@ -45,7 +45,7 @@ public class SubstituteRuleVariables extends RuleTermVisitor<ExpressionNode> {
 	}
 
 	@Override
-	public ExpressionNode Visit(MultiplicationNode node) {
+	public ExpressionNode Visit(MultiplicationNode node) throws Exception {
 		ExpressionNode left =  Visit(node.Left);
 		ExpressionNode right =  Visit(node.Right);
 
@@ -57,7 +57,7 @@ public class SubstituteRuleVariables extends RuleTermVisitor<ExpressionNode> {
 	}
 
 	@Override
-	public ExpressionNode Visit(DivisionNode node) {
+	public ExpressionNode Visit(DivisionNode node) throws Exception {
 		ExpressionNode left =  Visit(node.Left);
 		ExpressionNode right =  Visit(node.Right);
 
@@ -68,19 +68,19 @@ public class SubstituteRuleVariables extends RuleTermVisitor<ExpressionNode> {
 	}
 
 	@Override
-	public ExpressionNode Visit(ParentheticalNode node) {
+	public ExpressionNode Visit(ParentheticalNode node) throws Exception {
 		return new ParentheticalNode(Visit(node.innerNode));
 		
 	}
 
 
 	@Override
-	public ExpressionNode Visit(UnaryNode node) {
+	public ExpressionNode Visit(UnaryNode node) throws Exception {
 		return new UnaryNode(Visit(node.innerNode));
 	}
 
 	@Override
-	public ExpressionNode Visit(FunctionNode node) {
+	public ExpressionNode Visit(FunctionNode node) throws Exception {
 		ArrayList<ExpressionNode> arguments = new ArrayList<>();
 		for (int i = 0; i < node.getArguments().size(); i++) {
 			arguments.add(Visit(node.arguments.get(i)));

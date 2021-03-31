@@ -1,30 +1,30 @@
 package expression;
 
 abstract class RuleTermVisitor<T> {
-	public abstract T Visit(PowerNode node);
+	public abstract T Visit(PowerNode node) throws Exception;
 
-	public abstract T Visit(AdditionNode node);
+	public abstract T Visit(AdditionNode node) throws Exception;
 
-	public abstract T Visit(SubtractionNode node);
+	public abstract T Visit(SubtractionNode node) throws Exception;
 
-	public abstract T Visit(MultiplicationNode node);
+	public abstract T Visit(MultiplicationNode node) throws Exception;
 
-	public abstract T Visit(DivisionNode node);
+	public abstract T Visit(DivisionNode node) throws Exception;
 
-	public abstract T Visit(ParentheticalNode node);
+	public abstract T Visit(ParentheticalNode node) throws Exception;
 
-	public abstract T Visit(UnaryNode node);
+	public abstract T Visit(UnaryNode node) throws Exception;
 
-	public abstract T Visit(FunctionNode node);
+	public abstract T Visit(FunctionNode node) throws Exception;
 
-	public abstract T Visit(VariableNode node);
+	public abstract T Visit(VariableNode node) throws Exception;
 
-	public abstract T Visit(NumberNode node);
+	public abstract T Visit(NumberNode node) throws Exception;
 
-	public abstract T Visit(RuleVariableNode node);
+	public abstract T Visit(RuleVariableNode node) throws Exception;
 
 	// Can talk about how this could be more efficient in C#, see bookmark page
-	public T Visit(ExpressionNode node) {
+	public T Visit(ExpressionNode node) throws Exception {
 		if (node instanceof PowerNode) {
 			return Visit((PowerNode) node);
 		} else if (node instanceof AdditionNode) {
@@ -48,9 +48,7 @@ abstract class RuleTermVisitor<T> {
 		} else if (node instanceof RuleVariableNode) {
 			return Visit((RuleVariableNode) node);
 		} else {
-			// Exception
-			System.out.println("No expressionNode of suitable type");
-			return null;
+			throw new Exception("Attempting to visit an unreachable node");
 		}
 	}
 }

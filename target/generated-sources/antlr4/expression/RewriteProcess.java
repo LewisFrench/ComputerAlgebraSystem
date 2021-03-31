@@ -14,15 +14,15 @@ public class RewriteProcess extends TermVisitor<ExpressionNode> {
 		rules = ruleSet;
 		this.ruleApplicationLimit = ruleApplicationLimit;
 	}
+//
+//	public RewriteProcess(ArrayList<Rule> ruleSet) {
+//		rules = ruleSet;
+//		this.ruleApplicationLimit = 15; // Int max? Depends if stackoverflow error is caught by GUI
 
-	public RewriteProcess(ArrayList<Rule> ruleSet) {
-		rules = ruleSet;
-		this.ruleApplicationLimit = 15; // Int max? Depends if stackoverflow error is caught by GUI
-
-	}
+//	}
 
 	@Override
-	public ExpressionNode Visit(PowerNode node) {
+	public ExpressionNode Visit(PowerNode node) throws Exception {
 		ExpressionNode visitedLeft = (Visit(node.Left));
 		ExpressionNode visitedRight = (Visit(node.Right));
 		// node.Left = rwLeft;
@@ -32,7 +32,7 @@ public class RewriteProcess extends TermVisitor<ExpressionNode> {
 	}
 
 	@Override
-	public ExpressionNode Visit(AdditionNode node) {
+	public ExpressionNode Visit(AdditionNode node) throws Exception {
 		ExpressionNode visitedLeft = (Visit(node.Left));
 		ExpressionNode visitedRight = (Visit(node.Right));
 
@@ -40,7 +40,7 @@ public class RewriteProcess extends TermVisitor<ExpressionNode> {
 	}
 
 	@Override
-	public ExpressionNode Visit(SubtractionNode node) {
+	public ExpressionNode Visit(SubtractionNode node) throws Exception {
 		ExpressionNode visitedLeft = (Visit(node.Left));
 		ExpressionNode visitedRight = (Visit(node.Right));
 
@@ -48,7 +48,7 @@ public class RewriteProcess extends TermVisitor<ExpressionNode> {
 	}
 
 	@Override
-	public ExpressionNode Visit(MultiplicationNode node) {
+	public ExpressionNode Visit(MultiplicationNode node) throws Exception {
 		ExpressionNode visitedLeft = (Visit(node.Left));
 		ExpressionNode visitedRight = (Visit(node.Right));
 		node.Left = visitedLeft;
@@ -58,7 +58,7 @@ public class RewriteProcess extends TermVisitor<ExpressionNode> {
 	}
 
 	@Override
-	public ExpressionNode Visit(DivisionNode node) {
+	public ExpressionNode Visit(DivisionNode node) throws Exception {
 		ExpressionNode visitedLeft = (Visit(node.Left));
 		ExpressionNode visitedRight = (Visit(node.Right));
 		node.Left = visitedLeft;
@@ -68,24 +68,24 @@ public class RewriteProcess extends TermVisitor<ExpressionNode> {
 	}
 
 	@Override
-	public ExpressionNode Visit(ParentheticalNode node) {
+	public ExpressionNode Visit(ParentheticalNode node) throws Exception {
 
 		return rewrite(new ParentheticalNode(Visit(node.innerNode)));
 	}
 
 	@Override
-	public ExpressionNode Visit(NumberNode node) {
+	public ExpressionNode Visit(NumberNode node) throws Exception {
 		return rewrite(node);
 	}
 
 	@Override
-	public ExpressionNode Visit(UnaryNode node) {
+	public ExpressionNode Visit(UnaryNode node) throws Exception {
 		return rewrite(new UnaryNode(Visit(node.innerNode)));
 
 	}
 
 	@Override
-	public ExpressionNode Visit(FunctionNode node) {
+	public ExpressionNode Visit(FunctionNode node) throws Exception {
 		ArrayList<ExpressionNode> arguments = new ArrayList<>();
 		for (int i = 0; i < node.getArguments().size(); i++) {
 			arguments.add(Visit(node.arguments.get(i)));
@@ -103,13 +103,13 @@ public class RewriteProcess extends TermVisitor<ExpressionNode> {
 //	}
 
 	@Override
-	public ExpressionNode Visit(VariableNode node) {
+	public ExpressionNode Visit(VariableNode node) throws Exception {
 		return rewrite(node);
 	}
 
-	public ExpressionNode rewrite(ExpressionNode node) {
+	public ExpressionNode rewrite(ExpressionNode node) throws Exception {
 		System.out.println("rewrite");
-		if (this.ruleApplicationLimit <= this.ruleApplicationCount && !(ruleApplicationLimit == 0)) {
+		if (!(this.ruleApplicationLimit > this.ruleApplicationCount)) {
 			System.out.println("Rule application limit reached");
 			return node;
 		}

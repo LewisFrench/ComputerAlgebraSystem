@@ -4,34 +4,34 @@ package expression;
 class EvaluateExpressionVisitor extends TermVisitor<String> {
 
 	@Override
-	public String Visit(PowerNode node) {
+	public String Visit(PowerNode node) throws Exception {
 		return Visit(node.Left) + "^" + Visit(node.Right);
 	}
 
 	@Override
-	public String Visit(AdditionNode node) {
+	public String Visit(AdditionNode node) throws Exception {
 		return Visit(node.Left) + "+" + Visit(node.Right);
 	}
 
 	@Override
-	public String Visit(SubtractionNode node) {
+	public String Visit(SubtractionNode node) throws Exception {
 
 		return Visit(node.Left) + "-" + Visit(node.Right);
 	}
 
 	@Override
-	public String Visit(MultiplicationNode node) {
+	public String Visit(MultiplicationNode node) throws Exception {
 		return Visit(node.Left) + "*" + Visit(node.Right);
 	}
 
 	@Override
-	public String Visit(DivisionNode node) {
+	public String Visit(DivisionNode node) throws Exception {
 		// divide by 0 errors
 		return Visit(node.Left) + "/" + Visit(node.Right);
 	}
 
 	@Override
-	public String Visit(ParentheticalNode node) {
+	public String Visit(ParentheticalNode node) throws Exception {
 		return "(" + Visit(node.innerNode) + ")";
 	}
 
@@ -41,7 +41,7 @@ class EvaluateExpressionVisitor extends TermVisitor<String> {
 	}
 
 	@Override
-	public String Visit(UnaryNode node) {
+	public String Visit(UnaryNode node) throws Exception {
 		return ("-" + Visit(node.innerNode).toString());
 	}
 

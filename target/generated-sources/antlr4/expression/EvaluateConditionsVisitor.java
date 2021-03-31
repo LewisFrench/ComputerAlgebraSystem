@@ -54,7 +54,7 @@ public class EvaluateConditionsVisitor extends ConditionVisitor<Boolean> {
 	}
 
 	@Override
-	public Boolean Visit(RelopNode node) {
+	public Boolean Visit(RelopNode node) throws Exception {
 
 		// Interesting talking point: if the variable in the thing isn't comparable
 		// (e.g. (x^2) > 1) then do I return true or false?
@@ -100,7 +100,7 @@ public class EvaluateConditionsVisitor extends ConditionVisitor<Boolean> {
 
 	// public boolean calculateRelop(ExpressionNode left, ExpressionNode right,
 	// String relop) {
-	public boolean calculateRelop(RelopNode relopNode) {
+	public boolean calculateRelop(RelopNode relopNode) throws Exception {
 
 		// Decide equivalence between any two nodes
 		EvaluateTree treeMatcher = new EvaluateTree();
@@ -111,8 +111,8 @@ public class EvaluateConditionsVisitor extends ConditionVisitor<Boolean> {
 		}
 		
 		if (!(relopNode.left instanceof NumberNode && relopNode.right instanceof NumberNode)) {
-			System.out.println("\nError: Attemting to provide inequality to non-numerical values");
-			//throw new Exception("Error: Attemting to provide inequality to non-numerical values");
+			//System.out.println("\nError: Attemting to provide inequality to non-numerical values");
+			throw new Exception("Check your rule conditions. You cannot evaluate inequalities of non-numerical terms");
 		}
 		NumberNode l;
 		NumberNode r;
@@ -161,23 +161,23 @@ public class EvaluateConditionsVisitor extends ConditionVisitor<Boolean> {
 	}
 
 	@Override
-	public Boolean Visit(ConditionFunctionNode node) {
+	public Boolean Visit(ConditionFunctionNode node) throws Exception {
 		System.out.println("CONDITIONFUNCTION HERE " + node.functionName + "  " + node.getArguments());
 		return this.conditionFunctions.determineFunction(node.functionName, node.arguments);
 	}
 
 	@Override
-	public Boolean Visit(NotNode node) {
+	public Boolean Visit(NotNode node) throws Exception {
 		return !(Visit(node.innerNode));
 	}
 
 	@Override
-	public Boolean Visit(ConditionAndNode node) {
+	public Boolean Visit(ConditionAndNode node) throws Exception {
 		return (Visit(node.left) && Visit(node.right));
 	}
 
 	@Override
-	public Boolean Visit(ConditionOrNode node) {
+	public Boolean Visit(ConditionOrNode node) throws Exception {
 		return (Visit(node.left) || Visit(node.right));
 	}
 

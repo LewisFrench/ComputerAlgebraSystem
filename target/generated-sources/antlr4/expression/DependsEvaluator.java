@@ -10,7 +10,7 @@ public class DependsEvaluator extends TermVisitor<Boolean> {
 	}
 
 	@Override
-	public Boolean Visit(PowerNode node) {
+	public Boolean Visit(PowerNode node) throws Exception {
 		if (node.getClass() == dependency.getClass()) {
 			if (treeMatcher.Visit(node, dependency)) {
 				return true;
@@ -21,7 +21,7 @@ public class DependsEvaluator extends TermVisitor<Boolean> {
 
 	// Methods determine if dependency is present in the tree
 	@Override
-	public Boolean Visit(AdditionNode node) {
+	public Boolean Visit(AdditionNode node) throws Exception {
 		if (node.getClass() == dependency.getClass()) {
 			if (treeMatcher.Visit(node, dependency)) {
 				return true;
@@ -33,7 +33,7 @@ public class DependsEvaluator extends TermVisitor<Boolean> {
 	}
 
 	@Override
-	public Boolean Visit(SubtractionNode node) {
+	public Boolean Visit(SubtractionNode node) throws Exception {
 		if (node.getClass() == dependency.getClass()) {
 			if (treeMatcher.Visit(node, dependency)) {
 				return true;
@@ -43,7 +43,7 @@ public class DependsEvaluator extends TermVisitor<Boolean> {
 	}
 
 	@Override
-	public Boolean Visit(MultiplicationNode node) {
+	public Boolean Visit(MultiplicationNode node) throws Exception {
 		if (node.getClass() == dependency.getClass()) {
 			if (treeMatcher.Visit(node, dependency)) {
 				return true;
@@ -53,7 +53,7 @@ public class DependsEvaluator extends TermVisitor<Boolean> {
 	}
 
 	@Override
-	public Boolean Visit(DivisionNode node) {
+	public Boolean Visit(DivisionNode node) throws Exception {
 
 		if (node.getClass() == dependency.getClass()) {
 			if (treeMatcher.Visit(node, dependency)) {
@@ -64,7 +64,7 @@ public class DependsEvaluator extends TermVisitor<Boolean> {
 	}
 
 	@Override
-	public Boolean Visit(ParentheticalNode node) {
+	public Boolean Visit(ParentheticalNode node) throws Exception {
 		if (node.getClass() == dependency.getClass()) {
 			if (treeMatcher.Visit(node, dependency)) {
 				return true;
@@ -79,7 +79,7 @@ public class DependsEvaluator extends TermVisitor<Boolean> {
 	}
 
 	@Override
-	public Boolean Visit(UnaryNode node) {
+	public Boolean Visit(UnaryNode node) throws Exception {
 		if (node.getClass() == dependency.getClass()) {
 			if (treeMatcher.Visit(node, dependency)) {
 				return true;
@@ -90,7 +90,7 @@ public class DependsEvaluator extends TermVisitor<Boolean> {
 	}
 
 	@Override
-	public Boolean Visit(FunctionNode node) {
+	public Boolean Visit(FunctionNode node) throws Exception {
 
 		if (node.getClass() == dependency.getClass()) {
 			if (treeMatcher.Visit(node, dependency)) {

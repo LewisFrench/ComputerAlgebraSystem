@@ -29,6 +29,7 @@ public class Program {
 	}
 
 	public String Rewrite(ArrayList<Rule> rules, ExpressionNode termAst, int ruleApplicationLimit) {
+		
 		System.out.println("\n Rule application Limit : " + ruleApplicationLimit);
 		for (Rule r : rules) {
 			System.out.println(r);
@@ -44,11 +45,13 @@ public class Program {
 			return outputValue;
 			
 			// Catch different type of exceptions here, determine if I can customise the error messages. 
-				// if not - evaluate that I would've liked to dedicate more time to determining the causes of every issue, but time constraints. 
+				// if not - evaluate that I would've liked to dedicate more time to determining the causes of every issue, but time constraints.
+		} catch (StackOverflowError soe) {
+			throw new StackOverflowError("Check for any infinitely-recursive rules or choose a lower rule application limit");
 		} catch (Exception e) {
 			System.out.println("Rewrite Error Thrown: " + e.getMessage() + "  " + e.toString());
 		}
-
+		
 		return outputValue;
 	}
 

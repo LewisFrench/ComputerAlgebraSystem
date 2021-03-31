@@ -11,7 +11,7 @@ class ConditionFunctionEvaluator {
 		this.variables = variables;
 	}
 
-	public boolean determineFunction(String functionName, ArrayList<ExpressionNode> arguments) {
+	public boolean determineFunction(String functionName, ArrayList<ExpressionNode> arguments) throws Exception {
 		ConditionFunction conditionFunction = null;
 		switch (functionName) {
 		case "_is_number":
@@ -61,7 +61,7 @@ class ConditionFunctionEvaluator {
 abstract class ConditionFunction {
 	String functionDescription;
 
-	abstract boolean function(ArrayList<ExpressionNode> arguments);
+	abstract boolean function(ArrayList<ExpressionNode> arguments) throws Exception;
 }
 
 class is_literal extends ConditionFunction {
@@ -72,6 +72,7 @@ class is_literal extends ConditionFunction {
 		if (arguments.size() == 1) {
 			return (arguments.get(0) instanceof VariableNode);
 		}
+		//Exception
 		return false;
 	}
 }
@@ -84,6 +85,7 @@ class is_number extends ConditionFunction {
 		if (arguments.size() == 1) {
 			return (arguments.get(0) instanceof NumberNode);
 		}
+		//Exception
 		return false;
 	}
 }
@@ -102,6 +104,7 @@ class is_integer extends ConditionFunction {
 				return false;
 			}
 		}
+		// Exception
 		return false;
 	}
 
@@ -111,10 +114,11 @@ class depends extends ConditionFunction {
 	String functionDescription = "depends($A, $b)  :  Determines if term $A contains any instance of term $b";
 
 	@Override
-	boolean function(ArrayList<ExpressionNode> arguments) {
+	boolean function(ArrayList<ExpressionNode> arguments) throws Exception {
 		if (arguments.size() == 2) {
 			return new DependsEvaluator(arguments.get(1)).Visit(arguments.get(0));
 		}
+		// Exception
 		return false; // Throw Exception
 	}
 }

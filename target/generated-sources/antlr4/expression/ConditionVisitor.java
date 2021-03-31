@@ -3,41 +3,41 @@ package expression;
 abstract class ConditionVisitor<T> {
 
 	// Condition Nodes
-	public abstract T Visit(ConditionAndNode node);
+	public abstract T Visit(ConditionAndNode node)throws Exception;
 
-	public abstract T Visit(ConditionOrNode node);
+	public abstract T Visit(ConditionOrNode node)throws Exception;
 
-	public abstract T Visit(NotNode node);
+	public abstract T Visit(NotNode node)throws Exception;
 
-	public abstract T Visit(RelopNode node);
+	public abstract T Visit(RelopNode node) throws Exception;
 
-	public abstract T Visit(ConditionFunctionNode node);
+	public abstract T Visit(ConditionFunctionNode node) throws Exception;
 
 	// Expression Nodes
-	public abstract T Visit(PowerNode node);
+	public abstract T Visit(PowerNode node)throws Exception;
 
-	public abstract T Visit(AdditionNode node);
+	public abstract T Visit(AdditionNode node)throws Exception;
 
-	public abstract T Visit(SubtractionNode node);
+	public abstract T Visit(SubtractionNode node) throws Exception;
 
-	public abstract T Visit(MultiplicationNode node);
+	public abstract T Visit(MultiplicationNode node) throws Exception;
 
-	public abstract T Visit(DivisionNode node);
+	public abstract T Visit(DivisionNode node) throws Exception;
 
-	public abstract T Visit(ParentheticalNode node);
+	public abstract T Visit(ParentheticalNode node) throws Exception;
 
-	public abstract T Visit(UnaryNode node);
+	public abstract T Visit(UnaryNode node) throws Exception;
 
-	public abstract T Visit(FunctionNode node);
+	public abstract T Visit(FunctionNode node) throws Exception;
 
-	public abstract T Visit(VariableNode node);
+	public abstract T Visit(VariableNode node) throws Exception;
 
-	public abstract T Visit(NumberNode node);
+	public abstract T Visit(NumberNode node) throws Exception;
 
-	public abstract T Visit(RuleVariableNode node);
+	public abstract T Visit(RuleVariableNode node) throws Exception;
 
 	// Can talk about how this could be more efficient in C#, see bookmark page
-	public T Visit(ExpressionNode node) {
+	public T Visit(ExpressionNode node) throws Exception{
 		if (node instanceof ConditionAndNode) {
 			return Visit((ConditionAndNode) node);
 		} else if (node instanceof ConditionOrNode) {
@@ -71,9 +71,7 @@ abstract class ConditionVisitor<T> {
 		} else if (node instanceof RuleVariableNode) {
 			return Visit((RuleVariableNode) node);
 		} else {
-			// Exception
-			System.out.println("No expressionNode of suitable type");
-			return null;
+			throw new Exception("Attempted to visit invalid node");
 		}
 	}
 }

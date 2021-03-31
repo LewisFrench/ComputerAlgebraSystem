@@ -39,7 +39,7 @@ class Rule {
 //
 //		// this.lhsNode = new BuildLhsVisitor(variables).visit(lhs);
 //	}
-	public Rule(ExpressionNode lhsNode, ExpressionNode rhsNode) {
+	public Rule(ExpressionNode lhsNode, ExpressionNode rhsNode) throws Exception {
 
 		this.lhsNode = lhsNode;
 		this.rhsNode = rhsNode;
@@ -50,7 +50,7 @@ class Rule {
 		this.conditionsNode = null;
 	}
 
-	public Rule(ExpressionNode lhsNode, ExpressionNode rhsNode, ExpressionNode conditions) {
+	public Rule(ExpressionNode lhsNode, ExpressionNode rhsNode, ExpressionNode conditions) throws Exception {
 		this.lhsNode = lhsNode;
 		this.rhsNode = rhsNode;
 		this.conditionsNode = conditions;
