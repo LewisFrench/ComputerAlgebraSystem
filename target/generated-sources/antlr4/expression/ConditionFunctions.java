@@ -14,18 +14,19 @@ class ConditionFunctionEvaluator {
 	public boolean determineFunction(String functionName, ArrayList<ExpressionNode> arguments) {
 		ConditionFunction conditionFunction = null;
 		switch (functionName) {
-		case "is_number":
+		case "_is_number":
 			conditionFunction = new is_number();
 			break;
 
-		case "is_literal":
+		case "_is_literal":
 			conditionFunction = new is_literal();
 			break;
 
-		case "is_integer":
+		case "_is_integer":
 			conditionFunction = new is_integer();
 			break;
-		case "depends":
+		case "_depends":
+			System.out.println("Doing depends " + arguments.toString());
 			conditionFunction = new depends();
 			break;
 		default:
@@ -33,27 +34,27 @@ class ConditionFunctionEvaluator {
 		}
 
 		if (conditionFunction != null) {
-			return conditionFunction.function(this.transformRuleVariableArguments(arguments));
+			return conditionFunction.function(arguments);
 		}
 		return false;
 	}
-
-	public ArrayList<ExpressionNode> transformRuleVariableArguments(ArrayList<ExpressionNode> arguments) {
-		ArrayList<ExpressionNode> transformedArguments = new ArrayList<>();
-		for (ExpressionNode argument : arguments) {
-			if (argument instanceof RuleVariableNode) {
-				if (this.variables.get(((RuleVariableNode) argument).toString()) != null) {
-					transformedArguments.add(this.variables.get(((RuleVariableNode) argument).toString()));
-				} else {
-					transformedArguments.add(argument);
-				}
-
-			} else {
-				transformedArguments.add(argument);
-			}
-		}
-		return transformedArguments;
-	}
+//
+//	public ArrayList<ExpressionNode> transformRuleVariableArguments(ArrayList<ExpressionNode> arguments) {
+//		ArrayList<ExpressionNode> transformedArguments = new ArrayList<>();
+//		for (ExpressionNode argument : arguments) {
+//			if (argument instanceof RuleVariableNode) {
+//				if (this.variables.get(((RuleVariableNode) argument).toString()) != null) {
+//					transformedArguments.add(this.variables.get(((RuleVariableNode) argument).toString()));
+//				} else {
+//					transformedArguments.add(argument);
+//				}
+//
+//			} else {
+//				transformedArguments.add(argument);
+//			}
+//		}
+//		return transformedArguments;
+//	}
 
 }
 

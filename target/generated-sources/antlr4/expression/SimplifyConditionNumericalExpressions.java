@@ -38,7 +38,7 @@ public class SimplifyConditionNumericalExpressions extends ConditionVisitor<Expr
 
 		}
 
-		return new FunctionNode(node.functionName, arguments);
+		return new ConditionFunctionNode(node.functionName, arguments);
 	}
 	
 	@Override

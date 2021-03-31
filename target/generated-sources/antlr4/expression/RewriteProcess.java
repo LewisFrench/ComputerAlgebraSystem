@@ -6,12 +6,18 @@ import java.util.LinkedHashMap;
 public class RewriteProcess extends TermVisitor<ExpressionNode> {
 	// LinkedHashMap<String, ExpressionNode> variables;
 	ArrayList<Rule> rules;
-	int ruleApplicationLimit = 10;
+	int ruleApplicationLimit;
 	int ruleApplicationCount = 0;
 	// Maximum Rule Applications
 
+	public RewriteProcess(ArrayList<Rule> ruleSet, int ruleApplicationLimit) {
+		rules = ruleSet;
+		this.ruleApplicationLimit = ruleApplicationLimit;
+	}
+
 	public RewriteProcess(ArrayList<Rule> ruleSet) {
 		rules = ruleSet;
+		this.ruleApplicationLimit = 15; // Int max? Depends if stackoverflow error is caught by GUI
 
 	}
 
@@ -102,7 +108,7 @@ public class RewriteProcess extends TermVisitor<ExpressionNode> {
 	}
 
 	public ExpressionNode rewrite(ExpressionNode node) {
-
+		System.out.println("rewrite");
 		if (this.ruleApplicationLimit <= this.ruleApplicationCount && !(ruleApplicationLimit == 0)) {
 			System.out.println("Rule application limit reached");
 			return node;
@@ -110,18 +116,19 @@ public class RewriteProcess extends TermVisitor<ExpressionNode> {
 		EvaluateTree argumentEvaluator;
 		if (rules != null) {
 			for (Rule r : rules) {
-
+				System.out.println("Attempting to match term "+ node.toString() + " to rule " + r.toString());
 				boolean conditionsHold = false;
 				argumentEvaluator = new EvaluateTree();
 
 				boolean ruleMatches = argumentEvaluator.Visit(r.lhsNode, node);
 
 				if (ruleMatches) {
-
+					System.out.println("Rule Matches");
 					boolean validArguments = argumentsValid(argumentEvaluator);
 
 					if (validArguments) {
 
+						System.out.println("\n\nMatch rule : " + r.toString() + "\nto term : " + node.toString());
 						this.ruleApplicationCount++;
 
 						LinkedHashMap<String, ExpressionNode> newRuleVariables = new LinkedHashMap<String, ExpressionNode>();
@@ -131,20 +138,18 @@ public class RewriteProcess extends TermVisitor<ExpressionNode> {
 						}
 
 						if (r.conditionsNode != null) {
-							System.out.println("\n Checking Conditions: " + r.conditionsNode.toString()  + "\n");
-							ExpressionNode substitutedConditions = new SubstituteConditionRuleVariables(newRuleVariables).Visit(r.conditionsNode);
-							System.out.println(substitutedConditions.toString());
-							ExpressionNode simplified = new SimplifyConditionNumericalExpressions().Visit(substitutedConditions);
-							System.out.println(simplified.toString());
+							ExpressionNode substitutedConditions = new SubstituteConditionRuleVariables(
+									newRuleVariables).Visit(r.conditionsNode);
+
+							ExpressionNode simplified = new SimplifyConditionNumericalExpressions()
+									.Visit(substitutedConditions);
+
 							conditionsHold = new EvaluateConditionsVisitor(newRuleVariables).Visit(simplified);
-							System.out.println("Conditions hold : "  + conditionsHold);
-							//ExpressionNode conditionsNode = new BuildConditionsVisitor(newRuleVariables)
-							//		.visitRuleConditions(r.conditions);
-							//conditionsHold = new EvaluateConditionsVisitor(r.variables).Visit(conditionsNode);
+
 						}
 
 						if (conditionsHold || r.conditionsNode == null) {
-							System.out.println("\napply rule " + r.toString() + " to  " + node.toString());
+
 							ExpressionNode substituted = new SubstituteRuleVariables(newRuleVariables).Visit(r.rhsNode);
 
 							ExpressionNode solved = new SimplifyNumericalOperations().Visit(substituted);

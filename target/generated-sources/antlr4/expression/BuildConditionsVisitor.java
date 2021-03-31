@@ -60,8 +60,8 @@ public class BuildConditionsVisitor extends ConditionsBaseVisitor<ExpressionNode
 	@Override
 	public ExpressionNode visitConditionFunction(ConditionsParser.ConditionFunctionContext context) {
 		ArrayList<ExpressionNode> arguments = new ArrayList<>();
-		for (int i = 0; i < context.condExpr().size(); i++) {
-			arguments.add(visit(context.condExpr(i)));
+		for (int i = 0; i < context.expression().size(); i++) {
+			arguments.add(visit(context.expression(i)));
 		}
 		return new ConditionFunctionNode(context.function.getText(), arguments);
 	}

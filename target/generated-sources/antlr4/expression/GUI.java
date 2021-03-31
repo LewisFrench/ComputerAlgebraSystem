@@ -1,6 +1,7 @@
 package expression;
 
 import java.awt.BorderLayout;
+import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -34,6 +35,9 @@ public class GUI implements ActionListener {
 	File rulesFile = null;
 
 	JLabel errorMessage;
+	
+	
+	JTextField enterRuleApplicationLimit;
 
 //	public static void main(String[] args) {
 //		new GUI();
@@ -41,6 +45,10 @@ public class GUI implements ActionListener {
 //	}
 
 	public GUI() {
+		
+		
+		
+		
 		JFrame frame = new JFrame();
 		fileChooser = new JFileChooser(".");
 		fileChooser.setCurrentDirectory(new java.io.File("./RewriteRules"));
@@ -50,20 +58,26 @@ public class GUI implements ActionListener {
 		openFileButton = new JButton("Load Rules");
 		enterTerm = new JTextField("", 30);
 		beginRewriteButton = new JButton("Apply Rewrite Rules");
-		Program p = new Program();
+		//Program p = new Program();
 		term = new JLabel("");
 		filePath = new JLabel("");
 		result = new JLabel("");
 		errorMessage = new JLabel("");
-
+		enterRuleApplicationLimit = new JTextField("", 10);
 		fileChooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
 
 		JPanel panel = new JPanel();
+		
+		
+		panel.setLayout(new GridBagLayout());
 		panel.setBorder(BorderFactory.createEmptyBorder(30, 30, 30, 30));
 		panel.setLayout(new GridLayout(0, 1));
 
+		
+		
 		panel.add(openFileButton);
 		panel.add(enterTerm);
+		panel.add(enterRuleApplicationLimit);
 		panel.add(beginRewriteButton);
 		panel.add(term);
 		panel.add(filePath);
@@ -89,16 +103,27 @@ public class GUI implements ActionListener {
 		}
 		if (e.getSource() == beginRewriteButton) {
 			errorMessage.setText("");
+			result.setText("");
 			Program p = new Program();
+			
+			
 			try {
-
+				
 				ArrayList<String> ruleStringList = readRules(fileChooser.getSelectedFile());
 				ArrayList<Rule> rules = this.getRules(ruleStringList, p);
 				if (rules != null) {
 					ExpressionNode term = p.parseTerm(enterTerm.getText());
-					String output = p.Rewrite(rules, term);
-					result.setText(output);
+					if (!(enterRuleApplicationLimit.getText().replaceAll(" ","").equals(""))) {
+						int ruleApplicationLimit = Integer.valueOf(enterRuleApplicationLimit.getText());
+						String output = p.Rewrite(rules, term, ruleApplicationLimit);
+						result.setText(output);
+					} else {
+						String output = p.Rewrite(rules, term, 0);
+						result.setText(output);
+					}
 				}
+			}catch (NumberFormatException nfe) {
+				errorMessage.setText("Rule Application Limit must be an integer value");
 			} catch (FileNotFoundException fnfe) {
 				errorMessage.setText("ERROR FileNotFound: " + fnfe.getMessage());
 			} catch (NullPointerException npe) {
@@ -114,8 +139,9 @@ public class GUI implements ActionListener {
 	public ArrayList<Rule> getRules(ArrayList<String> ruleStringList, Program p) throws Exception {
 		try {
 			ArrayList<Rule> rules = new ArrayList<Rule>();
+			System.out.println("RULE STRING : " + ruleStringList.toString());
 			for (String ruleString : ruleStringList) {
-
+				
 				Rule rule = p.parseRule(ruleString);
 				if (rule != null) {
 					rules.add(rule);

@@ -78,28 +78,6 @@ public interface ConditionsListener extends ParseTreeListener {
 	 */
 	void exitConditionOperation(ConditionsParser.ConditionOperationContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code expr}
-	 * labeled alternative in {@link ConditionsParser#condExpr}.
-	 * @param ctx the parse tree
-	 */
-	void enterExpr(ConditionsParser.ExprContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code expr}
-	 * labeled alternative in {@link ConditionsParser#condExpr}.
-	 * @param ctx the parse tree
-	 */
-	void exitExpr(ConditionsParser.ExprContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link ConditionsParser#ruleTerm}.
-	 * @param ctx the parse tree
-	 */
-	void enterRuleTerm(ConditionsParser.RuleTermContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link ConditionsParser#ruleTerm}.
-	 * @param ctx the parse tree
-	 */
-	void exitRuleTerm(ConditionsParser.RuleTermContext ctx);
-	/**
 	 * Enter a parse tree produced by the {@code FunctionExpression}
 	 * labeled alternative in {@link ConditionsParser#expression}.
 	 * @param ctx the parse tree
@@ -183,4 +161,14 @@ public interface ConditionsListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitRuleVariable(ConditionsParser.RuleVariableContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link ConditionsParser#ruleTerm}.
+	 * @param ctx the parse tree
+	 */
+	void enterRuleTerm(ConditionsParser.RuleTermContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ConditionsParser#ruleTerm}.
+	 * @param ctx the parse tree
+	 */
+	void exitRuleTerm(ConditionsParser.RuleTermContext ctx);
 }
