@@ -1,5 +1,4 @@
 grammar Conditions;
-import RuleAlgebra;
 
 
 ruleConditions: condition EOF;
@@ -24,6 +23,11 @@ expression
    |  value = NUMBER #Number
    ;
    
+OP_ADD: '+';
+OP_SUB: '-';
+OP_MUL: '*';
+OP_DIV: '/';
+OP_POW: '^';
 
 
 RELOP_EQ: '==';
@@ -36,6 +40,15 @@ RELOP_LTE: '<=';
 OP_AND: '&';
 OP_OR: '|';
 OP_NOT: '!';
+
+ NUMBER
+   : UNSIGNED_INTEGER ('.' UNSIGNED_INTEGER)?
+   ;
+
+fragment UNSIGNED_INTEGER
+   : ('0' .. '9')+
+   ;
+
 
 CONDITION_VARIABLE
    : '_'VALID_CONDITION_CHAR+
