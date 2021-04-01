@@ -160,14 +160,4 @@ public interface ConditionsListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitRuleVariable(ConditionsParser.RuleVariableContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link ConditionsParser#ruleTerm}.
-	 * @param ctx the parse tree
-	 */
-	void enterRuleTerm(ConditionsParser.RuleTermContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link ConditionsParser#ruleTerm}.
-	 * @param ctx the parse tree
-	 */
-	void exitRuleTerm(ConditionsParser.RuleTermContext ctx);
 }

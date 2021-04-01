@@ -1,1 +1,1 @@
-$x = $x+1
+fib($n) = $n : _is_integer($n)
