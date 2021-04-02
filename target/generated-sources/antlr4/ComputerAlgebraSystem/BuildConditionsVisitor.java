@@ -122,22 +122,6 @@ public class BuildConditionsVisitor extends ConditionsBaseVisitor<ExpressionNode
 		default:
 			System.out.println("FAIL");
 		}
-//		node.Left = visit(context.left);
-//		node.Right = visit(context.right);
-
-		// Should outsource to another method, simplifyOperation?
-//		if (node.Left instanceof NumberNode && node.Right instanceof NumberNode && node instanceof AdditionNode) {
-//			return new NumberNode(((NumberNode) node.Left).getValue() + ((NumberNode) node.Right).getValue());
-//		}
-//		if (node.Left instanceof NumberNode && node.Right instanceof NumberNode && node instanceof SubtractionNode) {
-//			return new NumberNode(((NumberNode) node.Left).getValue() - ((NumberNode) node.Right).getValue());
-//		}
-//		if (node.Left instanceof NumberNode && node.Right instanceof NumberNode && node instanceof MultiplicationNode) {
-//			return new NumberNode(((NumberNode) node.Left).getValue() * ((NumberNode) node.Right).getValue());
-//		}
-//		if (node.Left instanceof NumberNode && node.Right instanceof NumberNode && node instanceof DivisionNode) {
-//			return new NumberNode(((NumberNode) node.Left).getValue() / ((NumberNode) node.Right).getValue());
-//		}
 
 		return node;
 	}

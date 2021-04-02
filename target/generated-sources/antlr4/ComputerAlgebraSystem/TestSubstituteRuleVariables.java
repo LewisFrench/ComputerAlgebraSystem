@@ -1,16 +1,18 @@
 package ComputerAlgebraSystem;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
-class TestSubstituteRuleVariables {
+public class TestSubstituteRuleVariables {
 
 	@Test
-	void testSubstituteVariable() {
+	public void testSubstituteVariable() {
 		LinkedHashMap<String, ExpressionNode> variables = new LinkedHashMap<>();
 		variables.put("$n", new VariableNode("x"));
 		ExpressionNode rv = new RuleVariableNode("n");
@@ -27,7 +29,7 @@ class TestSubstituteRuleVariables {
 	}
 
 	@Test
-	void testSubstituteNumber() {
+	public void testSubstituteNumber() {
 		LinkedHashMap<String, ExpressionNode> variables = new LinkedHashMap<>();
 		variables.put("$test", new NumberNode(1.4));
 		ExpressionNode rv = new RuleVariableNode("test");
@@ -44,7 +46,7 @@ class TestSubstituteRuleVariables {
 	}
 
 	@Test
-	void testSubstituteAddition() {
+	public void testSubstituteAddition() {
 		LinkedHashMap<String, ExpressionNode> variables = new LinkedHashMap<>();
 
 		variables.put("$test", new AdditionNode(new NumberNode(2), new VariableNode("u")));
@@ -64,7 +66,7 @@ class TestSubstituteRuleVariables {
 	}
 
 	@Test
-	void testSubstituteSubstitution() {
+	public void testSubstituteSubstitution() {
 		LinkedHashMap<String, ExpressionNode> variables = new LinkedHashMap<>();
 		variables.put("$test", new SubtractionNode(new NumberNode(2), new VariableNode("u")));
 		ExpressionNode rv = new RuleVariableNode("test");
@@ -83,7 +85,7 @@ class TestSubstituteRuleVariables {
 	}
 
 	@Test
-	void testSubstituteMultiplication() {
+	public void testSubstituteMultiplication() {
 		LinkedHashMap<String, ExpressionNode> variables = new LinkedHashMap<>();
 		variables.put("$test", new MultiplicationNode(new NumberNode(2), new VariableNode("u")));
 		ExpressionNode rv = new RuleVariableNode("test");
@@ -102,7 +104,7 @@ class TestSubstituteRuleVariables {
 	}
 
 	@Test
-	void testSubstituteDivision() {
+	public void testSubstituteDivision() {
 		LinkedHashMap<String, ExpressionNode> variables = new LinkedHashMap<>();
 		variables.put("$test", new DivisionNode(new NumberNode(2), new VariableNode("u")));
 		ExpressionNode rv = new RuleVariableNode("test");
@@ -121,7 +123,7 @@ class TestSubstituteRuleVariables {
 	}
 
 	@Test
-	void testSubstituteExponentiation() {
+	public void testSubstituteExponentiation() {
 		LinkedHashMap<String, ExpressionNode> variables = new LinkedHashMap<>();
 		variables.put("$test", new PowerNode(new NumberNode(2), new VariableNode("u")));
 		ExpressionNode rv = new RuleVariableNode("test");
@@ -141,7 +143,7 @@ class TestSubstituteRuleVariables {
 	}
 
 	@Test
-	void testSubstituteParenthetical() {
+	public void testSubstituteParenthetical() {
 		LinkedHashMap<String, ExpressionNode> variables = new LinkedHashMap<>();
 		variables.put("$test", new ParentheticalNode(new NumberNode(2)));
 		ExpressionNode rv = new RuleVariableNode("test");
@@ -159,7 +161,7 @@ class TestSubstituteRuleVariables {
 	}
 
 	@Test
-	void testSubstituteUnary() {
+	public void testSubstituteUnary() {
 		LinkedHashMap<String, ExpressionNode> variables = new LinkedHashMap<>();
 		variables.put("$test", new UnaryNode(new NumberNode(2)));
 		ExpressionNode rv = new RuleVariableNode("test");
@@ -182,7 +184,7 @@ class TestSubstituteRuleVariables {
 
 	
 	@Test
-	void testSubstituteFunction() {
+	public void testSubstituteFunction() {
 		LinkedHashMap<String, ExpressionNode> variables = new LinkedHashMap<>();
 		
 		ArrayList<ExpressionNode> functionArguments = new ArrayList<ExpressionNode>();
@@ -211,7 +213,7 @@ class TestSubstituteRuleVariables {
 	}
 	
 	@Test
-	void testSubstituteNullVariables_Exception() {
+	public void testSubstituteNullVariables_Exception() {
 		LinkedHashMap<String, ExpressionNode> variables = new LinkedHashMap<>();
 		//variables.put("$n", new VariableNode("x"));
 		ExpressionNode rv = new RuleVariableNode("n");
@@ -222,7 +224,7 @@ class TestSubstituteRuleVariables {
 	}
 	
 	@Test
-	void testSubstituteNullVariable_Node_Exception() {
+	public void testSubstituteNullVariable_Node_Exception() {
 		LinkedHashMap<String, ExpressionNode> variables = new LinkedHashMap<>();
 		variables.put("$n", null);
 		ExpressionNode rv = new RuleVariableNode("n");
@@ -232,7 +234,7 @@ class TestSubstituteRuleVariables {
 	}
 	
 	@Test 
-	void TestSubstituteComplex_Addition() {
+	public void TestSubstituteComplex_Addition() {
 		LinkedHashMap<String, ExpressionNode> variables = new LinkedHashMap<>();
 		variables.put("$n", new VariableNode("x"));
 		
@@ -252,7 +254,7 @@ class TestSubstituteRuleVariables {
 		
 	}
 	@Test 
-	void TestSubstituteComplex_Subtraction() {
+	public void TestSubstituteComplex_Subtraction() {
 		LinkedHashMap<String, ExpressionNode> variables = new LinkedHashMap<>();
 		variables.put("$n", new VariableNode("x"));
 		
@@ -273,7 +275,7 @@ class TestSubstituteRuleVariables {
 	
 	
 	@Test 
-	void TestSubstituteComplex_Multiplication() {
+	public void TestSubstituteComplex_Multiplication() {
 		LinkedHashMap<String, ExpressionNode> variables = new LinkedHashMap<>();
 		variables.put("$n", new VariableNode("x"));
 		
@@ -293,7 +295,7 @@ class TestSubstituteRuleVariables {
 	}
 	
 	@Test 
-	void TestSubstituteComplex_DivisionNode() {
+	public void TestSubstituteComplex_DivisionNode() {
 		LinkedHashMap<String, ExpressionNode> variables = new LinkedHashMap<>();
 		variables.put("$n", new VariableNode("x"));
 		
@@ -313,7 +315,7 @@ class TestSubstituteRuleVariables {
 	}
 	
 	@Test 
-	void TestSubstituteComplex_Exponentiation() {
+	public void TestSubstituteComplex_Exponentiation() {
 		LinkedHashMap<String, ExpressionNode> variables = new LinkedHashMap<>();
 		variables.put("$n", new VariableNode("x"));
 		
@@ -334,7 +336,7 @@ class TestSubstituteRuleVariables {
 	
 	
 	@Test 
-	void TestSubstituteComplex_Unary() {
+	public void TestSubstituteComplex_Unary() {
 		LinkedHashMap<String, ExpressionNode> variables = new LinkedHashMap<>();
 		variables.put("$n", new VariableNode("x"));
 		
@@ -355,7 +357,7 @@ class TestSubstituteRuleVariables {
 	
 	
 	@Test 
-	void TestSubstituteComplex_Parenthetical() {
+	public void TestSubstituteComplex_Parenthetical() {
 		LinkedHashMap<String, ExpressionNode> variables = new LinkedHashMap<>();
 		variables.put("$n", new VariableNode("x"));
 		
@@ -375,7 +377,7 @@ class TestSubstituteRuleVariables {
 	}
 	
 	@Test 
-	void TestSubstituteComplex_FunctionNode() {
+	public void TestSubstituteComplex_FunctionNode() {
 		LinkedHashMap<String, ExpressionNode> variables = new LinkedHashMap<>();
 		variables.put("$n", new VariableNode("x"));
 		ArrayList<ExpressionNode> arguments = new ArrayList<>();
@@ -399,7 +401,5 @@ class TestSubstituteRuleVariables {
 			e.printStackTrace();
 		}
 	}
-	
-	
 	
 }

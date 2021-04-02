@@ -1,14 +1,17 @@
 package ComputerAlgebraSystem;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.antlr.v4.runtime.misc.ParseCancellationException;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
-class TestRuleAlgebraParser {
+public class TestRuleAlgebraParser {
 
 	@Test
-	void testValidRuleNoConditions_Variable_Number() {
+	public void testValidRuleNoConditions_Variable_Number() {
 
 		Program p = new Program();
 		try {
@@ -20,7 +23,7 @@ class TestRuleAlgebraParser {
 		} catch(Exception e) {e.printStackTrace();}
 	}
 	@Test
-	void testValidRuleNoConditions_Number_Variable() {
+	public void testValidRuleNoConditions_Number_Variable() {
 		Program p = new Program();
 		try {
 			Rule result = p.parseRule("1=x");
@@ -33,7 +36,7 @@ class TestRuleAlgebraParser {
 	
 	
 	@Test
-	void testValidRuleNoConditions_RuleVariable_Number() {
+	public void testValidRuleNoConditions_RuleVariable_Number() {
 
 		Program p = new Program();
 		try {
@@ -46,7 +49,7 @@ class TestRuleAlgebraParser {
 	}
 	
 	@Test
-	void testValidRuleNoConditions_RuleVariable_RuleVariable() {
+	public void testValidRuleNoConditions_RuleVariable_RuleVariable() {
 
 		Program p = new Program();
 		try {
@@ -59,7 +62,7 @@ class TestRuleAlgebraParser {
 	}
 	
 	@Test
-	void testValidRuleNoConditions_Unary_Parenthetical() {
+	public void testValidRuleNoConditions_Unary_Parenthetical() {
 
 		Program p = new Program();
 		try {
@@ -72,7 +75,7 @@ class TestRuleAlgebraParser {
 	}
 	
 	@Test
-	void testValidRuleNoConditions_Parenthetical_Unary() {
+	public void testValidRuleNoConditions_Parenthetical_Unary() {
 
 		Program p = new Program();
 		try {
@@ -85,7 +88,7 @@ class TestRuleAlgebraParser {
 	}
 	
 	@Test
-	void testValidRuleNoConditions_Addition_Subtraction() {
+	public void testValidRuleNoConditions_Addition_Subtraction() {
 		
 		Program p = new Program();
 		try {
@@ -97,7 +100,7 @@ class TestRuleAlgebraParser {
 	}
 
 	@Test
-	void testValidRuleNoConditions_Subtraction_Addition() {
+	public void testValidRuleNoConditions_Subtraction_Addition() {
 
 		Program p = new Program();
 		try {
@@ -110,7 +113,7 @@ class TestRuleAlgebraParser {
 	}
 	
 	@Test
-	void testValidRuleNoConditions_Multiplication_Division() {
+	public void testValidRuleNoConditions_Multiplication_Division() {
 
 		Program p = new Program();
 		try {
@@ -123,7 +126,7 @@ class TestRuleAlgebraParser {
 	}
 	
 	@Test
-	void testValidRuleNoConditions_Division_Multiplication() {
+	public void testValidRuleNoConditions_Division_Multiplication() {
 
 		Program p = new Program();
 		try {
@@ -137,7 +140,7 @@ class TestRuleAlgebraParser {
 	
 	
 	@Test
-	void testValidRuleNoConditions_Function_Exponentiation() {
+	public void testValidRuleNoConditions_Function_Exponentiation() {
 
 		Program p = new Program();
 		try {
@@ -152,7 +155,7 @@ class TestRuleAlgebraParser {
 	
 
 	@Test
-	void testValidRuleValidConditions_RelopGT() {
+	public void testValidRuleValidConditions_RelopGT() {
 
 		Program p = new Program();
 		try {
@@ -166,7 +169,7 @@ class TestRuleAlgebraParser {
 	}
 	
 	@Test
-	void testValidRuleValidConditions_RelopGTE() {
+	public void testValidRuleValidConditions_RelopGTE() {
 
 		Program p = new Program();
 		try {
@@ -180,7 +183,7 @@ class TestRuleAlgebraParser {
 	}
 	
 	@Test
-	void testValidRuleValidConditions_RelopLT() {
+	public void testValidRuleValidConditions_RelopLT() {
 
 		Program p = new Program();
 		try {
@@ -194,7 +197,7 @@ class TestRuleAlgebraParser {
 	}	
 	
 	@Test
-	void testValidRuleValidConditions_RelopLTE() {
+	public void testValidRuleValidConditions_RelopLTE() {
 
 		Program p = new Program();
 		try {
@@ -207,7 +210,7 @@ class TestRuleAlgebraParser {
 		} catch(Exception e) {e.printStackTrace();}
 	}	
 	@Test
-	void testValidRuleValidConditions_RelopEQ() {
+	public void testValidRuleValidConditions_RelopEQ() {
 
 		Program p = new Program();
 		try {
@@ -221,7 +224,7 @@ class TestRuleAlgebraParser {
 	}	
 	
 	@Test
-	void testValidRuleValidConditions_RelopNEQ() {
+	public void testValidRuleValidConditions_RelopNEQ() {
 
 		Program p = new Program();
 		try {
@@ -235,7 +238,7 @@ class TestRuleAlgebraParser {
 	}	
 	
 	@Test
-	void testValidRuleValidConditions_ConditionFunction_Depends() {
+	public void testValidRuleValidConditions_ConditionFunction_Depends() {
 
 		Program p = new Program();
 		try {
@@ -248,7 +251,7 @@ class TestRuleAlgebraParser {
 		} catch(Exception e) {e.printStackTrace();}
 	}	
 	@Test
-	void testValidRuleValidConditions_ConditionFunction_is_literal() {
+	public void testValidRuleValidConditions_ConditionFunction_is_literal() {
 
 		Program p = new Program();
 		try {
@@ -261,7 +264,7 @@ class TestRuleAlgebraParser {
 		} catch(Exception e) {e.printStackTrace();}
 	}	
 	@Test
-	void testValidRuleValidConditions_ConditionFunction_is_number() {
+	public void testValidRuleValidConditions_ConditionFunction_is_number() {
 
 		Program p = new Program();
 		try {
@@ -275,7 +278,7 @@ class TestRuleAlgebraParser {
 	}	
 	
 	@Test
-	void testValidRuleValidConditions_ConditionFunction_is_integer() {
+	public void testValidRuleValidConditions_ConditionFunction_is_integer() {
 
 		Program p = new Program();
 		try {
@@ -289,7 +292,7 @@ class TestRuleAlgebraParser {
 	}	
 	
 	@Test
-	void testValidRuleValidConditions_logical_OR() {
+	public void testValidRuleValidConditions_logical_OR() {
 
 		Program p = new Program();
 		try {
@@ -300,7 +303,7 @@ class TestRuleAlgebraParser {
 	}	
 
 	@Test
-	void testValidRuleValidConditions_logical_AND() {
+	public void testValidRuleValidConditions_logical_AND() {
 
 		Program p = new Program();
 		try {
@@ -311,7 +314,7 @@ class TestRuleAlgebraParser {
 	}	
 	
 	@Test
-	void testValidRuleValidConditions_logical_NOT() {
+	public void testValidRuleValidConditions_logical_NOT() {
 
 		Program p = new Program();
 		try {
@@ -322,60 +325,60 @@ class TestRuleAlgebraParser {
 	}	
 	
 	@Test
-	void testValidRuleValidConditions_ConditionFunction_no_underscore_is_integer_Exception() {
+	public void testValidRuleValidConditions_ConditionFunction_no_underscore_is_integer_Exception() {
 
 		Program p = new Program();
 			assertThrows(ParseCancellationException.class, () -> p.parseRule("x=1:is_integer(x)"));
 	}	
 	@Test
-	void testValidRuleValidConditions_ConditionFunction_no_underscore_is_literal_Exception() {
+	public void testValidRuleValidConditions_ConditionFunction_no_underscore_is_literal_Exception() {
 
 		Program p = new Program();
 			assertThrows(ParseCancellationException.class, () -> p.parseRule("x=1:is_literal(x)"));
 	}		
 	
 	@Test
-	void testValidRuleValidConditions_ConditionFunction_no_underscore_is_numberException() {
+	public void testValidRuleValidConditions_ConditionFunction_no_underscore_is_numberException() {
 
 		Program p = new Program();
 			assertThrows(ParseCancellationException.class, () -> p.parseRule("x=1:is_number(x)"));
 	}	
 	
 	@Test
-	void testValidRuleValidConditions_ConditionFunction_no_underscore_depends_Exception() {
+	public void testValidRuleValidConditions_ConditionFunction_no_underscore_depends_Exception() {
 
 		Program p = new Program();
 			assertThrows(ParseCancellationException.class, () -> p.parseRule("x=1:depends(x)"));
 	}	
-	void testInvalidRuleNoConditions_NoRHS_NoEquals() {
+	public void testInvalidRuleNoConditions_NoRHS_NoEquals() {
 
 		Program p = new Program();
 		assertThrows(Exception.class, ()-> p.parseRule("f(x)"));
 
 	}
 	@Test
-	void testInvalidRuleNoConditions_NoRHS() {
+	public void testInvalidRuleNoConditions_NoRHS() {
 
 		Program p = new Program();
 		assertThrows(ParseCancellationException.class, ()-> p.parseRule("f(x)="));
 
 	}
 	@Test
-	void testInvalidRuleNoConditions_NoLHS() {
+	public void testInvalidRuleNoConditions_NoLHS() {
 
 		Program p = new Program();
 		assertThrows(Exception.class, ()-> p.parseRule("=f(x)"));
 	}
 	
 	@Test
-	void testInvalidRuleNoConditions_NoConditions() {
+	public void testInvalidRuleNoConditions_NoConditions() {
 
 		Program p = new Program();
 		assertThrows(Exception.class, ()-> p.parseRule("x=f(x):"));
 	}
 	
 	@Test
-	void testInvalidRuleNoConditions_invalid_relop_exception() {
+	public void testInvalidRuleNoConditions_invalid_relop_exception() {
 
 		Program p = new Program();
 		assertThrows(Exception.class, ()-> p.parseRule("x=f(x): 1>"));
@@ -385,7 +388,7 @@ class TestRuleAlgebraParser {
 	}
 	
 	@Test
-	void testInvalidRuleNoConditions_invalid_Equality_exception() {
+	public void testInvalidRuleNoConditions_invalid_Equality_exception() {
 
 		Program p = new Program();
 		assertThrows(Exception.class, ()-> p.parseRule("x=f(x): 1=="));
@@ -395,7 +398,7 @@ class TestRuleAlgebraParser {
 	}
 	
 	@Test
-	void testInvalidRuleNoConditions_invalid_logical_AND_exception() {
+	public void testInvalidRuleNoConditions_invalid_logical_AND_exception() {
 
 		Program p = new Program();
 		assertThrows(Exception.class, ()-> p.parseRule("x=f(x): 1>0 &"));
@@ -405,7 +408,7 @@ class TestRuleAlgebraParser {
 	}
 	
 	@Test
-	void testInvalidRuleNoConditions_invalid_logical_OR_exception() {
+	public void testInvalidRuleNoConditions_invalid_logical_OR_exception() {
 
 		Program p = new Program();
 		assertThrows(Exception.class, ()-> p.parseRule("x=f(x): 1>0 |"));
@@ -415,5 +418,5 @@ class TestRuleAlgebraParser {
 	}	
 	
 	
-	
+
 }

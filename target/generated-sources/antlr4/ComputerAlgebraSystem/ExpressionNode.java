@@ -168,10 +168,6 @@ class VariableNode extends ExpressionNode {
 		return value;
 	}
 
-	public void setValue(String value) {
-		this.value = value;
-	}
-
 	public String toString() {
 		return this.getValue();
 	}
@@ -187,14 +183,6 @@ class RuleVariableNode extends ExpressionNode {
 
 	public String toString() {
 		return  "$"+this.value;
-	}
-
-	public String getValue() {
-		return this.value;
-	}
-
-	public void setValue(String value) {
-		this.value = value;
 	}
 
 }

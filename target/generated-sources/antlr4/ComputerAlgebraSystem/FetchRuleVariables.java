@@ -98,7 +98,6 @@ public class FetchRuleVariables extends RuleTermVisitor<ExpressionNode> {
 
 	@Override
 	public ExpressionNode Visit(RuleVariableNode node) {
-		System.out.println("VisitingRuleVariable" + node.toString() + "   " + node.getValue());
 		this.variables.put(node.toString(), null);
 		return node;
 	}
