@@ -1,13 +1,15 @@
 package ComputerAlgebraSystem;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
-class TestSimplifyNumericalOperations {
+public class TestSimplifyNumericalOperations {
+
 
 	@Test
-	void testSimpleAddition() {
+	public void testSimpleAddition() {
 		ExpressionNode addition = new AdditionNode(new NumberNode(2.1), new NumberNode(3.2));
 		SimplifyNumericalOperations s = new SimplifyNumericalOperations();
 
@@ -22,7 +24,7 @@ class TestSimplifyNumericalOperations {
 	}
 
 	@Test
-	void testSimpleSubtraction() {
+	public void testSimpleSubtraction() {
 		ExpressionNode subtraction = new SubtractionNode(new NumberNode(2.1), new NumberNode(3.2));
 		SimplifyNumericalOperations s = new SimplifyNumericalOperations();
 
@@ -37,7 +39,7 @@ class TestSimplifyNumericalOperations {
 	}
 
 	@Test
-	void testSimpleMultiplication() {
+	public void testSimpleMultiplication() {
 		ExpressionNode multiplication = new MultiplicationNode(new NumberNode(2.1), new NumberNode(3.2));
 		SimplifyNumericalOperations s = new SimplifyNumericalOperations();
 
@@ -52,7 +54,7 @@ class TestSimplifyNumericalOperations {
 	}
 
 	@Test
-	void testSimpleDivision() {
+	public void testSimpleDivision() {
 		ExpressionNode division = new DivisionNode(new NumberNode(2.1), new NumberNode(3.2));
 		SimplifyNumericalOperations s = new SimplifyNumericalOperations();
 
@@ -67,7 +69,7 @@ class TestSimplifyNumericalOperations {
 	}
 
 	@Test
-	void testSimpleExponentiation() {
+	public void testSimpleExponentiation() {
 		ExpressionNode exponentiation = new PowerNode(new NumberNode(2.1), new NumberNode(3.2));
 		SimplifyNumericalOperations s = new SimplifyNumericalOperations();
 
@@ -82,7 +84,7 @@ class TestSimplifyNumericalOperations {
 	}
 
 	@Test
-	void testComplexAddition() {
+	public void testComplexAddition() {
 
 		ExpressionNode subAddition = new AdditionNode(new NumberNode(2.1), new NumberNode(3.2));
 		ExpressionNode addition = new AdditionNode(new NumberNode(1.0), subAddition);
@@ -99,7 +101,7 @@ class TestSimplifyNumericalOperations {
 	}
 
 	@Test
-	void testUnary() {
+	public void testUnary() {
 		UnaryNode unaryNode = new UnaryNode(new NumberNode(1.0));
 
 		SimplifyNumericalOperations s = new SimplifyNumericalOperations();
@@ -116,7 +118,7 @@ class TestSimplifyNumericalOperations {
 	}
 
 	@Test
-	void testUnaryNumberAddition() {
+	public void testUnaryNumberAddition() {
 		UnaryNode unaryNode = new UnaryNode(new NumberNode(1.0));
 		AdditionNode unaryAddition = new AdditionNode(unaryNode, new NumberNode(4.3));
 		SimplifyNumericalOperations s = new SimplifyNumericalOperations();
@@ -133,7 +135,7 @@ class TestSimplifyNumericalOperations {
 	}
 
 	@Test
-	void testUnaryUnaryAddition() {
+	public void testUnaryUnaryAddition() {
 		UnaryNode unaryNode = new UnaryNode(new NumberNode(1.0));
 		UnaryNode unaryNode2 = new UnaryNode(new NumberNode(2.0));
 
@@ -152,7 +154,7 @@ class TestSimplifyNumericalOperations {
 	}
 
 	@Test
-	void testUnaryUnarySubtraction() {
+	public void testUnaryUnarySubtraction() {
 		UnaryNode unaryNode = new UnaryNode(new NumberNode(1.0));
 		UnaryNode unaryNode2 = new UnaryNode(new NumberNode(2.0));
 
@@ -171,7 +173,7 @@ class TestSimplifyNumericalOperations {
 	}
 
 	@Test
-	void testUnaryUnaryMultiplication() {
+	public void testUnaryUnaryMultiplication() {
 		UnaryNode unaryNode = new UnaryNode(new NumberNode(1.0));
 		UnaryNode unaryNode2 = new UnaryNode(new NumberNode(2.0));
 
@@ -190,7 +192,7 @@ class TestSimplifyNumericalOperations {
 	}
 
 	@Test
-	void testUnaryUnaryDivision() {
+	public void testUnaryUnaryDivision() {
 		UnaryNode unaryNode = new UnaryNode(new NumberNode(1.0));
 		UnaryNode unaryNode2 = new UnaryNode(new NumberNode(2.0));
 
@@ -210,7 +212,7 @@ class TestSimplifyNumericalOperations {
 	
 	
 	@Test
-	void testParentheticalNumberAddition() {
+	public void testParentheticalNumberAddition() {
 		ExpressionNode addition = new AdditionNode(new NumberNode(1.1), new NumberNode(2.2));
 
 		ExpressionNode parentheticalNode = new ParentheticalNode(addition);
@@ -225,4 +227,5 @@ class TestSimplifyNumericalOperations {
 			e.printStackTrace();
 		}
 	}
+
 }

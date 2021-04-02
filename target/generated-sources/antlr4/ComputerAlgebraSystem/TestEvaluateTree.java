@@ -1,15 +1,20 @@
 package ComputerAlgebraSystem;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
-class TestEvaluateTree {
+public class TestEvaluateTree {
+
 
 	@Test
-	void testEvaluateTree_Variable() {
+	public void testEvaluateTree_Variable() {
 		ExpressionNode l = new VariableNode("x");
 		ExpressionNode r = new VariableNode("x");
 		
@@ -25,7 +30,7 @@ class TestEvaluateTree {
 	}
 	
 	@Test
-	void testEvaluateTree_Number () {
+	public void testEvaluateTree_Number () {
 		ExpressionNode l = new NumberNode(2.56);
 		ExpressionNode r = new NumberNode(2.56);
 		EvaluateTree treeMatcher = new EvaluateTree();
@@ -40,7 +45,7 @@ class TestEvaluateTree {
 	}
 	
 	@Test
-	void testEvaluateTree_Addition() {
+	public void testEvaluateTree_Addition() {
 		
 		ExpressionNode l = new NumberNode(2.56);
 		ExpressionNode r = new NumberNode(2.57);
@@ -61,7 +66,7 @@ class TestEvaluateTree {
 		}
 	}
 	@Test
-	void testEvaluateTree_Subtraction() {
+	public void testEvaluateTree_Subtraction() {
 		
 		ExpressionNode l = new NumberNode(2.56);
 		ExpressionNode r = new VariableNode("x");
@@ -84,7 +89,7 @@ class TestEvaluateTree {
 	
 	
 	@Test
-	void testEvaluateTree_Multiplication() {
+	public void testEvaluateTree_Multiplication() {
 		
 		ExpressionNode l = new NumberNode(2.56);
 		ExpressionNode r = new VariableNode("x");
@@ -106,7 +111,7 @@ class TestEvaluateTree {
 	}
 	
 	@Test
-	void testEvaluateTree_Division() {
+	public void testEvaluateTree_Division() {
 		
 		ExpressionNode l = new NumberNode(2.56);
 		ExpressionNode r = new VariableNode("x");
@@ -128,7 +133,7 @@ class TestEvaluateTree {
 	}
 	
 	@Test
-	void testEvaluateTree_Exponentiation() {
+	public void testEvaluateTree_Exponentiation() {
 		
 		ExpressionNode l = new NumberNode(2.56);
 		ExpressionNode r = new VariableNode("x");
@@ -150,7 +155,7 @@ class TestEvaluateTree {
 	}
 	
 	@Test
-	void testEvaluateTree_Unary() {
+	public void testEvaluateTree_Unary() {
 		
 		ExpressionNode innerNode = new VariableNode("x");
 		ExpressionNode unaryNode = new UnaryNode(innerNode);
@@ -173,7 +178,7 @@ class TestEvaluateTree {
 	}
 	
 	@Test
-	void testEvaluateTree_Function() {
+	public void testEvaluateTree_Function() {
 		
 		ArrayList<ExpressionNode> functionArguments = new ArrayList<>();
 		functionArguments.add(new VariableNode("p"));
@@ -203,7 +208,7 @@ class TestEvaluateTree {
 	
 	
 	@Test
-	void testEvaluateTree_Parenthetical() {
+	public void testEvaluateTree_Parenthetical() {
 		
 		ExpressionNode innerNode = new VariableNode("x");
 		ExpressionNode parentheticalNode = new ParentheticalNode(innerNode);
@@ -228,7 +233,7 @@ class TestEvaluateTree {
 	
 	
 	@Test
-	void testEvaluateTree_RuleVariable_AddsRuleVariable () {
+	public void testEvaluateTree_RuleVariable_AddsRuleVariable () {
 		ExpressionNode l = new RuleVariableNode("x");
 		ExpressionNode r = new VariableNode("x");
 		EvaluateTree treeMatcher = new EvaluateTree();
@@ -247,7 +252,7 @@ class TestEvaluateTree {
 	
 	
 	@Test
-	void testEvaluateTree_RuleVariable_Exception () {
+	public void testEvaluateTree_RuleVariable_Exception () {
 		ExpressionNode l = new RuleVariableNode("x");
 		ExpressionNode r = new RuleVariableNode("x");
 		EvaluateTree treeMatcher = new EvaluateTree();
@@ -256,7 +261,7 @@ class TestEvaluateTree {
 	}
 	
 	@Test
-	void testEvaluateTree_Complex_Addition_Unary () {
+	public void testEvaluateTree_Complex_Addition_Unary () {
 		ExpressionNode innerNode = new RuleVariableNode("x");
 		ExpressionNode unaryNode = new UnaryNode(innerNode);
 		ExpressionNode additionNode = new AdditionNode(new VariableNode("xy"), unaryNode);
@@ -278,6 +283,4 @@ class TestEvaluateTree {
 		
 		
 	}
-	
-
 }

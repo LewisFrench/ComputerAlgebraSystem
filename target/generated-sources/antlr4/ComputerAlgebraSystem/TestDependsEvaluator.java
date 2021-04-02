@@ -1,15 +1,19 @@
 package ComputerAlgebraSystem;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
-class TestDependsEvaluator {
+public class TestDependsEvaluator {
+
 
 	@Test
-	void testDependsEvaluatorVariable() {
+	public void testDependsEvaluatorVariable() {
 		ExpressionNode dependency = new VariableNode("x");
 		DependsEvaluator d = new DependsEvaluator(dependency);
 		assertTrue(d.Visit(new VariableNode("x")));
@@ -18,7 +22,7 @@ class TestDependsEvaluator {
 	}
 
 	@Test
-	void testDependsEvaluatorNumber() {
+	public void testDependsEvaluatorNumber() {
 		ExpressionNode dependency = new NumberNode(5.12);
 		DependsEvaluator d = new DependsEvaluator(dependency);
 		assertTrue(d.Visit(new NumberNode(5.12)));
@@ -27,7 +31,7 @@ class TestDependsEvaluator {
 	}
 
 	@Test
-	void testDependsEvaluatorUnary() {
+	public void testDependsEvaluatorUnary() {
 		ExpressionNode innerNode = new VariableNode("x");
 		ExpressionNode dependency = new UnaryNode(innerNode);
 
@@ -43,7 +47,7 @@ class TestDependsEvaluator {
 	}
 
 	@Test
-	void testDependsEvaluatorParenthetical() {
+	public void testDependsEvaluatorParenthetical() {
 		ExpressionNode innerNode = new VariableNode("x");
 		ExpressionNode dependency = new ParentheticalNode(innerNode);
 
@@ -59,7 +63,7 @@ class TestDependsEvaluator {
 	}
 
 	@Test
-	void testDependsEvaluatorAddition() {
+	public void testDependsEvaluatorAddition() {
 		ExpressionNode dependency = new AdditionNode(new NumberNode(2.1), new VariableNode("x"));
 
 		DependsEvaluator d = new DependsEvaluator(dependency);
@@ -74,7 +78,7 @@ class TestDependsEvaluator {
 	}
 
 	@Test
-	void testDependsEvaluatorSubtraction() {
+	public void testDependsEvaluatorSubtraction() {
 		ExpressionNode dependency = new SubtractionNode(new NumberNode(2.1), new VariableNode("x"));
 
 		DependsEvaluator d = new DependsEvaluator(dependency);
@@ -89,7 +93,7 @@ class TestDependsEvaluator {
 	}
 
 	@Test
-	void testDependsEvaluatorMultiplication() {
+	public void testDependsEvaluatorMultiplication() {
 		ExpressionNode dependency = new MultiplicationNode(new NumberNode(2.1), new VariableNode("x"));
 
 		DependsEvaluator d = new DependsEvaluator(dependency);
@@ -104,7 +108,7 @@ class TestDependsEvaluator {
 	}
 
 	@Test
-	void testDependsEvaluatorDivisionNode() {
+	public void testDependsEvaluatorDivisionNode() {
 		ExpressionNode dependency = new DivisionNode(new NumberNode(2.1), new VariableNode("x"));
 
 		DependsEvaluator d = new DependsEvaluator(dependency);
@@ -119,7 +123,7 @@ class TestDependsEvaluator {
 	}
 
 	@Test
-	void testDependsEvaluatorExponentiation() {
+	public void testDependsEvaluatorExponentiation() {
 		ExpressionNode dependency = new PowerNode(new NumberNode(2.1), new VariableNode("x"));
 
 		DependsEvaluator d = new DependsEvaluator(dependency);
@@ -134,7 +138,7 @@ class TestDependsEvaluator {
 	}
 
 	@Test
-	void testDependsEvaluatorFunction() {
+	public void testDependsEvaluatorFunction() {
 		ArrayList<ExpressionNode> functionArguments = new ArrayList<>();
 		functionArguments.add(new NumberNode(2.1));
 		functionArguments.add(new VariableNode("y"));
@@ -162,13 +166,11 @@ class TestDependsEvaluator {
 	
 	
 	@Test
-	void testDependsEvaluator_VisitRuleVariableNode_Exception() {
+	public void testDependsEvaluator_VisitRuleVariableNode_Exception() {
 		ExpressionNode dependency = new RuleVariableNode("d");
 		DependsEvaluator d = new DependsEvaluator(dependency);
 
 		assertThrows(Exception.class, () -> d.Visit(dependency));
 
 	}
-	
-	
 }

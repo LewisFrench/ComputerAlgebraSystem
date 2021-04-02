@@ -1,14 +1,18 @@
 package ComputerAlgebraSystem;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.antlr.v4.runtime.misc.ParseCancellationException;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
-class TestTermAlgebraParser {
+public class TestTermAlgebraParser {
+
 
 	@Test
-	void testParseSimpleNumber() {
+	public void testParseSimpleNumber() {
 		Program p = new Program();
 		
 		
@@ -27,7 +31,7 @@ class TestTermAlgebraParser {
 	}
 
 	@Test
-	void testParseSimpleVariable() {
+	public void testParseSimpleVariable() {
 		Program p = new Program();
 		
 		
@@ -45,7 +49,7 @@ class TestTermAlgebraParser {
 	}
 	
 	@Test
-	void testParseSimpleAddition() {
+	public void testParseSimpleAddition() {
 		Program p = new Program();
 		
 		
@@ -63,7 +67,7 @@ class TestTermAlgebraParser {
 	}
 	
 	@Test
-	void testParseSimpleSubtraction() {
+	public void testParseSimpleSubtraction() {
 		Program p = new Program();
 		
 		
@@ -82,7 +86,7 @@ class TestTermAlgebraParser {
 	
 	
 	@Test
-	void testParseSimpleUnary() {
+	public void testParseSimpleUnary() {
 		Program p = new Program();
 		
 		try {
@@ -96,7 +100,7 @@ class TestTermAlgebraParser {
 	}
 	
 	@Test
-	void testParseSimpleParenthetical() {
+	public void testParseSimpleParenthetical() {
 		Program p = new Program();
 		
 		try {
@@ -110,7 +114,7 @@ class TestTermAlgebraParser {
 	}
 	
 	@Test
-	void testParseSimpleFunction() {
+	public void testParseSimpleFunction() {
 		Program p = new Program();
 		
 		try {
@@ -128,7 +132,7 @@ class TestTermAlgebraParser {
 	}
 	
 	@Test
-	void testParseSimpleDivision() {
+	public void testParseSimpleDivision() {
 		Program p = new Program();
 		
 		
@@ -145,7 +149,7 @@ class TestTermAlgebraParser {
 		} catch (Exception e) { e.printStackTrace();}	
 	}
 	@Test
-	void testParseSimpleExponentiation() {
+	public void testParseSimpleExponentiation() {
 		Program p = new Program();
 		
 		
@@ -164,56 +168,56 @@ class TestTermAlgebraParser {
 
 	
 	@Test
-	void testParseSimpleRuleVariable_Exception() {
+	public void testParseSimpleRuleVariable_Exception() {
 		Program p = new Program();
 		assertThrows(ParseCancellationException.class, () ->p.parseTerm("$a"));
 
 	}
 
 	@Test
-	void testParseInvalidVariable_Exception() {
+	public void testParseInvalidVariable_Exception() {
 		Program p = new Program();
 		assertThrows(ParseCancellationException.class, () ->p.parseTerm("a."));
 		
 	}
 	
 	@Test
-	void testParseInvalidNumber_Exception() {
+	public void testParseInvalidNumber_Exception() {
 		Program p = new Program();
 		assertThrows(ParseCancellationException.class, () ->p.parseTerm("2f"));
 	}
 	
 	@Test
-	void testParseInvalidParenthetical_Exception() {
+	public void testParseInvalidParenthetical_Exception() {
 		Program p = new Program();
 		assertThrows(ParseCancellationException.class, () ->p.parseTerm("(a"));
 	}
 	@Test
-	void testParseInvalidUnary_Exception() {
+	public void testParseInvalidUnary_Exception() {
 		Program p = new Program();
 		assertThrows(ParseCancellationException.class, () ->p.parseTerm("-"));
 	}
 	@Test
-	void testParseInvalidSubtractionException() {
+	public void testParseInvalidSubtractionException() {
 		Program p = new Program();
 		assertThrows(ParseCancellationException.class, () ->p.parseTerm("2-"));
 		assertThrows(ParseCancellationException.class, () ->p.parseTerm("2-."));
 	}
 	@Test
-	void testParseInvalidMultiplicationException() {
+	public void testParseInvalidMultiplicationException() {
 		Program p = new Program();
 		assertThrows(ParseCancellationException.class, () ->p.parseTerm("2*"));
 		assertThrows(ParseCancellationException.class, () ->p.parseTerm("*2"));
 	}
 	@Test
-	void testParseInvalidDivisionException() {
+	public void testParseInvalidDivisionException() {
 		Program p = new Program();
 		assertThrows(ParseCancellationException.class, () ->p.parseTerm("2.4/"));
 		assertThrows(ParseCancellationException.class, () ->p.parseTerm("2/."));
 	}
 
 	@Test
-	void testParseInvalidFunction_Exception() {
+	public void testParseInvalidFunction_Exception() {
 		Program p = new Program();
 		assertThrows(ParseCancellationException.class, () ->p.parseTerm("func("));
 		assertThrows(ParseCancellationException.class, () ->p.parseTerm("func(x,"));
@@ -222,5 +226,5 @@ class TestTermAlgebraParser {
 	
 	
 	
-	
+
 }
