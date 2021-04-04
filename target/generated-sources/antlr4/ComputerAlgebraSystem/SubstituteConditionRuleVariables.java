@@ -39,8 +39,6 @@ public class SubstituteConditionRuleVariables extends ConditionVisitor<Expressio
 
 	@Override
 	public ExpressionNode Visit(ConditionFunctionNode node) throws Exception {
-		
-		System.out.println("Visitng correct node");
 		ArrayList<ExpressionNode> arguments = new ArrayList<>();
 		for (int i = 0; i < node.getArguments().size(); i++) {
 			arguments.add(Visit(node.arguments.get(i)));
@@ -121,12 +119,11 @@ public class SubstituteConditionRuleVariables extends ConditionVisitor<Expressio
 	}
 
 	@Override
-	public ExpressionNode Visit(RuleVariableNode node) {
+	public ExpressionNode Visit(RuleVariableNode node) throws Exception {
 		if (this.ruleVariables.get(node.toString()) != null) {
 			return this.ruleVariables.get(node.toString());
 		}
-		// Exception;
-		return null;
+		throw new Exception("Attempting to substitute a non-existent rule variable. Please check the structure of your rules");
 	}
 
 }

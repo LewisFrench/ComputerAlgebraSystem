@@ -23,18 +23,10 @@ abstract class OperationNode extends ExpressionNode {
 		return Left;
 	}
 
-	public void setLeft(ExpressionNode left) {
-		Left = left;
-	}
 
 	public ExpressionNode getRight() {
 		return Right;
 	}
-
-	public void setRight(ExpressionNode right) {
-		Right = right;
-	}
-
 }
 
 class PowerNode extends OperationNode {
@@ -264,6 +256,3 @@ class NotNode extends ExpressionNode {
 
 }
 
-//class ConditionParentheticalNode extends ExpressionNode {
-//
-//}

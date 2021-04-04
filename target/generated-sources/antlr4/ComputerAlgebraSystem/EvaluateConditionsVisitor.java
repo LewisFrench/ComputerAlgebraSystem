@@ -8,62 +8,44 @@ import Conditions.ConditionsLexer;
 // Assuming I don't need them all for the is_literal() implementation
 
 public class EvaluateConditionsVisitor extends ConditionVisitor<Boolean> {
-
-	LinkedHashMap<String, ExpressionNode> variables;
 	ConditionFunctionEvaluator conditionFunctions;
 
-	public EvaluateConditionsVisitor(LinkedHashMap<String, ExpressionNode> variables) {
-		this.variables = variables;
-		this.conditionFunctions = new ConditionFunctionEvaluator(this.variables);
+	public EvaluateConditionsVisitor() {
+		this.conditionFunctions = new ConditionFunctionEvaluator();
 	}
 
 	@Override
-	public Boolean Visit(AdditionNode node) {
-		// TODO Auto-generated method stub
-		return null;
+	public Boolean Visit(AdditionNode node) throws Exception {
+		throw new Exception("Attempted to visit invalid node when evaluating conditions. Please check the structure of your conditions");
 	}
 
 	@Override
-	public Boolean Visit(SubtractionNode node) {
-		// TODO Auto-generated method stub
-		return null;
+	public Boolean Visit(SubtractionNode node) throws Exception {
+		throw new Exception("Attempted to visit invalid node when evaluating conditions. Please check the structure of your conditions");
 	}
 
 	@Override
-	public Boolean Visit(MultiplicationNode node) {
-		// TODO Auto-generated method stub
-		return null;
+	public Boolean Visit(MultiplicationNode node) throws Exception {
+		throw new Exception("Attempted to visit invalid node when evaluating conditions. Please check the structure of your conditions");
 	}
 
 	@Override
-	public Boolean Visit(DivisionNode node) {
-		// TODO Auto-generated method stub
-		return null;
+	public Boolean Visit(DivisionNode node)  throws Exception {
+		throw new Exception("Attempted to visit invalid node when evaluating conditions. Please check the structure of your conditions");
 	}
 
 	@Override
-	public Boolean Visit(NumberNode node) {
-		// TODO Auto-generated method stub
-		return null;
+	public Boolean Visit(NumberNode node) throws Exception {
+		throw new Exception("Attempted to visit invalid node when evaluating conditions. Please check the structure of your conditions");
 	}
 
 	@Override
-	public Boolean Visit(UnaryNode node) {
-		// TODO Auto-generated method stub
-		return null;
+	public Boolean Visit(UnaryNode node) throws Exception {
+		throw new Exception("Attempted to visit invalid node when evaluating conditions. Please check the structure of your conditions");
 	}
 
 	@Override
 	public Boolean Visit(RelopNode node) throws Exception {
-
-		// Interesting talking point: if the variable in the thing isn't comparable
-		// (e.g. (x^2) > 1) then do I return true or false?
-
-		// Current solution is ensuring that the value will be a number
-
-		// Will need to outsource this method to handle < , > , == in switch statement
-
-		// boolean relopResult = calculateRelop(node.left, node.right, node.relop);
 		boolean relopResult = calculateRelop(node);
 		return relopResult;
 	}
@@ -71,35 +53,24 @@ public class EvaluateConditionsVisitor extends ConditionVisitor<Boolean> {
 
 
 	@Override
-	public Boolean Visit(RuleVariableNode node) {
-		// TODO Auto-generated method stub
-		if (this.variables.get(node.toString()) != null) {
-
-		}
-		return null;
+	public Boolean Visit(RuleVariableNode node)  throws Exception {
+		throw new Exception("Attempted to visit invalid node when evaluating conditions. Please check the structure of your conditions");
 	}
 	@Override
-	public Boolean Visit(PowerNode node) {
-		// TODO Auto-generated method stub
-		return null;
+	public Boolean Visit(PowerNode node)  throws Exception {
+		throw new Exception("Attempted to visit invalid node when evaluating conditions. Please check the structure of your conditions");
 	}
 
 	@Override
-	public Boolean Visit(ParentheticalNode node) {
-		// TODO Auto-generated method stub
-		return null;
+	public Boolean Visit(ParentheticalNode node) throws Exception {
+		throw new Exception("Attempted to visit invalid node when evaluating conditions. Please check the structure of your conditions");
 	}
 
 	@Override
-	public Boolean Visit(VariableNode node) {
-		// TODO Auto-generated method stub
-		
-		System.out.println("HERE");
-		return null;
+	public Boolean Visit(VariableNode node) throws Exception {
+		throw new Exception("Attempted to visit invalid node when evaluating conditions. Please check the structure of your conditions");
 	}
 
-	// public boolean calculateRelop(ExpressionNode left, ExpressionNode right,
-	// String relop) {
 	public boolean calculateRelop(RelopNode relopNode) throws Exception {
 
 		// Decide equivalence between any two nodes
@@ -111,14 +82,11 @@ public class EvaluateConditionsVisitor extends ConditionVisitor<Boolean> {
 		}
 		
 		if (!(relopNode.left instanceof NumberNode && relopNode.right instanceof NumberNode)) {
-			//System.out.println("\nError: Attemting to provide inequality to non-numerical values");
 			throw new Exception("Check your rule conditions. You cannot evaluate inequalities of non-numerical terms");
 		}
-		NumberNode l;
-		NumberNode r;
+		NumberNode l = (NumberNode)(relopNode.left);
+		NumberNode r = (NumberNode)(relopNode.right);
 		
-		l = getNumberNode(relopNode.left);
-		r = getNumberNode(relopNode.right);
 
 		boolean relopResult = false;
 
@@ -141,28 +109,10 @@ public class EvaluateConditionsVisitor extends ConditionVisitor<Boolean> {
 		return relopResult;
 	}
 
-	// Support for UnaryNode comparisons
-	public NumberNode getNumberNode(ExpressionNode node) {
-		if (node instanceof RuleVariableNode) {
-			ExpressionNode value = this.variables.get(((RuleVariableNode) node).toString());
-			if (value instanceof NumberNode) {
-				return (NumberNode) value;
-			}
-		} else if (node instanceof NumberNode) {
-			return (NumberNode) node;
-		} else if (node instanceof UnaryNode) {
-			if (((UnaryNode) node).innerNode instanceof NumberNode) {
-				return new NumberNode(-1 * ((NumberNode) ((UnaryNode) node).innerNode).getValue());
-			}
-		}
-		// Exception? - cannot compare the two nodes using > >= < <= operators
 
-		return null;
-	}
 
 	@Override
 	public Boolean Visit(ConditionFunctionNode node) throws Exception {
-		System.out.println("CONDITIONFUNCTION HERE " + node.functionName + "  " + node.getArguments());
 		return this.conditionFunctions.determineFunction(node.functionName, node.arguments);
 	}
 
@@ -182,10 +132,8 @@ public class EvaluateConditionsVisitor extends ConditionVisitor<Boolean> {
 	}
 
 	@Override
-	public Boolean Visit(FunctionNode node) {
-		System.out.println("Visitn here for some reason");
-		// TODO Auto-generated method stub
-		return null;
+	public Boolean Visit(FunctionNode node) throws Exception {
+		throw new Exception("Attempted to visit invalid node when evaluating conditions. Please check the structure of your conditions");
 	}
 
 }

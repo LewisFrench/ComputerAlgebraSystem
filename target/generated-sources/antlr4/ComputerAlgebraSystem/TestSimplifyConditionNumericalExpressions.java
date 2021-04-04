@@ -2,7 +2,10 @@ package ComputerAlgebraSystem;
 
 import static org.junit.Assert.*;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import java.util.ArrayList;
 
 import org.junit.Test;
 
@@ -28,6 +31,22 @@ public class TestSimplifyConditionNumericalExpressions {
 	}
 
 	@Test
+	public void testSimpleAddition_cannot_simplify() {
+		ExpressionNode addition = new AdditionNode(new VariableNode("q"), new NumberNode(1));
+		ExpressionNode relopGT = new RelopNode(addition, new NumberNode(0.0), ConditionsLexer.RELOP_GT, ">");
+		SimplifyConditionNumericalExpressions s = new SimplifyConditionNumericalExpressions();
+
+		try {
+			ExpressionNode result = s.Visit(relopGT);
+			assertTrue(result instanceof RelopNode);
+			assertFalse(((RelopNode) result).left instanceof NumberNode);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	@Test
 	public void testSimpleSubtraction() {
 		ExpressionNode subtraction = new SubtractionNode(new NumberNode(1.2), new NumberNode(1));
 		ExpressionNode relopGT = new RelopNode(subtraction, new NumberNode(0.0), ConditionsLexer.RELOP_GT, ">");
@@ -43,7 +62,23 @@ public class TestSimplifyConditionNumericalExpressions {
 		}
 
 	}
-	
+
+	@Test
+	public void testSimpleSubtraction_cannot_simplify() {
+		ExpressionNode subtraction = new SubtractionNode(new NumberNode(1), new VariableNode("q"));
+		ExpressionNode relopGT = new RelopNode(subtraction, new NumberNode(0.0), ConditionsLexer.RELOP_GT, ">");
+		SimplifyConditionNumericalExpressions s = new SimplifyConditionNumericalExpressions();
+
+		try {
+			ExpressionNode result = s.Visit(relopGT);
+			assertTrue(result instanceof RelopNode);
+			assertFalse(((RelopNode) result).left instanceof NumberNode);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
 	@Test
 	public void testSimpleMultiplication() {
 		ExpressionNode multiplication = new MultiplicationNode(new NumberNode(1.2), new NumberNode(1));
@@ -60,9 +95,29 @@ public class TestSimplifyConditionNumericalExpressions {
 		}
 
 	}
+
+	@Test
+	public void testSimpleMultiplication_cannot_simplify() {
+		ArrayList<ExpressionNode> arguments = new ArrayList<>();
+		arguments.add(new NumberNode(2));
+		ExpressionNode multiplication = new MultiplicationNode(new NumberNode(1),
+				new FunctionNode("TestFunc", arguments));
+		ExpressionNode relopGT = new RelopNode(multiplication, new NumberNode(0.0), ConditionsLexer.RELOP_GT, ">");
+		SimplifyConditionNumericalExpressions s = new SimplifyConditionNumericalExpressions();
+
+		try {
+			ExpressionNode result = s.Visit(relopGT);
+			assertTrue(result instanceof RelopNode);
+			assertFalse(((RelopNode) result).left instanceof NumberNode);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
 	@Test
 	public void testSimpleDivision() {
-		ExpressionNode division= new DivisionNode(new NumberNode(1.2), new NumberNode(1));
+		ExpressionNode division = new DivisionNode(new NumberNode(1.2), new NumberNode(1));
 		ExpressionNode relopGT = new RelopNode(division, new NumberNode(0.0), ConditionsLexer.RELOP_GT, ">");
 		SimplifyConditionNumericalExpressions s = new SimplifyConditionNumericalExpressions();
 
@@ -76,6 +131,7 @@ public class TestSimplifyConditionNumericalExpressions {
 		}
 
 	}
+
 	@Test
 	public void testSimpleExponentiation() {
 		ExpressionNode power = new PowerNode(new NumberNode(1.2), new NumberNode(1));
@@ -92,7 +148,7 @@ public class TestSimplifyConditionNumericalExpressions {
 		}
 
 	}
-	
+
 	@Test
 	public void testParentheticalOperation() {
 		ExpressionNode power = new PowerNode(new NumberNode(1.2), new NumberNode(1));
@@ -110,6 +166,7 @@ public class TestSimplifyConditionNumericalExpressions {
 		}
 
 	}
+
 	
 	@Test
 	public void testUnaryOperation() {
@@ -128,7 +185,26 @@ public class TestSimplifyConditionNumericalExpressions {
 		}
 
 	}
-	
+
+	@Test
+	public void testUnaryOperation_cannot_Simplify() {
+		ExpressionNode power = new DivisionNode(new ParentheticalNode(new VariableNode("o")), new NumberNode(1));
+		ExpressionNode unary = new UnaryNode(power);
+		ExpressionNode relopGT = new RelopNode(unary, new NumberNode(0.0), ConditionsLexer.RELOP_GT, ">");
+		SimplifyConditionNumericalExpressions s = new SimplifyConditionNumericalExpressions();
+		
+		try {
+			ExpressionNode result = s.Visit(relopGT);
+			assertTrue(result instanceof RelopNode);
+			assertTrue(((RelopNode) result).left instanceof UnaryNode);
+			assertTrue(((RelopNode)result).right instanceof NumberNode);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+
 	@Test
 	public void testComplexOperationAdditionUnaryParenthetical() {
 		ExpressionNode parenthetical = new ParentheticalNode(new NumberNode(3));
@@ -145,65 +221,87 @@ public class TestSimplifyConditionNumericalExpressions {
 			e.printStackTrace();
 		}
 	}
-	
-	
-	
+
 	@Test
-	public void testNonNumericalExpression_False () {
+	public void testNonNumericalExpression_False() {
 		ExpressionNode addition = new AdditionNode(new VariableNode("x"), new NumberNode(1));
 		ExpressionNode relopGT = new RelopNode(addition, new NumberNode(0.0), ConditionsLexer.RELOP_GT, ">");
 		SimplifyConditionNumericalExpressions s = new SimplifyConditionNumericalExpressions();
-		try { 
-		ExpressionNode result = s.Visit(relopGT);
-		assertFalse(((RelopNode) result).left instanceof NumberNode);
+		try {
+			ExpressionNode result = s.Visit(relopGT);
+			assertFalse(((RelopNode) result).left instanceof NumberNode);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	
-	
+
 	@Test
 	public void testComplexOperationLogicalAND_True() {
 		ExpressionNode addition = new AdditionNode(new VariableNode("x"), new NumberNode(1));
-		ExpressionNode conditionAndNode = new ConditionAndNode(new RelopNode(addition, new NumberNode(0.0), ConditionsLexer.RELOP_GT, ">"), new RelopNode(addition, new NumberNode(0.0), ConditionsLexer.RELOP_GT, ">"));
+		ExpressionNode conditionAndNode = new ConditionAndNode(
+				new RelopNode(addition, new NumberNode(0.0), ConditionsLexer.RELOP_GT, ">"),
+				new RelopNode(addition, new NumberNode(0.0), ConditionsLexer.RELOP_GT, ">"));
 		SimplifyConditionNumericalExpressions s = new SimplifyConditionNumericalExpressions();
-		try { 
-		ExpressionNode result = s.Visit(conditionAndNode);
-		assertFalse(((ConditionAndNode) result).left instanceof NumberNode);
-		assertFalse(((ConditionAndNode) result).right instanceof NumberNode);
+		try {
+			ExpressionNode result = s.Visit(conditionAndNode);
+			assertFalse(((ConditionAndNode) result).left instanceof NumberNode);
+			assertFalse(((ConditionAndNode) result).right instanceof NumberNode);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	@Test
 	public void testComplexOperationLogicalOR_True() {
 		ExpressionNode addition = new AdditionNode(new VariableNode("x"), new NumberNode(1));
-		ExpressionNode conditionOrNode = new ConditionOrNode(new RelopNode(addition, new NumberNode(0.0), ConditionsLexer.RELOP_GT, ">"), new RelopNode(addition, new NumberNode(0.0), ConditionsLexer.RELOP_GT, ">"));
+		ArrayList<ExpressionNode> conditionFunctionArguments = new ArrayList<ExpressionNode>();
+		conditionFunctionArguments.add(new AdditionNode(new NumberNode(2.1), new NumberNode(1)));
+		ExpressionNode conditionOrNode = new ConditionOrNode(
+				new RelopNode(addition, new NumberNode(0.0), ConditionsLexer.RELOP_GT, ">"),
+				new ConditionFunctionNode("_is_number", conditionFunctionArguments));
 		SimplifyConditionNumericalExpressions s = new SimplifyConditionNumericalExpressions();
-		System.out.println("HERE " +s.toString());
-		try { 
-		ExpressionNode result = s.Visit(conditionOrNode);
-		assertFalse(((ConditionOrNode) result).left instanceof NumberNode);
-		assertFalse(((ConditionOrNode) result).right instanceof NumberNode);
+		try {
+			ExpressionNode result = s.Visit(conditionOrNode);
+			assertTrue(((ConditionOrNode) result).left instanceof RelopNode);
+			assertTrue(((ConditionOrNode) result).right instanceof ConditionFunctionNode);
+			assertTrue(((ConditionFunctionNode)((ConditionOrNode) result).right).arguments.get(0) instanceof NumberNode);
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 	
+
 	@Test
 	public void testComplexOperationLogicalNOT_True() {
-		ExpressionNode addition = new AdditionNode(new VariableNode("x"), new NumberNode(1));
-		ExpressionNode conditionOrNode = new ConditionOrNode(new RelopNode(addition, new NumberNode(0.0), ConditionsLexer.RELOP_GT, ">"), new RelopNode(addition, new NumberNode(0.0), ConditionsLexer.RELOP_GT, ">"));
+		ExpressionNode subtraction = new SubtractionNode(new NumberNode(2), new NumberNode(1));
+		ExpressionNode conditionOrNode = new ConditionOrNode(
+				new RelopNode(subtraction, new VariableNode("p"), ConditionsLexer.RELOP_GT, ">"),
+				new RelopNode(subtraction, new NumberNode(0.0), ConditionsLexer.RELOP_GT, ">"));
+		ExpressionNode not = new NotNode(conditionOrNode);
 		SimplifyConditionNumericalExpressions s = new SimplifyConditionNumericalExpressions();
-		try { 
-		ExpressionNode result = s.Visit(conditionOrNode);
-		assertFalse(((ConditionOrNode) result).left instanceof NumberNode);
-		assertFalse(((ConditionOrNode) result).right instanceof NumberNode);
+		try {
+			ExpressionNode result = s.Visit(not);
+			NotNode notResult = (NotNode) result;
+			assertTrue(notResult.innerNode instanceof ConditionOrNode);
+			RelopNode leftRelop = (RelopNode) (((ConditionOrNode) notResult.innerNode).left);
+			RelopNode rightRelop = (RelopNode) (((ConditionOrNode) notResult.innerNode).right);
+			assertTrue(leftRelop.left instanceof NumberNode);
+			assertTrue(leftRelop.right instanceof VariableNode);
+			assertTrue(rightRelop.left instanceof NumberNode);
+			assertTrue(rightRelop.right instanceof NumberNode);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 	
+	@Test 
+	public void testVisitRuleVariable_Exception() {
+		ExpressionNode rv = new RuleVariableNode("c");
+		SimplifyConditionNumericalExpressions s = new SimplifyConditionNumericalExpressions();
+		
+		ExpressionNode relop = new RelopNode(new PowerNode(new NumberNode(2.3), new VariableNode("x")), rv,ConditionsLexer.RELOP_GT, ">");
+		assertThrows(Exception.class, () -> s.Visit(relop) );
+	}
 
 }

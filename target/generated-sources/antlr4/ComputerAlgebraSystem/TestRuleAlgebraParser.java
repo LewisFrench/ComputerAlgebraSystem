@@ -325,6 +325,117 @@ public class TestRuleAlgebraParser {
 	}	
 	
 	@Test
+	public void testValidRuleValidConditions_parenthetical_relop() {
+
+		Program p = new Program();
+		try {
+			Rule result = p.parseRule("x=1:(1>+0)");
+			assertTrue(result.conditionsNode instanceof RelopNode);			
+			
+		} catch(Exception e) {e.printStackTrace();}
+	}
+	@Test
+	public void testValidRuleValidConditions_Addition_relop() {
+
+		Program p = new Program();
+		try {
+			Rule result = p.parseRule("x=1:1+3>0");
+			assertTrue(result.conditionsNode instanceof RelopNode);
+			assertTrue(((RelopNode)result.conditionsNode).left instanceof AdditionNode);
+			
+		} catch(Exception e) {e.printStackTrace();}
+	}
+	@Test
+	public void testValidRuleValidConditions_Subtraction_relop() {
+
+		Program p = new Program();
+		try {
+			Rule result = p.parseRule("x=1:1-3>0");
+			assertTrue(result.conditionsNode instanceof RelopNode);
+			assertTrue(((RelopNode)result.conditionsNode).left instanceof SubtractionNode);
+			
+		} catch(Exception e) {e.printStackTrace();}
+	}
+	
+	@Test
+	public void testValidRuleValidConditions_Multiplication_relop() {
+
+		Program p = new Program();
+		try {
+			Rule result = p.parseRule("x=1:1*3>0");
+			assertTrue(result.conditionsNode instanceof RelopNode);
+			assertTrue(((RelopNode)result.conditionsNode).left instanceof MultiplicationNode);
+			
+		} catch(Exception e) {e.printStackTrace();}
+	}
+	
+	@Test
+	public void testValidRuleValidConditions_Division_relop() {
+
+		Program p = new Program();
+		try {
+			Rule result = p.parseRule("x=1:(1)/3>0");
+			assertTrue(result.conditionsNode instanceof RelopNode);
+			assertTrue(((RelopNode)result.conditionsNode).left instanceof DivisionNode);
+			
+		} catch(Exception e) {e.printStackTrace();}
+	}
+	
+	@Test
+	public void testValidRuleValidConditions_Exponentiation_relop() {
+
+		Program p = new Program();
+		try {
+			Rule result = p.parseRule("x=1:1^3>0");
+			assertTrue(result.conditionsNode instanceof RelopNode);
+			assertTrue(((RelopNode)result.conditionsNode).left instanceof PowerNode);
+			
+		} catch(Exception e) {e.printStackTrace();}
+	}
+	
+	@Test
+	public void testValidRuleValidConditions_Compare_EQ() {
+
+		Program p = new Program();
+		try {
+			Rule result = p.parseRule("+x=1:testFunc(x) == testFunc(x)");
+			System.out.println(result.toString());
+			assertTrue(result.conditionsNode instanceof RelopNode);
+			assertTrue(((RelopNode)result.conditionsNode).left instanceof FunctionNode);
+			
+		} catch(Exception e) {e.printStackTrace();}
+	}
+	
+	@Test
+	public void testValidRuleValidConditions_Relop_RuleVariable() {
+
+		Program p = new Program();
+		try {
+			Rule result = p.parseRule("$x^2 = 1 : $x > 1");
+			System.out.println(result.toString());
+			assertTrue(result.conditionsNode instanceof RelopNode);
+			assertTrue(((RelopNode)result.conditionsNode).left instanceof RuleVariableNode);
+			
+		} catch(Exception e) {e.printStackTrace();}
+	}
+	
+	
+	
+	
+	
+	
+	@Test
+	public void testValidRuleValidConditions_relop_containing_unary() {
+
+		Program p = new Program();
+		try {
+			Rule result = p.parseRule("x=1:(1>-0)");
+			assertTrue(result.conditionsNode instanceof RelopNode);			
+			
+		} catch(Exception e) {e.printStackTrace();}
+	}
+	
+	@Test
 	public void testValidRuleValidConditions_ConditionFunction_no_underscore_is_integer_Exception() {
 
 		Program p = new Program();
@@ -350,6 +461,8 @@ public class TestRuleAlgebraParser {
 		Program p = new Program();
 			assertThrows(ParseCancellationException.class, () -> p.parseRule("x=1:depends(x)"));
 	}	
+		
+	@Test
 	public void testInvalidRuleNoConditions_NoRHS_NoEquals() {
 
 		Program p = new Program();

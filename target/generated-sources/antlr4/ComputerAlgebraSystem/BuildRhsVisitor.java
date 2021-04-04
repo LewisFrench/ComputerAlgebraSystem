@@ -58,10 +58,7 @@ public class BuildRhsVisitor extends RuleAlgebraBaseVisitor<ExpressionNode> {
 			node = new DivisionNode(left, right);
 			break;
 
-		default:
-			System.out.println("FAIL");
 		}
-	
 		return node;
 	}
 
@@ -76,18 +73,12 @@ public class BuildRhsVisitor extends RuleAlgebraBaseVisitor<ExpressionNode> {
 		case RuleAlgebraLexer.OP_SUB:
 			node = new UnaryNode(visit(context.expression()));
 			break;
-
-		default:
-			System.out.println("Unary Number");
 		}
 		return node;
 	}
 
 	@Override
 	public ExpressionNode visitRuleVariable(RuleAlgebraParser.RuleVariableContext context) {
-//		if (this.variables.get(context.getText()) != null) {
-//			return this.variables.get(context.getText());
-//		}
 		return new RuleVariableNode(context.value.getText());
 	}
 

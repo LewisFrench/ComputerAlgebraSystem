@@ -46,9 +46,6 @@ abstract class TermVisitor<T> {
 		} else if (node instanceof NumberNode) {
 			return Visit((NumberNode) node);
 		}
-//		else if (node instanceof RuleVariableNode) {
-//			return Visit((RuleVariableNode) node);
-//		}
 		else {
 			throw new Exception("Attempted to visit a valid node");
 		}

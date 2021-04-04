@@ -19,7 +19,6 @@ public class DependsEvaluator extends TermVisitor<Boolean> {
 		return Visit(node.Left) || Visit(node.Right);
 	}
 
-	// Methods determine if dependency is present in the tree
 	@Override
 	public Boolean Visit(AdditionNode node) throws Exception {
 		if (node.getClass() == dependency.getClass()) {
@@ -105,13 +104,6 @@ public class DependsEvaluator extends TermVisitor<Boolean> {
 		return argumentMatch;
 	}
 
-//	@Override
-//	public Boolean Visit(RuleVariableNode node) {
-//		// Exception here?? Shouldn't be able to reach
-//		// Should I make this the case in a a new parent class e.g. not list abstract
-//		// Visit(RuleVariableNode node) and have it flag error if visited?
-//		return null;
-//	}
 
 	@Override
 	public Boolean Visit(VariableNode node) {

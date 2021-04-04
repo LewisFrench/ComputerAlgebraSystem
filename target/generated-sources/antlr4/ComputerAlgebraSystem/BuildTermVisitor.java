@@ -27,7 +27,6 @@ public class BuildTermVisitor extends AlgebraBaseVisitor<ExpressionNode> {
 		return node;
 	}
 
-
 	@Override
 	public ExpressionNode visitParenthetical(AlgebraParser.ParentheticalContext context) {
 
@@ -79,8 +78,6 @@ public class BuildTermVisitor extends AlgebraBaseVisitor<ExpressionNode> {
 			node = new DivisionNode(left, right);
 			break;
 
-		default:
-			System.out.println("FAIL");
 		}
 
 		node.Left = visit(context.left);

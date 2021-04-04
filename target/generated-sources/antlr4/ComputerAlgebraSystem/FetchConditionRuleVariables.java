@@ -9,6 +9,10 @@ public class FetchConditionRuleVariables extends ConditionVisitor<ExpressionNode
 	public FetchConditionRuleVariables() {
 	}
 
+	
+	public LinkedHashMap<String, ExpressionNode> getVariables(){
+		return this.variables;
+	}
 	@Override
 	public ExpressionNode Visit(ConditionAndNode node) throws Exception {
 		ExpressionNode left = Visit(node.left);
@@ -87,9 +91,6 @@ public class FetchConditionRuleVariables extends ConditionVisitor<ExpressionNode
 	@Override
 	public ExpressionNode Visit(ParentheticalNode node) throws Exception {
 		ExpressionNode innerNode = Visit(node.innerNode);
-		if (innerNode instanceof NumberNode) {
-			return ((NumberNode) innerNode);
-		}
 		return new ParentheticalNode(innerNode);
 	}
 
@@ -97,10 +98,6 @@ public class FetchConditionRuleVariables extends ConditionVisitor<ExpressionNode
 	public ExpressionNode Visit(UnaryNode node) throws Exception {
 
 		ExpressionNode innerNode = Visit(node.innerNode);
-		if (innerNode instanceof NumberNode) {
-			double invertedValue = (((NumberNode) innerNode).getValue()) * -1;
-			return new NumberNode(invertedValue);
-		}
 		return new UnaryNode(innerNode);
 	}
 

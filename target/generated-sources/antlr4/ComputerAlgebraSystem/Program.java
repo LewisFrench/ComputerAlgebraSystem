@@ -28,19 +28,11 @@ public class Program {
 		GUI g = new GUI();
 	}
 
-	public String Rewrite(ArrayList<Rule> rules, ExpressionNode termAst, int ruleApplicationLimit) {
-
-		System.out.println("\n Rule application Limit : " + ruleApplicationLimit);
-		for (Rule r : rules) {
-			System.out.println(r);
-		}
+	public String Rewrite(ArrayList<Rule> rules, ExpressionNode termAst, int ruleApplicationLimit) throws Exception {
 		String outputValue = "";
 		try {
 			ExpressionNode ast2 = new RewriteProcess(rules, ruleApplicationLimit).Visit(termAst);
-			System.out.println("Output: " + ast2.toString());
 			ExpressionNode simplified = new SimplifyNumericalOperations().Visit(ast2);
-
-			System.out.println(simplified.toString());
 			outputValue = new EvaluateExpressionVisitor().Visit(simplified);
 			return outputValue;
 
@@ -52,10 +44,8 @@ public class Program {
 			throw new StackOverflowError(
 					"Check for any infinitely-recursive rules or choose a lower rule application limit");
 		} catch (Exception e) {
-			System.out.println("Rewrite Error Thrown: " + e.getMessage() + "  " + e.toString());
+			throw new Exception("Rewrite Error: " + e.getMessage() + "  " + e.toString());
 		}
-
-		return outputValue;
 	}
 
 	private static String[] splitRuleString(String ruleString) throws Exception {
@@ -102,24 +92,19 @@ public class Program {
 
 			ExpressionNode rhsNode = new BuildRhsVisitor().visitRuleTerm(rhs);
 
-			// Check rulevariables correlate : throw exception if not
-			// if (! ruleVariablesCorrelate( lhsNode, rhsNode) { throw exception };
 
 			if (splitRule.length == 3) {
 
 				ConditionsParser conditionsParser = getConditionsParser(splitRule[2]);
 				RuleConditionsContext conditions = conditionsParser.ruleConditions();
 				ExpressionNode conditionsNode = new BuildConditionsVisitor().visit(conditions);
-				System.out.println("\nSHOULD BE CONDITIONNODE" + conditionsNode.getClass());
-				// check contains all variables here too (LHS --> Condition)
 
 				r = (new Rule(lhsNode, rhsNode, conditionsNode));
-				// System.out.println()
 				r.variables = lhsVisitor.variables;
-
+				
+				// Check if rule variables correlate from LHS --> Conditions
 				FetchConditionRuleVariables fCond = new FetchConditionRuleVariables();
 				fCond.Visit(conditionsNode);
-				System.out.println("\nCondition node test: " + r.variables + "  " + fCond.variables);
 				if (!(r.variables.keySet().containsAll(fCond.variables.keySet()))) {
 					throw new Exception("Condition contains a rule variable that isn't present in the LHS of a rule");
 				}
@@ -127,7 +112,7 @@ public class Program {
 				r = (new Rule(lhsNode, rhsNode));
 				r.variables = lhsVisitor.variables;
 			} else {
-				throw new ParseCancellationException();
+				throw new ParseCancellationException("Rule entered with invalid length. Please check the structure of your rules");
 			}
 
 			FetchRuleVariables f = new FetchRuleVariables();
@@ -170,7 +155,6 @@ public class Program {
 
 		ExpressionNode termAst = null;
 
-		System.out.println("Expression : " + expression);
 		if (expression.equals(null) || expression.equals("")) {
 			throw new Exception("Please enter an algebraic term");
 		}

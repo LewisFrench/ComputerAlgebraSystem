@@ -49,12 +49,6 @@ class EvaluateExpressionVisitor extends TermVisitor<String> {
 	public String Visit(FunctionNode node) {
 		return node.toString();
 	}
-//
-//	@Override
-//	public String Visit(RuleVariableNode node) {
-//
-//		return node.toString();
-//	}
 
 	@Override
 	public String Visit(VariableNode node) {
