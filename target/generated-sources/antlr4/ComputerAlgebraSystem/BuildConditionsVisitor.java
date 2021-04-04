@@ -120,7 +120,7 @@ public class BuildConditionsVisitor extends ConditionsBaseVisitor<ExpressionNode
 			break;
 
 		default:
-			System.out.println("FAIL");
+			return node;
 		}
 
 		return node;
@@ -144,10 +144,6 @@ public class BuildConditionsVisitor extends ConditionsBaseVisitor<ExpressionNode
 
 	@Override
 	public ExpressionNode visitRuleVariable(ConditionsParser.RuleVariableContext context) {
-
-//		if (this.variables.get(context.getText()) != null) {
-//			return variables.get(context.getText());
-//		}
 		return new RuleVariableNode(context.value.getText());
 	}
 

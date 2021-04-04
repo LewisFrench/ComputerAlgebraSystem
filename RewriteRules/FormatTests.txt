@@ -1,1 +1,1 @@
-fib($n) = $n : _is_integer($n)
+(x) = (y)

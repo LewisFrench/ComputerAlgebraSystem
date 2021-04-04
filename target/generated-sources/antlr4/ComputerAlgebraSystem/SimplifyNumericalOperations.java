@@ -102,15 +102,4 @@ public class SimplifyNumericalOperations extends TermVisitor<ExpressionNode> {
 		return node;
 	}
 
-//	@Override
-//	public ExpressionNode Visit(RuleVariableNode node) {
-//		System.out.println("\nVISITING RULEVARLABLENODE " + node.toString() + "  " + this.variables);
-//		if (this.variables.get(node.toString())!= null) {
-//			System.out.println("Returning " + this.variables.get(node.toString()) + this.variables.get(node.toString()).getClass());
-//			return this.variables.get(node.toString());
-//		}
-//		// Exception
-//		return node;
-//	}
-
 }

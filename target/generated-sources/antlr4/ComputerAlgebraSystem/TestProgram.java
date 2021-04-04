@@ -1,18 +1,189 @@
 package ComputerAlgebraSystem;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import org.junit.jupiter.api.Test;
+import java.util.ArrayList;
 
-class TestProgram {
+import org.antlr.v4.runtime.misc.ParseCancellationException;
+import org.junit.Test;
 
-//	@Test
-//	void testSplitRuleString() {
-//		Program p = new Program();
-//		String ruleString = "x=1";
-//		try {
-//			p
-//		}
-//	}
+public class TestProgram {
 
+	@Test
+	public void testParseRule_Normal_withConditions() {
+		Program p = new Program();
+		try {
+			Rule r = p.parseRule("x = 1 : 3>4");
+			assertTrue(r instanceof Rule);
+			assertTrue(r.conditionsNode != null);
+			assertTrue(r.conditionsNode instanceof RelopNode);
+		} catch (ParseCancellationException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	@Test
+	public void testParseRule_Normal_noConditions() {
+		Program p = new Program();
+		try {
+			Rule r = p.parseRule("x = 1");
+			assertTrue(r instanceof Rule);
+			assertTrue(r.conditionsNode == null);
+		} catch (ParseCancellationException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	@Test
+	public void testParseRule_ParseCancellationException_LHS() {
+		Program p = new Program();
+		try {
+			assertThrows(ParseCancellationException.class, () -> p.parseRule("x1 =1 : 3>4"));
+		} catch (ParseCancellationException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	@Test
+	public void testParseRule_ParseCancellationException_Conditions() {
+		Program p = new Program();
+		try {
+			assertThrows(ParseCancellationException.class, () -> p.parseRule("x =1 : 3==>4x"));
+		} catch (ParseCancellationException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	@Test
+	public void testParseRule_ParseCancellationException_RHS() {
+		Program p = new Program();
+		try {
+			assertThrows(ParseCancellationException.class, () -> p.parseRule("x ==1 : 3>4"));
+		} catch (ParseCancellationException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	@Test
+	public void testParseRule_RHSRuleVariables_Correspond_False() {
+		Program p = new Program();
+		try {
+			assertThrows(Exception.class, () -> p.parseRule("$x = $y+$x"));
+
+		} catch (ParseCancellationException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	@Test
+	public void testParseRule_ConditionRuleVariables_Correspond_False() {
+		Program p = new Program();
+		try {
+			assertThrows(Exception.class, () -> p.parseRule("$x = $x : is_number($y)"));
+
+		} catch (ParseCancellationException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	@Test
+	public void testParseTerm_Normal() {
+		Program p = new Program();
+		try {
+			ExpressionNode node = p.parseTerm("x+1");
+		} catch (ParseCancellationException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+	}
+	
+	@Test
+	public void testParseTerm_Invalid_ParseCancellationException() {
+		Program p = new Program();
+		assertThrows(ParseCancellationException.class, () -> p.parseTerm("x+"));
+
+	}
+
+	@Test
+	public void testParseTerm_Null_Exception() {
+		Program p = new Program();
+
+		assertThrows(Exception.class, () -> p.parseTerm(null));
+
+	}
+
+	@Test
+	public void testParseTerm_Empty_Exception() {
+		Program p = new Program();
+
+		assertThrows(Exception.class, () -> p.parseTerm(""));
+
+	}
+	@Test
+	public void testRewrite_Normal() {
+		Program p = new Program();
+		ArrayList<Rule> rules = new ArrayList<>();
+		try { 
+			Rule r= new Rule(new RuleVariableNode("x"), new NumberNode(1));
+			rules.add(r);
+			String result = p.Rewrite(rules,new VariableNode("p"), 100);
+			System.out.println("HERE \n\n" + result);
+			assertTrue(result.equals("1.0"));
+		} catch (Exception e ) {e.printStackTrace();}
+
+	}
+	
+	
+	@Test
+	public void testRewrite_StackOverflow() {
+		Program p = new Program();
+		ArrayList<Rule> rules = new ArrayList<>();
+		try { 
+			Rule r= new Rule(new RuleVariableNode("x"), new RuleVariableNode("x"));
+			rules.add(r);
+			assertThrows(StackOverflowError.class, () -> p.Rewrite(rules, new VariableNode("a"), Integer.MAX_VALUE-1));
+			
+		} catch (Exception e ) {e.printStackTrace();}
+
+	}
+	
+	@Test
+	public void testRewrite_RewriteError() {
+		Program p = new Program();
+		ArrayList<Rule> rules = new ArrayList<>();
+		try { 
+			Rule r= new Rule(new RuleVariableNode("x"), new RuleVariableNode("x"));
+			rules.add(r);
+			assertThrows(Exception.class, () -> p.Rewrite(rules, new RuleVariableNode("a"), Integer.MAX_VALUE-1));
+			
+		} catch (Exception e ) {e.printStackTrace();}
+
+	}
+	
+	
+	
 }

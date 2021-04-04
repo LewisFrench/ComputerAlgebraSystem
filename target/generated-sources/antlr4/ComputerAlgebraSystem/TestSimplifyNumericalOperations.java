@@ -1,7 +1,10 @@
 package ComputerAlgebraSystem;
 
 import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import java.util.ArrayList;
 
 import org.junit.Test;
 
@@ -9,7 +12,7 @@ public class TestSimplifyNumericalOperations {
 
 
 	@Test
-	public void testSimpleAddition() {
+	public void testSimpleAddition_can_simplify() {
 		ExpressionNode addition = new AdditionNode(new NumberNode(2.1), new NumberNode(3.2));
 		SimplifyNumericalOperations s = new SimplifyNumericalOperations();
 
@@ -23,6 +26,21 @@ public class TestSimplifyNumericalOperations {
 		}
 	}
 
+	@Test
+	public void testSimpleAddition_cannot_simplify() {
+		ExpressionNode addition = new AdditionNode(new NumberNode(2.1), new VariableNode("x"));
+		SimplifyNumericalOperations s = new SimplifyNumericalOperations();
+
+		try {
+			ExpressionNode result = s.Visit(addition);
+			assertFalse(result.getClass() == NumberNode.class);
+			assertTrue(result.getClass() == AdditionNode.class);
+			// Further test: when using bigdecimal check value = 5.3
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 	@Test
 	public void testSimpleSubtraction() {
 		ExpressionNode subtraction = new SubtractionNode(new NumberNode(2.1), new NumberNode(3.2));
@@ -39,6 +57,22 @@ public class TestSimplifyNumericalOperations {
 	}
 
 	@Test
+	public void testSimpleSubtraction_cannot_simplify() {
+		ExpressionNode subtraction = new SubtractionNode(new NumberNode(2.1), new VariableNode("x"));
+		SimplifyNumericalOperations s = new SimplifyNumericalOperations();
+
+		try {
+			ExpressionNode result = s.Visit(subtraction);
+			assertFalse(result.getClass() == NumberNode.class);
+			assertTrue(result.getClass() == SubtractionNode.class);
+			// Further test: when using bigdecimal check value = 5.3
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
 	public void testSimpleMultiplication() {
 		ExpressionNode multiplication = new MultiplicationNode(new NumberNode(2.1), new NumberNode(3.2));
 		SimplifyNumericalOperations s = new SimplifyNumericalOperations();
@@ -52,6 +86,22 @@ public class TestSimplifyNumericalOperations {
 			e.printStackTrace();
 		}
 	}
+	@Test
+	public void testSimpleMultiplication_cannot_simplify() {
+		ExpressionNode multiplication = new MultiplicationNode(new NumberNode(2.1), new VariableNode("x"));
+		SimplifyNumericalOperations s = new SimplifyNumericalOperations();
+
+		try {
+			ExpressionNode result = s.Visit(multiplication);
+			assertFalse(result.getClass() == NumberNode.class);
+			assertTrue(result.getClass() == MultiplicationNode.class);
+			// Further test: when using bigdecimal check value = 5.3
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 
 	@Test
 	public void testSimpleDivision() {
@@ -69,6 +119,23 @@ public class TestSimplifyNumericalOperations {
 	}
 
 	@Test
+	public void testSimpleDivision_cannot_simplify() {
+		ExpressionNode division = new DivisionNode(new NumberNode(2.1), new VariableNode("x"));
+		SimplifyNumericalOperations s = new SimplifyNumericalOperations();
+
+		try {
+			ExpressionNode result = s.Visit(division);
+			assertFalse(result.getClass() == NumberNode.class);
+			assertTrue(result.getClass() == DivisionNode.class);
+			// Further test: when using bigdecimal check value = 5.3
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	
+	@Test
 	public void testSimpleExponentiation() {
 		ExpressionNode exponentiation = new PowerNode(new NumberNode(2.1), new NumberNode(3.2));
 		SimplifyNumericalOperations s = new SimplifyNumericalOperations();
@@ -83,6 +150,22 @@ public class TestSimplifyNumericalOperations {
 		}
 	}
 
+	@Test
+	public void testSimpleExponentiation_cannot_simplify() {
+		ExpressionNode exponentiation = new PowerNode(new NumberNode(2.1), new VariableNode("x"));
+		SimplifyNumericalOperations s = new SimplifyNumericalOperations();
+
+		try {
+			ExpressionNode result = s.Visit(exponentiation);
+			assertFalse(result.getClass() == NumberNode.class);
+			assertTrue(result.getClass() == PowerNode.class);
+			// Further test: when using bigdecimal check value = 5.3
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 	@Test
 	public void testComplexAddition() {
 
@@ -152,6 +235,26 @@ public class TestSimplifyNumericalOperations {
 		}
 
 	}
+	
+	@Test
+	public void testUnaryUnaryAddition_cannot_simplify() {
+		UnaryNode unaryNode = new UnaryNode(new NumberNode(1.0));
+		UnaryNode unaryNode2 = new UnaryNode(new VariableNode("x"));
+
+		ExpressionNode unaryAddition = new AdditionNode(unaryNode, unaryNode2);
+		SimplifyNumericalOperations s = new SimplifyNumericalOperations();
+		try {
+			ExpressionNode result = s.Visit(unaryAddition);
+			assertTrue(result.getClass() == AdditionNode.class);
+		
+			// Further test: when using bigdecimal check value = 5.3
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+	
 
 	@Test
 	public void testUnaryUnarySubtraction() {
@@ -227,5 +330,34 @@ public class TestSimplifyNumericalOperations {
 			e.printStackTrace();
 		}
 	}
+	
+	@Test
+	public void testParentheticalNumberAddition_cannot_simplify() {
+		ArrayList<ExpressionNode > arguments = new ArrayList<ExpressionNode>();
+		arguments.add(new NumberNode(2));
+		ExpressionNode addition = new AdditionNode(new NumberNode(1.1), new FunctionNode("testFunc", arguments));
+
+		ExpressionNode parentheticalNode = new ParentheticalNode(addition);
+		SimplifyNumericalOperations s = new SimplifyNumericalOperations();
+		try {
+			ExpressionNode result = s.Visit(parentheticalNode);
+			assertTrue(result.getClass() == ParentheticalNode.class);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	
+	@Test
+	public void testVisitRuleVariableNode_Exception() {
+		
+		ExpressionNode rv = new RuleVariableNode("x");
+
+		ExpressionNode parentheticalNode = new ParentheticalNode(rv);
+		SimplifyNumericalOperations s = new SimplifyNumericalOperations();
+		assertThrows(Exception.class, () -> s.Visit(rv));
+	}
+	
 
 }

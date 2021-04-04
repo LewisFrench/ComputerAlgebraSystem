@@ -86,7 +86,7 @@ public class TestTermAlgebraParser {
 	
 	
 	@Test
-	public void testParseSimpleUnary() {
+	public void testParseSimpleUnary_Negative() {
 		Program p = new Program();
 		
 		try {
@@ -95,6 +95,19 @@ public class TestTermAlgebraParser {
 			ExpressionNode innerNode = (((UnaryNode)n).innerNode);
 			assertTrue(((UnaryNode)n).innerNode instanceof NumberNode);
 			assertEquals(((NumberNode)innerNode).getValue(), 1);
+		} catch (ParseCancellationException e) {e.printStackTrace(); 
+		} catch (Exception e) { e.printStackTrace();}	
+	}
+	@Test
+	public void testParseSimpleUnary_Positive() {
+		Program p = new Program();
+		
+		try {
+			ExpressionNode n = p.parseTerm("+1");
+			assertTrue(n instanceof NumberNode);
+			
+			
+			
 		} catch (ParseCancellationException e) {e.printStackTrace(); 
 		} catch (Exception e) { e.printStackTrace();}	
 	}
@@ -127,6 +140,24 @@ public class TestTermAlgebraParser {
 			assertTrue(nFunc.arguments.get(2) instanceof UnaryNode);
 			
 			
+		} catch (ParseCancellationException e) {e.printStackTrace(); 
+		} catch (Exception e) { e.printStackTrace();}	
+	}
+	
+	@Test
+	public void testParseSimpleMultiplication() {
+		Program p = new Program();
+		
+		
+		try {
+			ExpressionNode n = p.parseTerm("a*+1");
+			assertTrue(n instanceof MultiplicationNode);
+			ExpressionNode left = (((MultiplicationNode)n).getLeft());
+			ExpressionNode right = (((MultiplicationNode)n).getRight());
+			assertTrue(left instanceof VariableNode);
+			assertTrue(((MultiplicationNode)n).Right instanceof NumberNode);
+			assertEquals(((VariableNode)left).getValue(), "a");
+			assertEquals(((NumberNode)right).getValue(), 1);
 		} catch (ParseCancellationException e) {e.printStackTrace(); 
 		} catch (Exception e) { e.printStackTrace();}	
 	}

@@ -58,9 +58,6 @@ public class BuildLhsVisitor extends RuleAlgebraBaseVisitor<ExpressionNode> {
 		case RuleAlgebraLexer.OP_DIV:
 			node = new DivisionNode(left, right);
 			break;
-
-		default:
-			System.out.println("FAIL");
 		}
 
 		return node;
@@ -79,9 +76,6 @@ public class BuildLhsVisitor extends RuleAlgebraBaseVisitor<ExpressionNode> {
 
 			node = new UnaryNode(visit(context.expression()));
 			break;
-
-		default:
-			System.out.println("Unary Number");
 		}
 		return node;
 	}

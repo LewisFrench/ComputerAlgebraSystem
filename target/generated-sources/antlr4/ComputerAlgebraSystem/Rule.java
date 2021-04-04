@@ -6,39 +6,11 @@ import Conditions.ConditionsParser.RuleConditionsContext;
 import RuleAlgebra.RuleAlgebraParser.RuleTermContext;
 
 class Rule {
-//	RuleTermContext lhs;
-//	RuleTermContext rhs;
-//	RuleConditionsContext conditions;
 	ExpressionNode lhsNode;
 	ExpressionNode rhsNode;
 	ExpressionNode conditionsNode;
 	LinkedHashMap<String, ExpressionNode> variables;
 
-//	public Rule(ExpressionNode lhsNode, ExpressionNode rhsNode) {
-////		this.lhs = lhs;
-////		this.rhs = rhs;
-//		this.lhsNode = lhsNode;
-//		this.rhsNode = rhsNode;
-//		FetchRuleVariables f = new FetchRuleVariables();
-//		ExpressionNode test = f.Visit(lhsNode);
-//		this.variables = f.variables;
-//		this.conditions = null;
-//		this.conditionsNode = null;
-//		// this.lhsNode = new BuildLhsVisitor(variables).visit(lhs);
-//	}
-//
-//	public Rule(ExpressionNode lhsNode, ExpressionNode rhsNode, RuleConditionsContext conditions) {
-////		this.lhs = lhs;
-////		this.rhs = rhs;
-//		this.lhsNode = lhsNode;
-//		this.rhsNode = rhsNode;
-//		this.conditions = conditions;
-//		FetchRuleVariables f = new FetchRuleVariables();
-//		ExpressionNode test = f.Visit(lhsNode);
-//		this.variables = f.variables;
-//
-//		// this.lhsNode = new BuildLhsVisitor(variables).visit(lhs);
-//	}
 	public Rule(ExpressionNode lhsNode, ExpressionNode rhsNode) throws Exception {
 
 		this.lhsNode = lhsNode;
@@ -46,7 +18,6 @@ class Rule {
 		FetchRuleVariables f = new FetchRuleVariables();
 		f.Visit(lhsNode); 
 		this.variables = f.variables;
-		//this.conditions = null;
 		this.conditionsNode = null;
 	}
 
@@ -58,7 +29,6 @@ class Rule {
 		f.Visit(lhsNode);
 		this.variables = f.variables;
 
-		// this.lhsNode = new BuildLhsVisitor(variables).visit(lhs);
 	}
 
 	public String toString() {

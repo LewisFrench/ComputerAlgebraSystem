@@ -385,8 +385,8 @@ public class TestSubstituteRuleVariables {
 		arguments.add(new SubtractionNode(new NumberNode(3), new NumberNode(4)));
 		arguments.add(new MultiplicationNode(new NumberNode(3), new NumberNode(4)));
 		arguments.add(new DivisionNode(new NumberNode(3), new NumberNode(4)));
-		arguments.add(new PowerNode(new NumberNode(3), new NumberNode(4)));
-		arguments.add(new RuleVariableNode("n"));
+		arguments.add(new PowerNode(new NumberNode(3), new RuleVariableNode("n")));
+		
 		ExpressionNode functionNode = new FunctionNode("TestFunction", arguments);
 		SubstituteRuleVariables s = new SubstituteRuleVariables(variables);
 		
@@ -394,7 +394,7 @@ public class TestSubstituteRuleVariables {
 			ExpressionNode result = s.Visit(functionNode);
 			assertTrue(result instanceof FunctionNode);
 			FunctionNode addResult = (FunctionNode)result;
-			assertTrue(addResult.arguments.get(5) instanceof VariableNode);
+			assertTrue(((PowerNode)addResult.arguments.get(4)).Right instanceof VariableNode);
 			
 			
 		} catch(Exception e) {
