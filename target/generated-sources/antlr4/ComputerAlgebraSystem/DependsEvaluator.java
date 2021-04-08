@@ -74,7 +74,11 @@ public class DependsEvaluator extends TermVisitor<Boolean> {
 
 	@Override
 	public Boolean Visit(NumberNode node) {
-		return node.getClass() == dependency.getClass() && node.getValue() == ((NumberNode) dependency).getValue();
+		System.out.println("COMPARING DEPENDS NUMBERS" + node.toString() + " to  " + dependency.toString() 
+		+ (node.getClass() == dependency.getClass() && node.getValue().compareTo(((NumberNode) dependency).getValue()) == 0)
+				);
+		
+		return node.getClass() == dependency.getClass() && node.getValue().compareTo(((NumberNode) dependency).getValue()) == 0;
 	}
 
 	@Override

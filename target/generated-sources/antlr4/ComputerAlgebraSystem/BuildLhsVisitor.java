@@ -1,7 +1,7 @@
 package ComputerAlgebraSystem;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 
 import RuleAlgebra.RuleAlgebraBaseVisitor;
@@ -22,8 +22,12 @@ public class BuildLhsVisitor extends RuleAlgebraBaseVisitor<ExpressionNode> {
 
 	@Override
 	public ExpressionNode visitNumber(RuleAlgebraParser.NumberContext context) {
-		this.variables.put(context.value.getText(), new NumberNode(Double.valueOf(context.value.getText())));
-		return new NumberNode(Double.valueOf(context.value.getText()));
+		BigDecimal b = BigDecimal.valueOf(Double.valueOf(context.value.getText()));
+		ExpressionNode n = new NumberNode(b);
+		this.variables.put(context.value.getText(),  n);
+		return n;
+//		this.variables.put(context.value.getText(),  new NumberNode(new BigDecimal(Double.valueOf(context.value.getText()))));
+//		return new NumberNode(new BigDecimal(Double.valueOf(context.value.getText())));
 	}
 
 	@Override
@@ -66,14 +70,16 @@ public class BuildLhsVisitor extends RuleAlgebraBaseVisitor<ExpressionNode> {
 	@Override
 	public ExpressionNode visitUnaryExpression(RuleAlgebraParser.UnaryExpressionContext context) {
 
-		ExpressionNode node = null;
+		ExpressionNode node = visit(context.expression());
 		switch (context.op.getType()) {
 		case RuleAlgebraLexer.OP_ADD:
 			node = visit(context.expression());
 			break;
 
 		case RuleAlgebraLexer.OP_SUB:
-
+			if (node instanceof NumberNode) {
+				return new NumberNode(((NumberNode)node).getValue().multiply(BigDecimal.valueOf(-1)));
+			}
 			node = new UnaryNode(visit(context.expression()));
 			break;
 		}

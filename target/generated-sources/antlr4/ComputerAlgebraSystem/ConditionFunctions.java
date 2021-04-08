@@ -1,5 +1,6 @@
 package ComputerAlgebraSystem;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
@@ -188,8 +189,9 @@ class is_integer extends ConditionFunction {
 	boolean function(ArrayList<ExpressionNode> arguments) throws Exception {
 		if (arguments.size() == 1) {
 			if (arguments.get(0) instanceof NumberNode) {
-				return (((NumberNode) arguments.get(0)).getValue() == Math
-						.floor(((NumberNode) arguments.get(0)).getValue()));
+//				return (((NumberNode) arguments.get(0)).getValue() == Math
+//						.floor(((NumberNode) arguments.get(0)).getValue()));
+				return (((NumberNode)arguments.get(0)).getValue().remainder(BigDecimal.ONE).compareTo(BigDecimal.ZERO) == 0);
 			} else {
 				return false;
 			}

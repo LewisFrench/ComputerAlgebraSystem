@@ -2,9 +2,6 @@ package ComputerAlgebraSystem;
 
 import java.util.LinkedHashMap;
 
-import Conditions.ConditionsParser.RuleConditionsContext;
-import RuleAlgebra.RuleAlgebraParser.RuleTermContext;
-
 class Rule {
 	ExpressionNode lhsNode;
 	ExpressionNode rhsNode;

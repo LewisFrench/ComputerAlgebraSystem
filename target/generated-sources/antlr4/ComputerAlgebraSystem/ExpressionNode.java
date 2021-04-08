@@ -1,5 +1,6 @@
 package ComputerAlgebraSystem;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -133,18 +134,22 @@ class FunctionNode extends ExpressionNode {
 }
 
 class NumberNode extends ExpressionNode {
-	public double value;
+	public BigDecimal value;
 
+	public NumberNode(BigDecimal b) {
+		this.value = b;
+	}
 	public NumberNode(double d) {
-		this.value = d;
+		BigDecimal b = BigDecimal.valueOf(Double.valueOf(d));
+		this.value = b;
 	}
 
 	public String toString() {
 		return String.valueOf(value);
 	}
 
-	public double getValue() {
-		return value;
+	public BigDecimal getValue() {
+		return this.value;
 	}
 
 }

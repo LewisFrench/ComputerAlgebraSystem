@@ -1,5 +1,6 @@
 package ComputerAlgebraSystem;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 
 import Algebra.AlgebraBaseVisitor;
@@ -16,8 +17,11 @@ public class BuildTermVisitor extends AlgebraBaseVisitor<ExpressionNode> {
 
 	@Override
 	public ExpressionNode visitNumber(AlgebraParser.NumberContext context) {
-		NumberNode node = new NumberNode(Double.valueOf(context.value.getText()));
-		return node;
+		//System.out.println("\n BigDecimal :  " + context.getText() + "   \n" + new BigDecimal(Double.valueOf(context.value.getText())));
+		BigDecimal b = BigDecimal.valueOf(Double.valueOf(context.value.getText()));
+		return new NumberNode(b);
+		//return new NumberNode(new BigDecimal(Double.valueOf(context.value.getText())));
+		
 	}
 
 	@Override
@@ -35,15 +39,19 @@ public class BuildTermVisitor extends AlgebraBaseVisitor<ExpressionNode> {
 
 	@Override
 	public ExpressionNode visitUnaryExpression(AlgebraParser.UnaryExpressionContext context) {
-		ExpressionNode node = null;
+		ExpressionNode node = visit(context.expression());
+		
 		switch (context.op.getType()) {
 		case AlgebraLexer.OP_ADD:
-			node = visit(context.expression());
-			break;
+			return node;
+			
 
 		case AlgebraLexer.OP_SUB:
-			node = new UnaryNode(visit(context.expression()));
-			break;
+			if (node instanceof NumberNode) {
+				return new NumberNode(((NumberNode)node).getValue().multiply(BigDecimal.valueOf(-1)));
+			}
+			return new UnaryNode(node);
+			
 
 		default:
 			break;
@@ -80,8 +88,8 @@ public class BuildTermVisitor extends AlgebraBaseVisitor<ExpressionNode> {
 
 		}
 
-		node.Left = visit(context.left);
-		node.Right = visit(context.right);
+//		node.Left = visit(context.left);
+//		node.Right = visit(context.right);
 
 		return node;
 	}

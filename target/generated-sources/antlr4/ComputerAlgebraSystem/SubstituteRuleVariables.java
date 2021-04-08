@@ -15,9 +15,9 @@ public class SubstituteRuleVariables extends RuleTermVisitor<ExpressionNode> {
 		ExpressionNode left =  Visit(node.Left);
 		ExpressionNode right =  Visit(node.Right);
 
-		if (node.Left instanceof NumberNode && node.Right instanceof NumberNode) {
-			return new NumberNode(Math.pow(((NumberNode)node.Left).getValue() , ((NumberNode)node.Right).getValue()));
-		}
+//		if (node.Left instanceof NumberNode && node.Right instanceof NumberNode) {
+//			return new NumberNode(Math.pow(((NumberNode)node.Left).getValue() , ((NumberNode)node.Right).getValue()));
+//		}
 		return new PowerNode(left, right);
 	}
 
@@ -26,10 +26,10 @@ public class SubstituteRuleVariables extends RuleTermVisitor<ExpressionNode> {
 		ExpressionNode left =  Visit(node.Left);
 		ExpressionNode right =  Visit(node.Right);
 		
-		if (node.Left instanceof NumberNode && node.Right instanceof NumberNode) {
-			return new NumberNode(((NumberNode)node.Left).getValue() + ((NumberNode)node.Right).getValue() );
-		}
-		
+//		if (node.Left instanceof NumberNode && node.Right instanceof NumberNode) {
+//			return new NumberNode(((NumberNode)node.Left).getValue() + ((NumberNode)node.Right).getValue() );
+//		}
+//		
 		return new AdditionNode(left, right);
 	}
 
@@ -38,9 +38,9 @@ public class SubstituteRuleVariables extends RuleTermVisitor<ExpressionNode> {
 		ExpressionNode left =  Visit(node.Left);
 		ExpressionNode right =  Visit(node.Right);
 
-		if (node.Left instanceof NumberNode && node.Right instanceof NumberNode) {
-			return new NumberNode(((NumberNode)node.Left).getValue() - ((NumberNode)node.Right).getValue() );
-		}
+//		if (node.Left instanceof NumberNode && node.Right instanceof NumberNode) {
+//			return new NumberNode(((NumberNode)node.Left).getValue() - ((NumberNode)node.Right).getValue() );
+//		}
 		return new SubtractionNode(left, right);
 	}
 
@@ -49,9 +49,9 @@ public class SubstituteRuleVariables extends RuleTermVisitor<ExpressionNode> {
 		ExpressionNode left =  Visit(node.Left);
 		ExpressionNode right =  Visit(node.Right);
 
-		if (node.Left instanceof NumberNode && node.Right instanceof NumberNode) {
-			return new NumberNode(((NumberNode)node.Left).getValue() *((NumberNode)node.Right).getValue() );
-		}
+//		if (node.Left instanceof NumberNode && node.Right instanceof NumberNode) {
+//			return new NumberNode(((NumberNode)node.Left).getValue() *((NumberNode)node.Right).getValue() );
+//		}
 		
 		return new MultiplicationNode(left, right);
 	}
@@ -61,9 +61,9 @@ public class SubstituteRuleVariables extends RuleTermVisitor<ExpressionNode> {
 		ExpressionNode left =  Visit(node.Left);
 		ExpressionNode right =  Visit(node.Right);
 
-		if (node.Left instanceof NumberNode && node.Right instanceof NumberNode) {
-			return new NumberNode(((NumberNode)node.Left).getValue() /((NumberNode)node.Right).getValue() );
-		}
+//		if (node.Left instanceof NumberNode && node.Right instanceof NumberNode) {
+//			return new NumberNode(((NumberNode)node.Left).getValue() /((NumberNode)node.Right).getValue() );
+//		}
 		return new DivisionNode(left, right);
 	}
 
@@ -102,7 +102,6 @@ public class SubstituteRuleVariables extends RuleTermVisitor<ExpressionNode> {
 
 	@Override
 	public ExpressionNode Visit(RuleVariableNode node) throws Exception {
-		System.out.println("Substituting Rule variable " + node.toString() + "  " + this.variables);
 		if (this.variables.get(node.toString()) != null) {
 			return this.variables.get(node.toString());
 		} 

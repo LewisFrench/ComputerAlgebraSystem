@@ -4,11 +4,9 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
 public class RewriteProcess extends TermVisitor<ExpressionNode> {
-	// LinkedHashMap<String, ExpressionNode> variables;
 	ArrayList<Rule> rules;
 	int ruleApplicationLimit;
 	int ruleApplicationCount = 0;
-	// Maximum Rule Applications
 
 	public RewriteProcess(ArrayList<Rule> ruleSet, int ruleApplicationLimit) {
 		rules = ruleSet;
@@ -72,7 +70,8 @@ public class RewriteProcess extends TermVisitor<ExpressionNode> {
 
 	@Override
 	public ExpressionNode Visit(UnaryNode node) throws Exception {
-		return rewrite(new UnaryNode(Visit(node.innerNode)));
+		ExpressionNode innerNode = Visit(node.innerNode);
+		return rewrite(new UnaryNode(innerNode));
 
 	}
 
@@ -93,10 +92,10 @@ public class RewriteProcess extends TermVisitor<ExpressionNode> {
 	}
 
 	public ExpressionNode rewrite(ExpressionNode node) throws Exception {
-		
 		if (!(this.ruleApplicationLimit > this.ruleApplicationCount)) {
 			return node;
 		}
+		
 		EvaluateTree argumentEvaluator;
 		if (rules != null) {
 			for (Rule r : rules) {
@@ -106,14 +105,9 @@ public class RewriteProcess extends TermVisitor<ExpressionNode> {
 				boolean ruleMatches = argumentEvaluator.Visit(r.lhsNode, node);
 
 				if (ruleMatches) {
-					System.out.println("Rule Matches");
 					boolean validArguments = argumentsValid(argumentEvaluator);
 
 					if (validArguments) {
-
-						
-						
-
 						LinkedHashMap<String, ExpressionNode> newRuleVariables = new LinkedHashMap<String, ExpressionNode>();
 						for (int i = 0; i < argumentEvaluator.variables.size(); i++) {
 							newRuleVariables.put(argumentEvaluator.variables.get(i),
@@ -132,10 +126,9 @@ public class RewriteProcess extends TermVisitor<ExpressionNode> {
 						}
 
 						if (conditionsHold || r.conditionsNode == null) {
-							System.out.println("Matched rule " + r.toString() + "to term  " + node.toString());
+//							System.out.println("Matched rule " + r.toString() + "to term  " + node.toString());
 							this.ruleApplicationCount++;
 							ExpressionNode substituted = new SubstituteRuleVariables(newRuleVariables).Visit(r.rhsNode);
-
 							ExpressionNode solved = new SimplifyNumericalOperations().Visit(substituted);
 
 							return Visit(solved);

@@ -2,6 +2,7 @@ package ComputerAlgebraSystem;
 
 import static org.junit.Assert.*;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 
 import org.junit.Test;
@@ -19,7 +20,7 @@ public class TestRewriteProcess {
 		try {
 			ExpressionNode result = rewrite.Visit(term);
 			assertTrue(result.getClass() == NumberNode.class);
-			assertTrue(((NumberNode) result).value == 2);
+			assertTrue(((NumberNode) result).getValue().compareTo(new BigDecimal(2.0)) ==0);
 		} catch (Exception e) {
 			System.out.println(e.getStackTrace());
 		}
@@ -34,7 +35,7 @@ public class TestRewriteProcess {
 		try {
 			ExpressionNode result = rewrite.Visit(term);
 			assertTrue(result.getClass() == NumberNode.class);
-			assertTrue(((NumberNode) result).value == 2);
+			assertTrue(((NumberNode) result).getValue().compareTo(new BigDecimal(2)) ==0);
 		} catch (Exception e) {
 			System.out.println(e.getStackTrace());
 		}
@@ -54,7 +55,7 @@ public class TestRewriteProcess {
 			ExpressionNode result = rewrite.Visit(term);
 
 			assertTrue(result.getClass() == NumberNode.class);
-			assertTrue(((NumberNode) result).value == 2);
+			assertTrue(((NumberNode) result).getValue().compareTo(new BigDecimal(2)) ==0);
 		} catch (Exception e) {
 			System.out.println(e.getStackTrace());
 		}
@@ -73,7 +74,7 @@ public class TestRewriteProcess {
 			RewriteProcess rewrite = new RewriteProcess(rules, ruleApplicationLimit);
 			ExpressionNode result = rewrite.Visit(term);
 			assertTrue(result.getClass() == NumberNode.class);
-			assertTrue(((NumberNode) result).value == 3);
+			assertTrue(((NumberNode) result).getValue().compareTo(new BigDecimal(3)) ==0);
 		} catch (Exception e) {
 			System.out.println(e.getStackTrace());
 		}
@@ -233,7 +234,7 @@ public class TestRewriteProcess {
 			ExpressionNode result = rewrite.Visit(term);
 
 			assertTrue(result.getClass() == NumberNode.class);
-			assertTrue(((NumberNode) result).value == 2);
+			assertTrue(((NumberNode) result).getValue().compareTo(new BigDecimal(2.0)) ==0);
 
 		} catch (Exception e) {
 			System.out.println(e.getStackTrace());
@@ -277,7 +278,7 @@ public class TestRewriteProcess {
 			ExpressionNode result = rewrite.Visit(term);
 
 			assertTrue(result.getClass() == NumberNode.class);
-			assertTrue(((NumberNode) result).value == -2.2);
+			assertTrue(((NumberNode) result).getValue().compareTo(BigDecimal.valueOf(-2.2)) ==0);
 
 		} catch (Exception e) {
 			System.out.println(e.getStackTrace());

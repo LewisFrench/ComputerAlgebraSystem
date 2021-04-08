@@ -66,7 +66,7 @@ public class EvaluateTree extends AstComparator<Boolean> {
 	@Override
 	public Boolean Visit(NumberNode lhsNode, ExpressionNode node) {
 		if (lhsNode.getClass() == node.getClass()) {
-			if (lhsNode.getValue() == ((NumberNode) node).getValue()) {
+			if (lhsNode.getValue().compareTo( ((NumberNode) node).getValue()) == 0) {
 				return true;
 			}
 		}

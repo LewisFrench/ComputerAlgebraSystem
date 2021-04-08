@@ -5,6 +5,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.math.BigDecimal;
+
 import org.antlr.v4.runtime.misc.ParseCancellationException;
 import org.junit.Test;
 
@@ -19,11 +21,12 @@ public class TestTermAlgebraParser {
 		try {
 			ExpressionNode n = p.parseTerm("3");
 			assertTrue(n instanceof NumberNode);
-			assertEquals(((NumberNode)n).getValue(), 3);
+			assertTrue(((NumberNode) n).getValue().compareTo(new BigDecimal(3)) ==0);
 			
 			n = p.parseTerm("3.91");
 			assertTrue(n instanceof NumberNode);
-			assertEquals(((NumberNode)n).getValue(), 3.91);
+			System.out.println(n.toString());
+			assertTrue(((NumberNode) n).getValue().compareTo(BigDecimal.valueOf(3.91)) == 0);
 			
 		} catch (ParseCancellationException e) {e.printStackTrace(); 
 		} catch (Exception e) { e.printStackTrace();}
@@ -61,7 +64,7 @@ public class TestTermAlgebraParser {
 			assertTrue(left instanceof VariableNode);
 			assertTrue(((AdditionNode)n).Right instanceof NumberNode);
 			assertEquals(((VariableNode)left).getValue(), "a");
-			assertEquals(((NumberNode)right).getValue(), 1);
+			assertTrue(((NumberNode) right).getValue().compareTo(new BigDecimal(1)) ==0);
 		} catch (ParseCancellationException e) {e.printStackTrace(); 
 		} catch (Exception e) { e.printStackTrace();}	
 	}
@@ -79,22 +82,33 @@ public class TestTermAlgebraParser {
 			assertTrue(left instanceof VariableNode);
 			assertTrue(((SubtractionNode)n).Right instanceof NumberNode);
 			assertEquals(((VariableNode)left).getValue(), "a");
-			assertEquals(((NumberNode)right).getValue(), 1);
+			assertTrue(((NumberNode) right).getValue().compareTo(new BigDecimal(1)) ==0);
 		} catch (ParseCancellationException e) {e.printStackTrace(); 
 		} catch (Exception e) { e.printStackTrace();}	
 	}
-	
 	
 	@Test
 	public void testParseSimpleUnary_Negative() {
 		Program p = new Program();
 		
 		try {
-			ExpressionNode n = p.parseTerm("-1");
+			ExpressionNode n = p.parseTerm("-x");
 			assertTrue(n instanceof UnaryNode);
 			ExpressionNode innerNode = (((UnaryNode)n).innerNode);
-			assertTrue(((UnaryNode)n).innerNode instanceof NumberNode);
-			assertEquals(((NumberNode)innerNode).getValue(), 1);
+			assertTrue(((UnaryNode)n).innerNode instanceof VariableNode);
+			assertTrue(((VariableNode) innerNode).getValue().equals("x"));
+		} catch (ParseCancellationException e) {e.printStackTrace(); 
+		} catch (Exception e) { e.printStackTrace();}	
+	}
+	
+	@Test
+	public void testParseSimpleUnary_Negative_Number() {
+		Program p = new Program();
+		
+		try {
+			ExpressionNode n = p.parseTerm("-1");
+			assertTrue(n instanceof NumberNode);
+			assertTrue(((NumberNode)n).getValue().compareTo(new BigDecimal(-1))==0 );
 		} catch (ParseCancellationException e) {e.printStackTrace(); 
 		} catch (Exception e) { e.printStackTrace();}	
 	}
@@ -105,9 +119,7 @@ public class TestTermAlgebraParser {
 		try {
 			ExpressionNode n = p.parseTerm("+1");
 			assertTrue(n instanceof NumberNode);
-			
-			
-			
+
 		} catch (ParseCancellationException e) {e.printStackTrace(); 
 		} catch (Exception e) { e.printStackTrace();}	
 	}
@@ -131,7 +143,7 @@ public class TestTermAlgebraParser {
 		Program p = new Program();
 		
 		try {
-			ExpressionNode n = p.parseTerm("TestFunction(x,1,-2)");
+			ExpressionNode n = p.parseTerm("TestFunction(x,1,-x)");
 			assertTrue(n instanceof FunctionNode);
 			FunctionNode nFunc = (FunctionNode) n;
 			assertTrue(nFunc.arguments.size() == 3);
@@ -157,7 +169,9 @@ public class TestTermAlgebraParser {
 			assertTrue(left instanceof VariableNode);
 			assertTrue(((MultiplicationNode)n).Right instanceof NumberNode);
 			assertEquals(((VariableNode)left).getValue(), "a");
-			assertEquals(((NumberNode)right).getValue(), 1);
+			assertTrue(right instanceof NumberNode);
+			System.out.println(n.toString());
+			assertTrue(((NumberNode) right).getValue().compareTo(BigDecimal.valueOf(1)) ==0);
 		} catch (ParseCancellationException e) {e.printStackTrace(); 
 		} catch (Exception e) { e.printStackTrace();}	
 	}
@@ -175,7 +189,7 @@ public class TestTermAlgebraParser {
 			assertTrue(left instanceof VariableNode);
 			assertTrue(((DivisionNode)n).Right instanceof NumberNode);
 			assertEquals(((VariableNode)left).getValue(), "a");
-			assertEquals(((NumberNode)right).getValue(), 1);
+			assertTrue(((NumberNode) right).getValue().compareTo(new BigDecimal(1)) ==0);
 		} catch (ParseCancellationException e) {e.printStackTrace(); 
 		} catch (Exception e) { e.printStackTrace();}	
 	}
@@ -192,7 +206,7 @@ public class TestTermAlgebraParser {
 			assertTrue(left instanceof VariableNode);
 			assertTrue(((PowerNode)n).Right instanceof NumberNode);
 			assertEquals(((VariableNode)left).getValue(), "a");
-			assertEquals(((NumberNode)right).getValue(), 1);
+			assertTrue(((NumberNode) right).getValue().compareTo(new BigDecimal(1)) ==0);
 		} catch (ParseCancellationException e) {e.printStackTrace(); 
 		} catch (Exception e) { e.printStackTrace();}	
 	}
