@@ -2,6 +2,8 @@ package ComputerAlgebraSystem;
 
 import static org.junit.Assert.*;
 
+import java.math.BigDecimal;
+
 import org.junit.Test;
 
 import Conditions.ConditionsLexer;
@@ -11,7 +13,7 @@ public class TestRule {
 	@Test
 	public void testRuleCreation_No_Conditions() {
 		ExpressionNode lhsNode = new RuleVariableNode("x");
-		ExpressionNode rhsNode = new NumberNode(2);
+		ExpressionNode rhsNode = new NumberNode(new BigDecimal(2));
 		
 		try {
 			Rule r = new Rule(lhsNode, rhsNode);
@@ -25,8 +27,8 @@ public class TestRule {
 	@Test
 	public void testRuleCreation_Conditions() {
 		ExpressionNode lhsNode = new RuleVariableNode("x");
-		ExpressionNode rhsNode = new NumberNode(2);
-		ExpressionNode conditionsNode = new RelopNode(new NumberNode(2), new NumberNode(3), ConditionsLexer.RELOP_EQ, "==");
+		ExpressionNode rhsNode = new NumberNode(new BigDecimal(2));
+		ExpressionNode conditionsNode = new RelopNode(new NumberNode(new BigDecimal(2)), new NumberNode(new BigDecimal(3)), ConditionsLexer.RELOP_EQ, "==");
 		
 		try {
 			Rule r = new Rule(lhsNode, rhsNode, conditionsNode);

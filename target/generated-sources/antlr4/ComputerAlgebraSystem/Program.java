@@ -25,7 +25,8 @@ public class Program {
 	}
 
 	public static void main(String[] args) {
-		GUI g = new GUI();
+		//GUI g = new GUI();
+		new GUI();
 	}
 
 	public String Rewrite(ArrayList<Rule> rules, ExpressionNode termAst, int ruleApplicationLimit) throws Exception {
@@ -58,10 +59,10 @@ public class Program {
 		if (splitByEquals[0].replaceAll(" ", "").equals(null) || splitByEquals[0].replaceAll(" ", "").equals("")) {
 			throw new Exception("Rules must have symbols on their either side of the '=' ");
 		}
-		System.out.println("currently ok");
 		String[] splitByCondition = splitByEquals[1].split(":", 2);
+		
+		// MAybe a check for balnk here? Can throw a better exception
 		if (splitByCondition.length > 1) {
-			System.out.println("RuleHasConditions");
 			return new String[] { splitByEquals[0], splitByCondition[0], splitByCondition[1] };
 		} else {
 			return new String[] { splitByEquals[0], splitByCondition[0] };
@@ -70,7 +71,6 @@ public class Program {
 
 	public Rule parseRule(String ruleInput) throws ParseCancellationException, Exception {
 		Rule r = null;
-		System.out.println("Rule: " + ruleInput);
 		if (ruleInput.replaceAll(" ", "").equals("") || ruleInput.equals(null)) {
 			throw new Exception("File contains no rules");
 		}
@@ -80,7 +80,7 @@ public class Program {
 			// Catch format exception here
 			splitRule = splitRuleString(ruleInput);
 
-			System.out.println(Arrays.deepToString(splitRule));
+			
 			RuleAlgebraParser lhsParser = getRuleParser(splitRule[0]);
 			RuleAlgebraParser rhsParser = getRuleParser(splitRule[1]);
 

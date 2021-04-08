@@ -2,10 +2,9 @@ package ComputerAlgebraSystem;
 
 import Conditions.ConditionsBaseVisitor;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
-
-import RuleAlgebra.RuleAlgebraLexer;
 import Conditions.ConditionsLexer;
 import Conditions.ConditionsParser;
 
@@ -139,7 +138,7 @@ public class BuildConditionsVisitor extends ConditionsBaseVisitor<ExpressionNode
 
 	@Override
 	public ExpressionNode visitNumber(ConditionsParser.NumberContext context) {
-		return new NumberNode(Double.valueOf(context.getText()));
+		return new NumberNode(new BigDecimal(Double.valueOf(context.value.getText())));
 	}
 
 	@Override

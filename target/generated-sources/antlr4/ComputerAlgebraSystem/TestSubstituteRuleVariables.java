@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
@@ -152,18 +153,20 @@ public class TestSubstituteRuleVariables {
 			ExpressionNode result = s.Visit(rv);
 			assertTrue(((ParentheticalNode) result).innerNode instanceof NumberNode);
 			ExpressionNode resultNode = (((ParentheticalNode) result).innerNode);
-			assertTrue(((NumberNode) resultNode).getValue() == 2);
+			assertTrue(((NumberNode) resultNode).getValue().compareTo(new BigDecimal(2)) ==0);
 
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
+	
+	
 
 	@Test
 	public void testSubstituteUnary() {
 		LinkedHashMap<String, ExpressionNode> variables = new LinkedHashMap<>();
-		variables.put("$test", new UnaryNode(new NumberNode(2)));
+		variables.put("$test", new UnaryNode(new VariableNode("x")));
 		ExpressionNode rv = new RuleVariableNode("test");
 		SubstituteRuleVariables s = new SubstituteRuleVariables(variables);
 
@@ -171,9 +174,32 @@ public class TestSubstituteRuleVariables {
 			ExpressionNode result = s.Visit(rv);
 			assertTrue(result instanceof UnaryNode);
 
+			assertTrue(((UnaryNode) result).innerNode instanceof VariableNode);
+			ExpressionNode resultNode = (((UnaryNode) result).innerNode);
+			assertTrue(((VariableNode) resultNode).getValue().equals("x"));
+
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+	
+	@Test
+	public void testSubstituteUnary_Number() {
+		LinkedHashMap<String, ExpressionNode> variables = new LinkedHashMap<>();
+		variables.put("$test", new UnaryNode(new NumberNode(2)));
+		ExpressionNode rv = new RuleVariableNode("test");
+		SubstituteRuleVariables s = new SubstituteRuleVariables(variables);
+
+		try {
+		
+			ExpressionNode result = s.Visit(rv);
+			System.out.println(result.toString() + "   " + result.getClass());
+ 			assertTrue(result instanceof UnaryNode);
 			assertTrue(((UnaryNode) result).innerNode instanceof NumberNode);
 			ExpressionNode resultNode = (((UnaryNode) result).innerNode);
-			assertTrue(((NumberNode) resultNode).getValue() == 2);
+			assertTrue(((NumberNode) resultNode).getValue().compareTo(BigDecimal.valueOf(2.0)) ==0);
 
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

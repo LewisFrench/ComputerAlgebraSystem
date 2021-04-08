@@ -1,9 +1,11 @@
+
 package ComputerAlgebraSystem;
 
 import static org.junit.Assert.*;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 
 import org.junit.Test;
@@ -19,7 +21,6 @@ public class TestSimplifyNumericalOperations {
 		try {
 			ExpressionNode result = s.Visit(addition);
 			assertTrue(result.getClass() == NumberNode.class);
-			// Further test: when using bigdecimal check value = 5.3
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -35,7 +36,6 @@ public class TestSimplifyNumericalOperations {
 			ExpressionNode result = s.Visit(addition);
 			assertFalse(result.getClass() == NumberNode.class);
 			assertTrue(result.getClass() == AdditionNode.class);
-			// Further test: when using bigdecimal check value = 5.3
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -49,7 +49,6 @@ public class TestSimplifyNumericalOperations {
 		try {
 			ExpressionNode result = s.Visit(subtraction);
 			assertTrue(result.getClass() == NumberNode.class);
-			// Further test: when using bigdecimal check value = 5.3
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -65,7 +64,6 @@ public class TestSimplifyNumericalOperations {
 			ExpressionNode result = s.Visit(subtraction);
 			assertFalse(result.getClass() == NumberNode.class);
 			assertTrue(result.getClass() == SubtractionNode.class);
-			// Further test: when using bigdecimal check value = 5.3
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -80,7 +78,6 @@ public class TestSimplifyNumericalOperations {
 		try {
 			ExpressionNode result = s.Visit(multiplication);
 			assertTrue(result.getClass() == NumberNode.class);
-			// Further test: when using bigdecimal check value = 5.3
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -95,7 +92,6 @@ public class TestSimplifyNumericalOperations {
 			ExpressionNode result = s.Visit(multiplication);
 			assertFalse(result.getClass() == NumberNode.class);
 			assertTrue(result.getClass() == MultiplicationNode.class);
-			// Further test: when using bigdecimal check value = 5.3
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -111,7 +107,6 @@ public class TestSimplifyNumericalOperations {
 		try {
 			ExpressionNode result = s.Visit(division);
 			assertTrue(result.getClass() == NumberNode.class);
-			// Further test: when using bigdecimal check value = 5.3
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -127,7 +122,6 @@ public class TestSimplifyNumericalOperations {
 			ExpressionNode result = s.Visit(division);
 			assertFalse(result.getClass() == NumberNode.class);
 			assertTrue(result.getClass() == DivisionNode.class);
-			// Further test: when using bigdecimal check value = 5.3
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -143,7 +137,6 @@ public class TestSimplifyNumericalOperations {
 		try {
 			ExpressionNode result = s.Visit(exponentiation);
 			assertTrue(result.getClass() == NumberNode.class);
-			// Further test: when using bigdecimal check value = 5.3
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -159,7 +152,6 @@ public class TestSimplifyNumericalOperations {
 			ExpressionNode result = s.Visit(exponentiation);
 			assertFalse(result.getClass() == NumberNode.class);
 			assertTrue(result.getClass() == PowerNode.class);
-			// Further test: when using bigdecimal check value = 5.3
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -176,7 +168,6 @@ public class TestSimplifyNumericalOperations {
 		try {
 			ExpressionNode result = s.Visit(addition);
 			assertTrue(result.getClass() == NumberNode.class);
-			// Further test: when using bigdecimal check value = 5.3
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -191,8 +182,7 @@ public class TestSimplifyNumericalOperations {
 		try {
 			ExpressionNode result = s.Visit(unaryNode);
 			assertTrue(result.getClass() == NumberNode.class);
-			assertTrue(((NumberNode) result).getValue() < 0.0);
-			// Further test: when using bigdecimal check value = 5.3
+			assertTrue(((NumberNode) result).getValue().compareTo(new BigDecimal(-1.0)) == 0);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -208,8 +198,7 @@ public class TestSimplifyNumericalOperations {
 		try {
 			ExpressionNode result = s.Visit(unaryAddition);
 			assertTrue(result.getClass() == NumberNode.class);
-			assertTrue(((NumberNode) result).getValue() < 5.0);
-			// Further test: when using bigdecimal check value = 5.3
+			assertTrue(((NumberNode) result).getValue().compareTo(BigDecimal.valueOf(3.3)) == 0);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -227,8 +216,7 @@ public class TestSimplifyNumericalOperations {
 		try {
 			ExpressionNode result = s.Visit(unaryAddition);
 			assertTrue(result.getClass() == NumberNode.class);
-			assertTrue(((NumberNode) result).getValue() < 0);
-			// Further test: when using bigdecimal check value = 5.3
+			assertTrue(((NumberNode) result).getValue().compareTo(new BigDecimal(-3.0)) ==0);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -261,12 +249,12 @@ public class TestSimplifyNumericalOperations {
 		UnaryNode unaryNode = new UnaryNode(new NumberNode(1.0));
 		UnaryNode unaryNode2 = new UnaryNode(new NumberNode(2.0));
 
-		ExpressionNode unarySubtracttion = new SubtractionNode(unaryNode, unaryNode2);
+		ExpressionNode unarySubtraction = new SubtractionNode(unaryNode, unaryNode2);
 		SimplifyNumericalOperations s = new SimplifyNumericalOperations();
 		try {
-			ExpressionNode result = s.Visit(unarySubtracttion);
+			ExpressionNode result = s.Visit(unarySubtraction);
 			assertTrue(result.getClass() == NumberNode.class);
-			assertTrue(((NumberNode) result).getValue() > 0);
+			assertTrue(((NumberNode) result).getValue().compareTo(new BigDecimal(1.0)) == 0);
 			// Further test: when using bigdecimal check value = 5.3
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -285,7 +273,7 @@ public class TestSimplifyNumericalOperations {
 		try {
 			ExpressionNode result = s.Visit(unaryMultiplication);
 			assertTrue(result.getClass() == NumberNode.class);
-			assertTrue(((NumberNode) result).getValue() > 0);
+			assertTrue(((NumberNode) result).getValue().compareTo(new BigDecimal(2.0)) == 0);
 			// Further test: when using bigdecimal check value = 5.3
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -304,8 +292,7 @@ public class TestSimplifyNumericalOperations {
 		try {
 			ExpressionNode result = s.Visit(unaryDivisionNode);
 			assertTrue(result.getClass() == NumberNode.class);
-			assertTrue(((NumberNode) result).getValue() > 0);
-			// Further test: when using bigdecimal check value = 5.3
+			assertTrue(((NumberNode) result).getValue().compareTo(new BigDecimal(0.5)) == 0);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -323,8 +310,8 @@ public class TestSimplifyNumericalOperations {
 		try {
 			ExpressionNode result = s.Visit(parentheticalNode);
 			assertTrue(result.getClass() == NumberNode.class);
-			assertTrue(((NumberNode) result).getValue() > 0);
-			// Further test: when using bigdecimal check value = 5.3
+			System.out.println("\n\nRESULT : " + result + "   " + ((NumberNode)result).getValue().toString());
+			assertTrue(((NumberNode) result).getValue().compareTo(BigDecimal.valueOf(3.3)) == 0);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -354,7 +341,6 @@ public class TestSimplifyNumericalOperations {
 		
 		ExpressionNode rv = new RuleVariableNode("x");
 
-		ExpressionNode parentheticalNode = new ParentheticalNode(rv);
 		SimplifyNumericalOperations s = new SimplifyNumericalOperations();
 		assertThrows(Exception.class, () -> s.Visit(rv));
 	}

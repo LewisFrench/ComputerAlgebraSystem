@@ -1,5 +1,6 @@
 package ComputerAlgebraSystem;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -22,7 +23,9 @@ public class BuildRhsVisitor extends RuleAlgebraBaseVisitor<ExpressionNode> {
 
 	@Override
 	public ExpressionNode visitNumber(RuleAlgebraParser.NumberContext context) {
-		return new NumberNode(Double.valueOf(context.value.getText()));
+		BigDecimal b = BigDecimal.valueOf(Double.valueOf(context.value.getText()));
+		return new NumberNode(b);
+		//return new NumberNode(new BigDecimal(Double.valueOf(context.value.getText())));
 	}
 
 	@Override
@@ -65,12 +68,15 @@ public class BuildRhsVisitor extends RuleAlgebraBaseVisitor<ExpressionNode> {
 	@Override
 	public ExpressionNode visitUnaryExpression(RuleAlgebraParser.UnaryExpressionContext context) {
 
-		ExpressionNode node = null;
+		ExpressionNode node = visit(context.expression());
 		switch (context.op.getType()) {
 		case RuleAlgebraLexer.OP_ADD:
 			node = visit(context.expression());
 			break;
 		case RuleAlgebraLexer.OP_SUB:
+			if (node instanceof NumberNode) {
+				return new NumberNode(((NumberNode)node).getValue().multiply(BigDecimal.valueOf(-1)));
+			}
 			node = new UnaryNode(visit(context.expression()));
 			break;
 		}

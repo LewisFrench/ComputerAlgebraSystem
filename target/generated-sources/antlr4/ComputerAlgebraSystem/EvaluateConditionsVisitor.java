@@ -1,7 +1,5 @@
 package ComputerAlgebraSystem;
 
-import java.util.LinkedHashMap;
-
 import Conditions.ConditionsLexer;
 
 // Could likely split the AstVisitor into two visitors, one for the expression only nodes, and one for conditionnodes
@@ -93,16 +91,16 @@ public class EvaluateConditionsVisitor extends ConditionVisitor<Boolean> {
 		switch (relopNode.relop) {
 
 		case ConditionsLexer.RELOP_LT:
-			relopResult = l.getValue() < r.getValue();
+			relopResult = l.getValue().compareTo( r.getValue()) < 0;
 			break;
 		case ConditionsLexer.RELOP_LTE:
-			relopResult = l.getValue() <= r.getValue();
+			relopResult = l.getValue().compareTo( r.getValue()) <= 0;
 			break;
 		case ConditionsLexer.RELOP_GT:
-			relopResult = l.getValue() > r.getValue();
+			relopResult = l.getValue().compareTo( r.getValue()) > 0;
 			break;
 		case ConditionsLexer.RELOP_GTE:
-			relopResult = l.getValue() >= r.getValue();
+			relopResult = l.getValue().compareTo( r.getValue()) >= 0;
 		default:
 			// Exception for the weird case
 		}
