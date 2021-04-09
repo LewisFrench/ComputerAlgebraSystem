@@ -126,7 +126,7 @@ public class RewriteProcess extends TermVisitor<ExpressionNode> {
 						}
 
 						if (conditionsHold || r.conditionsNode == null) {
-//							System.out.println("Matched rule " + r.toString() + "to term  " + node.toString());
+							System.out.println("\nMatched rule " + r.toString() + " to term  " + node.toString());
 							this.ruleApplicationCount++;
 							ExpressionNode substituted = new SubstituteRuleVariables(newRuleVariables).Visit(r.rhsNode);
 							ExpressionNode solved = new SimplifyNumericalOperations().Visit(substituted);
