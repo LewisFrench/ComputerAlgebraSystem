@@ -1,5 +1,6 @@
 package ComputerAlgebraSystem;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 
 public class EvaluateTree extends AstComparator<Boolean> {
@@ -85,11 +86,19 @@ public class EvaluateTree extends AstComparator<Boolean> {
 
 	@Override
 	public Boolean Visit(UnaryNode lhsNode, ExpressionNode node) throws Exception {
+		System.out.println("Visiting matcher : " + lhsNode.toString() + "  " +lhsNode.getClass() + "\n"+ node.toString() + "   " + node.getClass());
 		boolean match = false;
 		if (lhsNode.getClass() == node.getClass()) {
 			match = Visit(lhsNode.innerNode, ((UnaryNode) node).innerNode);
 
 		}
+		if (node instanceof NumberNode) {
+			if (((NumberNode)node).getValue().compareTo(BigDecimal.valueOf(0)) <0) {
+				return Visit(lhsNode.innerNode, node);
+			}
+		}
+		
+		 // if node is a number and lhsNode innernode is a number, match them instead
 		return match;
 	}
 

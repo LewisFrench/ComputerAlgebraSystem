@@ -1,1 +1,1 @@
-$x+$x = d
+$n*($m*$A) = ($n*$m)*$A : _is_number($n) & _is_number($m)
