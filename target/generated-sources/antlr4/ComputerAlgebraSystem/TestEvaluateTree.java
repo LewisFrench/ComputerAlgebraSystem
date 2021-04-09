@@ -25,7 +25,7 @@ public class TestEvaluateTree {
 			assertFalse(treeMatcher.Visit(l,  new VariableNode("xy")));
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			fail();
 		}
 	
 	}
@@ -41,7 +41,7 @@ public class TestEvaluateTree {
 			assertFalse(treeMatcher.Visit(l, new NumberNode(new BigDecimal(2.57))));
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			fail();
 		}
 	}
 	
@@ -63,7 +63,7 @@ public class TestEvaluateTree {
 			assertFalse(treeMatcher.Visit(l, new AdditionNode(new VariableNode("n"), r2)));
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			fail();
 		}
 	}
 	@Test
@@ -84,7 +84,7 @@ public class TestEvaluateTree {
 			assertFalse(treeMatcher.Visit(l, new SubtractionNode(new VariableNode("n"), r2)));
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			fail();
 		}
 	}
 	
@@ -107,7 +107,7 @@ public class TestEvaluateTree {
 			assertFalse(treeMatcher.Visit(l, new MultiplicationNode(new VariableNode("n"), r2)));
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			fail();
 		}
 	}
 	
@@ -129,7 +129,7 @@ public class TestEvaluateTree {
 			assertFalse(treeMatcher.Visit(l, new DivisionNode(new VariableNode("n"), r2)));
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			fail();
 		}
 	}
 	
@@ -151,7 +151,7 @@ public class TestEvaluateTree {
 			assertFalse(treeMatcher.Visit(l, new PowerNode(new VariableNode("n"), r2)));
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			fail();
 		}
 	}
 	
@@ -174,7 +174,7 @@ public class TestEvaluateTree {
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			fail();
 		}
 	}
 	
@@ -203,36 +203,10 @@ public class TestEvaluateTree {
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			fail();
 		}
 	}
-	
-	
-	@Test
-	public void testEvaluateTree_Parenthetical() {
 		
-		ExpressionNode innerNode = new VariableNode("x");
-		ExpressionNode parentheticalNode = new ParentheticalNode(innerNode);
-		
-		ExpressionNode innerNode2 = new VariableNode("x");
-		ExpressionNode parentheticalNode2 = new ParentheticalNode (innerNode2);
-		
-		
-		EvaluateTree treeMatcher = new EvaluateTree();
-		
-		try {
-			assertTrue(treeMatcher.Visit(parentheticalNode, parentheticalNode2));
-			assertFalse(treeMatcher.Visit(parentheticalNode, new ParentheticalNode(new VariableNode("xa"))));
-			assertFalse(treeMatcher.Visit(parentheticalNode, new ParentheticalNode(new NumberNode(new BigDecimal(2.1)))));
-			
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-	
-	
-	
 	@Test
 	public void testEvaluateTree_RuleVariable_AddsRuleVariable () {
 		ExpressionNode l = new RuleVariableNode("x");
@@ -245,7 +219,7 @@ public class TestEvaluateTree {
 			assertTrue(treeMatcher.arguments.get(0) instanceof VariableNode);
 			assertTrue(((VariableNode)treeMatcher.arguments.get(0)).getValue().equals(((VariableNode)r).getValue()) );
 		} catch(Exception e) {
-			e.printStackTrace();
+			fail();
 		}
 		
 	}
@@ -278,7 +252,7 @@ public class TestEvaluateTree {
 			assertTrue(((VariableNode)treeMatcher.arguments.get(0)).getValue().equals("x"));
 			
 		} catch (Exception e) {
-			e.printStackTrace();
+			fail();
 		}
 		
 		

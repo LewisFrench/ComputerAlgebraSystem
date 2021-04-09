@@ -64,18 +64,6 @@ public class RuleAlgebraBaseListener implements RuleAlgebraListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterUnaryExpression(RuleAlgebraParser.UnaryExpressionContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitUnaryExpression(RuleAlgebraParser.UnaryExpressionContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void enterParenthetical(RuleAlgebraParser.ParentheticalContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -83,6 +71,18 @@ public class RuleAlgebraBaseListener implements RuleAlgebraListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitParenthetical(RuleAlgebraParser.ParentheticalContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterUnaryExpression(RuleAlgebraParser.UnaryExpressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitUnaryExpression(RuleAlgebraParser.UnaryExpressionContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

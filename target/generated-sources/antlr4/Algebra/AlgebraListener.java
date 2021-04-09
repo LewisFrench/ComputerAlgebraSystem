@@ -54,18 +54,6 @@ public interface AlgebraListener extends ParseTreeListener {
 	 */
 	void exitNumber(AlgebraParser.NumberContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code UnaryExpression}
-	 * labeled alternative in {@link AlgebraParser#expression}.
-	 * @param ctx the parse tree
-	 */
-	void enterUnaryExpression(AlgebraParser.UnaryExpressionContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code UnaryExpression}
-	 * labeled alternative in {@link AlgebraParser#expression}.
-	 * @param ctx the parse tree
-	 */
-	void exitUnaryExpression(AlgebraParser.UnaryExpressionContext ctx);
-	/**
 	 * Enter a parse tree produced by the {@code Parenthetical}
 	 * labeled alternative in {@link AlgebraParser#expression}.
 	 * @param ctx the parse tree
@@ -77,6 +65,18 @@ public interface AlgebraListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitParenthetical(AlgebraParser.ParentheticalContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code UnaryExpression}
+	 * labeled alternative in {@link AlgebraParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterUnaryExpression(AlgebraParser.UnaryExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code UnaryExpression}
+	 * labeled alternative in {@link AlgebraParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitUnaryExpression(AlgebraParser.UnaryExpressionContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code Operation}
 	 * labeled alternative in {@link AlgebraParser#expression}.

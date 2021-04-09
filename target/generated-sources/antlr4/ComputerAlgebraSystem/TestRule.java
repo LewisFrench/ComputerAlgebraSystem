@@ -19,7 +19,7 @@ public class TestRule {
 			Rule r = new Rule(lhsNode, rhsNode);
 			assertTrue(r.getLhsNode() instanceof RuleVariableNode);
 			assertTrue(r.getRhsNode() instanceof NumberNode);
-		} catch (Exception e) {	e.printStackTrace(); }
+		} catch (Exception e) {	fail(); }
 		
 	}
 	
@@ -34,7 +34,7 @@ public class TestRule {
 			Rule r = new Rule(lhsNode, rhsNode, conditionsNode);
 			assertTrue(r.getLhsNode() instanceof RuleVariableNode);
 			assertTrue(r.getRhsNode() instanceof NumberNode);
-		} catch (Exception e) {	e.printStackTrace(); }
+		} catch (Exception e) {	fail(); }
 		
 	}
 	

@@ -23,7 +23,7 @@ public class TestSimplifyNumericalOperations {
 			assertTrue(result.getClass() == NumberNode.class);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			fail();
 		}
 	}
 
@@ -38,7 +38,7 @@ public class TestSimplifyNumericalOperations {
 			assertTrue(result.getClass() == AdditionNode.class);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			fail();
 		}
 	}
 	@Test
@@ -51,7 +51,7 @@ public class TestSimplifyNumericalOperations {
 			assertTrue(result.getClass() == NumberNode.class);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			fail();
 		}
 	}
 
@@ -66,7 +66,7 @@ public class TestSimplifyNumericalOperations {
 			assertTrue(result.getClass() == SubtractionNode.class);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			fail();
 		}
 	}
 	
@@ -80,7 +80,7 @@ public class TestSimplifyNumericalOperations {
 			assertTrue(result.getClass() == NumberNode.class);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			fail();
 		}
 	}
 	@Test
@@ -94,7 +94,7 @@ public class TestSimplifyNumericalOperations {
 			assertTrue(result.getClass() == MultiplicationNode.class);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			fail();
 		}
 	}
 	
@@ -109,7 +109,7 @@ public class TestSimplifyNumericalOperations {
 			assertTrue(result.getClass() == NumberNode.class);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			fail();
 		}
 	}
 
@@ -124,7 +124,7 @@ public class TestSimplifyNumericalOperations {
 			assertTrue(result.getClass() == DivisionNode.class);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			fail();
 		}
 	}
 	
@@ -139,7 +139,7 @@ public class TestSimplifyNumericalOperations {
 			assertTrue(result.getClass() == NumberNode.class);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			fail();
 		}
 	}
 
@@ -154,7 +154,7 @@ public class TestSimplifyNumericalOperations {
 			assertTrue(result.getClass() == PowerNode.class);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			fail();
 		}
 	}
 	
@@ -170,7 +170,7 @@ public class TestSimplifyNumericalOperations {
 			assertTrue(result.getClass() == NumberNode.class);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			fail();
 		}
 	}
 
@@ -185,7 +185,7 @@ public class TestSimplifyNumericalOperations {
 			assertTrue(((NumberNode) result).getValue().compareTo(new BigDecimal(-1.0)) == 0);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			fail();
 		}
 
 	}
@@ -201,7 +201,7 @@ public class TestSimplifyNumericalOperations {
 			assertTrue(((NumberNode) result).getValue().compareTo(BigDecimal.valueOf(3.3)) == 0);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			fail();
 		}
 
 	}
@@ -219,7 +219,7 @@ public class TestSimplifyNumericalOperations {
 			assertTrue(((NumberNode) result).getValue().compareTo(new BigDecimal(-3.0)) ==0);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			fail();
 		}
 
 	}
@@ -238,7 +238,7 @@ public class TestSimplifyNumericalOperations {
 			// Further test: when using bigdecimal check value = 5.3
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			fail();
 		}
 
 	}
@@ -258,7 +258,7 @@ public class TestSimplifyNumericalOperations {
 			// Further test: when using bigdecimal check value = 5.3
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			fail();
 		}
 
 	}
@@ -277,7 +277,7 @@ public class TestSimplifyNumericalOperations {
 			// Further test: when using bigdecimal check value = 5.3
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			fail();
 		}
 
 	}
@@ -295,45 +295,13 @@ public class TestSimplifyNumericalOperations {
 			assertTrue(((NumberNode) result).getValue().compareTo(new BigDecimal(0.5)) == 0);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			fail();
 		}
 
 	}
 	
 	
-	@Test
-	public void testParentheticalNumberAddition() {
-		ExpressionNode addition = new AdditionNode(new NumberNode(1.1), new NumberNode(2.2));
 
-		ExpressionNode parentheticalNode = new ParentheticalNode(addition);
-		SimplifyNumericalOperations s = new SimplifyNumericalOperations();
-		try {
-			ExpressionNode result = s.Visit(parentheticalNode);
-			assertTrue(result.getClass() == NumberNode.class);
-			System.out.println("\n\nRESULT : " + result + "   " + ((NumberNode)result).getValue().toString());
-			assertTrue(((NumberNode) result).getValue().compareTo(BigDecimal.valueOf(3.3)) == 0);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-	
-	@Test
-	public void testParentheticalNumberAddition_cannot_simplify() {
-		ArrayList<ExpressionNode > arguments = new ArrayList<ExpressionNode>();
-		arguments.add(new NumberNode(2));
-		ExpressionNode addition = new AdditionNode(new NumberNode(1.1), new FunctionNode("testFunc", arguments));
-
-		ExpressionNode parentheticalNode = new ParentheticalNode(addition);
-		SimplifyNumericalOperations s = new SimplifyNumericalOperations();
-		try {
-			ExpressionNode result = s.Visit(parentheticalNode);
-			assertTrue(result.getClass() == ParentheticalNode.class);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
 	
 	
 	@Test

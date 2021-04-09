@@ -34,7 +34,7 @@ public class BuildTermVisitor extends AlgebraBaseVisitor<ExpressionNode> {
 	@Override
 	public ExpressionNode visitParenthetical(AlgebraParser.ParentheticalContext context) {
 
-		return new ParentheticalNode(visit(context.expression()));
+		return (visit(context.expression()));
 	}
 
 	@Override

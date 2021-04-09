@@ -199,47 +199,7 @@ public class TestRewriteProcess {
 		}
 	}
 
-	@Test
-	public void testSimpleTransformation_Parenthetical() {
-		ExpressionNode term = new ParentheticalNode(new VariableNode("x"));
-		ArrayList<Rule> rules = new ArrayList<>();
-		ExpressionNode ruleLhs = new ParentheticalNode(new VariableNode("x"));
-		ExpressionNode ruleRhs = new ParentheticalNode(new VariableNode("y"));
 
-		int ruleApplicationLimit = 1;
-		try {
-			rules.add(new Rule(ruleLhs, ruleRhs));
-			RewriteProcess rewrite = new RewriteProcess(rules, ruleApplicationLimit);
-			ExpressionNode result = rewrite.Visit(term);
-
-			assertTrue(result.getClass() == ParentheticalNode.class);
-			assertTrue(((ParentheticalNode) result).innerNode instanceof VariableNode);
-
-		} catch (Exception e) {
-			System.out.println(e.getStackTrace());
-		}
-	}
-
-	@Test
-	public void testSimpleTransformation_Parenthetical_Numerical() {
-		ExpressionNode term = new ParentheticalNode(new VariableNode("x"));
-		ArrayList<Rule> rules = new ArrayList<>();
-		ExpressionNode ruleLhs = new ParentheticalNode(new VariableNode("x"));
-		ExpressionNode ruleRhs = new ParentheticalNode(new NumberNode(2));
-
-		int ruleApplicationLimit = 1;
-		try {
-			rules.add(new Rule(ruleLhs, ruleRhs));
-			RewriteProcess rewrite = new RewriteProcess(rules, ruleApplicationLimit);
-			ExpressionNode result = rewrite.Visit(term);
-
-			assertTrue(result.getClass() == NumberNode.class);
-			assertTrue(((NumberNode) result).getValue().compareTo(new BigDecimal(2.0)) ==0);
-
-		} catch (Exception e) {
-			System.out.println(e.getStackTrace());
-		}
-	}
 
 	@Test
 	public void testSimpleTransformation_Unary() {
@@ -449,26 +409,6 @@ public class TestRewriteProcess {
 		}
 
 	}	
-	
-	@Test
-	public void testRuleVariableTransformation_Parenthetical() {
-		
-		ExpressionNode term = new ParentheticalNode(new  VariableNode("xy"));
-		ArrayList<Rule> rules = new ArrayList<>();
-		
-		ExpressionNode lhs = new ParentheticalNode( new RuleVariableNode("n"));
-		int ruleApplicationLimit = 1;
-		try {
-			rules.add(new Rule(lhs, new RuleVariableNode("n")));
-			RewriteProcess rewrite = new RewriteProcess(rules, ruleApplicationLimit);
-			ExpressionNode result = rewrite.Visit(term);
-			assertTrue(result.getClass() == VariableNode.class);
-			assertTrue(((VariableNode) result).getValue().equals("xy"));
-		} catch (Exception e) {
-			System.out.println(e.getStackTrace());
-		}
-
-	}
 	
 	
 	@Test

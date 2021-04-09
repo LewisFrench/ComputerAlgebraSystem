@@ -24,7 +24,7 @@ abstract class ConditionVisitor<T> {
 
 	public abstract T Visit(DivisionNode node) throws Exception;
 
-	public abstract T Visit(ParentheticalNode node) throws Exception;
+//	public abstract T Visit(ParentheticalNode node) throws Exception;
 
 	public abstract T Visit(UnaryNode node) throws Exception;
 
@@ -58,8 +58,8 @@ abstract class ConditionVisitor<T> {
 			return Visit((MultiplicationNode) node);
 		} else if (node instanceof DivisionNode) {
 			return Visit((DivisionNode) node);
-		} else if (node instanceof ParentheticalNode) {
-			return Visit((ParentheticalNode) node);
+//		} else if (node instanceof ParentheticalNode) {
+//			return Visit((ParentheticalNode) node);
 		} else if (node instanceof UnaryNode) {
 			return Visit((UnaryNode) node);
 		} else if (node instanceof FunctionNode) {

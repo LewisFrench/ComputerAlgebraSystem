@@ -5,7 +5,6 @@ $A*1 = $A
 0+$A = $A
 $A+0 = $A
 $A*$A^$n = $A^($n+1)
-$A^$n*$A = $A^($n+1)
 $A^$n * $A^$m = $A^($n+$m) : _is_integer($n) & _is_integer($m)
 $A*$A = $A^2 : !(_is_number($A))
 $n*($m*$A) = ($n*$m)*$A : _is_number($n) & _is_number($m)

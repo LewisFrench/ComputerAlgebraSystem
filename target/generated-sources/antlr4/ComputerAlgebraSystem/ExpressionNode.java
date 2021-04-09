@@ -91,17 +91,17 @@ class DivisionNode extends OperationNode {
 	}
 }
 
-class ParentheticalNode extends ExpressionNode {
-	public ExpressionNode innerNode;
-
-	public ParentheticalNode(ExpressionNode innerNode) {
-		this.innerNode = innerNode;
-	}
-
-	public String toString() {
-		return "(" + this.innerNode.toString() + ")";
-	}
-}
+//class ParentheticalNode extends ExpressionNode {
+//	public ExpressionNode innerNode;
+//
+//	public ParentheticalNode(ExpressionNode innerNode) {
+//		this.innerNode = innerNode;
+//	}
+//
+//	public String toString() {
+//		return "(" + this.innerNode.toString() + ")";
+//	}
+//}
 
 class UnaryNode extends ExpressionNode {
 	public ExpressionNode innerNode;

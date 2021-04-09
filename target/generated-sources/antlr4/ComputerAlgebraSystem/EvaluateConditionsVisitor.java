@@ -59,10 +59,10 @@ public class EvaluateConditionsVisitor extends ConditionVisitor<Boolean> {
 		throw new Exception("Attempted to visit invalid node when evaluating conditions. Please check the structure of your conditions");
 	}
 
-	@Override
-	public Boolean Visit(ParentheticalNode node) throws Exception {
-		throw new Exception("Attempted to visit invalid node when evaluating conditions. Please check the structure of your conditions");
-	}
+//	@Override
+//	public Boolean Visit(ParentheticalNode node) throws Exception {
+//		throw new Exception("Attempted to visit invalid node when evaluating conditions. Please check the structure of your conditions");
+//	}
 
 	@Override
 	public Boolean Visit(VariableNode node) throws Exception {

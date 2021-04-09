@@ -62,15 +62,15 @@ public class DependsEvaluator extends TermVisitor<Boolean> {
 		return Visit(node.Left) || Visit(node.Right);
 	}
 
-	@Override
-	public Boolean Visit(ParentheticalNode node) throws Exception {
-		if (node.getClass() == dependency.getClass()) {
-			if (treeMatcher.Visit(node, dependency)) {
-				return true;
-			}
-		}
-		return Visit(node.innerNode);
-	}
+//	@Override
+//	public Boolean Visit(ParentheticalNode node) throws Exception {
+//		if (node.getClass() == dependency.getClass()) {
+//			if (treeMatcher.Visit(node, dependency)) {
+//				return true;
+//			}
+//		}
+//		return Visit(node.innerNode);
+//	}
 
 	@Override
 	public Boolean Visit(NumberNode node) {

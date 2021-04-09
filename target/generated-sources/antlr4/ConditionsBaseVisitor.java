@@ -79,14 +79,14 @@ public class ConditionsBaseVisitor<T> extends AbstractParseTreeVisitor<T> implem
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitUnaryExpression(ConditionsParser.UnaryExpressionContext ctx) { return visitChildren(ctx); }
+	@Override public T visitParenthetical(ConditionsParser.ParentheticalContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitParenthetical(ConditionsParser.ParentheticalContext ctx) { return visitChildren(ctx); }
+	@Override public T visitUnaryExpression(ConditionsParser.UnaryExpressionContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
