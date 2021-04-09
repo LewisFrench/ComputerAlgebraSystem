@@ -5,4 +5,4 @@ diff($A+$B, $x) = diff($A, $x) + diff($B, $x)
 diff($A-$B,$x) = diff($A,$x) - diff($B,$x)
 diff($A*$B,$x) = diff($A,$x)*$B + $A*diff($B,$x)
 diff(ln($A),$x) = diff($A,$x)/$A
-diff(sin($A),$x) = diff($A,$x)*cos($A)
+diff(sin($A),$x) = diff($A,$x)*cos($A

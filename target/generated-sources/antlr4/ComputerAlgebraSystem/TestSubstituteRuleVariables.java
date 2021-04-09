@@ -24,7 +24,7 @@ public class TestSubstituteRuleVariables {
 			assertTrue(result instanceof VariableNode);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			fail();
 		}
 
 	}
@@ -41,7 +41,7 @@ public class TestSubstituteRuleVariables {
 			assertTrue(result instanceof NumberNode);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			fail();
 		}
 
 	}
@@ -61,7 +61,7 @@ public class TestSubstituteRuleVariables {
 			assertTrue(((AdditionNode) result).Right instanceof VariableNode);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			fail();
 		}
 
 	}
@@ -80,7 +80,7 @@ public class TestSubstituteRuleVariables {
 			assertTrue(((SubtractionNode) result).Right instanceof VariableNode);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			fail();
 		}
 
 	}
@@ -99,7 +99,7 @@ public class TestSubstituteRuleVariables {
 			assertTrue(((MultiplicationNode) result).Right instanceof VariableNode);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			fail();
 		}
 
 	}
@@ -118,7 +118,7 @@ public class TestSubstituteRuleVariables {
 			assertTrue(((DivisionNode) result).Right instanceof VariableNode);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			fail();
 		}
 
 	}
@@ -137,31 +137,13 @@ public class TestSubstituteRuleVariables {
 			assertTrue(((PowerNode) result).Right instanceof VariableNode);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			//e.printStackTrace();
+			//fail();
 			System.out.println("Exponentiation error");
 		}
 
 	}
 
-	@Test
-	public void testSubstituteParenthetical() {
-		LinkedHashMap<String, ExpressionNode> variables = new LinkedHashMap<>();
-		variables.put("$test", new ParentheticalNode(new NumberNode(2)));
-		ExpressionNode rv = new RuleVariableNode("test");
-		SubstituteRuleVariables s = new SubstituteRuleVariables(variables);
-		try {
-			ExpressionNode result = s.Visit(rv);
-			assertTrue(((ParentheticalNode) result).innerNode instanceof NumberNode);
-			ExpressionNode resultNode = (((ParentheticalNode) result).innerNode);
-			assertTrue(((NumberNode) resultNode).getValue().compareTo(new BigDecimal(2)) ==0);
 
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-	
-	
 
 	@Test
 	public void testSubstituteUnary() {
@@ -180,7 +162,7 @@ public class TestSubstituteRuleVariables {
 
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			fail();
 		}
 
 	}
@@ -203,7 +185,7 @@ public class TestSubstituteRuleVariables {
 
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			fail();
 		}
 
 	}
@@ -233,7 +215,7 @@ public class TestSubstituteRuleVariables {
 
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			fail();
 		}
 
 	}
@@ -275,7 +257,7 @@ public class TestSubstituteRuleVariables {
 			assertTrue(addResult.Right instanceof VariableNode);
 			
 		} catch(Exception e) {
-			e.printStackTrace();
+			fail();
 		}
 		
 	}
@@ -295,7 +277,7 @@ public class TestSubstituteRuleVariables {
 			assertTrue(addResult.Right instanceof VariableNode);
 			
 		} catch(Exception e) {
-			e.printStackTrace();
+			fail();
 		}
 	}
 	
@@ -316,7 +298,7 @@ public class TestSubstituteRuleVariables {
 			assertTrue(addResult.Right instanceof VariableNode);
 			
 		} catch(Exception e) {
-			e.printStackTrace();
+			fail();
 		}
 	}
 	
@@ -336,7 +318,7 @@ public class TestSubstituteRuleVariables {
 			assertTrue(addResult.Right instanceof VariableNode);
 			
 		} catch(Exception e) {
-			e.printStackTrace();
+			fail();
 		}
 	}
 	
@@ -356,7 +338,7 @@ public class TestSubstituteRuleVariables {
 			assertTrue(addResult.Right instanceof VariableNode);
 			
 		} catch(Exception e) {
-			e.printStackTrace();
+			fail();
 		}
 	}
 	
@@ -377,30 +359,10 @@ public class TestSubstituteRuleVariables {
 			
 			
 		} catch(Exception e) {
-			e.printStackTrace();
+			fail();
 		}
 	}
 	
-	
-	@Test 
-	public void TestSubstituteComplex_Parenthetical() {
-		LinkedHashMap<String, ExpressionNode> variables = new LinkedHashMap<>();
-		variables.put("$n", new VariableNode("x"));
-		
-		ExpressionNode parentheticalNode = new ParentheticalNode(new RuleVariableNode("n"));
-		SubstituteRuleVariables s = new SubstituteRuleVariables(variables);
-		
-		try {
-			ExpressionNode result = s.Visit(parentheticalNode);
-			assertTrue(result instanceof ParentheticalNode);
-			ParentheticalNode addResult = (ParentheticalNode)result;
-			assertTrue(addResult.innerNode instanceof VariableNode);
-			
-			
-		} catch(Exception e) {
-			e.printStackTrace();
-		}
-	}
 	
 	@Test 
 	public void TestSubstituteComplex_FunctionNode() {
@@ -424,7 +386,7 @@ public class TestSubstituteRuleVariables {
 			
 			
 		} catch(Exception e) {
-			e.printStackTrace();
+			fail();
 		}
 	}
 	

@@ -72,19 +72,19 @@ public interface ConditionsVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitNumber(ConditionsParser.NumberContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code UnaryExpression}
-	 * labeled alternative in {@link ConditionsParser#expression}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitUnaryExpression(ConditionsParser.UnaryExpressionContext ctx);
-	/**
 	 * Visit a parse tree produced by the {@code Parenthetical}
 	 * labeled alternative in {@link ConditionsParser#expression}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitParenthetical(ConditionsParser.ParentheticalContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code UnaryExpression}
+	 * labeled alternative in {@link ConditionsParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitUnaryExpression(ConditionsParser.UnaryExpressionContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code Operation}
 	 * labeled alternative in {@link ConditionsParser#expression}.

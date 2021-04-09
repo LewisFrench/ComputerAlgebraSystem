@@ -182,8 +182,6 @@ public class TestEvaluateConditionsVisitor {
 		ExpressionNode and = new ConditionAndNode(relop, relop2);
 		try { 
 			assertTrue(e.Visit(and));
-			
-			
 		} catch (Exception e1) { e1.printStackTrace(); }
 		
 	}	
@@ -287,7 +285,7 @@ public class TestEvaluateConditionsVisitor {
 		assertThrows(Exception.class, () -> e.Visit(new MultiplicationNode(new NumberNode(new BigDecimal(2)), new VariableNode("v"))));
 		assertThrows(Exception.class, () -> e.Visit(new PowerNode(new NumberNode(new BigDecimal(2)), new VariableNode("v"))));
 		assertThrows(Exception.class, () -> e.Visit(new UnaryNode(new NumberNode(new BigDecimal(2)))));
-		assertThrows(Exception.class, () -> e.Visit(new ParentheticalNode(new NumberNode(new BigDecimal(2)))));
+		
 		assertThrows(Exception.class, () -> e.Visit(new FunctionNode("TestFunction", new ArrayList<ExpressionNode>())));
 		assertThrows(Exception.class, () -> e.Visit(new VariableNode("x")));
 		assertThrows(Exception.class, () -> e.Visit(new NumberNode(new BigDecimal(2))));

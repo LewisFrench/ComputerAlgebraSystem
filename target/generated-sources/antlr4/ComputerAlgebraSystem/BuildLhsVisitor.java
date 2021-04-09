@@ -32,7 +32,7 @@ public class BuildLhsVisitor extends RuleAlgebraBaseVisitor<ExpressionNode> {
 
 	@Override
 	public ExpressionNode visitParenthetical(RuleAlgebraParser.ParentheticalContext context) {
-		return new ParentheticalNode(visit(context.expression()));
+		return (visit(context.expression()));
 	}
 
 	@Override

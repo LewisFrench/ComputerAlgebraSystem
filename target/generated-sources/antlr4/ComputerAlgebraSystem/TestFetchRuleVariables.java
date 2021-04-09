@@ -17,7 +17,7 @@ public class TestFetchRuleVariables {
 		try {
 			f.Visit(rv);
 			assertTrue(f.getVariables().keySet().contains("$n"));
-		} catch (Exception e) {e.printStackTrace();}	
+		} catch (Exception e) {fail();}	
 
 	}
 	
@@ -30,7 +30,7 @@ public class TestFetchRuleVariables {
 		try {
 			f.Visit(v);
 			assertTrue(f.getVariables().keySet().isEmpty());
-		} catch (Exception e) {e.printStackTrace();}	
+		} catch (Exception e) {fail();}	
 
 	}
 	
@@ -42,7 +42,7 @@ public class TestFetchRuleVariables {
 		try {
 			f.Visit(v);
 			assertTrue(f.getVariables().keySet().isEmpty());
-		} catch (Exception e) {e.printStackTrace();}	
+		} catch (Exception e) {fail();}	
 
 	}
 	
@@ -56,7 +56,7 @@ public class TestFetchRuleVariables {
 		try {
 			f.Visit(subtraction);
 			assertTrue(f.getVariables().keySet().contains("$n"));
-		} catch (Exception e) {e.printStackTrace();}	
+		} catch (Exception e) {fail();}	
 
 	}
 	
@@ -69,7 +69,7 @@ public class TestFetchRuleVariables {
 		try {
 			f.Visit(multiplication);
 			assertTrue(f.getVariables().keySet().contains("$n"));
-		} catch (Exception e) {e.printStackTrace();}	
+		} catch (Exception e) {fail();}	
 
 	}
 	
@@ -82,7 +82,7 @@ public class TestFetchRuleVariables {
 		try {
 			f.Visit(division);
 			assertTrue(f.getVariables().keySet().contains("$n"));
-		} catch (Exception e) {e.printStackTrace();}	
+		} catch (Exception e) {fail();}	
 
 	}
 	
@@ -95,7 +95,7 @@ public class TestFetchRuleVariables {
 		try {
 			f.Visit(addition);
 			assertTrue(f.getVariables().keySet().contains("$n"));
-		} catch (Exception e) {e.printStackTrace();}	
+		} catch (Exception e) {fail();}	
 
 	}
 	
@@ -108,7 +108,7 @@ public class TestFetchRuleVariables {
 		try {
 			f.Visit(power);
 			assertTrue(f.getVariables().keySet().contains("$n"));
-		} catch (Exception e) {e.printStackTrace();}	
+		} catch (Exception e) {fail();}	
 
 	}
 
@@ -122,23 +122,10 @@ public class TestFetchRuleVariables {
 		try {
 			f.Visit(unary);
 			assertTrue(f.getVariables().keySet().contains("$n"));
-		} catch (Exception e) {e.printStackTrace();}	
+		} catch (Exception e) {fail();}	
 
 	}
 	
-	
-	@Test
-	public void testFetchComplexRuleVariable_Parenthetical() {
-		ExpressionNode rv = new RuleVariableNode("n");
-		ExpressionNode parenthetical = new ParentheticalNode(rv);
-		FetchRuleVariables f = new FetchRuleVariables();
-
-		try {
-			f.Visit(parenthetical);
-			assertTrue(f.getVariables().keySet().contains("$n"));
-		} catch (Exception e) {e.printStackTrace();}	
-
-	}
 	@Test
 	public void testFetchComplexRuleVariable_Function() {
 		ExpressionNode rv = new RuleVariableNode("n");
@@ -146,13 +133,13 @@ public class TestFetchRuleVariables {
 		ArrayList<ExpressionNode> arguments = new ArrayList<>();
 		arguments.add(new NumberNode(2));
 		arguments.add(rv);
-		ExpressionNode parenthetical = new ParentheticalNode(rv);
+		ExpressionNode unary = new UnaryNode(rv);
 		FetchRuleVariables f = new FetchRuleVariables();
 
 		try {
-			f.Visit(parenthetical);
+			f.Visit(unary);
 			assertTrue(f.getVariables().keySet().contains("$n"));
-		} catch (Exception e) {e.printStackTrace();}	
+		} catch (Exception e) {fail();}	
 
 	}
 	

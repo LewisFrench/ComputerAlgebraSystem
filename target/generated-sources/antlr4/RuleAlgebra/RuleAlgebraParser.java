@@ -217,6 +217,27 @@ public class RuleAlgebraParser extends Parser {
 			else return visitor.visitChildren(this);
 		}
 	}
+	public static class ParentheticalContext extends ExpressionContext {
+		public TerminalNode LPAREN() { return getToken(RuleAlgebraParser.LPAREN, 0); }
+		public ExpressionContext expression() {
+			return getRuleContext(ExpressionContext.class,0);
+		}
+		public TerminalNode RPAREN() { return getToken(RuleAlgebraParser.RPAREN, 0); }
+		public ParentheticalContext(ExpressionContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof RuleAlgebraListener ) ((RuleAlgebraListener)listener).enterParenthetical(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof RuleAlgebraListener ) ((RuleAlgebraListener)listener).exitParenthetical(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof RuleAlgebraVisitor ) return ((RuleAlgebraVisitor<? extends T>)visitor).visitParenthetical(this);
+			else return visitor.visitChildren(this);
+		}
+	}
 	public static class UnaryExpressionContext extends ExpressionContext {
 		public Token op;
 		public ExpressionContext expression() {
@@ -236,27 +257,6 @@ public class RuleAlgebraParser extends Parser {
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof RuleAlgebraVisitor ) return ((RuleAlgebraVisitor<? extends T>)visitor).visitUnaryExpression(this);
-			else return visitor.visitChildren(this);
-		}
-	}
-	public static class ParentheticalContext extends ExpressionContext {
-		public TerminalNode LPAREN() { return getToken(RuleAlgebraParser.LPAREN, 0); }
-		public ExpressionContext expression() {
-			return getRuleContext(ExpressionContext.class,0);
-		}
-		public TerminalNode RPAREN() { return getToken(RuleAlgebraParser.RPAREN, 0); }
-		public ParentheticalContext(ExpressionContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof RuleAlgebraListener ) ((RuleAlgebraListener)listener).enterParenthetical(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof RuleAlgebraListener ) ((RuleAlgebraListener)listener).exitParenthetical(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof RuleAlgebraVisitor ) return ((RuleAlgebraVisitor<? extends T>)visitor).visitParenthetical(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -331,42 +331,55 @@ public class RuleAlgebraParser extends Parser {
 			switch ( getInterpreter().adaptivePredict(_input,1,_ctx) ) {
 			case 1:
 				{
-				_localctx = new FunctionExpressionContext(_localctx);
+				_localctx = new ParentheticalContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
 
 				setState(8);
-				((FunctionExpressionContext)_localctx).func = match(VARIABLE);
-				setState(9);
 				match(LPAREN);
+				setState(9);
+				expression(0);
 				setState(10);
-				((FunctionExpressionContext)_localctx).arguments = expression(0);
-				setState(15);
-				_errHandler.sync(this);
-				_la = _input.LA(1);
-				while (_la==COMMA) {
-					{
-					{
-					setState(11);
-					match(COMMA);
-					setState(12);
-					expression(0);
-					}
-					}
-					setState(17);
-					_errHandler.sync(this);
-					_la = _input.LA(1);
-				}
-				setState(18);
 				match(RPAREN);
 				}
 				break;
 			case 2:
 				{
+				_localctx = new FunctionExpressionContext(_localctx);
+				_ctx = _localctx;
+				_prevctx = _localctx;
+				setState(12);
+				((FunctionExpressionContext)_localctx).func = match(VARIABLE);
+				setState(13);
+				match(LPAREN);
+				setState(14);
+				((FunctionExpressionContext)_localctx).arguments = expression(0);
+				setState(19);
+				_errHandler.sync(this);
+				_la = _input.LA(1);
+				while (_la==COMMA) {
+					{
+					{
+					setState(15);
+					match(COMMA);
+					setState(16);
+					expression(0);
+					}
+					}
+					setState(21);
+					_errHandler.sync(this);
+					_la = _input.LA(1);
+				}
+				setState(22);
+				match(RPAREN);
+				}
+				break;
+			case 3:
+				{
 				_localctx = new UnaryExpressionContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
-				setState(20);
+				setState(24);
 				((UnaryExpressionContext)_localctx).op = _input.LT(1);
 				_la = _input.LA(1);
 				if ( !(_la==OP_ADD || _la==OP_SUB) ) {
@@ -377,21 +390,8 @@ public class RuleAlgebraParser extends Parser {
 					_errHandler.reportMatch(this);
 					consume();
 				}
-				setState(21);
-				expression(8);
-				}
-				break;
-			case 3:
-				{
-				_localctx = new ParentheticalContext(_localctx);
-				_ctx = _localctx;
-				_prevctx = _localctx;
-				setState(22);
-				match(LPAREN);
-				setState(23);
-				expression(0);
-				setState(24);
-				match(RPAREN);
+				setState(25);
+				expression(4);
 				}
 				break;
 			case 4:
@@ -442,11 +442,11 @@ public class RuleAlgebraParser extends Parser {
 						((OperationContext)_localctx).left = _prevctx;
 						pushNewRecursionContext(_localctx, _startState, RULE_expression);
 						setState(32);
-						if (!(precpred(_ctx, 6))) throw new FailedPredicateException(this, "precpred(_ctx, 6)");
+						if (!(precpred(_ctx, 8))) throw new FailedPredicateException(this, "precpred(_ctx, 8)");
 						setState(33);
 						((OperationContext)_localctx).op = match(OP_POW);
 						setState(34);
-						((OperationContext)_localctx).right = expression(7);
+						((OperationContext)_localctx).right = expression(9);
 						}
 						break;
 					case 2:
@@ -455,7 +455,7 @@ public class RuleAlgebraParser extends Parser {
 						((OperationContext)_localctx).left = _prevctx;
 						pushNewRecursionContext(_localctx, _startState, RULE_expression);
 						setState(35);
-						if (!(precpred(_ctx, 5))) throw new FailedPredicateException(this, "precpred(_ctx, 5)");
+						if (!(precpred(_ctx, 7))) throw new FailedPredicateException(this, "precpred(_ctx, 7)");
 						setState(36);
 						((OperationContext)_localctx).op = _input.LT(1);
 						_la = _input.LA(1);
@@ -468,7 +468,7 @@ public class RuleAlgebraParser extends Parser {
 							consume();
 						}
 						setState(37);
-						((OperationContext)_localctx).right = expression(6);
+						((OperationContext)_localctx).right = expression(8);
 						}
 						break;
 					case 3:
@@ -477,7 +477,7 @@ public class RuleAlgebraParser extends Parser {
 						((OperationContext)_localctx).left = _prevctx;
 						pushNewRecursionContext(_localctx, _startState, RULE_expression);
 						setState(38);
-						if (!(precpred(_ctx, 4))) throw new FailedPredicateException(this, "precpred(_ctx, 4)");
+						if (!(precpred(_ctx, 6))) throw new FailedPredicateException(this, "precpred(_ctx, 6)");
 						setState(39);
 						((OperationContext)_localctx).op = _input.LT(1);
 						_la = _input.LA(1);
@@ -490,7 +490,7 @@ public class RuleAlgebraParser extends Parser {
 							consume();
 						}
 						setState(40);
-						((OperationContext)_localctx).right = expression(5);
+						((OperationContext)_localctx).right = expression(7);
 						}
 						break;
 					}
@@ -523,30 +523,30 @@ public class RuleAlgebraParser extends Parser {
 	private boolean expression_sempred(ExpressionContext _localctx, int predIndex) {
 		switch (predIndex) {
 		case 0:
-			return precpred(_ctx, 6);
+			return precpred(_ctx, 8);
 		case 1:
-			return precpred(_ctx, 5);
+			return precpred(_ctx, 7);
 		case 2:
-			return precpred(_ctx, 4);
+			return precpred(_ctx, 6);
 		}
 		return true;
 	}
 
 	public static final String _serializedATN =
 		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\17\61\4\2\t\2\4\3"+
-		"\t\3\3\2\3\2\3\2\3\3\3\3\3\3\3\3\3\3\3\3\7\3\20\n\3\f\3\16\3\23\13\3\3"+
-		"\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\5\3!\n\3\3\3\3\3\3\3\3"+
+		"\t\3\3\2\3\2\3\2\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\7\3\24\n\3\f"+
+		"\3\16\3\27\13\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\5\3!\n\3\3\3\3\3\3\3\3"+
 		"\3\3\3\3\3\3\3\3\3\3\3\7\3,\n\3\f\3\16\3/\13\3\3\3\2\3\4\4\2\4\2\4\3\2"+
 		"\3\4\3\2\5\6\2\67\2\6\3\2\2\2\4 \3\2\2\2\6\7\5\4\3\2\7\b\7\2\2\3\b\3\3"+
-		"\2\2\2\t\n\b\3\1\2\n\13\7\b\2\2\13\f\7\13\2\2\f\21\5\4\3\2\r\16\7\n\2"+
-		"\2\16\20\5\4\3\2\17\r\3\2\2\2\20\23\3\2\2\2\21\17\3\2\2\2\21\22\3\2\2"+
-		"\2\22\24\3\2\2\2\23\21\3\2\2\2\24\25\7\r\2\2\25!\3\2\2\2\26\27\t\2\2\2"+
-		"\27!\5\4\3\n\30\31\7\13\2\2\31\32\5\4\3\2\32\33\7\r\2\2\33!\3\2\2\2\34"+
-		"!\7\b\2\2\35\36\7\f\2\2\36!\7\b\2\2\37!\7\t\2\2 \t\3\2\2\2 \26\3\2\2\2"+
-		" \30\3\2\2\2 \34\3\2\2\2 \35\3\2\2\2 \37\3\2\2\2!-\3\2\2\2\"#\f\b\2\2"+
-		"#$\7\7\2\2$,\5\4\3\t%&\f\7\2\2&\'\t\3\2\2\',\5\4\3\b()\f\6\2\2)*\t\2\2"+
-		"\2*,\5\4\3\7+\"\3\2\2\2+%\3\2\2\2+(\3\2\2\2,/\3\2\2\2-+\3\2\2\2-.\3\2"+
-		"\2\2.\5\3\2\2\2/-\3\2\2\2\6\21 +-";
+		"\2\2\2\t\n\b\3\1\2\n\13\7\13\2\2\13\f\5\4\3\2\f\r\7\r\2\2\r!\3\2\2\2\16"+
+		"\17\7\b\2\2\17\20\7\13\2\2\20\25\5\4\3\2\21\22\7\n\2\2\22\24\5\4\3\2\23"+
+		"\21\3\2\2\2\24\27\3\2\2\2\25\23\3\2\2\2\25\26\3\2\2\2\26\30\3\2\2\2\27"+
+		"\25\3\2\2\2\30\31\7\r\2\2\31!\3\2\2\2\32\33\t\2\2\2\33!\5\4\3\6\34!\7"+
+		"\b\2\2\35\36\7\f\2\2\36!\7\b\2\2\37!\7\t\2\2 \t\3\2\2\2 \16\3\2\2\2 \32"+
+		"\3\2\2\2 \34\3\2\2\2 \35\3\2\2\2 \37\3\2\2\2!-\3\2\2\2\"#\f\n\2\2#$\7"+
+		"\7\2\2$,\5\4\3\13%&\f\t\2\2&\'\t\3\2\2\',\5\4\3\n()\f\b\2\2)*\t\2\2\2"+
+		"*,\5\4\3\t+\"\3\2\2\2+%\3\2\2\2+(\3\2\2\2,/\3\2\2\2-+\3\2\2\2-.\3\2\2"+
+		"\2.\5\3\2\2\2/-\3\2\2\2\6\25 +-";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

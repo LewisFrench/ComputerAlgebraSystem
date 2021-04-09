@@ -38,19 +38,19 @@ public interface RuleAlgebraVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitNumber(RuleAlgebraParser.NumberContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code UnaryExpression}
-	 * labeled alternative in {@link RuleAlgebraParser#expression}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitUnaryExpression(RuleAlgebraParser.UnaryExpressionContext ctx);
-	/**
 	 * Visit a parse tree produced by the {@code Parenthetical}
 	 * labeled alternative in {@link RuleAlgebraParser#expression}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitParenthetical(RuleAlgebraParser.ParentheticalContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code UnaryExpression}
+	 * labeled alternative in {@link RuleAlgebraParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitUnaryExpression(RuleAlgebraParser.UnaryExpressionContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code Operation}
 	 * labeled alternative in {@link RuleAlgebraParser#expression}.

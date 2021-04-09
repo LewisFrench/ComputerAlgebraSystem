@@ -20,7 +20,7 @@ public class TestConditionFunctions {
 		try {
 			assertTrue(c.determineFunction(functionName, arguments));
 			
-		} catch (Exception e) {e.printStackTrace();}
+		} catch (Exception e) {fail();}
 	}
 	@Test
 	public void testConditionFunctions__is_number_valid_False() {
@@ -32,7 +32,7 @@ public class TestConditionFunctions {
 		try {
 			assertFalse(c.determineFunction(functionName, arguments));
 			
-		} catch (Exception e) {e.printStackTrace();}
+		} catch (Exception e) {fail();}
 	}
 	
 	@Test
@@ -56,7 +56,7 @@ public class TestConditionFunctions {
 		try {
 			assertTrue(c.determineFunction(functionName, arguments));
 			
-		} catch (Exception e) {e.printStackTrace();}
+		} catch (Exception e) {fail();}
 	}
 	@Test
 	public void testConditionFunctions__is_literal_valid_False() {
@@ -68,7 +68,7 @@ public class TestConditionFunctions {
 		try {
 			assertFalse(c.determineFunction(functionName, arguments));
 			
-		} catch (Exception e) {e.printStackTrace();}
+		} catch (Exception e) {fail();}
 	}
 	
 	@Test
@@ -92,7 +92,7 @@ public class TestConditionFunctions {
 		try {
 			assertTrue(c.determineFunction(functionName, arguments));
 			
-		} catch (Exception e) {e.printStackTrace();}
+		} catch (Exception e) {fail();}
 	}
 	@Test
 	public void testConditionFunctions__is_addition_valid_False() {
@@ -104,7 +104,7 @@ public class TestConditionFunctions {
 		try {
 			assertFalse(c.determineFunction(functionName, arguments));
 			
-		} catch (Exception e) {e.printStackTrace();}
+		} catch (Exception e) {fail();}
 	}
 	
 	@Test
@@ -128,7 +128,7 @@ public class TestConditionFunctions {
 		try {
 			assertTrue(c.determineFunction(functionName, arguments));
 			
-		} catch (Exception e) {e.printStackTrace();}
+		} catch (Exception e) {fail();}
 	}
 	@Test
 	public void testConditionFunctions__is_subtraction_valid_False() {
@@ -140,7 +140,7 @@ public class TestConditionFunctions {
 		try {
 			assertFalse(c.determineFunction(functionName, arguments));
 			
-		} catch (Exception e) {e.printStackTrace();}
+		} catch (Exception e) {fail();}
 	}
 	
 	@Test
@@ -164,7 +164,7 @@ public class TestConditionFunctions {
 		try {
 			assertTrue(c.determineFunction(functionName, arguments));
 			
-		} catch (Exception e) {e.printStackTrace();}
+		} catch (Exception e) {fail();}
 	}
 	@Test
 	public void testConditionFunctions__is_multiplication_valid_False() {
@@ -176,7 +176,7 @@ public class TestConditionFunctions {
 		try {
 			assertFalse(c.determineFunction(functionName, arguments));
 			
-		} catch (Exception e) {e.printStackTrace();}
+		} catch (Exception e) {fail();}
 	}
 	
 	@Test
@@ -200,7 +200,7 @@ public class TestConditionFunctions {
 		try {
 			assertTrue(c.determineFunction(functionName, arguments));
 			
-		} catch (Exception e) {e.printStackTrace();}
+		} catch (Exception e) {fail();}
 	}
 	@Test
 	public void testConditionFunctions__is_division_valid_False() {
@@ -212,7 +212,7 @@ public class TestConditionFunctions {
 		try {
 			assertFalse(c.determineFunction(functionName, arguments));
 			
-		} catch (Exception e) {e.printStackTrace();}
+		} catch (Exception e) {fail();}
 	}
 	
 	@Test
@@ -236,7 +236,7 @@ public class TestConditionFunctions {
 		try {
 			assertTrue(c.determineFunction(functionName, arguments));
 			
-		} catch (Exception e) {e.printStackTrace();}
+		} catch (Exception e) {fail();}
 	}
 	@Test
 	public void testConditionFunctions__is_exponentiation_valid_False() {
@@ -248,7 +248,7 @@ public class TestConditionFunctions {
 		try {
 			assertFalse(c.determineFunction(functionName, arguments));
 			
-		} catch (Exception e) {e.printStackTrace();}
+		} catch (Exception e) {fail();}
 	}
 	
 	@Test
@@ -273,7 +273,7 @@ public class TestConditionFunctions {
 		try {
 			assertTrue(c.determineFunction(functionName, arguments));
 			
-		} catch (Exception e) {e.printStackTrace();}
+		} catch (Exception e) {fail();}
 	}
 	@Test
 	public void testConditionFunctions__is_unary_valid_False() {
@@ -285,7 +285,7 @@ public class TestConditionFunctions {
 		try {
 			assertFalse(c.determineFunction(functionName, arguments));
 			
-		} catch (Exception e) {e.printStackTrace();}
+		} catch (Exception e) {fail();}
 	}
 	
 	@Test
@@ -298,44 +298,7 @@ public class TestConditionFunctions {
 		ConditionFunctionEvaluator c = new ConditionFunctionEvaluator();
 		assertThrows(Exception.class, () -> c.determineFunction(functionName, arguments));
 	}
-	
-	
-	@Test
-	public void testConditionFunctions_is_parenthetical_valid_true() {
-		String functionName = "_is_parenthetical";
-		ArrayList<ExpressionNode> arguments = new ArrayList<>();
-		arguments.add(new ParentheticalNode(new VariableNode("l")));
-		
-		ConditionFunctionEvaluator c = new ConditionFunctionEvaluator();
-		try {
-			assertTrue(c.determineFunction(functionName, arguments));
-			
-		} catch (Exception e) {e.printStackTrace();}
-	}
-	@Test
-	public void testConditionFunctions__is_parenthetical_valid_False() {
-		String functionName = "_is_parenthetical";
-		ArrayList<ExpressionNode> arguments = new ArrayList<>();
-		arguments.add(new NumberNode(new BigDecimal(2.3)));
-		
-		ConditionFunctionEvaluator c = new ConditionFunctionEvaluator();
-		try {
-			assertFalse(c.determineFunction(functionName, arguments));
-			
-		} catch (Exception e) {e.printStackTrace();}
-	}
-	
-	@Test
-	public void testConditionFunctions_is_parenthetical_invalid_arguments() {
-		String functionName = "_is_parenthetical";
-		ArrayList<ExpressionNode> arguments = new ArrayList<>();
-		arguments.add(new VariableNode("x"));
-		arguments.add(new VariableNode("x"));
-		
-		ConditionFunctionEvaluator c = new ConditionFunctionEvaluator();
-		assertThrows(Exception.class, () -> c.determineFunction(functionName, arguments));
-	}
-	
+
 	
 	
 	@Test
@@ -351,7 +314,7 @@ public class TestConditionFunctions {
 		try {
 			assertTrue(c.determineFunction(functionName, arguments));
 			
-		} catch (Exception e) {e.printStackTrace();}
+		} catch (Exception e) {fail();}
 	}
 	@Test
 	public void testConditionFunctions__is_function_valid_False() {
@@ -363,7 +326,7 @@ public class TestConditionFunctions {
 		try {
 			assertFalse(c.determineFunction(functionName, arguments));
 			
-		} catch (Exception e) {e.printStackTrace();}
+		} catch (Exception e) {fail();}
 	}
 	
 	@Test
@@ -388,7 +351,7 @@ public class TestConditionFunctions {
 		try {
 			assertTrue(c.determineFunction(functionName, arguments));
 			
-		} catch (Exception e) {e.printStackTrace();}
+		} catch (Exception e) {fail();}
 	}
 	@Test
 	public void testConditionFunctions__is_integer_valid_False() {
@@ -400,7 +363,7 @@ public class TestConditionFunctions {
 		try {
 			assertFalse(c.determineFunction(functionName, arguments));
 			
-		} catch (Exception e) {e.printStackTrace();}
+		} catch (Exception e) {fail();}
 	}
 	@Test
 	public void testConditionFunctions__is_integer_valid_notNumber_False() {
@@ -412,7 +375,7 @@ public class TestConditionFunctions {
 		try {
 			assertFalse(c.determineFunction(functionName, arguments));
 			
-		} catch (Exception e) {e.printStackTrace();}
+		} catch (Exception e) {fail();}
 	}
 	
 	@Test
@@ -438,7 +401,7 @@ public class TestConditionFunctions {
 		try {
 			assertTrue(c.determineFunction(functionName, arguments));
 			
-		} catch (Exception e) {e.printStackTrace();}
+		} catch (Exception e) {fail();}
 	}
 	
 	@Test
@@ -451,7 +414,7 @@ public class TestConditionFunctions {
 		try {
 			assertFalse(c.determineFunction(functionName, arguments));
 			
-		} catch (Exception e) {e.printStackTrace();}
+		} catch (Exception e) {fail();}
 	}
 	
 	@Test

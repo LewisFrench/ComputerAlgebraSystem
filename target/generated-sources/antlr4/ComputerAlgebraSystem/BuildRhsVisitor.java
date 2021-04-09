@@ -11,9 +11,6 @@ import RuleAlgebra.RuleAlgebraParser;
 public class BuildRhsVisitor extends RuleAlgebraBaseVisitor<ExpressionNode> {
 	HashMap<String, ExpressionNode> variables;
 
-//	public BuildRhsVisitor(HashMap<String, ExpressionNode> variables) {
-//		this.variables = variables;
-//	}
 
 	@Override
 	public ExpressionNode visitRuleTerm(RuleAlgebraParser.RuleTermContext context) {
@@ -30,7 +27,7 @@ public class BuildRhsVisitor extends RuleAlgebraBaseVisitor<ExpressionNode> {
 
 	@Override
 	public ExpressionNode visitParenthetical(RuleAlgebraParser.ParentheticalContext context) {
-		return new ParentheticalNode(visit(context.expression()));
+		return (visit(context.expression()));
 	}
 
 	@Override

@@ -28,8 +28,8 @@ public class TestTermAlgebraParser {
 			System.out.println(n.toString());
 			assertTrue(((NumberNode) n).getValue().compareTo(BigDecimal.valueOf(3.91)) == 0);
 			
-		} catch (ParseCancellationException e) {e.printStackTrace(); 
-		} catch (Exception e) { e.printStackTrace();}
+		} catch (ParseCancellationException e) {fail(); 
+		} catch (Exception e) { fail();}
 		
 	}
 
@@ -47,8 +47,8 @@ public class TestTermAlgebraParser {
 			assertTrue(n instanceof VariableNode);
 			assertEquals(((VariableNode)n).getValue(), "test");
 			
-		} catch (ParseCancellationException e) {e.printStackTrace(); 
-		} catch (Exception e) { e.printStackTrace();}	
+		} catch (ParseCancellationException e) {fail(); 
+		} catch (Exception e) { fail();}	
 	}
 	
 	@Test
@@ -65,8 +65,8 @@ public class TestTermAlgebraParser {
 			assertTrue(((AdditionNode)n).Right instanceof NumberNode);
 			assertEquals(((VariableNode)left).getValue(), "a");
 			assertTrue(((NumberNode) right).getValue().compareTo(new BigDecimal(1)) ==0);
-		} catch (ParseCancellationException e) {e.printStackTrace(); 
-		} catch (Exception e) { e.printStackTrace();}	
+		} catch (ParseCancellationException e) {fail(); 
+		} catch (Exception e) { fail();}	
 	}
 	
 	@Test
@@ -83,8 +83,8 @@ public class TestTermAlgebraParser {
 			assertTrue(((SubtractionNode)n).Right instanceof NumberNode);
 			assertEquals(((VariableNode)left).getValue(), "a");
 			assertTrue(((NumberNode) right).getValue().compareTo(new BigDecimal(1)) ==0);
-		} catch (ParseCancellationException e) {e.printStackTrace(); 
-		} catch (Exception e) { e.printStackTrace();}	
+		} catch (ParseCancellationException e) {fail(); 
+		} catch (Exception e) { fail();}	
 	}
 	
 	@Test
@@ -97,8 +97,8 @@ public class TestTermAlgebraParser {
 			ExpressionNode innerNode = (((UnaryNode)n).innerNode);
 			assertTrue(((UnaryNode)n).innerNode instanceof VariableNode);
 			assertTrue(((VariableNode) innerNode).getValue().equals("x"));
-		} catch (ParseCancellationException e) {e.printStackTrace(); 
-		} catch (Exception e) { e.printStackTrace();}	
+		} catch (ParseCancellationException e) {fail(); 
+		} catch (Exception e) { fail();}	
 	}
 	
 	@Test
@@ -109,8 +109,8 @@ public class TestTermAlgebraParser {
 			ExpressionNode n = p.parseTerm("-1");
 			assertTrue(n instanceof NumberNode);
 			assertTrue(((NumberNode)n).getValue().compareTo(new BigDecimal(-1))==0 );
-		} catch (ParseCancellationException e) {e.printStackTrace(); 
-		} catch (Exception e) { e.printStackTrace();}	
+		} catch (ParseCancellationException e) {fail(); 
+		} catch (Exception e) { fail();}	
 	}
 	@Test
 	public void testParseSimpleUnary_Positive() {
@@ -120,22 +120,8 @@ public class TestTermAlgebraParser {
 			ExpressionNode n = p.parseTerm("+1");
 			assertTrue(n instanceof NumberNode);
 
-		} catch (ParseCancellationException e) {e.printStackTrace(); 
-		} catch (Exception e) { e.printStackTrace();}	
-	}
-	
-	@Test
-	public void testParseSimpleParenthetical() {
-		Program p = new Program();
-		
-		try {
-			ExpressionNode n = p.parseTerm("(a)");
-			assertTrue(n instanceof ParentheticalNode);
-			ExpressionNode innerNode = (((ParentheticalNode)n).innerNode);
-			assertTrue(((ParentheticalNode)n).innerNode instanceof VariableNode);
-			assertEquals(((VariableNode)innerNode).getValue(), "a");
-		} catch (ParseCancellationException e) {e.printStackTrace(); 
-		} catch (Exception e) { e.printStackTrace();}	
+		} catch (ParseCancellationException e) {fail(); 
+		} catch (Exception e) { fail();}	
 	}
 	
 	@Test
@@ -152,8 +138,8 @@ public class TestTermAlgebraParser {
 			assertTrue(nFunc.arguments.get(2) instanceof UnaryNode);
 			
 			
-		} catch (ParseCancellationException e) {e.printStackTrace(); 
-		} catch (Exception e) { e.printStackTrace();}	
+		} catch (ParseCancellationException e) {fail(); 
+		} catch (Exception e) { fail();}	
 	}
 	
 	@Test
@@ -172,8 +158,8 @@ public class TestTermAlgebraParser {
 			assertTrue(right instanceof NumberNode);
 			System.out.println(n.toString());
 			assertTrue(((NumberNode) right).getValue().compareTo(BigDecimal.valueOf(1)) ==0);
-		} catch (ParseCancellationException e) {e.printStackTrace(); 
-		} catch (Exception e) { e.printStackTrace();}	
+		} catch (ParseCancellationException e) {fail(); 
+		} catch (Exception e) { fail();}	
 	}
 	
 	@Test
@@ -190,8 +176,8 @@ public class TestTermAlgebraParser {
 			assertTrue(((DivisionNode)n).Right instanceof NumberNode);
 			assertEquals(((VariableNode)left).getValue(), "a");
 			assertTrue(((NumberNode) right).getValue().compareTo(new BigDecimal(1)) ==0);
-		} catch (ParseCancellationException e) {e.printStackTrace(); 
-		} catch (Exception e) { e.printStackTrace();}	
+		} catch (ParseCancellationException e) {fail(); 
+		} catch (Exception e) { fail();}	
 	}
 	@Test
 	public void testParseSimpleExponentiation() {
@@ -207,8 +193,8 @@ public class TestTermAlgebraParser {
 			assertTrue(((PowerNode)n).Right instanceof NumberNode);
 			assertEquals(((VariableNode)left).getValue(), "a");
 			assertTrue(((NumberNode) right).getValue().compareTo(new BigDecimal(1)) ==0);
-		} catch (ParseCancellationException e) {e.printStackTrace(); 
-		} catch (Exception e) { e.printStackTrace();}	
+		} catch (ParseCancellationException e) {fail(); 
+		} catch (Exception e) { fail();}	
 	}
 
 	

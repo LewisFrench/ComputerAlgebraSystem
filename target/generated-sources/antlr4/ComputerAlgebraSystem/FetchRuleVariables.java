@@ -51,10 +51,10 @@ public class FetchRuleVariables extends RuleTermVisitor<ExpressionNode> {
 		return new DivisionNode(left, right);
 	}
 
-	@Override
-	public ExpressionNode Visit(ParentheticalNode node) throws Exception {
-		return new ParentheticalNode(Visit(node.innerNode));
-	}
+//	@Override
+//	public ExpressionNode Visit(ParentheticalNode node) throws Exception {
+//		return new ParentheticalNode(Visit(node.innerNode));
+//	}
 
 	@Override
 	public ExpressionNode Visit(UnaryNode node) throws Exception {

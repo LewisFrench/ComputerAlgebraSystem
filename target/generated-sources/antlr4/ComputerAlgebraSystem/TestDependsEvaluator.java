@@ -42,26 +42,11 @@ public class TestDependsEvaluator {
 			assertTrue(d.Visit(new UnaryNode(new VariableNode("x"))));
 			assertFalse(d.Visit(new UnaryNode(new VariableNode("xy"))));
 		} catch (Exception e) {
-			e.printStackTrace();
+			fail();
 		}
 
 	}
 
-	@Test
-	public void testDependsEvaluatorParenthetical() {
-		ExpressionNode innerNode = new VariableNode("x");
-		ExpressionNode dependency = new ParentheticalNode(innerNode);
-
-		DependsEvaluator d = new DependsEvaluator(dependency);
-
-		try {
-			assertTrue(d.Visit(new ParentheticalNode(new VariableNode("x"))));
-			assertFalse(d.Visit(new ParentheticalNode(new VariableNode("xy"))));
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-	}
 
 	@Test
 	public void testDependsEvaluatorAddition() {
@@ -73,7 +58,7 @@ public class TestDependsEvaluator {
 			assertTrue(d.Visit(new AdditionNode(new NumberNode(new BigDecimal(2.1)), new VariableNode("x"))));
 			assertFalse(d.Visit(new AdditionNode(new NumberNode(new BigDecimal(2.1)), new VariableNode("xz"))));
 		} catch (Exception e) {
-			e.printStackTrace();
+			fail();
 		}
 
 	}
@@ -88,7 +73,7 @@ public class TestDependsEvaluator {
 			assertTrue(d.Visit(new SubtractionNode(new NumberNode(new BigDecimal(2.1)), new VariableNode("x"))));
 			assertFalse(d.Visit(new SubtractionNode(new NumberNode(new BigDecimal(2.1)), new VariableNode("xz"))));
 		} catch (Exception e) {
-			e.printStackTrace();
+			fail();
 		}
 
 	}
@@ -103,7 +88,7 @@ public class TestDependsEvaluator {
 			assertTrue(d.Visit(new MultiplicationNode(new NumberNode(new BigDecimal(2.1)), new VariableNode("x"))));
 			assertFalse(d.Visit(new MultiplicationNode(new NumberNode(new BigDecimal(2.1)), new VariableNode("xz"))));
 		} catch (Exception e) {
-			e.printStackTrace();
+			fail();
 		}
 
 	}
@@ -118,7 +103,7 @@ public class TestDependsEvaluator {
 			assertTrue(d.Visit(new DivisionNode(new NumberNode(new BigDecimal(2.1)), new VariableNode("x"))));
 			assertFalse(d.Visit(new DivisionNode(new NumberNode(new BigDecimal(2.1)), new VariableNode("xz"))));
 		} catch (Exception e) {
-			e.printStackTrace();
+			fail();
 		}
 
 	}
@@ -133,7 +118,7 @@ public class TestDependsEvaluator {
 			assertTrue(d.Visit(new PowerNode(new NumberNode(new BigDecimal(2.1)), new VariableNode("x"))));
 			assertFalse(d.Visit(new PowerNode(new NumberNode(new BigDecimal(2.1)), new VariableNode("xz"))));
 		} catch (Exception e) {
-			e.printStackTrace();
+			fail();
 		}
 
 	}
@@ -160,7 +145,7 @@ public class TestDependsEvaluator {
 			assertFalse(d.Visit(new FunctionNode("TestFunction", testFunctionArgumentsFalse)));
 			assertFalse(d.Visit(new FunctionNode("TestFunctionFalse", testFunctionArgumentsTrue)));
 		} catch (Exception e) {
-			e.printStackTrace();
+			fail();
 		}
 
 	}

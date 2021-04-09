@@ -27,26 +27,9 @@ public class TestSubstituteConditionRuleVariables {
 			assertTrue(relopResult.left instanceof NumberNode);
 			assertTrue(relopResult.right instanceof VariableNode);
 			assertEquals(((VariableNode)relopResult.right).getValue(), "x");
-		} catch (Exception e ) {e.printStackTrace();}
+		} catch (Exception e ) {fail();}
 	}
-	@Test
-	public void TestSubstituteConditionRuleVariables_Relop_Parenthetica() {
-		LinkedHashMap<String, ExpressionNode> variables = new LinkedHashMap<>();
-		variables.put("$n", new VariableNode("x"));
-		
-		RelopNode relop = new RelopNode(new NumberNode(3.2),new ParentheticalNode( new RuleVariableNode("n")), ConditionsLexer.RELOP_EQ, "==");
-		
-		SubstituteConditionRuleVariables s = new SubstituteConditionRuleVariables(variables);
-		
-		try { 
-			ExpressionNode result = s.Visit(relop);
-			RelopNode relopResult = (RelopNode) result;
-			assertTrue(relopResult.left instanceof NumberNode);
-			assertTrue(relopResult.right instanceof ParentheticalNode);
-			assertTrue(((ParentheticalNode)relopResult.right).innerNode instanceof VariableNode);
-		} catch (Exception e ) {e.printStackTrace();}
-	}
-	
+
 	@Test
 	public void TestSubstituteConditionRuleVariables_Not() {
 		LinkedHashMap<String, ExpressionNode> variables = new LinkedHashMap<>();
@@ -62,7 +45,7 @@ public class TestSubstituteConditionRuleVariables {
 			assertTrue(notResult.innerNode instanceof RelopNode);
 			
 			assertTrue(((RelopNode)notResult.innerNode).left instanceof SubtractionNode);
-		} catch (Exception e ) {e.printStackTrace();}
+		} catch (Exception e ) {fail();}
 	}
 	
 
@@ -83,28 +66,8 @@ public class TestSubstituteConditionRuleVariables {
 			assertTrue(result instanceof ConditionFunctionNode);
 			
 			assertTrue(((ConditionFunctionNode)result).getArguments().get(0) instanceof AdditionNode);
-		} catch (Exception e ) {e.printStackTrace();}
-	}
-	
-	@Test
-	public void TestSubstituteConditionRuleVariables_Relop_Parenthetical() {
-		LinkedHashMap<String, ExpressionNode> variables = new LinkedHashMap<>();
-		variables.put("$n", new VariableNode("x"));
-		
-		RelopNode relop = new RelopNode(new NumberNode(3.2),new ParentheticalNode( new RuleVariableNode("n")), ConditionsLexer.RELOP_EQ, "==");
-		
-		SubstituteConditionRuleVariables s = new SubstituteConditionRuleVariables(variables);
-		
-		try { 
-			ExpressionNode result = s.Visit(relop);
-			RelopNode relopResult = (RelopNode) result;
-			assertTrue(relopResult.left instanceof NumberNode);
-			assertTrue(relopResult.right instanceof ParentheticalNode);
-			assertTrue(((ParentheticalNode)relopResult.right).innerNode instanceof VariableNode);
-		} catch (Exception e ) {e.printStackTrace();}
-	}
-	
-	
+		} catch (Exception e ) {fail();}
+	}	
 	
 	@Test
 	public void TestSubstituteConditionRuleVariables_Relop_Unary() {
@@ -121,7 +84,7 @@ public class TestSubstituteConditionRuleVariables {
 			assertTrue(relopResult.left instanceof NumberNode);
 			assertTrue(relopResult.right instanceof UnaryNode);
 			assertTrue(((UnaryNode)relopResult.right).innerNode instanceof VariableNode);
-		} catch (Exception e ) {e.printStackTrace();}
+		} catch (Exception e ) {fail();}
 	}
 	
 	
@@ -145,7 +108,7 @@ public class TestSubstituteConditionRuleVariables {
 			MultiplicationNode relopMult = (MultiplicationNode)rightRelop.right;
 			assertTrue(relopMult.Right instanceof VariableNode);
 			
-		} catch (Exception e ) {e.printStackTrace();}
+		} catch (Exception e ) {fail();}
 	}
 	
 	
@@ -169,7 +132,7 @@ public class TestSubstituteConditionRuleVariables {
 			PowerNode relopPow = (PowerNode)rightRelop.right;
 			assertTrue(relopPow.Right instanceof VariableNode);
 			
-		} catch (Exception e ) {e.printStackTrace();}
+		} catch (Exception e ) {fail();}
 	}
 	
 	@Test 

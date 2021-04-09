@@ -11,7 +11,7 @@ abstract class AstComparator<T> {
 
 	public abstract T Visit(DivisionNode lhsNode, ExpressionNode node) throws Exception;
 
-	public abstract T Visit(ParentheticalNode lhsNode, ExpressionNode node) throws Exception;
+	//public abstract T Visit(ParentheticalNode lhsNode, ExpressionNode node) throws Exception;
 
 	public abstract T Visit(UnaryNode lhsNode, ExpressionNode node) throws Exception;
 
@@ -35,8 +35,8 @@ abstract class AstComparator<T> {
 			return Visit((MultiplicationNode) lhsNode, node);
 		} else if (lhsNode instanceof DivisionNode) {
 			return Visit((DivisionNode) lhsNode, node);
-		} else if (lhsNode instanceof ParentheticalNode) {
-			return Visit((ParentheticalNode) lhsNode, node);
+//		} else if (lhsNode instanceof ParentheticalNode) {
+//			return Visit((ParentheticalNode) lhsNode, node);
 		} else if (lhsNode instanceof UnaryNode) {
 			return Visit((UnaryNode) lhsNode, node);
 		} else if (lhsNode instanceof FunctionNode) {

@@ -25,7 +25,7 @@ public class TestSimplifyConditionNumericalExpressions {
 			assertTrue(((RelopNode) result).left instanceof NumberNode);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			fail();
 		}
 
 	}
@@ -42,7 +42,7 @@ public class TestSimplifyConditionNumericalExpressions {
 			assertFalse(((RelopNode) result).left instanceof NumberNode);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			fail();
 		}
 	}
 
@@ -58,7 +58,7 @@ public class TestSimplifyConditionNumericalExpressions {
 			assertTrue(((RelopNode) result).left instanceof NumberNode);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			fail();
 		}
 
 	}
@@ -75,7 +75,7 @@ public class TestSimplifyConditionNumericalExpressions {
 			assertFalse(((RelopNode) result).left instanceof NumberNode);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			fail();
 		}
 	}
 
@@ -91,7 +91,7 @@ public class TestSimplifyConditionNumericalExpressions {
 			assertTrue(((RelopNode) result).left instanceof NumberNode);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			fail();
 		}
 
 	}
@@ -111,7 +111,7 @@ public class TestSimplifyConditionNumericalExpressions {
 			assertFalse(((RelopNode) result).left instanceof NumberNode);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			fail();
 		}
 	}
 
@@ -127,7 +127,7 @@ public class TestSimplifyConditionNumericalExpressions {
 			assertTrue(((RelopNode) result).left instanceof NumberNode);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			fail();
 		}
 
 	}
@@ -144,28 +144,28 @@ public class TestSimplifyConditionNumericalExpressions {
 			assertTrue(((RelopNode) result).left instanceof NumberNode);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			fail();
 		}
 
 	}
 
-	@Test
-	public void testParentheticalOperation() {
-		ExpressionNode power = new PowerNode(new NumberNode(1.2), new NumberNode(1));
-		ExpressionNode parenthetical = new ParentheticalNode(power);
-		ExpressionNode relopGT = new RelopNode(parenthetical, new NumberNode(0.0), ConditionsLexer.RELOP_GT, ">");
-		SimplifyConditionNumericalExpressions s = new SimplifyConditionNumericalExpressions();
-
-		try {
-			ExpressionNode result = s.Visit(relopGT);
-			assertTrue(result instanceof RelopNode);
-			assertTrue(((RelopNode) result).left instanceof NumberNode);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-	}
+//	@Test
+//	public void testParentheticalOperation() {
+//		ExpressionNode power = new PowerNode(new NumberNode(1.2), new NumberNode(1));
+//		ExpressionNode parenthetical = new ParentheticalNode(power);
+//		ExpressionNode relopGT = new RelopNode(parenthetical, new NumberNode(0.0), ConditionsLexer.RELOP_GT, ">");
+//		SimplifyConditionNumericalExpressions s = new SimplifyConditionNumericalExpressions();
+//
+//		try {
+//			ExpressionNode result = s.Visit(relopGT);
+//			assertTrue(result instanceof RelopNode);
+//			assertTrue(((RelopNode) result).left instanceof NumberNode);
+//		} catch (Exception e) {
+//			// TODO Auto-generated catch block
+//			fail();
+//		}
+//
+//	}
 
 	
 	@Test
@@ -181,14 +181,14 @@ public class TestSimplifyConditionNumericalExpressions {
 			assertTrue(((RelopNode) result).left instanceof NumberNode);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			fail();
 		}
 
 	}
 
 	@Test
 	public void testUnaryOperation_cannot_Simplify() {
-		ExpressionNode power = new DivisionNode(new ParentheticalNode(new VariableNode("o")), new NumberNode(1));
+		ExpressionNode power = new DivisionNode(new UnaryNode(new VariableNode("o")), new NumberNode(1));
 		ExpressionNode unary = new UnaryNode(power);
 		ExpressionNode relopGT = new RelopNode(unary, new NumberNode(0.0), ConditionsLexer.RELOP_GT, ">");
 		SimplifyConditionNumericalExpressions s = new SimplifyConditionNumericalExpressions();
@@ -200,14 +200,14 @@ public class TestSimplifyConditionNumericalExpressions {
 			assertTrue(((RelopNode)result).right instanceof NumberNode);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			fail();
 		}
 
 	}
 
 	@Test
-	public void testComplexOperationAdditionUnaryParenthetical() {
-		ExpressionNode parenthetical = new ParentheticalNode(new NumberNode(3));
+	public void testComplexOperationAdditionUnary() {
+		ExpressionNode parenthetical = new NumberNode(3);
 		ExpressionNode unaryNode = new UnaryNode(parenthetical);
 		ExpressionNode addition = new AdditionNode(new NumberNode(1), unaryNode);
 		ExpressionNode relopGT = new RelopNode(addition, new NumberNode(0.0), ConditionsLexer.RELOP_GT, ">");
@@ -218,7 +218,7 @@ public class TestSimplifyConditionNumericalExpressions {
 			assertTrue(((RelopNode) result).left instanceof NumberNode);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			fail();
 		}
 	}
 
@@ -231,7 +231,7 @@ public class TestSimplifyConditionNumericalExpressions {
 			ExpressionNode result = s.Visit(relopGT);
 			assertFalse(((RelopNode) result).left instanceof NumberNode);
 		} catch (Exception e) {
-			e.printStackTrace();
+			fail();
 		}
 	}
 
@@ -247,7 +247,7 @@ public class TestSimplifyConditionNumericalExpressions {
 			assertFalse(((ConditionAndNode) result).left instanceof NumberNode);
 			assertFalse(((ConditionAndNode) result).right instanceof NumberNode);
 		} catch (Exception e) {
-			e.printStackTrace();
+			fail();
 		}
 	}
 
@@ -267,7 +267,7 @@ public class TestSimplifyConditionNumericalExpressions {
 			assertTrue(((ConditionFunctionNode)((ConditionOrNode) result).right).arguments.get(0) instanceof NumberNode);
 			
 		} catch (Exception e) {
-			e.printStackTrace();
+			fail();
 		}
 	}
 	
@@ -291,7 +291,7 @@ public class TestSimplifyConditionNumericalExpressions {
 			assertTrue(rightRelop.left instanceof NumberNode);
 			assertTrue(rightRelop.right instanceof NumberNode);
 		} catch (Exception e) {
-			e.printStackTrace();
+			fail();
 		}
 	}
 	

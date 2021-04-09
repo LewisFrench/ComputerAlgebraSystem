@@ -113,18 +113,6 @@ public interface ConditionsListener extends ParseTreeListener {
 	 */
 	void exitNumber(ConditionsParser.NumberContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code UnaryExpression}
-	 * labeled alternative in {@link ConditionsParser#expression}.
-	 * @param ctx the parse tree
-	 */
-	void enterUnaryExpression(ConditionsParser.UnaryExpressionContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code UnaryExpression}
-	 * labeled alternative in {@link ConditionsParser#expression}.
-	 * @param ctx the parse tree
-	 */
-	void exitUnaryExpression(ConditionsParser.UnaryExpressionContext ctx);
-	/**
 	 * Enter a parse tree produced by the {@code Parenthetical}
 	 * labeled alternative in {@link ConditionsParser#expression}.
 	 * @param ctx the parse tree
@@ -136,6 +124,18 @@ public interface ConditionsListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitParenthetical(ConditionsParser.ParentheticalContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code UnaryExpression}
+	 * labeled alternative in {@link ConditionsParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterUnaryExpression(ConditionsParser.UnaryExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code UnaryExpression}
+	 * labeled alternative in {@link ConditionsParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitUnaryExpression(ConditionsParser.UnaryExpressionContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code Operation}
 	 * labeled alternative in {@link ConditionsParser#expression}.

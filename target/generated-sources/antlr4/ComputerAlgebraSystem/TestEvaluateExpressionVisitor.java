@@ -84,15 +84,7 @@ public class TestEvaluateExpressionVisitor {
 		} catch (Exception e1) { e1.printStackTrace();}
 	}
 	
-	@Test
-	public void testSimple_Parenthetical() {
-		ExpressionNode node = new ParentheticalNode(new VariableNode("ac"));
-		EvaluateExpressionVisitor e= new EvaluateExpressionVisitor();
-		try {
-			assertEquals(e.Visit(node), "(ac)");
-		} catch (Exception e1) { e1.printStackTrace();}
-	}
-	
+
 	@Test
 	public void testSimple_Function_noArguments() {
 		

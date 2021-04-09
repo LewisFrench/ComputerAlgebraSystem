@@ -20,7 +20,7 @@ public class TestFetchConditionRuleVariables {
 		try {
 			f.Visit(rv);
 			assertTrue(f.getVariables().keySet().contains("$n"));
-		} catch (Exception e) {e.printStackTrace();}	
+		} catch (Exception e) {fail();}	
 
 	}
 	
@@ -33,7 +33,7 @@ public class TestFetchConditionRuleVariables {
 		try {
 			f.Visit(v);
 			assertTrue(f.getVariables().keySet().isEmpty());
-		} catch (Exception e) {e.printStackTrace();}	
+		} catch (Exception e) {fail();}	
 
 	}
 	
@@ -45,7 +45,7 @@ public class TestFetchConditionRuleVariables {
 		try {
 			f.Visit(v);
 			assertTrue(f.getVariables().keySet().isEmpty());
-		} catch (Exception e) {e.printStackTrace();}	
+		} catch (Exception e) {fail();}	
 
 	}
 	
@@ -59,7 +59,7 @@ public class TestFetchConditionRuleVariables {
 		try {
 			f.Visit(subtraction);
 			assertTrue(f.getVariables().keySet().contains("$n"));
-		} catch (Exception e) {e.printStackTrace();}	
+		} catch (Exception e) {fail();}	
 
 	}
 	
@@ -72,7 +72,7 @@ public class TestFetchConditionRuleVariables {
 		try {
 			f.Visit(multiplication);
 			assertTrue(f.getVariables().keySet().contains("$n"));
-		} catch (Exception e) {e.printStackTrace();}	
+		} catch (Exception e) {fail();}	
 
 	}
 	
@@ -85,7 +85,7 @@ public class TestFetchConditionRuleVariables {
 		try {
 			f.Visit(division);
 			assertTrue(f.getVariables().keySet().contains("$n"));
-		} catch (Exception e) {e.printStackTrace();}	
+		} catch (Exception e) {fail();}	
 
 	}
 	
@@ -98,7 +98,7 @@ public class TestFetchConditionRuleVariables {
 		try {
 			f.Visit(addition);
 			assertTrue(f.getVariables().keySet().contains("$n"));
-		} catch (Exception e) {e.printStackTrace();}	
+		} catch (Exception e) {fail();}	
 
 	}
 	
@@ -111,7 +111,7 @@ public class TestFetchConditionRuleVariables {
 		try {
 			f.Visit(power);
 			assertTrue(f.getVariables().keySet().contains("$n"));
-		} catch (Exception e) {e.printStackTrace();}	
+		} catch (Exception e) {fail();}	
 
 	}
 
@@ -126,7 +126,7 @@ public class TestFetchConditionRuleVariables {
 		try {
 			f.Visit(addition);
 			assertTrue(f.getVariables().keySet().isEmpty());
-		} catch (Exception e) {e.printStackTrace();}	
+		} catch (Exception e) {fail();}	
 
 	}
 	
@@ -140,23 +140,23 @@ public class TestFetchConditionRuleVariables {
 		try {
 			f.Visit(unary);
 			assertTrue(f.getVariables().keySet().contains("$n"));
-		} catch (Exception e) {e.printStackTrace();}	
+		} catch (Exception e) {fail();}	
 
 	}
 	
-	
-	@Test
-	public void testFetchComplexRuleVariable_Parenthetical() {
-		ExpressionNode rv = new RuleVariableNode("n");
-		ExpressionNode parenthetical = new ParentheticalNode(rv);
-		FetchConditionRuleVariables f = new FetchConditionRuleVariables();
-
-		try {
-			f.Visit(parenthetical);
-			assertTrue(f.getVariables().keySet().contains("$n"));
-		} catch (Exception e) {e.printStackTrace();}	
-
-	}
+//	
+//	@Test
+//	public void testFetchComplexRuleVariable_Parenthetical() {
+//		ExpressionNode rv = new RuleVariableNode("n");
+//		ExpressionNode unary = new UnaryNode(rv);
+//		FetchConditionRuleVariables f = new FetchConditionRuleVariables();
+//
+//		try {
+//			f.Visit(unary);
+//			assertTrue(f.getVariables().keySet().contains("$n"));
+//		} catch (Exception e) {fail();}	
+//
+//	}
 	@Test
 	public void testFetchComplexRuleVariable_Function() {
 		ExpressionNode rv = new RuleVariableNode("n");
@@ -164,13 +164,13 @@ public class TestFetchConditionRuleVariables {
 		ArrayList<ExpressionNode> arguments = new ArrayList<>();
 		arguments.add(new NumberNode(2));
 		arguments.add(rv);
-		ExpressionNode parenthetical = new ParentheticalNode(rv);
+		ExpressionNode unary = new UnaryNode(rv);
 		FetchConditionRuleVariables f = new FetchConditionRuleVariables();
 
 		try {
-			f.Visit(parenthetical);
+			f.Visit(unary);
 			assertTrue(f.getVariables().keySet().contains("$n"));
-		} catch (Exception e) {e.printStackTrace();}	
+		} catch (Exception e) {fail();}	
 
 	}
 	
@@ -180,13 +180,13 @@ public class TestFetchConditionRuleVariables {
 		
 		ExpressionNode relop = new RelopNode(new NumberNode(2.1), rv, ConditionsLexer.RELOP_GT, ">");
 		
-		ExpressionNode parenthetical = new ParentheticalNode(relop);
+		ExpressionNode unary = new UnaryNode(relop);
 		FetchConditionRuleVariables f = new FetchConditionRuleVariables();
 
 		try {
-			f.Visit(parenthetical);
+			f.Visit(unary);
 			assertTrue(f.getVariables().keySet().contains("$n"));
-		} catch (Exception e) {e.printStackTrace();}	
+		} catch (Exception e) {fail();}	
 
 	}
 	
@@ -202,7 +202,7 @@ public class TestFetchConditionRuleVariables {
 		try {
 			f.Visit(not);
 			assertTrue(f.getVariables().keySet().contains("$n"));
-		} catch (Exception e) {e.printStackTrace();}	
+		} catch (Exception e) {fail();}	
 
 	}
 	
@@ -219,7 +219,7 @@ public class TestFetchConditionRuleVariables {
 			f.Visit(and);
 			assertTrue(f.getVariables().keySet().contains("$n"));
 			assertTrue(f.getVariables().keySet().contains("$a"));
-		} catch (Exception e) {e.printStackTrace();}	
+		} catch (Exception e) {fail();}	
 
 	}
 	
@@ -238,7 +238,7 @@ public class TestFetchConditionRuleVariables {
 			assertTrue(f.getVariables().keySet().contains("$a"));
 			assertTrue(f.getVariables().keySet().contains("$q"));
 			assertTrue(f.getVariables().keySet().contains("$w"));
-		} catch (Exception e) {e.printStackTrace();}	
+		} catch (Exception e) {fail();}	
 
 	}
 	
@@ -253,7 +253,7 @@ public class TestFetchConditionRuleVariables {
 		try {
 			f.Visit(cf);
 			assertTrue(f.getVariables().keySet().contains("$n"));
-		} catch (Exception e) {e.printStackTrace();}	
+		} catch (Exception e) {fail();}	
 
 	}
 	

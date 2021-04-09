@@ -5,6 +5,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.math.BigDecimal;
+
 import org.antlr.v4.runtime.misc.ParseCancellationException;
 import org.junit.Test;
 
@@ -18,6 +20,19 @@ public class TestRuleAlgebraParser {
 			Rule result = p.parseRule("x=1");
 			assertTrue(result.lhsNode instanceof VariableNode);
 			assertTrue(result.rhsNode instanceof NumberNode);
+			assertTrue(result.conditionsNode == null);
+			
+		} catch(Exception e) {e.printStackTrace();}
+	}
+	@Test
+	public void testValidRuleNoConditions_Variable_NegativeNumber() {
+
+		Program p = new Program();
+		try {
+			Rule result = p.parseRule("x=-1");
+			assertTrue(result.lhsNode instanceof VariableNode);
+			assertTrue(result.rhsNode instanceof NumberNode);
+			assertTrue(((NumberNode)result.rhsNode).getValue().compareTo(BigDecimal.valueOf(-1.0))==0);
 			assertTrue(result.conditionsNode == null);
 			
 		} catch(Exception e) {e.printStackTrace();}
@@ -49,6 +64,12 @@ public class TestRuleAlgebraParser {
 	}
 	
 	@Test
+	public void testValidRuleNoConditions_RuleVariablesNotCorrespond_Exception() {
+
+		Program p = new Program();
+		assertThrows(Exception.class, ()-> p.parseRule("$x=$y"));
+	}
+	@Test
 	public void testValidRuleNoConditions_RuleVariable_RuleVariable() {
 
 		Program p = new Program();
@@ -60,33 +81,13 @@ public class TestRuleAlgebraParser {
 			
 		} catch(Exception e) {e.printStackTrace();}
 	}
-	
 	@Test
-	public void testValidRuleNoConditions_Unary_Parenthetical() {
+	public void testValidRuleNoConditions_ConditionRuleVariablesNotCorrespond_Exception() {
 
 		Program p = new Program();
-		try {
-			Rule result = p.parseRule("-x=(x)");
-			assertTrue(result.lhsNode instanceof UnaryNode);
-			assertTrue(result.rhsNode instanceof ParentheticalNode);
-			assertTrue(result.conditionsNode == null);
-			
-		} catch(Exception e) {e.printStackTrace();}
+		assertThrows(Exception.class, ()-> p.parseRule("$x=$x:$y>1"));
 	}
-	
-	@Test
-	public void testValidRuleNoConditions_Parenthetical_Unary() {
 
-		Program p = new Program();
-		try {
-			Rule result = p.parseRule("(x)=-x");
-			assertTrue(result.lhsNode instanceof ParentheticalNode);
-			assertTrue(result.rhsNode instanceof UnaryNode);
-			assertTrue(result.conditionsNode == null);
-			
-		} catch(Exception e) {e.printStackTrace();}
-	}
-	
 	@Test
 	public void testValidRuleNoConditions_Addition_Subtraction() {
 		

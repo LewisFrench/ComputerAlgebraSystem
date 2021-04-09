@@ -12,12 +12,12 @@ condition
 	;
 
 expression
-   :  func = VARIABLE LPAREN  arguments =  expression( COMMA expression)* RPAREN #FunctionExpression
-   |  op = (OP_ADD | OP_SUB) expression #UnaryExpression
-   |  LPAREN expression RPAREN #Parenthetical
+   :  LPAREN expression RPAREN #Parenthetical  
    |  left = expression  op = OP_POW right = expression #Operation
    |  left = expression  op = (OP_MUL | OP_DIV) right = expression #Operation
    |  left = expression  op = (OP_ADD | OP_SUB) right = expression #Operation
+   |  func = VARIABLE LPAREN  arguments =  expression( COMMA expression)* RPAREN #FunctionExpression
+   |  op = (OP_ADD | OP_SUB) expression #UnaryExpression
    |  value = VARIABLE  #Variable
    | VARIDENTIFIER value = VARIABLE #RuleVariable
    |  value = NUMBER #Number

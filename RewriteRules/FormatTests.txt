@@ -1,1 +1,1 @@
-$n*($m*$A) = ($n*$m)*$A : _is_number($n) & _is_number($m)
+$x = i : _is_integer($x)

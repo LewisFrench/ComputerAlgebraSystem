@@ -123,18 +123,6 @@ public class ConditionsBaseListener implements ConditionsListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterUnaryExpression(ConditionsParser.UnaryExpressionContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitUnaryExpression(ConditionsParser.UnaryExpressionContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void enterParenthetical(ConditionsParser.ParentheticalContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -142,6 +130,18 @@ public class ConditionsBaseListener implements ConditionsListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitParenthetical(ConditionsParser.ParentheticalContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterUnaryExpression(ConditionsParser.UnaryExpressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitUnaryExpression(ConditionsParser.UnaryExpressionContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
