@@ -37,7 +37,8 @@ class EvaluateExpressionVisitor extends TermVisitor<String> {
 	@Override
 	public String Visit(NumberNode node) {
 		System.out.println("\nvisiting Number : " + node.toString());
-		return String.valueOf(node.value);
+		return String.valueOf(node.getValue().stripTrailingZeros());
+		//return String.valueOf(node.value);
 	}
 
 	@Override

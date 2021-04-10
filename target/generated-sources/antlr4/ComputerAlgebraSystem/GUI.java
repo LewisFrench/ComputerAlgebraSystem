@@ -1,6 +1,9 @@
 package ComputerAlgebraSystem;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -16,6 +19,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
@@ -26,15 +30,16 @@ public class GUI implements ActionListener {
 	JButton openFileButton;
 	JTextField enterTerm;
 	JButton beginRewriteButton;
-
+	JLabel termLabel;
 	JLabel term;
 	JLabel filePath;
 
-	JLabel result;
+	//JLabel result;
+	JTextArea result;
 
 	File rulesFile = null;
 
-	JLabel errorMessage;
+	JTextArea errorMessage;
 
 	JTextField enterRuleApplicationLimit;
 
@@ -46,44 +51,125 @@ public class GUI implements ActionListener {
 	public GUI() {
 
 		JFrame frame = new JFrame();
+		JPanel panel = new JPanel();
+		panel.setLayout(new GridBagLayout());
+		panel.setBorder(BorderFactory.createEmptyBorder(30, 30, 30, 30));
+		GridBagConstraints c = new GridBagConstraints();
+		c.fill = GridBagConstraints.HORIZONTAL;
+
 		fileChooser = new JFileChooser(".");
 		fileChooser.setCurrentDirectory(new java.io.File("./RewriteRules"));
 		fileChooser.setDialogTitle("Open Rewrite Rules");
 		FileNameExtensionFilter filter = new FileNameExtensionFilter("Text Files", "txt", "text");
 		fileChooser.setFileFilter(filter);
+		// panel.add(fileChooser, BorderLayout.PAGE_START);
+
 		openFileButton = new JButton("Load Rules");
-		enterTerm = new JTextField("", 30);
-		beginRewriteButton = new JButton("Apply Rewrite Rules");
-		// Program p = new Program();
-		term = new JLabel("");
-		filePath = new JLabel("");
-		result = new JLabel("");
-		errorMessage = new JLabel("");
-		enterRuleApplicationLimit = new JTextField("", 10);
-		fileChooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
-
-		JPanel panel = new JPanel();
-
-		panel.setLayout(new GridBagLayout());
-		panel.setBorder(BorderFactory.createEmptyBorder(30, 30, 30, 30));
-		panel.setLayout(new GridLayout(0, 1));
-
-		panel.add(openFileButton);
-		panel.add(enterTerm);
-		panel.add(enterRuleApplicationLimit);
-		panel.add(beginRewriteButton);
-		panel.add(term);
-		panel.add(filePath);
-		panel.add(result);
-		panel.add(errorMessage);
-
 		openFileButton.addActionListener(this);
+		c.fill = GridBagConstraints.VERTICAL;
+		c.weightx = 0.5;
+		c.gridx = 0;
+		c.gridy = 0;
+		panel.add(openFileButton, c);
+
+		termLabel = new JLabel("Enter an algebraic term:");
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.weightx = 04;
+		c.gridx = 0;
+		c.gridy = 1;
+		c.gridwidth = 1;
+		panel.add(termLabel, c);
+
+		enterTerm = new JTextField("enter term");
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.weightx = 0.0;
+		c.gridx = 0;
+		c.gridy = 2;
+		c.ipady = 30;
+		c.gridwidth = 3;
+		panel.add(enterTerm, c);
+
+		beginRewriteButton = new JButton("Apply Rewrite Rules");
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.weightx = 0.0;
+		c.gridx = 0;
+		c.gridy = 3;
+		c.ipady = 10;
+		c.gridwidth = 3;
 		beginRewriteButton.addActionListener(this);
-		frame.add(panel, BorderLayout.CENTER);
+		panel.add(beginRewriteButton, c);
+
+		result = new JTextArea(2, 20);
+		result.setWrapStyleWord(true);
+		result.setLineWrap(true);
+		result.setOpaque(false);
+		result.setEditable(false);
+		result.setText("OIAWNN");
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.weightx = 0.0;
+		c.gridx = 0;
+		c.gridy = 9;
+		c.ipady = 10;
+
+		c.gridwidth = 3;
+		panel.add(result,c);
+
+		errorMessage = new JTextArea();
+		
+		errorMessage.setWrapStyleWord(true);
+		errorMessage.setLineWrap(true);
+		errorMessage.setOpaque(false);
+		errorMessage.setEditable(false);
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.weightx = 0.0;
+		c.gridx = 0;
+		c.gridy = 14;
+		
+		panel.add(errorMessage,c);
+		
+		
+		
+		frame.add(panel);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setTitle("Computer Algebra System");
 		frame.pack();
 		frame.setVisible(true);
+
+//		JFrame frame = new JFrame();
+//
+//		openFileButton = new JButton("Load Rules");
+//		enterTerm = new JTextField("", 30);
+//		beginRewriteButton = new JButton("Apply Rewrite Rules");
+//		// Program p = new Program();
+//		term = new JLabel("");
+//		filePath = new JLabel("");
+//		result = new JLabel("");
+//		errorMessage = new JLabel("");
+//		enterRuleApplicationLimit = new JTextField("", 10);
+//		fileChooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
+//
+//		JPanel panel = new JPanel();
+//
+//		panel.setLayout(new GridBagLayout());
+//		panel.setBorder(BorderFactory.createEmptyBorder(30, 30, 30, 30));
+//		panel.setLayout(new GridLayout(0, 1));
+//
+//		panel.add(openFileButton);
+//		panel.add(enterTerm);
+//		panel.add(enterRuleApplicationLimit);
+//		panel.add(beginRewriteButton);
+//		panel.add(term);
+//		panel.add(filePath);
+//		panel.add(result);
+//		panel.add(errorMessage);
+//
+//		openFileButton.addActionListener(this);
+//		beginRewriteButton.addActionListener(this);
+//		frame.add(panel, BorderLayout.CENTER);
+//		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//		frame.setTitle("Computer Algebra System");
+//		frame.pack();
+//		frame.setVisible(true);
 	}
 
 	@Override
@@ -98,25 +184,16 @@ public class GUI implements ActionListener {
 			errorMessage.setText("");
 			result.setText("");
 			Program p = new Program();
-
+			System.out.println("HERE");
 			try {
 
 				ArrayList<String> ruleStringList = readRules(fileChooser.getSelectedFile());
 				ArrayList<Rule> rules = this.getRules(ruleStringList, p);
 				if (rules != null) {
 					ExpressionNode term = p.parseTerm(enterTerm.getText());
-					if (!(enterRuleApplicationLimit.getText().replaceAll(" ", "").equals(""))) {
-						int ruleApplicationLimit = Integer.valueOf(enterRuleApplicationLimit.getText());
-						if (ruleApplicationLimit < 1) {
-							throw new NumberFormatException();
-						}
+					String output = p.Rewrite(rules, term, Integer.MAX_VALUE - 1);
+					result.setText(output);
 
-						String output = p.Rewrite(rules, term, ruleApplicationLimit);
-						result.setText(output);
-					} else {
-						String output = p.Rewrite(rules, term, Integer.MAX_VALUE - 1);
-						result.setText(output);
-					}
 				}
 			} catch (StackOverflowError soe) {
 				errorMessage.setText(soe.getLocalizedMessage());
@@ -131,6 +208,7 @@ public class GUI implements ActionListener {
 				errorMessage.setText(pce.getMessage());
 			} catch (Exception ex) {
 				errorMessage.setText(ex.getMessage());
+				ex.printStackTrace();
 			}
 		}
 	}
@@ -153,21 +231,7 @@ public class GUI implements ActionListener {
 			errorMessage.setText(ex.getMessage());
 		}
 		return null;
-
 	}
-
-//	public static String applyRewrite(ArrayList<String> rules, String term) {
-//		try {
-//			Program p = new Program();
-//			ArrayList<Rule> ruleObjects = p.generateRules(rules);
-//			//return p.generateRules(rules);
-//			//return p.Rewrite(rules, term);
-//		} catch (Exception e) {
-//			System.out.println("Fucked it in GUI");
-//			return "";
-//		}
-//		return "output goes here";
-//	}
 
 	public void setOutput(String output) {
 		result.setText(output);
@@ -181,7 +245,6 @@ public class GUI implements ActionListener {
 			while (s.hasNextLine()) {
 				ruleStrings.add(s.nextLine());
 			}
-			// System.out.println("Rules: " + ruleStrings.toString());
 			s.close();
 			return ruleStrings;
 		} catch (NullPointerException npe) {

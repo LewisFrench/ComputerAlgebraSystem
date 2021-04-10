@@ -45,7 +45,6 @@ public class EvaluateTree extends AstComparator<Boolean> {
 
 	@Override
 	public Boolean Visit(MultiplicationNode lhsNode, ExpressionNode node) throws Exception {
-		System.out.println("Comparing Multiplication : " + lhsNode.toString() + " vs " + node.toString());
 		if (lhsNode.getClass() == node.getClass()) {
 			boolean l = Visit(lhsNode.Left, ((MultiplicationNode) node).Left);
 			boolean r = Visit(lhsNode.Right, ((MultiplicationNode) node).Right);
@@ -75,19 +74,8 @@ public class EvaluateTree extends AstComparator<Boolean> {
 		return false;
 	}
 
-//	@Override
-//	public Boolean Visit(ParentheticalNode lhsNode, ExpressionNode node) throws Exception {
-//		boolean match = false;
-//		if (lhsNode.getClass() == node.getClass()) {
-//			match = Visit(lhsNode.innerNode, ((ParentheticalNode) node).innerNode);
-//
-//		}
-//		return match;
-//	}
-
 	@Override
 	public Boolean Visit(UnaryNode lhsNode, ExpressionNode node) throws Exception {
-		System.out.println("Visiting matcher : " + lhsNode.toString() + "  " +lhsNode.getClass() + "\n"+ node.toString() + "   " + node.getClass());
 		boolean match = false;
 		if (lhsNode.getClass() == node.getClass()) {
 			match = Visit(lhsNode.innerNode, ((UnaryNode) node).innerNode);
