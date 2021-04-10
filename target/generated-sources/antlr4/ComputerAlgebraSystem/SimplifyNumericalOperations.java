@@ -1,6 +1,7 @@
 package ComputerAlgebraSystem;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 
 public class SimplifyNumericalOperations extends TermVisitor<ExpressionNode> {
@@ -50,7 +51,7 @@ public class SimplifyNumericalOperations extends TermVisitor<ExpressionNode> {
 		ExpressionNode left = Visit(node.Left);
 		ExpressionNode right = Visit(node.Right);
 		if (left instanceof NumberNode && right instanceof NumberNode) {
-			return new NumberNode(((NumberNode) left).getValue() .divide(((NumberNode) right).getValue()));
+			return new NumberNode(((NumberNode) left).getValue() .divide(((NumberNode) right).getValue(), 10,RoundingMode.CEILING));
 		}
 		return new DivisionNode(left, right);
 	}

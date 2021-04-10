@@ -99,7 +99,7 @@ public class RewriteProcess extends TermVisitor<ExpressionNode> {
 		EvaluateTree argumentEvaluator;
 		if (rules != null) {
 			for (Rule r : rules) {
-				System.out.println("\nMatching rule " + r.toString() + " to term  " + node.toString());
+			
 				boolean conditionsHold = false;
 				argumentEvaluator = new EvaluateTree();
 
@@ -107,7 +107,6 @@ public class RewriteProcess extends TermVisitor<ExpressionNode> {
 
 				if (ruleMatches) {
 					boolean validArguments = argumentsValid(argumentEvaluator);
-					System.out.println("Matches");
 					if (validArguments) {
 						LinkedHashMap<String, ExpressionNode> newRuleVariables = new LinkedHashMap<String, ExpressionNode>();
 						for (int i = 0; i < argumentEvaluator.variables.size(); i++) {
@@ -127,11 +126,11 @@ public class RewriteProcess extends TermVisitor<ExpressionNode> {
 						}
 
 						if (conditionsHold || r.conditionsNode == null) {
-							//System.out.println("\nMatched rule " + r.toString() + " to term  " + node.toString());
+							
 							this.ruleApplicationCount++;
 							ExpressionNode substituted = new SubstituteRuleVariables(newRuleVariables).Visit(r.rhsNode);
 							ExpressionNode solved = new SimplifyNumericalOperations().Visit(substituted);
-
+							System.out.println("\nMatched rule " + r.toString() + " to term  " + node.toString() + "   -->   " + solved.toString() );
 							return Visit(solved);
 						}
 
