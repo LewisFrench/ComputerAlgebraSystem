@@ -78,7 +78,11 @@ public class FetchRuleVariables extends RuleTermVisitor<ExpressionNode> {
 	}
 
 	@Override
-	public ExpressionNode Visit(NumberNode node) {
+	public ExpressionNode Visit(DecimalNode node) {
+		return node;
+	}
+	@Override
+	public ExpressionNode Visit(IntegerNode node)  {
 		return node;
 	}
 
@@ -87,5 +91,7 @@ public class FetchRuleVariables extends RuleTermVisitor<ExpressionNode> {
 		this.variables.put(node.toString(), null);
 		return node;
 	}
+
+
 
 }

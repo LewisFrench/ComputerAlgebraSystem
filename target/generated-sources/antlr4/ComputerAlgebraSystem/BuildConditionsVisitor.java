@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import Conditions.ConditionsLexer;
 import Conditions.ConditionsParser;
+import RuleAlgebra.RuleAlgebraParser;
 
 public class BuildConditionsVisitor extends ConditionsBaseVisitor<ExpressionNode> {
 	LinkedHashMap<String, ExpressionNode> variables;
@@ -29,7 +30,6 @@ public class BuildConditionsVisitor extends ConditionsBaseVisitor<ExpressionNode
 		} else if (context.op.getType() == ConditionsLexer.OP_OR) {
 			node = new ConditionOrNode(left, right);
 		}
-
 		return node;
 	}
 
@@ -82,6 +82,14 @@ public class BuildConditionsVisitor extends ConditionsBaseVisitor<ExpressionNode
 			break;
 
 		case ConditionsLexer.OP_SUB:
+			if (node instanceof NumberNode) {
+				if (node instanceof DecimalNode) {
+					return new DecimalNode(((DecimalNode)node).getValue().multiply(BigDecimal.valueOf(-1)));
+				}
+				if (node instanceof IntegerNode) {
+					return new IntegerNode(((IntegerNode)node).getValue()*-1);
+				}
+			}
 			node = new UnaryNode(visit(context.expression()));
 			break;
 
@@ -133,14 +141,18 @@ public class BuildConditionsVisitor extends ConditionsBaseVisitor<ExpressionNode
 
 		FunctionNode f = new FunctionNode(context.func.getText(), arguments);
 		return f;
-
 	}
 
 	@Override
-	public ExpressionNode visitNumber(ConditionsParser.NumberContext context) {
-		return new NumberNode(new BigDecimal(Double.valueOf(context.value.getText())));
+	public ExpressionNode visitDecimal(ConditionsParser.DecimalContext context) {
+		return new DecimalNode(new BigDecimal(context.value.getText()));
 	}
 
+	@Override
+	public ExpressionNode visitInteger(ConditionsParser.IntegerContext context) {
+		return new IntegerNode(Long.parseLong(context.value.getText()));
+	}
+	
 	@Override
 	public ExpressionNode visitRuleVariable(ConditionsParser.RuleVariableContext context) {
 		return new RuleVariableNode(context.value.getText());

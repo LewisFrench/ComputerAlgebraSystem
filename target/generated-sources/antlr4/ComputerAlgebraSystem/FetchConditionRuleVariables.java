@@ -117,14 +117,23 @@ public class FetchConditionRuleVariables extends ConditionVisitor<ExpressionNode
 		return node;
 	}
 
-	@Override
-	public ExpressionNode Visit(NumberNode node) {
-		return node;
-	}
+
 
 	@Override
 	public ExpressionNode Visit(RuleVariableNode node) {
 		this.variables.put(node.toString(), null);
+		return node;
+	}
+
+
+	@Override
+	public ExpressionNode Visit(DecimalNode node) throws Exception {
+		return node;
+	}
+
+
+	@Override
+	public ExpressionNode Visit(IntegerNode node) throws Exception {
 		return node;
 	}
 }

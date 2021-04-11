@@ -184,17 +184,21 @@ class is_function extends ConditionFunction {
 	}
 }
 
+// Creation of _is_decimal???????????????
+
+
 class is_integer extends ConditionFunction {
 	@Override
 	boolean function(ArrayList<ExpressionNode> arguments) throws Exception {
 		if (arguments.size() == 1) {
-			if (arguments.get(0) instanceof NumberNode) {
-//				return (((NumberNode) arguments.get(0)).getValue() == Math
-//						.floor(((NumberNode) arguments.get(0)).getValue()));
-				return (((NumberNode)arguments.get(0)).getValue().remainder(BigDecimal.ONE).compareTo(BigDecimal.ZERO) == 0);
-			} else {
-				return false;
-			}
+			return (arguments.get(0) instanceof IntegerNode);
+//			if (arguments.get(0) instanceof NumberNode) {
+////				return (((NumberNode) arguments.get(0)).getValue() == Math
+////						.floor(((NumberNode) arguments.get(0)).getValue()));
+//				return (((NumberNode)arguments.get(0)).getValue().remainder(BigDecimal.ONE).compareTo(BigDecimal.ZERO) == 0);
+//			} else {
+//				return false;
+//			}
 		}
 		throw new Exception(
 				"Attempting to call is_integer with the incorrect number of arguments. Please consult the user guide for the syntax of these functions");

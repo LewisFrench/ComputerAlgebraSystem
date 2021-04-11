@@ -19,12 +19,17 @@ public class BuildRhsVisitor extends RuleAlgebraBaseVisitor<ExpressionNode> {
 	}
 
 	@Override
-	public ExpressionNode visitNumber(RuleAlgebraParser.NumberContext context) {
-		BigDecimal b = BigDecimal.valueOf(Double.valueOf(context.value.getText()));
-		return new NumberNode(b);
+	public ExpressionNode visitDecimal(RuleAlgebraParser.DecimalContext context) {
+		BigDecimal b = new BigDecimal(context.value.getText());
+		return new DecimalNode(b);
 		//return new NumberNode(new BigDecimal(Double.valueOf(context.value.getText())));
 	}
 
+	@Override
+	public ExpressionNode visitInteger(RuleAlgebraParser.IntegerContext context) {
+		return new IntegerNode(Long.parseLong(context.value.getText()));
+	}
+	
 	@Override
 	public ExpressionNode visitParenthetical(RuleAlgebraParser.ParentheticalContext context) {
 		return (visit(context.expression()));
@@ -72,7 +77,14 @@ public class BuildRhsVisitor extends RuleAlgebraBaseVisitor<ExpressionNode> {
 			break;
 		case RuleAlgebraLexer.OP_SUB:
 			if (node instanceof NumberNode) {
-				return new NumberNode(((NumberNode)node).getValue().multiply(BigDecimal.valueOf(-1)));
+				if (node instanceof NumberNode) {
+					if (node instanceof DecimalNode) {
+						return new DecimalNode(((DecimalNode)node).getValue().multiply(BigDecimal.valueOf(-1)));
+					}
+					if (node instanceof IntegerNode) {
+						return new IntegerNode(((IntegerNode)node).getValue()*-1);
+					}
+				}
 			}
 			node = new UnaryNode(visit(context.expression()));
 			break;

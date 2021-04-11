@@ -12,15 +12,17 @@ condition
 	;
 
 expression
-   :  LPAREN expression RPAREN #Parenthetical  
+   :  value = VARIABLE  #Variable
+   | VARIDENTIFIER value = VARIABLE #RuleVariable
+   |  value = DECIMALNUMBER #Decimal
+   |  value = INTEGER #Integer
+   |  LPAREN expression RPAREN #Parenthetical  
    |  left = expression  op = OP_POW right = expression #Operation
    |  left = expression  op = (OP_MUL | OP_DIV) right = expression #Operation
    |  left = expression  op = (OP_ADD | OP_SUB) right = expression #Operation
    |  func = VARIABLE LPAREN  arguments =  expression( COMMA expression)* RPAREN #FunctionExpression
    |  op = (OP_ADD | OP_SUB) expression #UnaryExpression
-   |  value = VARIABLE  #Variable
-   | VARIDENTIFIER value = VARIABLE #RuleVariable
-   |  value = NUMBER #Number
+
    ;
    
 OP_ADD: '+';
@@ -41,10 +43,13 @@ OP_AND: '&';
 OP_OR: '|';
 OP_NOT: '!';
 
- NUMBER
-   : UNSIGNED_INTEGER ('.' UNSIGNED_INTEGER)?
+ INTEGER
+   : UNSIGNED_INTEGER
    ;
 
+ DECIMALNUMBER
+   : UNSIGNED_INTEGER ('.' UNSIGNED_INTEGER)
+   ;
 fragment UNSIGNED_INTEGER
    : ('0' .. '9')+
    ;

@@ -64,10 +64,14 @@ public class RewriteProcess extends TermVisitor<ExpressionNode> {
 //	}
 
 	@Override
-	public ExpressionNode Visit(NumberNode node) throws Exception {
+	public ExpressionNode Visit(DecimalNode node) throws Exception {
 		return rewrite(node);
 	}
 
+	@Override
+	public ExpressionNode Visit(IntegerNode node) throws Exception {
+		return rewrite(node);
+	}
 	@Override
 	public ExpressionNode Visit(UnaryNode node) throws Exception {
 		ExpressionNode innerNode = Visit(node.innerNode);
@@ -77,6 +81,7 @@ public class RewriteProcess extends TermVisitor<ExpressionNode> {
 
 	@Override
 	public ExpressionNode Visit(FunctionNode node) throws Exception {
+		System.out.println("Visiting Function");
 		ArrayList<ExpressionNode> arguments = new ArrayList<>();
 		for (int i = 0; i < node.getArguments().size(); i++) {
 			arguments.add(Visit(node.arguments.get(i)));
@@ -99,13 +104,13 @@ public class RewriteProcess extends TermVisitor<ExpressionNode> {
 		EvaluateTree argumentEvaluator;
 		if (rules != null) {
 			for (Rule r : rules) {
-			
+				//System.out.println("Applying rule " + r.toString() + "  to term   " + node.toString());			
 				boolean conditionsHold = false;
 				argumentEvaluator = new EvaluateTree();
 
 				boolean ruleMatches = argumentEvaluator.Visit(r.lhsNode, node);
-
 				if (ruleMatches) {
+					System.out.println("Rule matches");
 					boolean validArguments = argumentsValid(argumentEvaluator);
 					if (validArguments) {
 						LinkedHashMap<String, ExpressionNode> newRuleVariables = new LinkedHashMap<String, ExpressionNode>();
@@ -126,11 +131,13 @@ public class RewriteProcess extends TermVisitor<ExpressionNode> {
 						}
 
 						if (conditionsHold || r.conditionsNode == null) {
-							
+							System.out.println("\nMatched rule " + r.toString() + " to term  " + node.toString() + "   -->   "); //+ solved.toString() );
 							this.ruleApplicationCount++;
+							System.out.println("substituting ");
 							ExpressionNode substituted = new SubstituteRuleVariables(newRuleVariables).Visit(r.rhsNode);
+							System.out.println("Solving ");
 							ExpressionNode solved = new SimplifyNumericalOperations().Visit(substituted);
-							System.out.println("\nMatched rule " + r.toString() + " to term  " + node.toString() + "   -->   " + solved.toString() );
+							
 							return Visit(solved);
 						}
 
@@ -158,5 +165,7 @@ public class RewriteProcess extends TermVisitor<ExpressionNode> {
 		}
 		return true;
 	}
+
+
 
 }

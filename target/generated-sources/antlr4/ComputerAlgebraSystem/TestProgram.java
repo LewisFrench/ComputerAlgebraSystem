@@ -152,7 +152,7 @@ public class TestProgram {
 			rules.add(r);
 			String result = p.Rewrite(rules,new VariableNode("p"), 100);
 			System.out.println("HERE \n\n" + result);
-			assertTrue(result.equals("1.0"));
+			assertTrue(result.equals("1"));
 		} catch (Exception e ) {fail();}
 
 	}

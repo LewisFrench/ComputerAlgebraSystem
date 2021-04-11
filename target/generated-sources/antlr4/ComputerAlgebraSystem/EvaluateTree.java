@@ -65,9 +65,18 @@ public class EvaluateTree extends AstComparator<Boolean> {
 	}
 
 	@Override
-	public Boolean Visit(NumberNode lhsNode, ExpressionNode node) {
+	public Boolean Visit(DecimalNode lhsNode, ExpressionNode node) {
 		if (lhsNode.getClass() == node.getClass()) {
-			if (lhsNode.getValue().compareTo( ((NumberNode) node).getValue()) == 0) {
+			if (lhsNode.getValue().compareTo( ((DecimalNode) node).getValue()) == 0) {
+				return true;
+			}
+		}
+		return false;
+	}
+	@Override
+	public Boolean Visit(IntegerNode lhsNode, ExpressionNode node) throws Exception {
+		if (lhsNode.getClass() == node.getClass()) {
+			if (lhsNode.getValue()==  ((IntegerNode) node).getValue()) {
 				return true;
 			}
 		}
@@ -81,8 +90,9 @@ public class EvaluateTree extends AstComparator<Boolean> {
 			match = Visit(lhsNode.innerNode, ((UnaryNode) node).innerNode);
 
 		}
+		// This might be irrelevant
 		if (node instanceof NumberNode) {
-			if (((NumberNode)node).getValue().compareTo(BigDecimal.valueOf(0)) <0) {
+			if (((DecimalNode)node).getValue().compareTo(BigDecimal.valueOf(0)) <0) {
 				return Visit(lhsNode.innerNode, node);
 			}
 		}
@@ -124,4 +134,6 @@ public class EvaluateTree extends AstComparator<Boolean> {
 		}
 		return false;
 	}
+
+
 }

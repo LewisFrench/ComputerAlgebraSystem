@@ -41,14 +41,68 @@ public class SimplifyConditionNumericalExpressions extends ConditionVisitor<Expr
 
 		return new ConditionFunctionNode(node.functionName, arguments);
 	}
-	
+//	
+//	@Override
+//	public ExpressionNode Visit(PowerNode node) throws Exception {
+//		ExpressionNode left = Visit(node.Left);
+//		ExpressionNode right = Visit(node.Right);
+//
+//		if (left instanceof DecimalNode && right instanceof DecimalNode) {
+//			return new DecimalNode(new BigDecimal(Math.pow(((DecimalNode) node.Left).getValue().doubleValue(), ((DecimalNode) node.Right).getValue().doubleValue())));
+//		}
+//		return new PowerNode(left, right);
+//	}
+//	@Override
+//	public ExpressionNode Visit(AdditionNode node) throws Exception {
+//		ExpressionNode left = Visit(node.Left);
+//		ExpressionNode right = Visit(node.Right);
+//		if (left instanceof DecimalNode && right instanceof DecimalNode) {
+//			return new DecimalNode(((DecimalNode) left).getValue().add(((DecimalNode) right).getValue()));
+//		}
+//		return new AdditionNode(left, right);
+//	}
+//
+//	@Override
+//	public ExpressionNode Visit(SubtractionNode node) throws Exception {
+//		ExpressionNode left = Visit(node.Left);
+//		ExpressionNode right = Visit(node.Right);
+//		if (left instanceof DecimalNode && right instanceof DecimalNode) {
+//			return new DecimalNode(((DecimalNode) left).getValue().subtract(((DecimalNode) right).getValue()));
+//		}
+//		return new SubtractionNode(left, right);
+//	}
+//
+//	@Override
+//	public ExpressionNode Visit(MultiplicationNode node) throws Exception {
+//		ExpressionNode left = Visit(node.Left);
+//		ExpressionNode right = Visit(node.Right);
+//		if (left instanceof DecimalNode && right instanceof DecimalNode) {
+//			return new DecimalNode(((DecimalNode) left).getValue().multiply(((DecimalNode) right).getValue()));
+//		}
+//		return new MultiplicationNode(left, right);
+//	}
+//
+//	@Override
+//	public ExpressionNode Visit(DivisionNode node) throws Exception {
+//		ExpressionNode left = Visit(node.Left);
+//		ExpressionNode right = Visit(node.Right);
+//		if (left instanceof DecimalNode && right instanceof DecimalNode) {
+//			return new DecimalNode(((DecimalNode) left).getValue() .divide(((DecimalNode) right).getValue()));
+//		}
+//		return new DivisionNode(left, right);
+//	}
+
 	@Override
 	public ExpressionNode Visit(PowerNode node) throws Exception {
 		ExpressionNode left = Visit(node.Left);
 		ExpressionNode right = Visit(node.Right);
 
 		if (left instanceof NumberNode && right instanceof NumberNode) {
-			return new NumberNode(new BigDecimal(Math.pow(((NumberNode) node.Left).getValue().doubleValue(), ((NumberNode) node.Right).getValue().doubleValue())));
+			if (left instanceof IntegerNode) {
+				return ((IntegerNode)left).exponentiate((NumberNode)right);
+			} else if (left instanceof DecimalNode) {
+				return ((DecimalNode)left).exponentiate((NumberNode)right);
+			}
 		}
 		return new PowerNode(left, right);
 	}
@@ -56,8 +110,13 @@ public class SimplifyConditionNumericalExpressions extends ConditionVisitor<Expr
 	public ExpressionNode Visit(AdditionNode node) throws Exception {
 		ExpressionNode left = Visit(node.Left);
 		ExpressionNode right = Visit(node.Right);
+		
 		if (left instanceof NumberNode && right instanceof NumberNode) {
-			return new NumberNode(((NumberNode) left).getValue().add(((NumberNode) right).getValue()));
+			if (left instanceof IntegerNode) {
+				return ((IntegerNode)left).add((NumberNode)right);
+			} else if (left instanceof DecimalNode) {
+				return ((DecimalNode)left).add((NumberNode)right);
+			}
 		}
 		return new AdditionNode(left, right);
 	}
@@ -67,7 +126,11 @@ public class SimplifyConditionNumericalExpressions extends ConditionVisitor<Expr
 		ExpressionNode left = Visit(node.Left);
 		ExpressionNode right = Visit(node.Right);
 		if (left instanceof NumberNode && right instanceof NumberNode) {
-			return new NumberNode(((NumberNode) left).getValue().subtract(((NumberNode) right).getValue()));
+			if (left instanceof IntegerNode) {
+				return ((IntegerNode)left).subtract((NumberNode)right);
+			} else if (left instanceof DecimalNode) {
+				return ((DecimalNode)left).subtract((NumberNode)right);
+			}
 		}
 		return new SubtractionNode(left, right);
 	}
@@ -77,7 +140,13 @@ public class SimplifyConditionNumericalExpressions extends ConditionVisitor<Expr
 		ExpressionNode left = Visit(node.Left);
 		ExpressionNode right = Visit(node.Right);
 		if (left instanceof NumberNode && right instanceof NumberNode) {
-			return new NumberNode(((NumberNode) left).getValue().multiply(((NumberNode) right).getValue()));
+			if (left instanceof NumberNode && right instanceof NumberNode) {
+				if (left instanceof IntegerNode) {
+					return ((IntegerNode)left).multiply((NumberNode)right);
+				} else if (left instanceof DecimalNode) {
+					return ((DecimalNode)left).multiply((NumberNode)right);
+				}
+			}
 		}
 		return new MultiplicationNode(left, right);
 	}
@@ -86,17 +155,28 @@ public class SimplifyConditionNumericalExpressions extends ConditionVisitor<Expr
 	public ExpressionNode Visit(DivisionNode node) throws Exception {
 		ExpressionNode left = Visit(node.Left);
 		ExpressionNode right = Visit(node.Right);
+		
+		// Handle division by 0 exception
+		// Add bigdecimal division scale, rounding method
+		
 		if (left instanceof NumberNode && right instanceof NumberNode) {
-			return new NumberNode(((NumberNode) left).getValue() .divide(((NumberNode) right).getValue()));
+			if (left instanceof NumberNode && right instanceof NumberNode) {
+				if (left instanceof IntegerNode) {
+					return ((IntegerNode)left).divide((NumberNode)right);
+				} else if (left instanceof DecimalNode) {
+					return ((DecimalNode)left).divide((NumberNode)right);
+				}
+			}
 		}
 		return new DivisionNode(left, right);
 	}
 
+
 //	@Override
 //	public ExpressionNode Visit(ParentheticalNode node) throws Exception {
 //		ExpressionNode innerNode = Visit(node.innerNode);
-//		if (innerNode instanceof NumberNode) {
-//			return ((NumberNode)innerNode);
+//		if (innerNode instanceof DecimalNode) {
+//			return ((DecimalNode)innerNode);
 //		}
 //		return new ParentheticalNode(innerNode);
 //	}
@@ -105,8 +185,8 @@ public class SimplifyConditionNumericalExpressions extends ConditionVisitor<Expr
 	public ExpressionNode Visit(UnaryNode node) throws Exception {
 		
 		ExpressionNode innerNode = Visit(node.innerNode);
-		if (innerNode instanceof NumberNode) {
-			return new NumberNode( (((NumberNode)innerNode).getValue()).multiply(new BigDecimal(-1)));
+		if (innerNode instanceof DecimalNode) {
+			return new DecimalNode( (((DecimalNode)innerNode).getValue()).multiply(new BigDecimal(-1)));
 			
 		}
 		return new UnaryNode(innerNode);
@@ -129,13 +209,21 @@ public class SimplifyConditionNumericalExpressions extends ConditionVisitor<Expr
 	}
 
 	@Override
-	public ExpressionNode Visit(NumberNode node) {
+	public ExpressionNode Visit(DecimalNode node) {
 		return node;
 	}
+	
+	@Override
+	public ExpressionNode Visit(IntegerNode node) throws Exception {
+		return node;
+	}
+
+	
 
 	@Override
 	public ExpressionNode Visit(RuleVariableNode node) throws Exception {
 		throw new Exception("Rulevariablenode persists in condition. Please check the structure of your rules. ");
 	}
+
 
 }

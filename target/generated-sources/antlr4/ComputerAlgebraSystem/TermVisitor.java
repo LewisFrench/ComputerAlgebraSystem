@@ -18,10 +18,11 @@ abstract class TermVisitor<T> {
 	public abstract T Visit(FunctionNode node)throws Exception;
 
 	public abstract T Visit(VariableNode node) throws Exception;
+	
+	public abstract T Visit(IntegerNode node) throws Exception;
 
-	public abstract T Visit(NumberNode node) throws Exception;
+	public abstract T Visit(DecimalNode node) throws Exception;
 
-	// public abstract T Visit(RuleVariableNode node);
 
 	// Can talk about how this could be more efficient in C#, see bookmark page
 	public T Visit(ExpressionNode node) throws Exception {
@@ -35,19 +36,19 @@ abstract class TermVisitor<T> {
 			return Visit((MultiplicationNode) node);
 		} else if (node instanceof DivisionNode) {
 			return Visit((DivisionNode) node);
-//		} else if (node instanceof ParentheticalNode) {
-//			return Visit((ParentheticalNode) node);
 		} else if (node instanceof UnaryNode) {
 			return Visit((UnaryNode) node);
 		} else if (node instanceof FunctionNode) {
 			return Visit((FunctionNode) node);
 		} else if (node instanceof VariableNode) {
 			return Visit((VariableNode) node);
-		} else if (node instanceof NumberNode) {
-			return Visit((NumberNode) node);
+		} else if (node instanceof IntegerNode) {
+			return Visit((IntegerNode) node);
+		} else if (node instanceof DecimalNode) {
+			return Visit((DecimalNode) node);
 		}
 		else {
-			throw new Exception("Attempted to visit a valid node");
+			throw new Exception("Attempted to visit an invalid node");
 		}
 	}
 }

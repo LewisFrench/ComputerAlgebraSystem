@@ -7,6 +7,7 @@ import Algebra.AlgebraBaseVisitor;
 import Algebra.AlgebraLexer;
 import Algebra.AlgebraParser;
 import RuleAlgebra.RuleAlgebraLexer;
+import RuleAlgebra.RuleAlgebraParser;
 
 public class BuildTermVisitor extends AlgebraBaseVisitor<ExpressionNode> {
 
@@ -16,14 +17,18 @@ public class BuildTermVisitor extends AlgebraBaseVisitor<ExpressionNode> {
 	}
 
 	@Override
-	public ExpressionNode visitNumber(AlgebraParser.NumberContext context) {
+	public ExpressionNode visitDecimal(AlgebraParser.DecimalContext context) {
 		//System.out.println("\n BigDecimal :  " + context.getText() + "   \n" + new BigDecimal(Double.valueOf(context.value.getText())));
-		BigDecimal b = BigDecimal.valueOf(Double.valueOf(context.value.getText()));
-		return new NumberNode(b);
+		BigDecimal b = new BigDecimal(context.value.getText());
+		return new DecimalNode(b);
 		//return new NumberNode(new BigDecimal(Double.valueOf(context.value.getText())));
 		
 	}
-
+	@Override
+	public ExpressionNode visitInteger(AlgebraParser.IntegerContext context) {
+		return new IntegerNode(Long.parseLong(context.value.getText()));
+	}
+	
 	@Override
 	public ExpressionNode visitVariable(AlgebraParser.VariableContext context) {
 
@@ -48,7 +53,12 @@ public class BuildTermVisitor extends AlgebraBaseVisitor<ExpressionNode> {
 
 		case AlgebraLexer.OP_SUB:
 			if (node instanceof NumberNode) {
-				return new NumberNode(((NumberNode)node).getValue().multiply(BigDecimal.valueOf(-1)));
+				if (node instanceof DecimalNode) {
+					return new DecimalNode(((DecimalNode)node).getValue().multiply(BigDecimal.valueOf(-1)));
+				}
+				if (node instanceof IntegerNode) {
+					return new IntegerNode(((IntegerNode)node).getValue()*-1);
+				}
 			}
 			return new UnaryNode(node);
 			

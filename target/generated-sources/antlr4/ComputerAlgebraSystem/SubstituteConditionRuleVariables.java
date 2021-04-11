@@ -113,10 +113,6 @@ public class SubstituteConditionRuleVariables extends ConditionVisitor<Expressio
 		return node;
 	}
 
-	@Override
-	public ExpressionNode Visit(NumberNode node) {
-		return node;
-	}
 
 	@Override
 	public ExpressionNode Visit(RuleVariableNode node) throws Exception {
@@ -124,6 +120,16 @@ public class SubstituteConditionRuleVariables extends ConditionVisitor<Expressio
 			return this.ruleVariables.get(node.toString());
 		}
 		throw new Exception("Attempting to substitute a non-existent rule variable. Please check the structure of your rules");
+	}
+
+	@Override
+	public ExpressionNode Visit(DecimalNode node) throws Exception {
+		return node;
+	}
+
+	@Override
+	public ExpressionNode Visit(IntegerNode node) throws Exception {
+		return node;
 	}
 
 }

@@ -72,10 +72,10 @@ public class DependsEvaluator extends TermVisitor<Boolean> {
 //		return Visit(node.innerNode);
 //	}
 
-	@Override
-	public Boolean Visit(NumberNode node) {
-		return node.getClass() == dependency.getClass() && node.getValue().compareTo(((NumberNode) dependency).getValue()) == 0;
-	}
+//	@Override
+//	public Boolean Visit(NumberNode node) {
+//		return node.getClass() == dependency.getClass() && node.getValue().compareTo(((NumberNode) dependency).getValue()) == 0;
+//	}
 
 	@Override
 	public Boolean Visit(UnaryNode node) throws Exception {
@@ -110,6 +110,16 @@ public class DependsEvaluator extends TermVisitor<Boolean> {
 		return node.getClass() == dependency.getClass()
 				&& node.getValue().equals(((VariableNode) dependency).getValue());
 
+	}
+
+	@Override
+	public Boolean Visit(IntegerNode node) throws Exception {
+		return (node.getClass() == dependency.getClass() && ((IntegerNode)dependency).getValue() == node.getValue());
+	}
+
+	@Override
+	public Boolean Visit(DecimalNode node) throws Exception {
+		return (node.getClass() == dependency.getClass() && ((DecimalNode)dependency).getValue().compareTo(node.getValue())==0);
 	}
 
 }

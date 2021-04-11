@@ -1,7 +1,7 @@
 package ComputerAlgebraSystem;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.LinkedHashMap;
 
 import org.antlr.v4.runtime.CharStream;
@@ -25,13 +25,15 @@ public class Program {
 	}
 
 	public static void main(String[] args) {
-		//GUI g = new GUI();
 		new GUI();
 	}
 
 	public String Rewrite(ArrayList<Rule> rules, ExpressionNode termAst, int ruleApplicationLimit) throws Exception {
+		
+		
 		String outputValue = "";
 		try {
+			System.out.println(termAst.toString());
 			ExpressionNode ast2 = new RewriteProcess(rules, ruleApplicationLimit).Visit(termAst);
 			ExpressionNode simplified = new SimplifyNumericalOperations().Visit(ast2);
 			outputValue = new EvaluateExpressionVisitor().Visit(simplified);

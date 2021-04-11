@@ -19,7 +19,9 @@ abstract class RuleTermVisitor<T> {
 
 	public abstract T Visit(VariableNode node) throws Exception;
 
-	public abstract T Visit(NumberNode node) throws Exception;
+	public abstract T Visit(DecimalNode node) throws Exception;
+	
+	public abstract T Visit(IntegerNode node) throws Exception;
 
 	public abstract T Visit(RuleVariableNode node) throws Exception;
 
@@ -43,12 +45,14 @@ abstract class RuleTermVisitor<T> {
 			return Visit((FunctionNode) node);
 		} else if (node instanceof VariableNode) {
 			return Visit((VariableNode) node);
-		} else if (node instanceof NumberNode) {
-			return Visit((NumberNode) node);
+		} else if (node instanceof DecimalNode) {
+			return Visit((DecimalNode) node);
+		} else if (node instanceof IntegerNode) {
+			return Visit((IntegerNode) node);
 		} else if (node instanceof RuleVariableNode) {
 			return Visit((RuleVariableNode) node);
 		} else {
-			throw new Exception("Attempting to visit an unreachable node");
+			throw new Exception("AAAttempting to visit an unreachable node");
 		}
 	}
 }

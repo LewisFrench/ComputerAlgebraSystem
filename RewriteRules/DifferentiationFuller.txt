@@ -14,4 +14,4 @@ diff(tan($A)^$n, $x) = $n * diff($A,$x) *sec($A)^2 * tan($A)^($n-1)
 diff(sec($A), $x) = diff($A, $x) * sec($A) * tan($A)
 diff(sec($A)^$n, $x) = $n*diff($A,$x)*(sec($A)^$n)*tan($A)
 diffn($A, $x, 0) = $A
-diffn($A, $x, $n) = diff(diffn($A, $x, $n-1), $x) : _is_integer($n) & $n > 0
+diffn($A, $x, $ng) = diff(diffn($A, $x, $n-1), $x) : _is_integer($n) & $n > 0

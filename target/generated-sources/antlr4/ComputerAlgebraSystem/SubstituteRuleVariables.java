@@ -95,10 +95,10 @@ public class SubstituteRuleVariables extends RuleTermVisitor<ExpressionNode> {
 		return node;
 	}
 
-	@Override
-	public ExpressionNode Visit(NumberNode node) {
-		return node;
-	}
+//	@Override
+//	public ExpressionNode Visit(NumberNode node) {
+//		return node;
+//	}
 
 	@Override
 	public ExpressionNode Visit(RuleVariableNode node) throws Exception {
@@ -106,6 +106,16 @@ public class SubstituteRuleVariables extends RuleTermVisitor<ExpressionNode> {
 			return this.variables.get(node.toString());
 		} 
 		throw new Exception("Attemped to substitute null rule variable. Check the use of rule variables in your rewrite rules.");
+	}
+
+	@Override
+	public ExpressionNode Visit(DecimalNode node) throws Exception {
+		return node;
+	}
+
+	@Override
+	public ExpressionNode Visit(IntegerNode node) throws Exception {
+		return node;
 	}
 	
 

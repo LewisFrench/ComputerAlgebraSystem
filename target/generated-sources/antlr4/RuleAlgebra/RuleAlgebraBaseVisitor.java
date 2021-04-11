@@ -24,7 +24,7 @@ public class RuleAlgebraBaseVisitor<T> extends AbstractParseTreeVisitor<T> imple
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitFunctionExpression(RuleAlgebraParser.FunctionExpressionContext ctx) { return visitChildren(ctx); }
+	@Override public T visitInteger(RuleAlgebraParser.IntegerContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -38,7 +38,14 @@ public class RuleAlgebraBaseVisitor<T> extends AbstractParseTreeVisitor<T> imple
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitNumber(RuleAlgebraParser.NumberContext ctx) { return visitChildren(ctx); }
+	@Override public T visitFunctionExpression(RuleAlgebraParser.FunctionExpressionContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitDecimal(RuleAlgebraParser.DecimalContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *

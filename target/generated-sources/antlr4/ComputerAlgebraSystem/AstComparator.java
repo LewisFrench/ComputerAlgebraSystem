@@ -21,7 +21,9 @@ abstract class AstComparator<T> {
 
 	public abstract T Visit(VariableNode lhsNode, ExpressionNode node) throws Exception;
 
-	public abstract T Visit(NumberNode lhsNode, ExpressionNode node)throws Exception;
+	public abstract T Visit(DecimalNode lhsNode, ExpressionNode node)throws Exception;
+	
+	public abstract T Visit(IntegerNode lhsNode, ExpressionNode node)throws Exception;
 
 	// Can talk about how this could be more effieint in C#, see bookmark page
 	public T Visit(ExpressionNode lhsNode, ExpressionNode node) throws Exception {
@@ -45,9 +47,11 @@ abstract class AstComparator<T> {
 			return Visit((RuleVariableNode) lhsNode, node);
 		} else if (lhsNode instanceof VariableNode) {
 			return Visit((VariableNode) lhsNode, node);
-		} else if (lhsNode instanceof NumberNode) {
-			return Visit((NumberNode) lhsNode, node);
-		}
+		} else if (lhsNode instanceof DecimalNode) {
+			return Visit((DecimalNode) lhsNode, node);
+		} else if (lhsNode instanceof IntegerNode) {
+			return Visit((IntegerNode) lhsNode, node);
+		 }
 
 		else {
 			throw new Exception("Tree matching error: attempted to visit an unreachable node. Please check the structure of your rules");

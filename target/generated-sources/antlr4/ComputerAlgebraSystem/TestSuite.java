@@ -10,7 +10,7 @@ import org.junit.runners.Suite.SuiteClasses;
 		TestSubstituteRuleVariables.class, TestTermAlgebraParser.class, TestFetchRuleVariables.class, 
 		TestConditionFunctions.class, TestSubstituteConditionRuleVariables.class, 
 		TestEvaluateExpressionVisitor.class, TestFetchConditionRuleVariables.class, TestEvaluateConditionsVisitor.class, 
-		TestRule.class, TestRewriteProcess.class, TestProgram.class})
+		TestRule.class, TestRewriteProcess.class, TestProgram.class, TestNumericalOperations.class})
 public class TestSuite {
 
 }

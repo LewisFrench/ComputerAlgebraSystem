@@ -10,6 +10,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -49,7 +50,6 @@ public class GUI implements ActionListener {
 //	}
 
 	public GUI() {
-
 		JFrame frame = new JFrame();
 		JPanel panel = new JPanel();
 		panel.setLayout(new GridBagLayout());
@@ -184,7 +184,6 @@ public class GUI implements ActionListener {
 			errorMessage.setText("");
 			result.setText("");
 			Program p = new Program();
-			System.out.println("HERE");
 			try {
 
 				ArrayList<String> ruleStringList = readRules(fileChooser.getSelectedFile());
@@ -208,7 +207,7 @@ public class GUI implements ActionListener {
 				errorMessage.setText(pce.getMessage());
 			} catch (Exception ex) {
 				errorMessage.setText(ex.getMessage());
-				ex.printStackTrace();
+				
 			}
 		}
 	}

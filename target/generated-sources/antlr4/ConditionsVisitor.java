@@ -51,12 +51,12 @@ public interface ConditionsVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitConditionOperation(ConditionsParser.ConditionOperationContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code FunctionExpression}
+	 * Visit a parse tree produced by the {@code Integer}
 	 * labeled alternative in {@link ConditionsParser#expression}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitFunctionExpression(ConditionsParser.FunctionExpressionContext ctx);
+	T visitInteger(ConditionsParser.IntegerContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code Variable}
 	 * labeled alternative in {@link ConditionsParser#expression}.
@@ -65,12 +65,19 @@ public interface ConditionsVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitVariable(ConditionsParser.VariableContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code Number}
+	 * Visit a parse tree produced by the {@code FunctionExpression}
 	 * labeled alternative in {@link ConditionsParser#expression}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitNumber(ConditionsParser.NumberContext ctx);
+	T visitFunctionExpression(ConditionsParser.FunctionExpressionContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code Decimal}
+	 * labeled alternative in {@link ConditionsParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitDecimal(ConditionsParser.DecimalContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code Parenthetical}
 	 * labeled alternative in {@link ConditionsParser#expression}.
