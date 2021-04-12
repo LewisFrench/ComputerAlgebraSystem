@@ -3,7 +3,8 @@ grammar RuleAlgebra;
 ruleTerm : expression EOF;
 
 expression
-   :  value = VARIABLE #Variable
+   : ('-')? numerator = INTEGER '/' ('-')? denominator = INTEGER #Rational   
+   |value = VARIABLE #Variable
    | VARIDENTIFIER value = VARIABLE #RuleVariable
    |  value = DECIMALNUMBER #Decimal
    |  value = INTEGER #Integer

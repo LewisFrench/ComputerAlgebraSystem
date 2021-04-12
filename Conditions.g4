@@ -13,6 +13,7 @@ condition
 
 expression
    :  value = VARIABLE  #Variable
+   | ('-')? numerator = INTEGER '/' ('-')? denominator = INTEGER #Rational
    | VARIDENTIFIER value = VARIABLE #RuleVariable
    |  value = DECIMALNUMBER #Decimal
    |  value = INTEGER #Integer
@@ -22,7 +23,6 @@ expression
    |  left = expression  op = (OP_ADD | OP_SUB) right = expression #Operation
    |  func = VARIABLE LPAREN  arguments =  expression( COMMA expression)* RPAREN #FunctionExpression
    |  op = (OP_ADD | OP_SUB) expression #UnaryExpression
-
    ;
    
 OP_ADD: '+';

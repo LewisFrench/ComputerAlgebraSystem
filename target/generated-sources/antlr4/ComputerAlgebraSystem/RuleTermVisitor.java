@@ -22,6 +22,8 @@ abstract class RuleTermVisitor<T> {
 	public abstract T Visit(DecimalNode node) throws Exception;
 	
 	public abstract T Visit(IntegerNode node) throws Exception;
+	
+	public abstract T Visit(RationalNode node) throws Exception;
 
 	public abstract T Visit(RuleVariableNode node) throws Exception;
 
@@ -49,6 +51,8 @@ abstract class RuleTermVisitor<T> {
 			return Visit((DecimalNode) node);
 		} else if (node instanceof IntegerNode) {
 			return Visit((IntegerNode) node);
+		} else if (node instanceof RationalNode) {
+			return Visit((RationalNode) node);
 		} else if (node instanceof RuleVariableNode) {
 			return Visit((RuleVariableNode) node);
 		} else {

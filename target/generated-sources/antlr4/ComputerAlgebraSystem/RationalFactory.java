@@ -1,27 +1,24 @@
 package ComputerAlgebraSystem;
 
-public class RationalFactory {
+public final class RationalFactory {
 	public long numerator;
 	public long denominator;
 	
-	public ExpressionNode createRational(long numerator, long denominator) {
+	public static ExpressionNode createRational(long numerator, long denominator) {
 		if (denominator == 0) {
 			throw new IllegalArgumentException("Attempting to create fraction with denominator of 0");
 		}
-		long gcd = gcd(numerator, denominator);
-		if (gcd == denominator) {
+		// Normalise negative denominators
+		if (denominator < 0) {
+			numerator *= -1;
+			denominator *= -1;
+		}
+		long rationalGcd = MathematicalOperations.gcd(numerator, denominator);
+		// Simplify rational to integer if possible
+		if (rationalGcd == Math.abs(denominator)) {
 			return new IntegerNode(numerator/denominator);
 		} else {
-			return new RationalNode(numerator/gcd, denominator/gcd );
+			return new RationalNode(numerator/rationalGcd, denominator/rationalGcd );
 		}
 	}
-
-	private static long gcd(long numerator, long denominator) {
-		if (denominator == 0) {
-			return numerator;
-		}
-		return gcd(denominator, numerator%denominator);
-	}
-	
-	
 }

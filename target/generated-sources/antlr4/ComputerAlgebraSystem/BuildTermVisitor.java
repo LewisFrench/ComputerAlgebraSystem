@@ -18,17 +18,32 @@ public class BuildTermVisitor extends AlgebraBaseVisitor<ExpressionNode> {
 
 	@Override
 	public ExpressionNode visitDecimal(AlgebraParser.DecimalContext context) {
-		//System.out.println("\n BigDecimal :  " + context.getText() + "   \n" + new BigDecimal(Double.valueOf(context.value.getText())));
 		BigDecimal b = new BigDecimal(context.value.getText());
+		if (context.getText().contains("-")) {
+			return new DecimalNode(b.multiply(new BigDecimal("-1")));
+		}
 		return new DecimalNode(b);
-		//return new NumberNode(new BigDecimal(Double.valueOf(context.value.getText())));
-		
+
 	}
+
 	@Override
 	public ExpressionNode visitInteger(AlgebraParser.IntegerContext context) {
+		if (context.getText().contains("-")) {
+			return new IntegerNode(-1 * Long.parseLong(context.value.getText()));
+		}
 		return new IntegerNode(Long.parseLong(context.value.getText()));
 	}
-	
+
+	@Override
+	public ExpressionNode visitRational(AlgebraParser.RationalContext context) {
+		long numerator;
+		long denominator;
+		String[] splitRational = context.getText().split("/");
+		numerator = Long.parseLong(splitRational[0]);
+		denominator = Long.parseLong(splitRational[1]);
+		return (RationalFactory.createRational(numerator, denominator));
+	}
+
 	@Override
 	public ExpressionNode visitVariable(AlgebraParser.VariableContext context) {
 
@@ -45,23 +60,25 @@ public class BuildTermVisitor extends AlgebraBaseVisitor<ExpressionNode> {
 	@Override
 	public ExpressionNode visitUnaryExpression(AlgebraParser.UnaryExpressionContext context) {
 		ExpressionNode node = visit(context.expression());
-		
+
 		switch (context.op.getType()) {
 		case AlgebraLexer.OP_ADD:
 			return node;
-			
 
 		case AlgebraLexer.OP_SUB:
 			if (node instanceof NumberNode) {
 				if (node instanceof DecimalNode) {
-					return new DecimalNode(((DecimalNode)node).getValue().multiply(BigDecimal.valueOf(-1)));
+					return new DecimalNode(((DecimalNode) node).getValue().multiply(BigDecimal.valueOf(-1)));
 				}
 				if (node instanceof IntegerNode) {
-					return new IntegerNode(((IntegerNode)node).getValue()*-1);
+					return new IntegerNode(((IntegerNode) node).getValue() * -1);
+				}
+				if (node instanceof RationalNode) {
+					return RationalFactory.createRational(-1 * ((RationalNode) node).numerator,
+							((RationalNode) node).denominator);
 				}
 			}
 			return new UnaryNode(node);
-			
 
 		default:
 			break;
@@ -73,19 +90,17 @@ public class BuildTermVisitor extends AlgebraBaseVisitor<ExpressionNode> {
 	public ExpressionNode visitOperation(AlgebraParser.OperationContext context) {
 		ExpressionNode left = visit(context.left);
 		ExpressionNode right = visit(context.right);
-		OperationNode node = null;
+		ExpressionNode node = null;
 		switch (context.op.getType()) {
 		case RuleAlgebraLexer.OP_POW:
 			node = new PowerNode(left, right);
 			break;
 		case RuleAlgebraLexer.OP_ADD:
 			node = new AdditionNode(left, right);
-
 			break;
 
 		case RuleAlgebraLexer.OP_SUB:
 			node = new SubtractionNode(left, right);
-
 			break;
 
 		case RuleAlgebraLexer.OP_MUL:
@@ -93,7 +108,15 @@ public class BuildTermVisitor extends AlgebraBaseVisitor<ExpressionNode> {
 			break;
 
 		case RuleAlgebraLexer.OP_DIV:
-			node = new DivisionNode(left, right);
+			System.out.println("Visiting Division");
+			// Division by 0 here
+			if (left instanceof IntegerNode && right instanceof IntegerNode) {
+				System.out.println("Creating RatinalNode");
+				node = RationalFactory.createRational(((IntegerNode) left).getValue(),
+						((IntegerNode) right).getValue());
+			} else {
+				node = new DivisionNode(left, right);
+			}
 			break;
 
 		}

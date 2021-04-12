@@ -22,17 +22,13 @@ public class BuildConditionsVisitor extends ConditionsBaseVisitor<ExpressionNode
 
 	@Override
 	public ExpressionNode visitConditionOperation(ConditionsParser.ConditionOperationContext context) {
-		ConditionOperationNode node = null;
-		ExpressionNode left = visit(context.left);
-		ExpressionNode right = visit(context.right);
-		if (context.op.getType() == ConditionsLexer.OP_AND) {
-			node = new ConditionAndNode(left, right);
-		} else if (context.op.getType() == ConditionsLexer.OP_OR) {
-			node = new ConditionOrNode(left, right);
-		}
-		return node;
+		long numerator;
+		long denominator;
+		String[] splitRational = context.getText().split("/");
+		numerator = Long.parseLong(splitRational[0]);
+		denominator = Long.parseLong(splitRational[1]);
+		return (RationalFactory.createRational(numerator, denominator));
 	}
-
 	@Override
 	public ExpressionNode visitRuleConditions(ConditionsParser.RuleConditionsContext context) {
 		return visit(context.condition());
@@ -84,10 +80,14 @@ public class BuildConditionsVisitor extends ConditionsBaseVisitor<ExpressionNode
 		case ConditionsLexer.OP_SUB:
 			if (node instanceof NumberNode) {
 				if (node instanceof DecimalNode) {
-					return new DecimalNode(((DecimalNode)node).getValue().multiply(BigDecimal.valueOf(-1)));
+					return new DecimalNode(((DecimalNode) node).getValue().multiply(BigDecimal.valueOf(-1)));
 				}
 				if (node instanceof IntegerNode) {
-					return new IntegerNode(((IntegerNode)node).getValue()*-1);
+					return new IntegerNode(((IntegerNode) node).getValue() * -1);
+				}
+				if (node instanceof RationalNode) {
+					return new RationalFactory().createRational(-1 * ((RationalNode) node).numerator,
+							((RationalNode) node).denominator);
 				}
 			}
 			node = new UnaryNode(visit(context.expression()));
@@ -101,7 +101,7 @@ public class BuildConditionsVisitor extends ConditionsBaseVisitor<ExpressionNode
 
 	@Override
 	public ExpressionNode visitOperation(ConditionsParser.OperationContext context) {
-		OperationNode node = null;
+		ExpressionNode node = null;
 		ExpressionNode left = visit(context.left);
 		ExpressionNode right = visit(context.right);
 		switch (context.op.getType()) {
@@ -123,7 +123,12 @@ public class BuildConditionsVisitor extends ConditionsBaseVisitor<ExpressionNode
 			break;
 
 		case ConditionsLexer.OP_DIV:
-			node = new DivisionNode(left, right);
+			if (left instanceof IntegerNode && right instanceof IntegerNode) {
+				node = new RationalFactory().createRational(((IntegerNode) left).getValue(),
+						((IntegerNode) right).getValue());
+			} else {
+				node = new DivisionNode(left, right);
+			}
 			break;
 
 		default:
@@ -145,12 +150,39 @@ public class BuildConditionsVisitor extends ConditionsBaseVisitor<ExpressionNode
 
 	@Override
 	public ExpressionNode visitDecimal(ConditionsParser.DecimalContext context) {
-		return new DecimalNode(new BigDecimal(context.value.getText()));
+		BigDecimal b = new BigDecimal(context.value.getText());
+		if (context.getText().contains("-")) {
+			return new DecimalNode(b.multiply(new BigDecimal("-1")));
+		}
+		return new DecimalNode(b);
 	}
 
 	@Override
 	public ExpressionNode visitInteger(ConditionsParser.IntegerContext context) {
+		if (context.getText().contains("-")) {
+			return new IntegerNode(-1 * Long.parseLong(context.value.getText()));
+		}
 		return new IntegerNode(Long.parseLong(context.value.getText()));
+	}
+
+	@Override
+	public ExpressionNode visitRational(ConditionsParser.RationalContext context) {
+		System.out.println("VISITING RATIONALNODE in conditions");
+		long numerator;
+		long denominator;
+		String[] splitRational = context.getText().split("/");
+		if (splitRational[0].contains("-")) {
+			numerator = -1* Long.parseLong(splitRational[0]);
+		} else {
+			numerator = Long.parseLong(splitRational[0]);
+		}
+		
+		if (splitRational[1].contains("-")) {
+			denominator = -1* Long.parseLong(splitRational[1]);
+		} else {
+			denominator = Long.parseLong(splitRational[1]);
+		}
+		return (new RationalFactory().createRational(numerator, denominator));
 	}
 	
 	@Override

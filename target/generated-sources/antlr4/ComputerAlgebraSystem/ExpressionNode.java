@@ -178,7 +178,7 @@ class DecimalNode extends NumberNode {
 			return new DecimalNode(((DecimalNode) this).getValue().add(((DecimalNode) augend).getValue()));
 		}
 		// Decimal + Integer
-		else  if (augend instanceof IntegerNode) {
+		else if (augend instanceof IntegerNode) {
 			return new DecimalNode(
 					((DecimalNode) this).getValue().add(BigDecimal.valueOf(((IntegerNode) augend).getValue())));
 		}
@@ -193,16 +193,15 @@ class DecimalNode extends NumberNode {
 		// Decimal - Decimal
 		if (subtrahend instanceof DecimalNode) {
 			return new DecimalNode(((DecimalNode) this).getValue().subtract(((DecimalNode) subtrahend).getValue()));
-		} 
+		}
 		// Decimal - Integer
-		else if (subtrahend instanceof IntegerNode)
-		{
+		else if (subtrahend instanceof IntegerNode) {
 			return new DecimalNode(((DecimalNode) this).getValue()
 					.subtract(BigDecimal.valueOf(((IntegerNode) subtrahend).getValue())));
-		} 
+		}
 		// Decimal - Rational
 		else {
-			return new SubtractionNode (this, subtrahend);
+			return new SubtractionNode(this, subtrahend);
 		}
 	}
 
@@ -211,7 +210,7 @@ class DecimalNode extends NumberNode {
 		// Decimal * Decimal
 		if (multiplicand instanceof DecimalNode) {
 			return new DecimalNode(((DecimalNode) this).getValue().multiply(((DecimalNode) multiplicand).getValue()));
-		} 
+		}
 		// Decimal * Integer
 		else if (multiplicand instanceof IntegerNode) {
 			return new DecimalNode(((DecimalNode) this).getValue()
@@ -234,13 +233,14 @@ class DecimalNode extends NumberNode {
 		try {
 			// Decimal / Decimal
 			if (divisor instanceof DecimalNode) {
-				
-				// do I need a check for /0.0 here? Probably, since 0.0 would be a decimal and have a val of 0
-				
+
+				// do I need a check for /0.0 here? Probably, since 0.0 would be a decimal and
+				// have a val of 0
+
 				return new DecimalNode(((DecimalNode) this).getValue().divide(((DecimalNode) divisor).getValue()));
-			} 
+			}
 			// Decimal / Integer
-			else if (divisor instanceof IntegerNode){
+			else if (divisor instanceof IntegerNode) {
 				if (((IntegerNode) divisor).getValue() == 0) {
 					throw new IllegalArgumentException("Attempted to divide by zero");
 				}
@@ -254,7 +254,7 @@ class DecimalNode extends NumberNode {
 		} catch (ArithmeticException ae) {
 			return new DecimalNode(((DecimalNode) this).getValue().divide(((DecimalNode) divisor).getValue(), 30,
 					RoundingMode.CEILING));
-		
+
 		} catch (IllegalArgumentException iae) {
 			throw new IllegalArgumentException("Attempted to divide a decimal number by zero");
 		}
@@ -314,7 +314,7 @@ class IntegerNode extends NumberNode {
 		else {
 			RationalNode rationalAugend = (RationalNode) augend;
 			long numerator = (rationalAugend.denominator * this.value) + rationalAugend.numerator;
-			return new RationalFactory().createRational(numerator, rationalAugend.denominator);
+			return RationalFactory.createRational(numerator, rationalAugend.denominator);
 		}
 	}
 
@@ -333,7 +333,7 @@ class IntegerNode extends NumberNode {
 		// Integer - Rational
 		else {
 			RationalNode rationalSubtrahend = (RationalNode) subtrahend;
-			return new RationalFactory().createRational(
+			return RationalFactory.createRational(
 					this.value * rationalSubtrahend.denominator - rationalSubtrahend.numerator,
 					rationalSubtrahend.denominator);
 		}
@@ -353,7 +353,7 @@ class IntegerNode extends NumberNode {
 		// Integer * Rational
 		else {
 			RationalNode rationalMultiplicand = (RationalNode) multiplicand;
-			return new RationalFactory().createRational(rationalMultiplicand.numerator * this.value,
+			return RationalFactory.createRational(rationalMultiplicand.numerator * this.value,
 					rationalMultiplicand.denominator);
 		}
 	}
@@ -365,7 +365,7 @@ class IntegerNode extends NumberNode {
 			if (((IntegerNode) divisor).getValue() == 0) {
 				throw new IllegalArgumentException("Attempted to divide by 0, please check your rules");
 			}
-			return new RationalFactory().createRational(this.value, ((IntegerNode) divisor).getValue());
+			return RationalFactory.createRational(this.value, ((IntegerNode) divisor).getValue());
 		}
 		// Integer / Decimal
 		else if (divisor instanceof DecimalNode) {
@@ -376,8 +376,7 @@ class IntegerNode extends NumberNode {
 		// Integer / Rational
 		else {
 			RationalNode rationalDivisor = (RationalNode) divisor;
-			return new RationalFactory().createRational(this.value * rationalDivisor.denominator,
-					rationalDivisor.numerator);
+			return RationalFactory.createRational(this.value * rationalDivisor.denominator, rationalDivisor.numerator);
 		}
 	}
 
@@ -422,26 +421,29 @@ class RationalNode extends NumberNode {
 	public long denominator;
 
 	public RationalNode(long numerator, long denominator) {
-		long gcd = gcd(Math.abs(numerator), Math.abs(denominator));
-		
-		// Normalise negative denominators
-		if (denominator < 0) {
-			numerator *= -1;
-			denominator *= -1;
-		}
-		
-		// Simplify
-		this.numerator = numerator / gcd;
-		this.denominator = denominator / gcd;
+		this.numerator = numerator;
+		this.denominator = denominator;
+//		long gcd = gcd(Math.abs(numerator), Math.abs(denominator));
+//
+//		// Normalise negative denominators
+//		if (denominator < 0) {
+//			numerator *= -1;
+//			denominator *= -1;
+//		}
+//
+//		// Simplify
+//		this.numerator = numerator / gcd;
+//		this.denominator = denominator / gcd;
 	}
 
-	private static long gcd(long numerator, long denominator) {
-		if (denominator == 0) {
-			return numerator;
-		}
-		return gcd(denominator, numerator % denominator);
+//	private static long gcd(long numerator, long denominator) {
+//		if (denominator == 0) {
+//			return numerator;
+//		}
+//		return gcd(denominator, numerator % denominator);
+//
+//	}
 
-	}
 	public String toString() {
 		return this.numerator + "/" + this.denominator;
 	}
@@ -457,14 +459,14 @@ class RationalNode extends NumberNode {
 			// Rational + Integer
 		} else if (augend instanceof IntegerNode) {
 			long numerator = (this.denominator * (((IntegerNode) augend).getValue()) + this.numerator);
-			return new RationalFactory().createRational(numerator, denominator);
+			return RationalFactory.createRational(numerator, denominator);
 			// Rational + Rational
 		} else {// (augend instanceof RationalNode)
 			RationalNode rationalAugend = (RationalNode) augend;
 			long numerator = (this.numerator * rationalAugend.denominator)
-					+ (this.denominator * rationalAugend.denominator);
+					+ (this.denominator * rationalAugend.numerator);
 			long denominator = this.denominator * rationalAugend.denominator;
-			return new RationalFactory().createRational(numerator, denominator);
+			return RationalFactory.createRational(numerator, denominator);
 
 		}
 
@@ -477,14 +479,14 @@ class RationalNode extends NumberNode {
 			return new SubtractionNode(this, subtrahend);
 			// Rational + Decimal
 		} else if (subtrahend instanceof IntegerNode) {
-			long numerator = (this.denominator * (((IntegerNode) subtrahend).getValue()) - this.numerator);
-			return new RationalFactory().createRational(numerator, denominator);
+			long numerator = this.numerator - (this.denominator * (((IntegerNode) subtrahend).getValue())) ;
+			return RationalFactory.createRational(numerator, denominator);
 		} else {
 			RationalNode rationalSubtrahend = (RationalNode) subtrahend;
 			long numerator = (this.numerator * rationalSubtrahend.denominator)
-					- (this.denominator * rationalSubtrahend.denominator);
+					- (this.denominator * rationalSubtrahend.numerator);
 			long denominator = this.denominator * rationalSubtrahend.denominator;
-			return new RationalFactory().createRational(numerator, denominator);
+			return RationalFactory.createRational(numerator, denominator);
 		}
 	}
 
@@ -493,11 +495,11 @@ class RationalNode extends NumberNode {
 		if (multiplicand instanceof DecimalNode) {
 			return new MultiplicationNode(this, multiplicand);
 		} else if (multiplicand instanceof IntegerNode) {
-			return new RationalFactory().createRational(this.numerator * (((IntegerNode) multiplicand).getValue()),
+			return RationalFactory.createRational(this.numerator * (((IntegerNode) multiplicand).getValue()),
 					this.denominator);
 		} else {
 			RationalNode rationalMultiplicand = (RationalNode) multiplicand;
-			return new RationalFactory().createRational(this.numerator * rationalMultiplicand.numerator,
+			return RationalFactory.createRational(this.numerator * rationalMultiplicand.numerator,
 					this.denominator * rationalMultiplicand.denominator);
 		}
 	}
@@ -507,24 +509,39 @@ class RationalNode extends NumberNode {
 		if (divisor instanceof DecimalNode) {
 			return new DivisionNode(this, divisor);
 		} else if (divisor instanceof IntegerNode) {
-			return new RationalFactory().createRational(this.numerator,
+			return RationalFactory.createRational(this.numerator,
 					this.denominator * ((IntegerNode) divisor).getValue());
 		} else { // is instance of rationalNode
 			RationalNode rationalDivisor = (RationalNode) divisor;
-			return new RationalFactory().createRational(this.numerator * rationalDivisor.denominator,
+			return RationalFactory.createRational(this.numerator * rationalDivisor.denominator,
 					this.denominator * rationalDivisor.numerator);
 		}
 	}
 
 	@Override
 	public ExpressionNode exponentiate(NumberNode exponent) {
-		// TODO Auto-generated method stub
-		return null;
+		if (exponent instanceof IntegerNode) {
+			long exponentValue = ((IntegerNode) exponent).getValue();
+			// Raise reciprocal to abs(exponent) if exponent value is negative;
+			if (exponentValue < 0) {
+				return RationalFactory.createRational(
+						MathematicalOperations.raiseToPowerLong(this.denominator, Math.abs(exponentValue)),
+						MathematicalOperations.raiseToPowerLong(this.numerator, Math.abs(exponentValue)));
+			} else {
+				return RationalFactory.createRational(
+						MathematicalOperations.raiseToPowerLong(this.numerator, Math.abs(exponentValue)),
+						MathematicalOperations.raiseToPowerLong(this.denominator, Math.abs(exponentValue)));
+			}
+		}
+		// Ignore other cases to preserve precision
+		else {
+			return new PowerNode(this, exponent);
+		}
+
 	}
 
 	@Override
 	public int compareNumber(NumberNode node) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 

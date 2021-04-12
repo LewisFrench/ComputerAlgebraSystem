@@ -33,9 +33,12 @@ public class Program {
 		
 		String outputValue = "";
 		try {
+			System.out.println(termAst.getClass());
 			System.out.println(termAst.toString());
+			
 			ExpressionNode ast2 = new RewriteProcess(rules, ruleApplicationLimit).Visit(termAst);
 			ExpressionNode simplified = new SimplifyNumericalOperations().Visit(ast2);
+			System.out.println("Simplified : " + simplified.toString());
 			outputValue = new EvaluateExpressionVisitor().Visit(simplified);
 			return outputValue;
 
@@ -47,6 +50,7 @@ public class Program {
 			throw new StackOverflowError(
 					"Check for any infinitely-recursive rules or choose a lower rule application limit");
 		} catch (Exception e) {
+			e.printStackTrace();
 			throw new Exception("Rewrite Error: " + e.getMessage() + "  " + e.toString());
 		}
 	}
@@ -91,7 +95,7 @@ public class Program {
 			RuleTermContext rhs = rhsParser.ruleTerm();
 			BuildLhsVisitor lhsVisitor = new BuildLhsVisitor(new LinkedHashMap<String, ExpressionNode>());
 			ExpressionNode lhsNode = lhsVisitor.visitRuleTerm(lhs);
-
+			System.out.println("Visiting rhs term");
 			ExpressionNode rhsNode = new BuildRhsVisitor().visitRuleTerm(rhs);
 
 
@@ -167,20 +171,22 @@ public class Program {
 			AlgebraLexer lexer = new AlgebraLexer(input);
 			lexer.removeErrorListeners();
 			lexer.addErrorListener(ThrowingErrorListener.INSTANCE);
-
+			System.out.println("Finished lexing");
 			CommonTokenStream tokens = new CommonTokenStream(lexer);
 
+			
 			AlgebraParser parser = new AlgebraParser(tokens);
 			parser.removeErrorListeners();
 			parser.addErrorListener(ThrowingErrorListener.INSTANCE);
-
 			TermContext termTree = parser.term();
+			System.out.println("Got Context");
 			termAst = new BuildTermVisitor().visitTerm(termTree);
 		} catch (ParseCancellationException pce) {
 			throw new ParseCancellationException("Syntax error: Please check the syntax of your algebraic term");
 		} catch (Exception e) {
 			throw new Exception("Error when parsing algebraic term");
 		}
+		System.out.println("\nTerm Ast: "+termAst);
 		return termAst;
 	}
 

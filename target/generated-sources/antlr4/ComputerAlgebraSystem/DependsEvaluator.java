@@ -122,4 +122,9 @@ public class DependsEvaluator extends TermVisitor<Boolean> {
 		return (node.getClass() == dependency.getClass() && ((DecimalNode)dependency).getValue().compareTo(node.getValue())==0);
 	}
 
+	@Override
+	public Boolean Visit(RationalNode node) throws Exception {
+		return (node.getClass() == dependency.getClass() && ((RationalNode)dependency).numerator == node.numerator && ((RationalNode)dependency).denominator == node.denominator);
+	}
+
 }

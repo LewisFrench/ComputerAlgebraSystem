@@ -13,32 +13,51 @@ import org.junit.Test;
 public class TestRuleAlgebraParser {
 
 	@Test
-	public void testValidRuleNoConditions_Variable_Number() {
+	public void testValidRuleNoConditions_Variable_Integer() {
 
 		Program p = new Program();
 		try {
 			Rule result = p.parseRule("x=1");
 			assertTrue(result.lhsNode instanceof VariableNode);
-			assertTrue(result.rhsNode instanceof NumberNode);
+			assertTrue(result.rhsNode instanceof IntegerNode);
 			assertTrue(result.conditionsNode == null);
 			
-		} catch(Exception e) {e.printStackTrace();}
+		} catch(Exception e) {e.printStackTrace(); fail();}
 	}
 	@Test
-	public void testValidRuleNoConditions_Variable_NegativeNumber() {
+	public void testValidRuleNoConditions_Variable_NegativeInteger() {
 
 		Program p = new Program();
 		try {
 			Rule result = p.parseRule("x=-1");
 			assertTrue(result.lhsNode instanceof VariableNode);
-			assertTrue(result.rhsNode instanceof NumberNode);
-			assertTrue(((NumberNode)result.rhsNode).getValue().compareTo(BigDecimal.valueOf(-1.0))==0);
+			assertTrue(result.rhsNode instanceof IntegerNode);
+			assertTrue(((IntegerNode)result.rhsNode).getValue() == -1);
 			assertTrue(result.conditionsNode == null);
 			
 		} catch(Exception e) {e.printStackTrace();}
 	}
 	@Test
-	public void testValidRuleNoConditions_Number_Variable() {
+	public void testValidRuleNoConditions_Variable_MultipleNegativeInteger() {
+		Program p = new Program();
+		try {
+			Rule result = p.parseRule("x=---1");
+			assertTrue(result.lhsNode instanceof VariableNode);
+			assertTrue(result.rhsNode instanceof IntegerNode);
+			assertTrue(((IntegerNode)result.rhsNode).getValue() == -1);
+			assertTrue(result.conditionsNode == null);
+			
+			result = p.parseRule("x=----1");
+			assertTrue(result.lhsNode instanceof VariableNode);
+			assertTrue(result.rhsNode instanceof IntegerNode);
+			assertTrue(((IntegerNode)result.rhsNode).getValue() == 1);
+			assertTrue(result.conditionsNode == null);
+			
+		} catch(Exception e) {e.printStackTrace();}
+		
+	}
+	@Test
+	public void testValidRuleNoConditions_Integer_Variable() {
 		Program p = new Program();
 		try {
 			Rule result = p.parseRule("1=x");
@@ -49,9 +68,97 @@ public class TestRuleAlgebraParser {
 		} catch(Exception e) {e.printStackTrace();}
 	}
 	
+	@Test
+	public void testValidRuleNoConditions_Variable_Decimal() {
+		Program p = new Program();
+		try {
+			Rule result = p.parseRule("x=1.0");
+			assertTrue(result.lhsNode instanceof VariableNode);
+			assertTrue(result.rhsNode instanceof DecimalNode);
+			assertTrue(((DecimalNode)result.rhsNode).getValue().compareTo(new BigDecimal("1"))==0);
+			assertTrue(result.conditionsNode == null);
+			
+		} catch(Exception e) {e.printStackTrace(); fail();}
+	}
 	
 	@Test
-	public void testValidRuleNoConditions_RuleVariable_Number() {
+	public void testValidRuleNoConditions_Variable_NegativeDecimal() {
+		Program p = new Program();
+		try {
+			Rule result = p.parseRule("x=-1.0");
+			assertTrue(result.lhsNode instanceof VariableNode);
+			assertTrue(result.rhsNode instanceof DecimalNode);
+			assertTrue(((DecimalNode)result.rhsNode).getValue().compareTo(new BigDecimal("-1"))==0);
+			assertTrue(result.conditionsNode == null);
+			
+		} catch(Exception e) {e.printStackTrace(); fail();}
+	}
+	
+	@Test
+	public void testValidRuleNoConditions_Variable_MultipleNegativeDecimal() {
+		Program p = new Program();
+		try {
+			Rule result = p.parseRule("x=---------1.0");
+			assertTrue(result.lhsNode instanceof VariableNode);
+			assertTrue(result.rhsNode instanceof DecimalNode);
+			assertTrue(((DecimalNode)result.rhsNode).getValue().compareTo(new BigDecimal("-1"))==0);
+			assertTrue(result.conditionsNode == null);
+			
+			result = p.parseRule("x=--------1.0");
+			assertTrue(result.lhsNode instanceof VariableNode);
+			assertTrue(result.rhsNode instanceof DecimalNode);
+			assertTrue(((DecimalNode)result.rhsNode).getValue().compareTo(new BigDecimal("1"))==0);
+			assertTrue(result.conditionsNode == null);
+			
+		} catch(Exception e) {e.printStackTrace(); fail();}
+	}
+	
+	@Test
+	public void testValidRuleNoConditions_Variable_Rational() {
+
+		Program p = new Program();
+		try {
+			Rule result = p.parseRule("x=1/3");
+			assertTrue(result.lhsNode instanceof VariableNode);
+			System.out.println(result.rhsNode.getClass());
+			assertTrue(result.rhsNode instanceof RationalNode);
+			assertTrue(result.conditionsNode == null);
+			
+		} catch(Exception e) {e.printStackTrace(); fail();}
+	}
+	
+	@Test
+	public void testValidRuleNoConditions_Variable_NegativeRational() {
+
+		Program p = new Program();
+		try {
+			Rule result = p.parseRule("x=-1/-3");
+			assertTrue(result.lhsNode instanceof VariableNode);
+			System.out.println(result.rhsNode.getClass());
+			assertTrue(result.rhsNode instanceof RationalNode);
+			assertTrue(result.conditionsNode == null);
+			
+		} catch(Exception e) {e.printStackTrace(); fail();}
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	@Test
+	public void testValidRuleNoConditions_RuleVariable_Integer() {
 
 		Program p = new Program();
 		try {

@@ -23,19 +23,29 @@ public class BuildLhsVisitor extends RuleAlgebraBaseVisitor<ExpressionNode> {
 	@Override
 	public ExpressionNode visitDecimal(RuleAlgebraParser.DecimalContext context) {
 		BigDecimal b = new BigDecimal(context.value.getText());
-		ExpressionNode n = new DecimalNode(b);
-		this.variables.put(context.value.getText(),  n);
-		return n;
-//		this.variables.put(context.value.getText(),  new NumberNode(new BigDecimal(Double.valueOf(context.value.getText()))));
-//		return new NumberNode(new BigDecimal(Double.valueOf(context.value.getText())));
+		if (context.getText().contains("-")) {
+			return new DecimalNode(b.multiply(new BigDecimal("-1")));
+		}
+		return new DecimalNode(b);
 	}
 
 	@Override
 	public ExpressionNode visitInteger(RuleAlgebraParser.IntegerContext context) {
+		if (context.getText().contains("-")) {
+			return new IntegerNode(-1 * Long.parseLong(context.value.getText()));
+		}
 		return new IntegerNode(Long.parseLong(context.value.getText()));
 	}
-	
-	
+
+	@Override
+	public ExpressionNode visitRational(RuleAlgebraParser.RationalContext context) {
+		long numerator;
+		long denominator;
+		String[] splitRational = context.getText().split("/");
+		numerator = Long.parseLong(splitRational[0]);
+		denominator = Long.parseLong(splitRational[1]);
+		return (RationalFactory.createRational(numerator, denominator));
+	}
 	@Override
 	public ExpressionNode visitParenthetical(RuleAlgebraParser.ParentheticalContext context) {
 		return (visit(context.expression()));
@@ -45,7 +55,7 @@ public class BuildLhsVisitor extends RuleAlgebraBaseVisitor<ExpressionNode> {
 	public ExpressionNode visitOperation(RuleAlgebraParser.OperationContext context) {
 		ExpressionNode left = visit(context.left);
 		ExpressionNode right = visit(context.right);
-		OperationNode node = null;
+		ExpressionNode node = null;
 		switch (context.op.getType()) {
 
 		case RuleAlgebraLexer.OP_POW:
@@ -66,7 +76,12 @@ public class BuildLhsVisitor extends RuleAlgebraBaseVisitor<ExpressionNode> {
 			break;
 
 		case RuleAlgebraLexer.OP_DIV:
-			node = new DivisionNode(left, right);
+			if (left instanceof IntegerNode && right instanceof IntegerNode) {
+				node = RationalFactory.createRational(((IntegerNode) left).getValue(),
+						((IntegerNode) right).getValue());
+			} else {
+				node = new DivisionNode(left, right);
+			}
 			break;
 		}
 
@@ -85,10 +100,14 @@ public class BuildLhsVisitor extends RuleAlgebraBaseVisitor<ExpressionNode> {
 		case RuleAlgebraLexer.OP_SUB:
 			if (node instanceof NumberNode) {
 				if (node instanceof DecimalNode) {
-					return new DecimalNode(((DecimalNode)node).getValue().multiply(BigDecimal.valueOf(-1)));
+					return new DecimalNode(((DecimalNode) node).getValue().multiply(BigDecimal.valueOf(-1)));
 				}
 				if (node instanceof IntegerNode) {
-					return new IntegerNode(((IntegerNode)node).getValue()*-1);
+					return new IntegerNode(((IntegerNode) node).getValue() * -1);
+				}
+				if (node instanceof RationalNode) {
+					return RationalFactory.createRational(-1 * ((RationalNode) node).numerator,
+							((RationalNode) node).denominator);
 				}
 			}
 			node = new UnaryNode(visit(context.expression()));

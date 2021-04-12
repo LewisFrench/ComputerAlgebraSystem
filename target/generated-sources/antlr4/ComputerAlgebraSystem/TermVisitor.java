@@ -22,6 +22,8 @@ abstract class TermVisitor<T> {
 	public abstract T Visit(IntegerNode node) throws Exception;
 
 	public abstract T Visit(DecimalNode node) throws Exception;
+	
+	public abstract T Visit(RationalNode node) throws Exception;
 
 
 	// Can talk about how this could be more efficient in C#, see bookmark page
@@ -46,6 +48,8 @@ abstract class TermVisitor<T> {
 			return Visit((IntegerNode) node);
 		} else if (node instanceof DecimalNode) {
 			return Visit((DecimalNode) node);
+		}else if (node instanceof RationalNode) {
+			return Visit((RationalNode) node);
 		}
 		else {
 			throw new Exception("Attempted to visit an invalid node");

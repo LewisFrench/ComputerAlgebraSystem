@@ -66,6 +66,11 @@ class EvaluateExpressionVisitor extends TermVisitor<String> {
 		return node.toString();
 	}
 
+	@Override
+	public String Visit(RationalNode node) throws Exception {
+		return node.toString();
+	}
+
 	
 
 }

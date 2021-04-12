@@ -95,10 +95,6 @@ public class SubstituteRuleVariables extends RuleTermVisitor<ExpressionNode> {
 		return node;
 	}
 
-//	@Override
-//	public ExpressionNode Visit(NumberNode node) {
-//		return node;
-//	}
 
 	@Override
 	public ExpressionNode Visit(RuleVariableNode node) throws Exception {
@@ -115,6 +111,11 @@ public class SubstituteRuleVariables extends RuleTermVisitor<ExpressionNode> {
 
 	@Override
 	public ExpressionNode Visit(IntegerNode node) throws Exception {
+		return node;
+	}
+
+	@Override
+	public ExpressionNode Visit(RationalNode node) throws Exception {
 		return node;
 	}
 	

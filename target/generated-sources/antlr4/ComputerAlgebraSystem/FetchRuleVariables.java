@@ -85,12 +85,20 @@ public class FetchRuleVariables extends RuleTermVisitor<ExpressionNode> {
 	public ExpressionNode Visit(IntegerNode node)  {
 		return node;
 	}
-
+	
+	@Override
+	public ExpressionNode Visit(RationalNode node) throws Exception {
+		return  node;
+	}
+	
+	
 	@Override
 	public ExpressionNode Visit(RuleVariableNode node) {
 		this.variables.put(node.toString(), null);
 		return node;
 	}
+
+	
 
 
 

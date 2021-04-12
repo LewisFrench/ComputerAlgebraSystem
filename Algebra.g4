@@ -4,6 +4,7 @@ term : expression EOF;
 
 expression
    :  value = VARIABLE  #Variable
+   |  ('-')? numerator = INTEGER '/' ('-')? denominator = INTEGER #Rational 
    |  value = DECIMALNUMBER #Decimal
    |  value = INTEGER #Integer
    |  LPAREN expression RPAREN #Parenthetical  

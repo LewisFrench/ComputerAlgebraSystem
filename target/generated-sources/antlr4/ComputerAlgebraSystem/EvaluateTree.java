@@ -82,6 +82,17 @@ public class EvaluateTree extends AstComparator<Boolean> {
 		}
 		return false;
 	}
+	
+	@Override
+	public Boolean Visit(RationalNode lhsNode, ExpressionNode node) throws Exception {
+		if (lhsNode.getClass() == node.getClass()) {
+			if (lhsNode.numerator == ((RationalNode)node).numerator && lhsNode.denominator == ((RationalNode)node).denominator) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 
 	@Override
 	public Boolean Visit(UnaryNode lhsNode, ExpressionNode node) throws Exception {
@@ -134,6 +145,7 @@ public class EvaluateTree extends AstComparator<Boolean> {
 		}
 		return false;
 	}
+
 
 
 }

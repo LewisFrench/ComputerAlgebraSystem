@@ -72,6 +72,13 @@ public class RewriteProcess extends TermVisitor<ExpressionNode> {
 	public ExpressionNode Visit(IntegerNode node) throws Exception {
 		return rewrite(node);
 	}
+	
+	@Override
+	public ExpressionNode Visit(RationalNode node) throws Exception {
+		return rewrite(node);
+	}
+	
+	
 	@Override
 	public ExpressionNode Visit(UnaryNode node) throws Exception {
 		ExpressionNode innerNode = Visit(node.innerNode);
@@ -165,6 +172,8 @@ public class RewriteProcess extends TermVisitor<ExpressionNode> {
 		}
 		return true;
 	}
+
+	
 
 
 
