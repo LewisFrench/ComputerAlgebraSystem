@@ -74,7 +74,7 @@ public class DependsEvaluator extends TermVisitor<Boolean> {
 
 	@Override
 	public Boolean Visit(NumberNode node) {
-		return node.getClass() == dependency.getClass() && node.getValue().compareTo(((NumberNode) dependency).getValue()) == 0;
+		return node.getClass() == dependency.getClass() && node.compareTo((NumberNode) dependency) == 0;
 	}
 
 	@Override
@@ -84,7 +84,6 @@ public class DependsEvaluator extends TermVisitor<Boolean> {
 				return true;
 			}
 		}
-
 		return Visit(node.innerNode);
 	}
 

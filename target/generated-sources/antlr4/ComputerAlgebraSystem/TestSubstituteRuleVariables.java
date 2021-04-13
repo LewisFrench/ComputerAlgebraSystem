@@ -32,7 +32,7 @@ public class TestSubstituteRuleVariables {
 	@Test
 	public void testSubstituteNumber() {
 		LinkedHashMap<String, ExpressionNode> variables = new LinkedHashMap<>();
-		variables.put("$test", new NumberNode(1.4));
+		variables.put("$test", new NumberNode(1,4));
 		ExpressionNode rv = new RuleVariableNode("test");
 		SubstituteRuleVariables s = new SubstituteRuleVariables(variables);
 
@@ -181,7 +181,7 @@ public class TestSubstituteRuleVariables {
  			assertTrue(result instanceof UnaryNode);
 			assertTrue(((UnaryNode) result).innerNode instanceof NumberNode);
 			ExpressionNode resultNode = (((UnaryNode) result).innerNode);
-			assertTrue(((NumberNode) resultNode).getValue().compareTo(BigDecimal.valueOf(2.0)) ==0);
+			assertTrue(((NumberNode) resultNode).getNumerator() == 2);
 
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -196,7 +196,7 @@ public class TestSubstituteRuleVariables {
 		LinkedHashMap<String, ExpressionNode> variables = new LinkedHashMap<>();
 		
 		ArrayList<ExpressionNode> functionArguments = new ArrayList<ExpressionNode>();
-		functionArguments.add(new NumberNode(2.1));
+		functionArguments.add(new NumberNode(2,11));
 		functionArguments.add(new VariableNode("xa"));
 		ExpressionNode functionNode = new FunctionNode("TestFunction", functionArguments);
 		

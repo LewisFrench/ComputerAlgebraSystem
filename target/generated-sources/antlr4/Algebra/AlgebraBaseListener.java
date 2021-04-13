@@ -28,13 +28,13 @@ public class AlgebraBaseListener implements AlgebraListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterFunctionExpression(AlgebraParser.FunctionExpressionContext ctx) { }
+	@Override public void enterInteger(AlgebraParser.IntegerContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitFunctionExpression(AlgebraParser.FunctionExpressionContext ctx) { }
+	@Override public void exitInteger(AlgebraParser.IntegerContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -52,13 +52,37 @@ public class AlgebraBaseListener implements AlgebraListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterNumber(AlgebraParser.NumberContext ctx) { }
+	@Override public void enterFunctionExpression(AlgebraParser.FunctionExpressionContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitNumber(AlgebraParser.NumberContext ctx) { }
+	@Override public void exitFunctionExpression(AlgebraParser.FunctionExpressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterRational(AlgebraParser.RationalContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitRational(AlgebraParser.RationalContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterDecimal(AlgebraParser.DecimalContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitDecimal(AlgebraParser.DecimalContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

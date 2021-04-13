@@ -1,2 +1,1 @@
-add($x, $y, 0) = $x
-add($x, $y, $n) = add($x+$y, $y, $n-1) : _is_number($x) & _is_number($y) & _is_integer($n) & $n>0
+x = y : (((1+2)/3) > 4000000/4000001)

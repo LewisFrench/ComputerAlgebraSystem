@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
+import Algebra.AlgebraParser;
 import RuleAlgebra.RuleAlgebraBaseVisitor;
 import RuleAlgebra.RuleAlgebraLexer;
 import RuleAlgebra.RuleAlgebraParser;
@@ -21,14 +22,38 @@ public class BuildLhsVisitor extends RuleAlgebraBaseVisitor<ExpressionNode> {
 	}
 
 	@Override
-	public ExpressionNode visitNumber(RuleAlgebraParser.NumberContext context) {
-		BigDecimal b = BigDecimal.valueOf(Double.valueOf(context.value.getText()));
-		ExpressionNode n = new NumberNode(b);
-		this.variables.put(context.value.getText(),  n);
-		return n;
-//		this.variables.put(context.value.getText(),  new NumberNode(new BigDecimal(Double.valueOf(context.value.getText()))));
-//		return new NumberNode(new BigDecimal(Double.valueOf(context.value.getText())));
+	public ExpressionNode visitDecimal(RuleAlgebraParser.DecimalContext context) {
+		BigDecimal b = new BigDecimal(context.getText());
+		
+		String formattedDecimal = b.stripTrailingZeros().toPlainString();
+		if (!(formattedDecimal.contains("."))){
+			return new NumberNode(Long.valueOf(formattedDecimal));
+		}
+
+		String[] splitByDecimalPoint = formattedDecimal.split("\\.");		
+		long numerator = Long.valueOf(formattedDecimal.replaceAll("\\.", ""));
+		
+		int numberOfDecimalPlaces = splitByDecimalPoint[1].length();
+		long denominator = 1;
+		for (int i = 0; i < numberOfDecimalPlaces ; i ++) {
+			denominator *= 10;
+		}
+		return new NumberNode(numerator, denominator);
 	}
+	
+	@Override
+	public ExpressionNode visitInteger(RuleAlgebraParser.IntegerContext context) {
+		return new NumberNode(Long.valueOf(context.getText()));
+	}
+	
+	@Override
+	public ExpressionNode visitRational(RuleAlgebraParser.RationalContext context) {
+		String[] split = context.getText().split("/");
+		long numerator = Long.valueOf(split[0]);
+		long denominator = Long.valueOf(split[1]);
+		return new NumberNode(numerator, denominator);
+	}
+	
 
 	@Override
 	public ExpressionNode visitParenthetical(RuleAlgebraParser.ParentheticalContext context) {
@@ -78,7 +103,7 @@ public class BuildLhsVisitor extends RuleAlgebraBaseVisitor<ExpressionNode> {
 
 		case RuleAlgebraLexer.OP_SUB:
 			if (node instanceof NumberNode) {
-				return new NumberNode(((NumberNode)node).getValue().multiply(BigDecimal.valueOf(-1)));
+				return new NumberNode(((NumberNode)node).getNumerator()* -1 , ((NumberNode)node).getDenominator());
 			}
 			node = new UnaryNode(visit(context.expression()));
 			break;

@@ -161,17 +161,6 @@ class is_unary extends ConditionFunction {
 				"Attempting to call _is_unary with the incorrect number of arguments. Please consult the user guide for the syntax of these functions");
 	}
 }
-//
-//class is_parenthetical extends ConditionFunction {
-//	@Override
-//	boolean function(ArrayList<ExpressionNode> arguments) throws Exception {
-//		if (arguments.size() == 1) {
-//			return (arguments.get(0) instanceof ParentheticalNode);
-//		}
-//		throw new Exception(
-//				"Attempting to call _is_parenthetical with the incorrect number of arguments. Please consult the user guide for the syntax of these functions");
-//	}
-//}
 
 class is_function extends ConditionFunction {
 	@Override
@@ -189,9 +178,8 @@ class is_integer extends ConditionFunction {
 	boolean function(ArrayList<ExpressionNode> arguments) throws Exception {
 		if (arguments.size() == 1) {
 			if (arguments.get(0) instanceof NumberNode) {
-//				return (((NumberNode) arguments.get(0)).getValue() == Math
-//						.floor(((NumberNode) arguments.get(0)).getValue()));
-				return (((NumberNode)arguments.get(0)).getValue().remainder(BigDecimal.ONE).compareTo(BigDecimal.ZERO) == 0);
+
+				return (((NumberNode)arguments.get(0)).getDenominator() ==1);
 			} else {
 				return false;
 			}

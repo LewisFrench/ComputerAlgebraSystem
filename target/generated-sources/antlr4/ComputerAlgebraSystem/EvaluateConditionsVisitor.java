@@ -91,16 +91,16 @@ public class EvaluateConditionsVisitor extends ConditionVisitor<Boolean> {
 		switch (relopNode.relop) {
 
 		case ConditionsLexer.RELOP_LT:
-			relopResult = l.getValue().compareTo( r.getValue()) < 0;
+			relopResult = l.compareTo( r) < 0;
 			break;
 		case ConditionsLexer.RELOP_LTE:
-			relopResult = l.getValue().compareTo( r.getValue()) <= 0;
+			relopResult = l.compareTo(r) <= 0;
 			break;
 		case ConditionsLexer.RELOP_GT:
-			relopResult = l.getValue().compareTo( r.getValue()) > 0;
+			relopResult = l.compareTo(r) > 0;
 			break;
 		case ConditionsLexer.RELOP_GTE:
-			relopResult = l.getValue().compareTo( r.getValue()) >= 0;
+			relopResult = l.compareTo(r) >= 0;
 		default:
 			// Exception for the weird case
 		}

@@ -15,7 +15,7 @@ public class TestSimplifyNumericalOperations {
 
 	@Test
 	public void testSimpleAddition_can_simplify() {
-		ExpressionNode addition = new AdditionNode(new NumberNode(2.1), new NumberNode(3.2));
+		ExpressionNode addition = new AdditionNode(new NumberNode(2,1), new NumberNode(3,2));
 		SimplifyNumericalOperations s = new SimplifyNumericalOperations();
 
 		try {
@@ -29,7 +29,7 @@ public class TestSimplifyNumericalOperations {
 
 	@Test
 	public void testSimpleAddition_cannot_simplify() {
-		ExpressionNode addition = new AdditionNode(new NumberNode(2.1), new VariableNode("x"));
+		ExpressionNode addition = new AdditionNode(new NumberNode(2,1), new VariableNode("x"));
 		SimplifyNumericalOperations s = new SimplifyNumericalOperations();
 
 		try {
@@ -43,7 +43,7 @@ public class TestSimplifyNumericalOperations {
 	}
 	@Test
 	public void testSimpleSubtraction() {
-		ExpressionNode subtraction = new SubtractionNode(new NumberNode(2.1), new NumberNode(3.2));
+		ExpressionNode subtraction = new SubtractionNode(new NumberNode(2,1), new NumberNode(3,2));
 		SimplifyNumericalOperations s = new SimplifyNumericalOperations();
 
 		try {
@@ -57,7 +57,7 @@ public class TestSimplifyNumericalOperations {
 
 	@Test
 	public void testSimpleSubtraction_cannot_simplify() {
-		ExpressionNode subtraction = new SubtractionNode(new NumberNode(2.1), new VariableNode("x"));
+		ExpressionNode subtraction = new SubtractionNode(new NumberNode(2,1), new VariableNode("x"));
 		SimplifyNumericalOperations s = new SimplifyNumericalOperations();
 
 		try {
@@ -72,7 +72,7 @@ public class TestSimplifyNumericalOperations {
 	
 	@Test
 	public void testSimpleMultiplication() {
-		ExpressionNode multiplication = new MultiplicationNode(new NumberNode(2.1), new NumberNode(3.2));
+		ExpressionNode multiplication = new MultiplicationNode(new NumberNode(2,1), new NumberNode(3,2));
 		SimplifyNumericalOperations s = new SimplifyNumericalOperations();
 
 		try {
@@ -85,7 +85,7 @@ public class TestSimplifyNumericalOperations {
 	}
 	@Test
 	public void testSimpleMultiplication_cannot_simplify() {
-		ExpressionNode multiplication = new MultiplicationNode(new NumberNode(2.1), new VariableNode("x"));
+		ExpressionNode multiplication = new MultiplicationNode(new NumberNode(2,1), new VariableNode("x"));
 		SimplifyNumericalOperations s = new SimplifyNumericalOperations();
 
 		try {
@@ -101,7 +101,7 @@ public class TestSimplifyNumericalOperations {
 
 	@Test
 	public void testSimpleDivision() {
-		ExpressionNode division = new DivisionNode(new NumberNode(2.1), new NumberNode(3.2));
+		ExpressionNode division = new DivisionNode(new NumberNode(2,1), new NumberNode(3,2));
 		SimplifyNumericalOperations s = new SimplifyNumericalOperations();
 
 		try {
@@ -115,7 +115,7 @@ public class TestSimplifyNumericalOperations {
 
 	@Test
 	public void testSimpleDivision_cannot_simplify() {
-		ExpressionNode division = new DivisionNode(new NumberNode(2.1), new VariableNode("x"));
+		ExpressionNode division = new DivisionNode(new NumberNode(2,1), new VariableNode("x"));
 		SimplifyNumericalOperations s = new SimplifyNumericalOperations();
 
 		try {
@@ -130,22 +130,56 @@ public class TestSimplifyNumericalOperations {
 	
 	
 	@Test
-	public void testSimpleExponentiation() {
-		ExpressionNode exponentiation = new PowerNode(new NumberNode(2.1), new NumberNode(3.2));
+	public void testSimpleExponentiation_IntegerPower() {
+		ExpressionNode exponentiation = new PowerNode(new NumberNode(2,3), new NumberNode(2));
 		SimplifyNumericalOperations s = new SimplifyNumericalOperations();
 
 		try {
 			ExpressionNode result = s.Visit(exponentiation);
 			assertTrue(result.getClass() == NumberNode.class);
+			assertTrue(((NumberNode) result).getNumerator() == 4);
+			assertTrue(((NumberNode) result).getDenominator() == 9);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			fail();
 		}
 	}
+	
+	@Test
+	public void testSimpleExponentiation_NegativeIntegerPower() {
+		ExpressionNode exponentiation = new PowerNode(new NumberNode(2,3), new NumberNode(-2,1));
+		SimplifyNumericalOperations s = new SimplifyNumericalOperations();
+
+		try {
+			ExpressionNode result = s.Visit(exponentiation);
+			System.out.println(result);
+			assertTrue(result.getClass() == NumberNode.class);
+			assertTrue(((NumberNode) result).getNumerator() == 9);
+			assertTrue(((NumberNode) result).getDenominator() == 4);
+		} catch (Exception e) {
+
+			fail();
+		}
+	}
 
 	@Test
-	public void testSimpleExponentiation_cannot_simplify() {
-		ExpressionNode exponentiation = new PowerNode(new NumberNode(2.1), new VariableNode("x"));
+	public void testSimpleExponentiation_cannot_Evaluate_FractionalPower() {
+		ExpressionNode exponentiation = new PowerNode(new NumberNode(2,1), new NumberNode(1,2));
+		SimplifyNumericalOperations s = new SimplifyNumericalOperations();
+
+		try {
+			ExpressionNode result = s.Visit(exponentiation);
+			assertFalse(result.getClass() == NumberNode.class);
+			assertTrue(result.getClass() == PowerNode.class);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			fail();
+		}
+	}
+	
+	@Test
+	public void testSimpleExponentiation_cannot_Evaluate() {
+		ExpressionNode exponentiation = new PowerNode(new NumberNode(2,1), new VariableNode("x"));
 		SimplifyNumericalOperations s = new SimplifyNumericalOperations();
 
 		try {
@@ -161,8 +195,8 @@ public class TestSimplifyNumericalOperations {
 	@Test
 	public void testComplexAddition() {
 
-		ExpressionNode subAddition = new AdditionNode(new NumberNode(2.1), new NumberNode(3.2));
-		ExpressionNode addition = new AdditionNode(new NumberNode(1.0), subAddition);
+		ExpressionNode subAddition = new AdditionNode(new NumberNode(2,1), new NumberNode(3,2));
+		ExpressionNode addition = new AdditionNode(new NumberNode(1), subAddition);
 		SimplifyNumericalOperations s = new SimplifyNumericalOperations();
 
 		try {
@@ -176,13 +210,14 @@ public class TestSimplifyNumericalOperations {
 
 	@Test
 	public void testUnary() {
-		UnaryNode unaryNode = new UnaryNode(new NumberNode(1.0));
+		UnaryNode unaryNode = new UnaryNode(new NumberNode(1,5));
 
 		SimplifyNumericalOperations s = new SimplifyNumericalOperations();
 		try {
 			ExpressionNode result = s.Visit(unaryNode);
 			assertTrue(result.getClass() == NumberNode.class);
-			assertTrue(((NumberNode) result).getValue().compareTo(new BigDecimal(-1.0)) == 0);
+			assertTrue(((NumberNode) result).getNumerator() == -1);
+			assertTrue(((NumberNode) result).getDenominator() == 5);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			fail();
@@ -192,13 +227,14 @@ public class TestSimplifyNumericalOperations {
 
 	@Test
 	public void testUnaryNumberAddition() {
-		UnaryNode unaryNode = new UnaryNode(new NumberNode(1.0));
-		AdditionNode unaryAddition = new AdditionNode(unaryNode, new NumberNode(4.3));
+		UnaryNode unaryNode = new UnaryNode(new NumberNode(1,6));
+		AdditionNode unaryAddition = new AdditionNode(unaryNode, new NumberNode(4,6));
 		SimplifyNumericalOperations s = new SimplifyNumericalOperations();
 		try {
 			ExpressionNode result = s.Visit(unaryAddition);
 			assertTrue(result.getClass() == NumberNode.class);
-			assertTrue(((NumberNode) result).getValue().compareTo(BigDecimal.valueOf(3.3)) == 0);
+			assertTrue(((NumberNode) result).getNumerator() == 1);
+			assertTrue(((NumberNode) result).getDenominator() == 2);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			fail();
@@ -208,15 +244,16 @@ public class TestSimplifyNumericalOperations {
 
 	@Test
 	public void testUnaryUnaryAddition() {
-		UnaryNode unaryNode = new UnaryNode(new NumberNode(1.0));
-		UnaryNode unaryNode2 = new UnaryNode(new NumberNode(2.0));
+		UnaryNode unaryNode = new UnaryNode(new NumberNode(1));
+		UnaryNode unaryNode2 = new UnaryNode(new NumberNode(2));
 
 		ExpressionNode unaryAddition = new AdditionNode(unaryNode, unaryNode2);
 		SimplifyNumericalOperations s = new SimplifyNumericalOperations();
 		try {
 			ExpressionNode result = s.Visit(unaryAddition);
 			assertTrue(result.getClass() == NumberNode.class);
-			assertTrue(((NumberNode) result).getValue().compareTo(new BigDecimal(-3.0)) ==0);
+			assertTrue(((NumberNode) result).getNumerator() == -3);
+			assertTrue(((NumberNode) result).getDenominator() == 1);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			fail();
@@ -226,7 +263,7 @@ public class TestSimplifyNumericalOperations {
 	
 	@Test
 	public void testUnaryUnaryAddition_cannot_simplify() {
-		UnaryNode unaryNode = new UnaryNode(new NumberNode(1.0));
+		UnaryNode unaryNode = new UnaryNode(new NumberNode(1));
 		UnaryNode unaryNode2 = new UnaryNode(new VariableNode("x"));
 
 		ExpressionNode unaryAddition = new AdditionNode(unaryNode, unaryNode2);
@@ -246,15 +283,17 @@ public class TestSimplifyNumericalOperations {
 
 	@Test
 	public void testUnaryUnarySubtraction() {
-		UnaryNode unaryNode = new UnaryNode(new NumberNode(1.0));
-		UnaryNode unaryNode2 = new UnaryNode(new NumberNode(2.0));
+		UnaryNode unaryNode = new UnaryNode(new NumberNode(1));
+		UnaryNode unaryNode2 = new UnaryNode(new NumberNode(2));
 
 		ExpressionNode unarySubtraction = new SubtractionNode(unaryNode, unaryNode2);
 		SimplifyNumericalOperations s = new SimplifyNumericalOperations();
 		try {
 			ExpressionNode result = s.Visit(unarySubtraction);
+			System.out.println(result);
 			assertTrue(result.getClass() == NumberNode.class);
-			assertTrue(((NumberNode) result).getValue().compareTo(new BigDecimal(1.0)) == 0);
+			assertTrue(((NumberNode) result).getNumerator() == 1);
+			assertTrue(((NumberNode) result).getDenominator() == 1);
 			// Further test: when using bigdecimal check value = 5.3
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -265,15 +304,16 @@ public class TestSimplifyNumericalOperations {
 
 	@Test
 	public void testUnaryUnaryMultiplication() {
-		UnaryNode unaryNode = new UnaryNode(new NumberNode(1.0));
-		UnaryNode unaryNode2 = new UnaryNode(new NumberNode(2.0));
+		UnaryNode unaryNode = new UnaryNode(new NumberNode(1));
+		UnaryNode unaryNode2 = new UnaryNode(new NumberNode(2));
 
 		ExpressionNode unaryMultiplication = new MultiplicationNode(unaryNode, unaryNode2);
 		SimplifyNumericalOperations s = new SimplifyNumericalOperations();
 		try {
 			ExpressionNode result = s.Visit(unaryMultiplication);
 			assertTrue(result.getClass() == NumberNode.class);
-			assertTrue(((NumberNode) result).getValue().compareTo(new BigDecimal(2.0)) == 0);
+			assertTrue(((NumberNode) result).getNumerator() == 2);
+			assertTrue(((NumberNode) result).getDenominator() == 1);
 			// Further test: when using bigdecimal check value = 5.3
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -284,15 +324,16 @@ public class TestSimplifyNumericalOperations {
 
 	@Test
 	public void testUnaryUnaryDivision() {
-		UnaryNode unaryNode = new UnaryNode(new NumberNode(1.0));
-		UnaryNode unaryNode2 = new UnaryNode(new NumberNode(2.0));
+		UnaryNode unaryNode = new UnaryNode(new NumberNode(1));
+		UnaryNode unaryNode2 = new UnaryNode(new NumberNode(2));
 
 		ExpressionNode unaryDivisionNode = new DivisionNode(unaryNode, unaryNode2);
 		SimplifyNumericalOperations s = new SimplifyNumericalOperations();
 		try {
 			ExpressionNode result = s.Visit(unaryDivisionNode);
 			assertTrue(result.getClass() == NumberNode.class);
-			assertTrue(((NumberNode) result).getValue().compareTo(new BigDecimal(0.5)) == 0);
+			assertTrue(((NumberNode) result).getNumerator() == 1);
+			assertTrue(((NumberNode) result).getDenominator() == 2);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			fail();

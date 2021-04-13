@@ -32,13 +32,13 @@ public class TestEvaluateTree {
 	
 	@Test
 	public void testEvaluateTree_Number () {
-		ExpressionNode l = new NumberNode(new BigDecimal(2.56));
-		ExpressionNode r = new NumberNode(new BigDecimal(2.56));
+		ExpressionNode l = new NumberNode(2);
+		ExpressionNode r = new NumberNode(2);
 		EvaluateTree treeMatcher = new EvaluateTree();
 		
 		try {
 			assertTrue(treeMatcher.Visit(l,  r));
-			assertFalse(treeMatcher.Visit(l, new NumberNode(new BigDecimal(2.57))));
+			assertFalse(treeMatcher.Visit(l, new NumberNode(3)));
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			fail();
@@ -48,18 +48,18 @@ public class TestEvaluateTree {
 	@Test
 	public void testEvaluateTree_Addition() {
 		
-		ExpressionNode l = new NumberNode(new BigDecimal(2.56));
-		ExpressionNode r = new NumberNode(new BigDecimal(2.57));
+		ExpressionNode l = new NumberNode(23,99);
+		ExpressionNode r = new NumberNode(23,100);
 		ExpressionNode add = new AdditionNode(l, r);
 		
-		ExpressionNode l2 = new NumberNode(new BigDecimal(2.56));
-		ExpressionNode r2 = new NumberNode(new BigDecimal(2.57));
+		ExpressionNode l2 = new NumberNode(23,99);
+		ExpressionNode r2 = new NumberNode(23,100);
 		ExpressionNode add2 = new AdditionNode(l2, r2);
 		EvaluateTree treeMatcher = new EvaluateTree();
 		
 		try {
 			assertTrue(treeMatcher.Visit(add, add2));
-			assertFalse(treeMatcher.Visit(l, new AdditionNode(new NumberNode(new BigDecimal(2.57)), r2)));
+			assertFalse(treeMatcher.Visit(l, new AdditionNode(new NumberNode(22,100), r2)));
 			assertFalse(treeMatcher.Visit(l, new AdditionNode(new VariableNode("n"), r2)));
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -69,18 +69,18 @@ public class TestEvaluateTree {
 	@Test
 	public void testEvaluateTree_Subtraction() {
 		
-		ExpressionNode l = new NumberNode(new BigDecimal(2.56));
+		ExpressionNode l = new NumberNode(44,103);
 		ExpressionNode r = new VariableNode("x");
 		ExpressionNode add = new SubtractionNode(l, r);
 		
-		ExpressionNode l2 = new NumberNode(new BigDecimal(2.56));
+		ExpressionNode l2 = new NumberNode(44,103);
 		ExpressionNode r2 = new VariableNode("x");
 		ExpressionNode add2 = new SubtractionNode(l2, r2);
 		EvaluateTree treeMatcher = new EvaluateTree();
 		
 		try {
 			assertTrue(treeMatcher.Visit(add, add2));
-			assertFalse(treeMatcher.Visit(l, new SubtractionNode(new NumberNode(new BigDecimal(2.57)), r2)));
+			assertFalse(treeMatcher.Visit(l, new SubtractionNode(new NumberNode(44,1031), r2)));
 			assertFalse(treeMatcher.Visit(l, new SubtractionNode(new VariableNode("n"), r2)));
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -92,18 +92,18 @@ public class TestEvaluateTree {
 	@Test
 	public void testEvaluateTree_Multiplication() {
 		
-		ExpressionNode l = new NumberNode(new BigDecimal(2.56));
+		ExpressionNode l = new NumberNode(1,1000);
 		ExpressionNode r = new VariableNode("x");
 		ExpressionNode add = new MultiplicationNode(l, r);
 		
-		ExpressionNode l2 = new NumberNode(new BigDecimal(2.56));
+		ExpressionNode l2 = new NumberNode(1,1000);
 		ExpressionNode r2 = new VariableNode("x");
 		ExpressionNode add2 = new MultiplicationNode(l2, r2);
 		EvaluateTree treeMatcher = new EvaluateTree();
 		
 		try {
 			assertTrue(treeMatcher.Visit(add, add2));
-			assertFalse(treeMatcher.Visit(l, new MultiplicationNode(new NumberNode(new BigDecimal(2.57)), r2)));
+			assertFalse(treeMatcher.Visit(l, new MultiplicationNode(new NumberNode(1,1001), r2)));
 			assertFalse(treeMatcher.Visit(l, new MultiplicationNode(new VariableNode("n"), r2)));
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -114,18 +114,18 @@ public class TestEvaluateTree {
 	@Test
 	public void testEvaluateTree_Division() {
 		
-		ExpressionNode l = new NumberNode(new BigDecimal(2.56));
+		ExpressionNode l = new NumberNode(0,4);
 		ExpressionNode r = new VariableNode("x");
 		ExpressionNode add = new DivisionNode(l, r);
 		
-		ExpressionNode l2 = new NumberNode(new BigDecimal(2.56));
+		ExpressionNode l2 = new NumberNode(0);
 		ExpressionNode r2 = new VariableNode("x");
 		ExpressionNode add2 = new DivisionNode(l2, r2);
 		EvaluateTree treeMatcher = new EvaluateTree();
 		
 		try {
 			assertTrue(treeMatcher.Visit(add, add2));
-			assertFalse(treeMatcher.Visit(l, new DivisionNode(new NumberNode(new BigDecimal(2.57)), r2)));
+			assertFalse(treeMatcher.Visit(l, new DivisionNode(new NumberNode(1,1), r2)));
 			assertFalse(treeMatcher.Visit(l, new DivisionNode(new VariableNode("n"), r2)));
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -136,18 +136,18 @@ public class TestEvaluateTree {
 	@Test
 	public void testEvaluateTree_Exponentiation() {
 		
-		ExpressionNode l = new NumberNode(new BigDecimal(2.56));
+		ExpressionNode l = new NumberNode(11,1);
 		ExpressionNode r = new VariableNode("x");
 		ExpressionNode add = new PowerNode(l, r);
 		
-		ExpressionNode l2 = new NumberNode(new BigDecimal(2.56));
+		ExpressionNode l2 = new NumberNode(11,1);
 		ExpressionNode r2 = new VariableNode("x");
 		ExpressionNode add2 = new PowerNode(l2, r2);
 		EvaluateTree treeMatcher = new EvaluateTree();
 		
 		try {
 			assertTrue(treeMatcher.Visit(add, add2));
-			assertFalse(treeMatcher.Visit(l, new PowerNode(new NumberNode(new BigDecimal(2.57)), r2)));
+			assertFalse(treeMatcher.Visit(l, new PowerNode(new NumberNode(11,2), r2)));
 			assertFalse(treeMatcher.Visit(l, new PowerNode(new VariableNode("n"), r2)));
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -170,7 +170,7 @@ public class TestEvaluateTree {
 		try {
 			assertTrue(treeMatcher.Visit(unaryNode, unaryNode2));
 			assertFalse(treeMatcher.Visit(unaryNode, new UnaryNode(new VariableNode("xa"))));
-			assertFalse(treeMatcher.Visit(unaryNode, new UnaryNode(new NumberNode(new BigDecimal(2.1)))));
+			assertFalse(treeMatcher.Visit(unaryNode, new UnaryNode(new NumberNode(2))));
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -183,12 +183,12 @@ public class TestEvaluateTree {
 		
 		ArrayList<ExpressionNode> functionArguments = new ArrayList<>();
 		functionArguments.add(new VariableNode("p"));
-		functionArguments.add(new NumberNode(new BigDecimal(2.4)));
+		functionArguments.add(new NumberNode(553,299));
 		ExpressionNode functionNode = new FunctionNode("TestFunction", functionArguments);
 		
 		ArrayList<ExpressionNode> functionArguments2 = new ArrayList<>();
 		functionArguments.add(new VariableNode("p"));
-		functionArguments.add(new NumberNode(new BigDecimal(2.4)));
+		functionArguments.add(new NumberNode(553,299));
 		ExpressionNode functionNode2 = new FunctionNode("TestFunction", functionArguments);
 		
 		

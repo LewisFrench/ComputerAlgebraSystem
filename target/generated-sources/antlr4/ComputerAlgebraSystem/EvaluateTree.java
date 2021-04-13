@@ -67,9 +67,7 @@ public class EvaluateTree extends AstComparator<Boolean> {
 	@Override
 	public Boolean Visit(NumberNode lhsNode, ExpressionNode node) {
 		if (lhsNode.getClass() == node.getClass()) {
-			if (lhsNode.getValue().compareTo( ((NumberNode) node).getValue()) == 0) {
-				return true;
-			}
+			return lhsNode.compareTo(((NumberNode)node)) == 0;
 		}
 		return false;
 	}
@@ -81,11 +79,12 @@ public class EvaluateTree extends AstComparator<Boolean> {
 			match = Visit(lhsNode.innerNode, ((UnaryNode) node).innerNode);
 
 		}
-		if (node instanceof NumberNode) {
-			if (((NumberNode)node).getValue().compareTo(BigDecimal.valueOf(0)) <0) {
-				return Visit(lhsNode.innerNode, node);
-			}
-		}
+//		// Is this necessary??
+//		if (node instanceof NumberNode) {
+//			if (((NumberNode)node).getValue().compareTo(BigDecimal.valueOf(0)) <0) {
+//				return Visit(lhsNode.innerNode, node);
+//			}
+//		}
 		
 		 // if node is a number and lhsNode innernode is a number, match them instead
 		return match;

@@ -17,12 +17,12 @@ public interface RuleAlgebraVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitRuleTerm(RuleAlgebraParser.RuleTermContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code FunctionExpression}
+	 * Visit a parse tree produced by the {@code Integer}
 	 * labeled alternative in {@link RuleAlgebraParser#expression}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitFunctionExpression(RuleAlgebraParser.FunctionExpressionContext ctx);
+	T visitInteger(RuleAlgebraParser.IntegerContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code Variable}
 	 * labeled alternative in {@link RuleAlgebraParser#expression}.
@@ -31,12 +31,26 @@ public interface RuleAlgebraVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitVariable(RuleAlgebraParser.VariableContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code Number}
+	 * Visit a parse tree produced by the {@code FunctionExpression}
 	 * labeled alternative in {@link RuleAlgebraParser#expression}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitNumber(RuleAlgebraParser.NumberContext ctx);
+	T visitFunctionExpression(RuleAlgebraParser.FunctionExpressionContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code Rational}
+	 * labeled alternative in {@link RuleAlgebraParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitRational(RuleAlgebraParser.RationalContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code Decimal}
+	 * labeled alternative in {@link RuleAlgebraParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitDecimal(RuleAlgebraParser.DecimalContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code Parenthetical}
 	 * labeled alternative in {@link RuleAlgebraParser#expression}.

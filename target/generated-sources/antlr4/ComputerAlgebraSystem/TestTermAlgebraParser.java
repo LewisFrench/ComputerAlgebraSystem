@@ -14,25 +14,138 @@ public class TestTermAlgebraParser {
 
 
 	@Test
-	public void testParseSimpleNumber() {
+	public void testParseSimpleNumber_Integer() {
 		Program p = new Program();
 		
 		
 		try {
 			ExpressionNode n = p.parseTerm("3");
 			assertTrue(n instanceof NumberNode);
-			assertTrue(((NumberNode) n).getValue().compareTo(new BigDecimal(3)) ==0);
+			assertTrue(((NumberNode) n).numerator == 3);
+			assertTrue(((NumberNode) n).denominator == 1);
 			
-			n = p.parseTerm("3.91");
+			n = p.parseTerm("-3");
 			assertTrue(n instanceof NumberNode);
-			System.out.println(n.toString());
-			assertTrue(((NumberNode) n).getValue().compareTo(BigDecimal.valueOf(3.91)) == 0);
+			assertTrue(((NumberNode) n).numerator == -3);
+			assertTrue(((NumberNode) n).denominator == 1);
+			
+			
+			n = p.parseTerm("0");
+			assertTrue(n instanceof NumberNode);
+			assertTrue(((NumberNode) n).numerator == 0);
+			assertTrue(((NumberNode) n).denominator == 1);
+			
+			
+			n = p.parseTerm("-0");
+			assertTrue(n instanceof NumberNode);
+			assertTrue(((NumberNode) n).numerator == 0);
+			assertTrue(((NumberNode) n).denominator == 1);
 			
 		} catch (ParseCancellationException e) {fail(); 
 		} catch (Exception e) { fail();}
 		
 	}
 
+	@Test
+	public void testParseSimpleNumber_Rational() {
+		Program p = new Program();
+		
+		try {
+			ExpressionNode n = p.parseTerm("1/3");
+			assertTrue(n instanceof NumberNode);
+			assertTrue(((NumberNode) n).numerator == 1);
+			assertTrue(((NumberNode) n).denominator == 3);
+			
+			n = p.parseTerm("0/3");
+			assertTrue(n instanceof NumberNode);
+			assertTrue(((NumberNode) n).numerator == 0);
+			assertTrue(((NumberNode) n).denominator == 1);
+			
+			n = p.parseTerm("1/-3");
+			assertTrue(n instanceof NumberNode);
+			assertTrue(((NumberNode) n).numerator == -1);
+			assertTrue(((NumberNode) n).denominator == 3);
+			
+			
+			n = p.parseTerm("-1/-3");
+			assertTrue(n instanceof NumberNode);
+			assertTrue(((NumberNode) n).numerator == 1);
+			assertTrue(((NumberNode) n).denominator == 3);
+		
+			n = p.parseTerm("-001/-0003");
+			assertTrue(n instanceof NumberNode);
+			assertTrue(((NumberNode) n).numerator == 1);
+			assertTrue(((NumberNode) n).denominator == 3);
+			n = p.parseTerm("-1/-3");
+		} catch (ParseCancellationException e) {fail(); 
+		} catch (Exception e) { fail();}
+		
+	}
+	
+	@Test
+	public void testParseSimpleNumber_DecimalInteger() {
+		Program p = new Program();
+		
+		
+		try {
+			ExpressionNode n = p.parseTerm("3.00000000000");
+			System.out.println(n.toString());
+			assertTrue(n instanceof NumberNode);
+			assertTrue(((NumberNode) n).numerator == 3);
+			assertTrue(((NumberNode) n).denominator == 1);
+			
+			n = p.parseTerm("-00003.00000");
+			assertTrue(n instanceof NumberNode);
+			assertTrue(((NumberNode) n).numerator == -3);
+			assertTrue(((NumberNode) n).denominator == 1);
+			
+			n = p.parseTerm("-00003.00000");
+			assertTrue(n instanceof NumberNode);
+			assertTrue(((NumberNode) n).numerator == -3);
+			assertTrue(((NumberNode) n).denominator == 1);
+			
+			n = p.parseTerm("-0000.00000");
+			assertTrue(n instanceof NumberNode);
+			assertTrue(((NumberNode) n).numerator == 0);
+			assertTrue(((NumberNode) n).denominator == 1);
+			
+		} catch (ParseCancellationException e) {fail(); 
+		} catch (Exception e) { fail();}
+		
+	}
+
+	@Test
+	public void testParseSimpleNumber_Decimal() {
+		Program p = new Program();
+		
+		
+		try {
+			ExpressionNode n = p.parseTerm("3.7");
+			System.out.println(n.toString());
+			assertTrue(n instanceof NumberNode);
+			assertTrue(((NumberNode) n).numerator == 37);
+			assertTrue(((NumberNode) n).denominator == 10);
+			
+			n = p.parseTerm("-3.2001");
+			System.out.println(n.toString());
+			assertTrue(n instanceof NumberNode);
+			assertTrue(((NumberNode) n).numerator == -32001);
+			assertTrue(((NumberNode) n).denominator == 10000);
+			
+			n = p.parseTerm("-0.0001");
+			System.out.println(n.toString());
+			assertTrue(n instanceof NumberNode);
+			assertTrue(((NumberNode) n).numerator == -1);
+			assertTrue(((NumberNode) n).denominator == 10000);
+			
+		} catch (ParseCancellationException e) {fail(); 
+		} catch (Exception e) { fail();}
+		
+	}
+
+	
+	
+	
 	@Test
 	public void testParseSimpleVariable() {
 		Program p = new Program();
@@ -64,7 +177,8 @@ public class TestTermAlgebraParser {
 			assertTrue(left instanceof VariableNode);
 			assertTrue(((AdditionNode)n).Right instanceof NumberNode);
 			assertEquals(((VariableNode)left).getValue(), "a");
-			assertTrue(((NumberNode) right).getValue().compareTo(new BigDecimal(1)) ==0);
+			assertTrue(((NumberNode) right).getNumerator() == 1);
+			assertTrue(((NumberNode) right).getDenominator() == 1);
 		} catch (ParseCancellationException e) {fail(); 
 		} catch (Exception e) { fail();}	
 	}
@@ -75,14 +189,15 @@ public class TestTermAlgebraParser {
 		
 		
 		try {
-			ExpressionNode n = p.parseTerm("a-1");
+			ExpressionNode n = p.parseTerm("a-4/3");
 			assertTrue(n instanceof SubtractionNode);
 			ExpressionNode left = (((SubtractionNode)n).getLeft());
 			ExpressionNode right = (((SubtractionNode)n).getRight());
 			assertTrue(left instanceof VariableNode);
 			assertTrue(((SubtractionNode)n).Right instanceof NumberNode);
 			assertEquals(((VariableNode)left).getValue(), "a");
-			assertTrue(((NumberNode) right).getValue().compareTo(new BigDecimal(1)) ==0);
+			assertTrue(((NumberNode) right).getNumerator() == 4);
+			assertTrue(((NumberNode) right).getDenominator() == 3);
 		} catch (ParseCancellationException e) {fail(); 
 		} catch (Exception e) { fail();}	
 	}
@@ -108,7 +223,8 @@ public class TestTermAlgebraParser {
 		try {
 			ExpressionNode n = p.parseTerm("-1");
 			assertTrue(n instanceof NumberNode);
-			assertTrue(((NumberNode)n).getValue().compareTo(new BigDecimal(-1))==0 );
+			assertTrue(((NumberNode) n).getNumerator() == -1);
+			assertTrue(((NumberNode) n).getDenominator() == 1);
 		} catch (ParseCancellationException e) {fail(); 
 		} catch (Exception e) { fail();}	
 	}
@@ -157,7 +273,8 @@ public class TestTermAlgebraParser {
 			assertEquals(((VariableNode)left).getValue(), "a");
 			assertTrue(right instanceof NumberNode);
 			System.out.println(n.toString());
-			assertTrue(((NumberNode) right).getValue().compareTo(BigDecimal.valueOf(1)) ==0);
+			assertTrue(((NumberNode) right).getNumerator() == 1);
+			assertTrue(((NumberNode) right).getDenominator() == 1);
 		} catch (ParseCancellationException e) {fail(); 
 		} catch (Exception e) { fail();}	
 	}
@@ -175,7 +292,8 @@ public class TestTermAlgebraParser {
 			assertTrue(left instanceof VariableNode);
 			assertTrue(((DivisionNode)n).Right instanceof NumberNode);
 			assertEquals(((VariableNode)left).getValue(), "a");
-			assertTrue(((NumberNode) right).getValue().compareTo(new BigDecimal(1)) ==0);
+			assertTrue(((NumberNode) right).getNumerator() == 1);
+			assertTrue(((NumberNode) right).getDenominator() == 1);
 		} catch (ParseCancellationException e) {fail(); 
 		} catch (Exception e) { fail();}	
 	}
@@ -192,7 +310,8 @@ public class TestTermAlgebraParser {
 			assertTrue(left instanceof VariableNode);
 			assertTrue(((PowerNode)n).Right instanceof NumberNode);
 			assertEquals(((VariableNode)left).getValue(), "a");
-			assertTrue(((NumberNode) right).getValue().compareTo(new BigDecimal(1)) ==0);
+			assertTrue(((NumberNode) right).getNumerator() == 1);
+			assertTrue(((NumberNode) right).getDenominator() == 1);
 		} catch (ParseCancellationException e) {fail(); 
 		} catch (Exception e) { fail();}	
 	}

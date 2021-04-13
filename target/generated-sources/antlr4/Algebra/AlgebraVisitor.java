@@ -17,12 +17,12 @@ public interface AlgebraVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitTerm(AlgebraParser.TermContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code FunctionExpression}
+	 * Visit a parse tree produced by the {@code Integer}
 	 * labeled alternative in {@link AlgebraParser#expression}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitFunctionExpression(AlgebraParser.FunctionExpressionContext ctx);
+	T visitInteger(AlgebraParser.IntegerContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code Variable}
 	 * labeled alternative in {@link AlgebraParser#expression}.
@@ -31,12 +31,26 @@ public interface AlgebraVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitVariable(AlgebraParser.VariableContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code Number}
+	 * Visit a parse tree produced by the {@code FunctionExpression}
 	 * labeled alternative in {@link AlgebraParser#expression}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitNumber(AlgebraParser.NumberContext ctx);
+	T visitFunctionExpression(AlgebraParser.FunctionExpressionContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code Rational}
+	 * labeled alternative in {@link AlgebraParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitRational(AlgebraParser.RationalContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code Decimal}
+	 * labeled alternative in {@link AlgebraParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitDecimal(AlgebraParser.DecimalContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code Parenthetical}
 	 * labeled alternative in {@link AlgebraParser#expression}.

@@ -5,6 +5,8 @@ import Conditions.ConditionsBaseVisitor;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
+
+import Algebra.AlgebraParser;
 import Conditions.ConditionsLexer;
 import Conditions.ConditionsParser;
 
@@ -83,6 +85,9 @@ public class BuildConditionsVisitor extends ConditionsBaseVisitor<ExpressionNode
 
 		case ConditionsLexer.OP_SUB:
 			node = new UnaryNode(visit(context.expression()));
+			if (node instanceof NumberNode) {
+				return new NumberNode(((NumberNode)node).getNumerator()* -1 , ((NumberNode)node).getDenominator());
+			}
 			break;
 
 		default:
@@ -137,8 +142,36 @@ public class BuildConditionsVisitor extends ConditionsBaseVisitor<ExpressionNode
 	}
 
 	@Override
-	public ExpressionNode visitNumber(ConditionsParser.NumberContext context) {
-		return new NumberNode(new BigDecimal(Double.valueOf(context.value.getText())));
+	public ExpressionNode visitDecimal(ConditionsParser.DecimalContext context) {
+		BigDecimal b = new BigDecimal(context.getText());
+		
+		String formattedDecimal = b.stripTrailingZeros().toPlainString();
+		if (!(formattedDecimal.contains("."))){
+			return new NumberNode(Long.valueOf(formattedDecimal));
+		}
+
+		String[] splitByDecimalPoint = formattedDecimal.split("\\.");		
+		long numerator = Long.valueOf(formattedDecimal.replaceAll("\\.", ""));
+		
+		int numberOfDecimalPlaces = splitByDecimalPoint[1].length();
+		long denominator = 1;
+		for (int i = 0; i < numberOfDecimalPlaces ; i ++) {
+			denominator *= 10;
+		}
+		return new NumberNode(numerator, denominator);
+	}
+	
+	@Override
+	public ExpressionNode visitInteger(ConditionsParser.IntegerContext context) {
+		return new NumberNode(Long.valueOf(context.getText()));
+	}
+	
+	@Override
+	public ExpressionNode visitRational(ConditionsParser.RationalContext context) {
+		String[] split = context.getText().split("/");
+		long numerator = Long.valueOf(split[0]);
+		long denominator = Long.valueOf(split[1]);
+		return new NumberNode(numerator, denominator);
 	}
 
 	@Override
