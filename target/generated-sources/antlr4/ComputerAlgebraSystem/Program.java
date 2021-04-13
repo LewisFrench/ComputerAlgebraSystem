@@ -1,7 +1,6 @@
 package ComputerAlgebraSystem;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.LinkedHashMap;
 
 import org.antlr.v4.runtime.CharStream;
@@ -44,7 +43,10 @@ public class Program {
 		} catch (StackOverflowError soe) {
 			throw new StackOverflowError(
 					"Check for any infinitely-recursive rules or choose a lower rule application limit");
-		} catch (Exception e) {
+		//} catch (RewriteError re) {
+			// Do I do anything here???
+		}	
+		 catch (Exception e) {
 			throw new Exception("Rewrite Error: " + e.getMessage());
 		}
 	}

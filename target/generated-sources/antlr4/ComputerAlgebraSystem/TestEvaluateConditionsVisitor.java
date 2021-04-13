@@ -3,7 +3,6 @@ package ComputerAlgebraSystem;
 import static org.junit.Assert.*;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 
 import org.junit.Test;
@@ -318,8 +317,8 @@ public class TestEvaluateConditionsVisitor {
 	@Test
 	public void testVisiting_Unavailable_Nodes_Exception() {
 		EvaluateConditionsVisitor e = new EvaluateConditionsVisitor();
-		ArrayList<ExpressionNode> arguments = new ArrayList<>();
-		ExpressionNode c = new ConditionFunctionNode("is_number", arguments);
+		//ArrayList<ExpressionNode> arguments = new ArrayList<>();
+		//ExpressionNode c = new ConditionFunctionNode("is_number", arguments);
 		assertThrows(Exception.class, () -> e.Visit(new AdditionNode(new NumberNode((2)), new VariableNode("v"))));
 		assertThrows(Exception.class, () -> e.Visit(new SubtractionNode(new NumberNode((2)), new VariableNode("v"))));
 		assertThrows(Exception.class, () -> e.Visit(new DivisionNode(new NumberNode((2)), new VariableNode("v"))));

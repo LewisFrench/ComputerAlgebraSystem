@@ -6,37 +6,37 @@ class EvaluateExpressionVisitor extends TermVisitor<String> {
 	@Override
 	public String Visit(PowerNode node) throws Exception {
 		System.out
-				.println("\nvisiting Power : " + "\nLHS :" + node.Left.toString() + "\nRHS: " + node.Right.toString());
-		return Visit(node.Left) + "^" + Visit(node.Right);
+				.println("\nvisiting Power : " + "\nLHS :" + node.getLeft().toString() + "\nRHS: " + node.getRight().toString());
+		return Visit(node.getLeft()) + "^" + Visit(node.getRight());
 	}
 
 	@Override
 	public String Visit(AdditionNode node) throws Exception {
 		System.out.println(
-				"\nvisiting Addition : " + "\nLHS :" + node.Left.toString() + "\nRHS: " + node.Right.toString());
-		return  Visit(node.Left) + "+" + Visit(node.Right) ;
+				"\nvisiting Addition : " + "\nLHS :" + node.getLeft().toString() + "\nRHS: " + node.getRight().toString());
+		return  Visit(node.getLeft()) + "+" + Visit(node.getRight()) ;
 	}
 
 	@Override
 	public String Visit(SubtractionNode node) throws Exception {
 		System.out.println(
-				"\nvisiting Subtraction : " + "\nLHS :" + node.Left.toString() + "\nRHS: " + node.Right.toString());
-		return Visit(node.Left) + "-" + Visit(node.Right);
+				"\nvisiting Subtraction : " + "\nLHS :" + node.getLeft().toString() + "\nRHS: " + node.getRight().toString());
+		return Visit(node.getLeft()) + "-" + Visit(node.getRight());
 	}
 
 	@Override
 	public String Visit(MultiplicationNode node) throws Exception {
 		System.out.println(
-				"\nvisiting Multiplication : " + "\nLHS :" + node.Left.toString() + "\nRHS: " + node.Right.toString());
-		return Visit(node.Left) + "*" + Visit(node.Right);
+				"\nvisiting Multiplication : " + "\nLHS :" + node.getLeft().toString() + "\nRHS: " + node.getRight().toString());
+		return Visit(node.getLeft()) + "*" + Visit(node.getRight());
 	}
 
 	@Override
 	public String Visit(DivisionNode node) throws Exception {
 		System.out.println(
-				"\nvisiting Division : " + "\nLHS :" + node.Left.toString() + "\nRHS: " + node.Right.toString());
+				"\nvisiting Division : " + "\nLHS :" + node.getLeft().toString() + "\nRHS: " + node.getRight().toString());
 		// divide by 0 errors
-		return Visit(node.Left) + "/" + Visit(node.Right);
+		return Visit(node.getLeft()) + "/" + Visit(node.getRight());
 	}
 
 	@Override

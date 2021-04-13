@@ -6,7 +6,6 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
-import Algebra.AlgebraParser;
 import Conditions.ConditionsLexer;
 import Conditions.ConditionsParser;
 

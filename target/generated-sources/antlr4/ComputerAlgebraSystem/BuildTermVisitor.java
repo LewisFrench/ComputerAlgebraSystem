@@ -2,7 +2,6 @@ package ComputerAlgebraSystem;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import Algebra.AlgebraBaseVisitor;
 import Algebra.AlgebraLexer;

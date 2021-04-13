@@ -4,7 +4,6 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import Algebra.AlgebraParser;
 import RuleAlgebra.RuleAlgebraBaseVisitor;
 import RuleAlgebra.RuleAlgebraLexer;
 import RuleAlgebra.RuleAlgebraParser;

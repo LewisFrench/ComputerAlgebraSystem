@@ -16,7 +16,7 @@ public class DependsEvaluator extends TermVisitor<Boolean> {
 				return true;
 			}
 		}
-		return Visit(node.Left) || Visit(node.Right);
+		return Visit(node.getLeft()) || Visit(node.getRight());
 	}
 
 	@Override
@@ -26,8 +26,8 @@ public class DependsEvaluator extends TermVisitor<Boolean> {
 				return true;
 			}
 		}
-		boolean left = Visit(node.Left);
-		boolean right = Visit(node.Right);
+		boolean left = Visit(node.getLeft());
+		boolean right = Visit(node.getRight());
 		return left || right;
 	}
 
@@ -38,7 +38,7 @@ public class DependsEvaluator extends TermVisitor<Boolean> {
 				return true;
 			}
 		}
-		return Visit(node.Left) || Visit(node.Right);
+		return Visit(node.getLeft()) || Visit(node.getRight());
 	}
 
 	@Override
@@ -48,7 +48,7 @@ public class DependsEvaluator extends TermVisitor<Boolean> {
 				return true;
 			}
 		}
-		return Visit(node.Left) || Visit(node.Right);
+		return Visit(node.getLeft()) || Visit(node.getRight());
 	}
 
 	@Override
@@ -59,7 +59,7 @@ public class DependsEvaluator extends TermVisitor<Boolean> {
 				return true;
 			}
 		}
-		return Visit(node.Left) || Visit(node.Right);
+		return Visit(node.getLeft()) || Visit(node.getRight());
 	}
 
 //	@Override

@@ -2,7 +2,6 @@ package ComputerAlgebraSystem;
 
 import static org.junit.Assert.*;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 
 import org.junit.Test;
