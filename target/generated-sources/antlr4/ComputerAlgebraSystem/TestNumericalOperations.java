@@ -1,6 +1,7 @@
 package ComputerAlgebraSystem;
 
 import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.Test;
 
@@ -204,6 +205,25 @@ public class TestNumericalOperations {
 		NumberNode num2 = new NumberNode(1,2);
 		ExpressionNode result = num1.exponentiate(num2);
 		assertEquals(PowerNode.class, result.getClass());
+	}
+	
+	
+	@Test
+	public void testRationalExponentiation_ZeroExponent() {
+		NumberNode num1 = new NumberNode(-2, 4);
+		NumberNode num2 = new NumberNode(0,1);
+		ExpressionNode result = num1.exponentiate(num2);
+		assertEquals(NumberNode.class, result.getClass());
+		assertEquals(1, ((NumberNode)result).getNumerator());
+		
+		
+	}
+	
+	@Test
+	public void testRationalExponentiation_NegativeExponent_Exception() {
+		assertThrows(IllegalArgumentException.class, () -> LongMath.raiseToPowerLong(2,-2));
+		
+		
 	}
 
 }
