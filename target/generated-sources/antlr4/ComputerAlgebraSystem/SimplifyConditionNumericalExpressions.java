@@ -41,14 +41,14 @@ public class SimplifyConditionNumericalExpressions extends ConditionVisitor<Expr
 
 		return new ConditionFunctionNode(node.functionName, arguments);
 	}
-	
 	@Override
 	public ExpressionNode Visit(PowerNode node) throws Exception {
 		ExpressionNode left = Visit(node.Left);
 		ExpressionNode right = Visit(node.Right);
 
 		if (left instanceof NumberNode && right instanceof NumberNode) {
-			return new NumberNode(new BigDecimal(Math.pow(((NumberNode) node.Left).getValue().doubleValue(), ((NumberNode) node.Right).getValue().doubleValue())));
+			
+			return ((NumberNode)left).exponentiate((NumberNode)right);
 		}
 		return new PowerNode(left, right);
 	}
@@ -57,7 +57,7 @@ public class SimplifyConditionNumericalExpressions extends ConditionVisitor<Expr
 		ExpressionNode left = Visit(node.Left);
 		ExpressionNode right = Visit(node.Right);
 		if (left instanceof NumberNode && right instanceof NumberNode) {
-			return new NumberNode(((NumberNode) left).getValue().add(((NumberNode) right).getValue()));
+			return ((NumberNode)left).add((NumberNode)right);
 		}
 		return new AdditionNode(left, right);
 	}
@@ -67,7 +67,7 @@ public class SimplifyConditionNumericalExpressions extends ConditionVisitor<Expr
 		ExpressionNode left = Visit(node.Left);
 		ExpressionNode right = Visit(node.Right);
 		if (left instanceof NumberNode && right instanceof NumberNode) {
-			return new NumberNode(((NumberNode) left).getValue().subtract(((NumberNode) right).getValue()));
+			return ((NumberNode)left).subtract((NumberNode)right);
 		}
 		return new SubtractionNode(left, right);
 	}
@@ -77,7 +77,7 @@ public class SimplifyConditionNumericalExpressions extends ConditionVisitor<Expr
 		ExpressionNode left = Visit(node.Left);
 		ExpressionNode right = Visit(node.Right);
 		if (left instanceof NumberNode && right instanceof NumberNode) {
-			return new NumberNode(((NumberNode) left).getValue().multiply(((NumberNode) right).getValue()));
+			return ((NumberNode)left).multiply((NumberNode)right);
 		}
 		return new MultiplicationNode(left, right);
 	}
@@ -87,27 +87,17 @@ public class SimplifyConditionNumericalExpressions extends ConditionVisitor<Expr
 		ExpressionNode left = Visit(node.Left);
 		ExpressionNode right = Visit(node.Right);
 		if (left instanceof NumberNode && right instanceof NumberNode) {
-			return new NumberNode(((NumberNode) left).getValue() .divide(((NumberNode) right).getValue()));
+			return ((NumberNode)left).divide((NumberNode)right);
 		}
 		return new DivisionNode(left, right);
 	}
-
-//	@Override
-//	public ExpressionNode Visit(ParentheticalNode node) throws Exception {
-//		ExpressionNode innerNode = Visit(node.innerNode);
-//		if (innerNode instanceof NumberNode) {
-//			return ((NumberNode)innerNode);
-//		}
-//		return new ParentheticalNode(innerNode);
-//	}
 
 	@Override
 	public ExpressionNode Visit(UnaryNode node) throws Exception {
 		
 		ExpressionNode innerNode = Visit(node.innerNode);
 		if (innerNode instanceof NumberNode) {
-			return new NumberNode( (((NumberNode)innerNode).getValue()).multiply(new BigDecimal(-1)));
-			
+			return ((NumberNode)innerNode).multiply(new NumberNode(-1));
 		}
 		return new UnaryNode(innerNode);
 	}

@@ -27,13 +27,13 @@ public class RuleAlgebraBaseListener implements RuleAlgebraListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterFunctionExpression(RuleAlgebraParser.FunctionExpressionContext ctx) { }
+	@Override public void enterInteger(RuleAlgebraParser.IntegerContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitFunctionExpression(RuleAlgebraParser.FunctionExpressionContext ctx) { }
+	@Override public void exitInteger(RuleAlgebraParser.IntegerContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -51,13 +51,37 @@ public class RuleAlgebraBaseListener implements RuleAlgebraListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterNumber(RuleAlgebraParser.NumberContext ctx) { }
+	@Override public void enterFunctionExpression(RuleAlgebraParser.FunctionExpressionContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitNumber(RuleAlgebraParser.NumberContext ctx) { }
+	@Override public void exitFunctionExpression(RuleAlgebraParser.FunctionExpressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterRational(RuleAlgebraParser.RationalContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitRational(RuleAlgebraParser.RationalContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterDecimal(RuleAlgebraParser.DecimalContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitDecimal(RuleAlgebraParser.DecimalContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

@@ -151,8 +151,7 @@ public class TestProgram {
 			Rule r= new Rule(new RuleVariableNode("x"), new NumberNode(1));
 			rules.add(r);
 			String result = p.Rewrite(rules,new VariableNode("p"), 100);
-			System.out.println("HERE \n\n" + result);
-			assertTrue(result.equals("1.0"));
+			assertTrue(result.equals("1"));
 		} catch (Exception e ) {fail();}
 
 	}

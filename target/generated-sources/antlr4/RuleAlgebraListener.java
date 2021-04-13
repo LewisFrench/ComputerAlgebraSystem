@@ -17,17 +17,17 @@ public interface RuleAlgebraListener extends ParseTreeListener {
 	 */
 	void exitRuleTerm(RuleAlgebraParser.RuleTermContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code FunctionExpression}
+	 * Enter a parse tree produced by the {@code Integer}
 	 * labeled alternative in {@link RuleAlgebraParser#expression}.
 	 * @param ctx the parse tree
 	 */
-	void enterFunctionExpression(RuleAlgebraParser.FunctionExpressionContext ctx);
+	void enterInteger(RuleAlgebraParser.IntegerContext ctx);
 	/**
-	 * Exit a parse tree produced by the {@code FunctionExpression}
+	 * Exit a parse tree produced by the {@code Integer}
 	 * labeled alternative in {@link RuleAlgebraParser#expression}.
 	 * @param ctx the parse tree
 	 */
-	void exitFunctionExpression(RuleAlgebraParser.FunctionExpressionContext ctx);
+	void exitInteger(RuleAlgebraParser.IntegerContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code Variable}
 	 * labeled alternative in {@link RuleAlgebraParser#expression}.
@@ -41,17 +41,41 @@ public interface RuleAlgebraListener extends ParseTreeListener {
 	 */
 	void exitVariable(RuleAlgebraParser.VariableContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code Number}
+	 * Enter a parse tree produced by the {@code FunctionExpression}
 	 * labeled alternative in {@link RuleAlgebraParser#expression}.
 	 * @param ctx the parse tree
 	 */
-	void enterNumber(RuleAlgebraParser.NumberContext ctx);
+	void enterFunctionExpression(RuleAlgebraParser.FunctionExpressionContext ctx);
 	/**
-	 * Exit a parse tree produced by the {@code Number}
+	 * Exit a parse tree produced by the {@code FunctionExpression}
 	 * labeled alternative in {@link RuleAlgebraParser#expression}.
 	 * @param ctx the parse tree
 	 */
-	void exitNumber(RuleAlgebraParser.NumberContext ctx);
+	void exitFunctionExpression(RuleAlgebraParser.FunctionExpressionContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code Rational}
+	 * labeled alternative in {@link RuleAlgebraParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterRational(RuleAlgebraParser.RationalContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code Rational}
+	 * labeled alternative in {@link RuleAlgebraParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitRational(RuleAlgebraParser.RationalContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code Decimal}
+	 * labeled alternative in {@link RuleAlgebraParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterDecimal(RuleAlgebraParser.DecimalContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code Decimal}
+	 * labeled alternative in {@link RuleAlgebraParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitDecimal(RuleAlgebraParser.DecimalContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code Parenthetical}
 	 * labeled alternative in {@link RuleAlgebraParser#expression}.

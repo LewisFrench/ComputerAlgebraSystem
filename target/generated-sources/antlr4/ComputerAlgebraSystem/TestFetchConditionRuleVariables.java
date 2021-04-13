@@ -178,7 +178,7 @@ public class TestFetchConditionRuleVariables {
 	public void testFetchComplexRuleVariable_Relop() {
 		ExpressionNode rv = new RuleVariableNode("n");
 		
-		ExpressionNode relop = new RelopNode(new NumberNode(2.1), rv, ConditionsLexer.RELOP_GT, ">");
+		ExpressionNode relop = new RelopNode(new NumberNode(2), rv, ConditionsLexer.RELOP_GT, ">");
 		
 		ExpressionNode unary = new UnaryNode(relop);
 		FetchConditionRuleVariables f = new FetchConditionRuleVariables();
@@ -195,7 +195,7 @@ public class TestFetchConditionRuleVariables {
 	public void testFetchComplexRuleVariable_Logical_NOT() {
 		ExpressionNode rv = new RuleVariableNode("n");
 		
-		ExpressionNode relop = new RelopNode(new NumberNode(2.1), rv, ConditionsLexer.RELOP_GT, ">");
+		ExpressionNode relop = new RelopNode(new NumberNode(2,1), rv, ConditionsLexer.RELOP_GT, ">");
 		ExpressionNode not = new NotNode(relop);
 		FetchConditionRuleVariables f = new FetchConditionRuleVariables();
 
@@ -210,8 +210,8 @@ public class TestFetchConditionRuleVariables {
 	public void testFetchComplexRuleVariable_Logical_AND() {
 		ExpressionNode rv = new RuleVariableNode("n");
 		
-		ExpressionNode relop = new RelopNode(new NumberNode(2.1), rv, ConditionsLexer.RELOP_GT, ">");
-		ExpressionNode relop2 = new RelopNode(new NumberNode(2.1), new RuleVariableNode("a"), ConditionsLexer.RELOP_GT, ">");
+		ExpressionNode relop = new RelopNode(new NumberNode(4), rv, ConditionsLexer.RELOP_GT, ">");
+		ExpressionNode relop2 = new RelopNode(new NumberNode(2,3), new RuleVariableNode("a"), ConditionsLexer.RELOP_GT, ">");
 		ExpressionNode and = new ConditionAndNode(relop, relop2);
 		FetchConditionRuleVariables f = new FetchConditionRuleVariables();
 

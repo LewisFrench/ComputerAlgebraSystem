@@ -77,17 +77,17 @@ public interface ConditionsListener extends ParseTreeListener {
 	 */
 	void exitConditionOperation(ConditionsParser.ConditionOperationContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code FunctionExpression}
+	 * Enter a parse tree produced by the {@code Integer}
 	 * labeled alternative in {@link ConditionsParser#expression}.
 	 * @param ctx the parse tree
 	 */
-	void enterFunctionExpression(ConditionsParser.FunctionExpressionContext ctx);
+	void enterInteger(ConditionsParser.IntegerContext ctx);
 	/**
-	 * Exit a parse tree produced by the {@code FunctionExpression}
+	 * Exit a parse tree produced by the {@code Integer}
 	 * labeled alternative in {@link ConditionsParser#expression}.
 	 * @param ctx the parse tree
 	 */
-	void exitFunctionExpression(ConditionsParser.FunctionExpressionContext ctx);
+	void exitInteger(ConditionsParser.IntegerContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code Variable}
 	 * labeled alternative in {@link ConditionsParser#expression}.
@@ -101,17 +101,41 @@ public interface ConditionsListener extends ParseTreeListener {
 	 */
 	void exitVariable(ConditionsParser.VariableContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code Number}
+	 * Enter a parse tree produced by the {@code FunctionExpression}
 	 * labeled alternative in {@link ConditionsParser#expression}.
 	 * @param ctx the parse tree
 	 */
-	void enterNumber(ConditionsParser.NumberContext ctx);
+	void enterFunctionExpression(ConditionsParser.FunctionExpressionContext ctx);
 	/**
-	 * Exit a parse tree produced by the {@code Number}
+	 * Exit a parse tree produced by the {@code FunctionExpression}
 	 * labeled alternative in {@link ConditionsParser#expression}.
 	 * @param ctx the parse tree
 	 */
-	void exitNumber(ConditionsParser.NumberContext ctx);
+	void exitFunctionExpression(ConditionsParser.FunctionExpressionContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code Rational}
+	 * labeled alternative in {@link ConditionsParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterRational(ConditionsParser.RationalContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code Rational}
+	 * labeled alternative in {@link ConditionsParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitRational(ConditionsParser.RationalContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code Decimal}
+	 * labeled alternative in {@link ConditionsParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterDecimal(ConditionsParser.DecimalContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code Decimal}
+	 * labeled alternative in {@link ConditionsParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitDecimal(ConditionsParser.DecimalContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code Parenthetical}
 	 * labeled alternative in {@link ConditionsParser#expression}.

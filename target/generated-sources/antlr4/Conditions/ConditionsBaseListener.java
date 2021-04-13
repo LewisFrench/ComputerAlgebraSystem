@@ -88,13 +88,13 @@ public class ConditionsBaseListener implements ConditionsListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterFunctionExpression(ConditionsParser.FunctionExpressionContext ctx) { }
+	@Override public void enterInteger(ConditionsParser.IntegerContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitFunctionExpression(ConditionsParser.FunctionExpressionContext ctx) { }
+	@Override public void exitInteger(ConditionsParser.IntegerContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -112,13 +112,37 @@ public class ConditionsBaseListener implements ConditionsListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterNumber(ConditionsParser.NumberContext ctx) { }
+	@Override public void enterFunctionExpression(ConditionsParser.FunctionExpressionContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitNumber(ConditionsParser.NumberContext ctx) { }
+	@Override public void exitFunctionExpression(ConditionsParser.FunctionExpressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterRational(ConditionsParser.RationalContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitRational(ConditionsParser.RationalContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterDecimal(ConditionsParser.DecimalContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitDecimal(ConditionsParser.DecimalContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

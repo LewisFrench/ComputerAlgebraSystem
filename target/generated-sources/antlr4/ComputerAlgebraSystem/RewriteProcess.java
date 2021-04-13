@@ -95,7 +95,6 @@ public class RewriteProcess extends TermVisitor<ExpressionNode> {
 		if (!(this.ruleApplicationLimit > this.ruleApplicationCount)) {
 			return node;
 		}
-		
 		EvaluateTree argumentEvaluator;
 		if (rules != null) {
 			for (Rule r : rules) {
@@ -103,17 +102,22 @@ public class RewriteProcess extends TermVisitor<ExpressionNode> {
 				boolean conditionsHold = false;
 				argumentEvaluator = new EvaluateTree();
 
+				// compare rule to redex
 				boolean ruleMatches = argumentEvaluator.Visit(r.lhsNode, node);
-
 				if (ruleMatches) {
+					
+					// determine if rule repeated rule variables are valid
 					boolean validArguments = argumentsValid(argumentEvaluator);
 					if (validArguments) {
+						
+						// Construct linkedhashmap of rule varluabels and their corresponding values
 						LinkedHashMap<String, ExpressionNode> newRuleVariables = new LinkedHashMap<String, ExpressionNode>();
 						for (int i = 0; i < argumentEvaluator.variables.size(); i++) {
 							newRuleVariables.put(argumentEvaluator.variables.get(i),
 									argumentEvaluator.arguments.get(i));
 						}
 
+						// if rule has conditions, determine if they hold
 						if (r.conditionsNode != null) {
 							ExpressionNode substitutedConditions = new SubstituteConditionRuleVariables(
 									newRuleVariables).Visit(r.conditionsNode);
@@ -124,13 +128,11 @@ public class RewriteProcess extends TermVisitor<ExpressionNode> {
 							conditionsHold = new EvaluateConditionsVisitor().Visit(simplified);
 
 						}
-
+						// rewrite the subtree with the substituted RHS of the rule
 						if (conditionsHold || r.conditionsNode == null) {
-							
 							this.ruleApplicationCount++;
 							ExpressionNode substituted = new SubstituteRuleVariables(newRuleVariables).Visit(r.rhsNode);
 							ExpressionNode solved = new SimplifyNumericalOperations().Visit(substituted);
-							System.out.println("\nMatched rule " + r.toString() + " to term  " + node.toString() + "   -->   " + solved.toString() );
 							return Visit(solved);
 						}
 

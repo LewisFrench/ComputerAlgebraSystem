@@ -20,7 +20,8 @@ public class TestRewriteProcess {
 		try {
 			ExpressionNode result = rewrite.Visit(term);
 			assertTrue(result.getClass() == NumberNode.class);
-			assertTrue(((NumberNode) result).getValue().compareTo(new BigDecimal(2.0)) ==0);
+			assertTrue(((NumberNode) result).getNumerator() == 2);
+			assertTrue(((NumberNode) result).getDenominator() == 1);
 		} catch (Exception e) {
 			System.out.println(e.getStackTrace());
 		}
@@ -35,7 +36,8 @@ public class TestRewriteProcess {
 		try {
 			ExpressionNode result = rewrite.Visit(term);
 			assertTrue(result.getClass() == NumberNode.class);
-			assertTrue(((NumberNode) result).getValue().compareTo(new BigDecimal(2)) ==0);
+			assertTrue(((NumberNode) result).getNumerator() == 2);
+			assertTrue(((NumberNode) result).getDenominator() == 1);
 		} catch (Exception e) {
 			System.out.println(e.getStackTrace());
 		}
@@ -55,7 +57,8 @@ public class TestRewriteProcess {
 			ExpressionNode result = rewrite.Visit(term);
 
 			assertTrue(result.getClass() == NumberNode.class);
-			assertTrue(((NumberNode) result).getValue().compareTo(new BigDecimal(2)) ==0);
+			assertTrue(((NumberNode) result).getNumerator() == 2);
+			assertTrue(((NumberNode) result).getDenominator() == 1);
 		} catch (Exception e) {
 			System.out.println(e.getStackTrace());
 		}
@@ -74,7 +77,8 @@ public class TestRewriteProcess {
 			RewriteProcess rewrite = new RewriteProcess(rules, ruleApplicationLimit);
 			ExpressionNode result = rewrite.Visit(term);
 			assertTrue(result.getClass() == NumberNode.class);
-			assertTrue(((NumberNode) result).getValue().compareTo(new BigDecimal(3)) ==0);
+			assertTrue(((NumberNode) result).getNumerator() == 3);
+			assertTrue(((NumberNode) result).getDenominator() == 1);
 		} catch (Exception e) {
 			System.out.println(e.getStackTrace());
 		}
@@ -226,10 +230,10 @@ public class TestRewriteProcess {
 
 	@Test
 	public void testSimpleTransformation_Unary_Numerical() {
-		ExpressionNode term = new UnaryNode(new NumberNode(2.1));
+		ExpressionNode term = new UnaryNode(new NumberNode(221,5));
 		ArrayList<Rule> rules = new ArrayList<>();
-		ExpressionNode ruleLhs = new UnaryNode(new NumberNode(2.1));
-		ExpressionNode ruleRhs = new UnaryNode(new NumberNode(2.2));
+		ExpressionNode ruleLhs = new UnaryNode(new NumberNode(221,5));
+		ExpressionNode ruleRhs = new UnaryNode(new NumberNode(224,3));
 
 		int ruleApplicationLimit = 1;
 		try {
@@ -238,7 +242,8 @@ public class TestRewriteProcess {
 			ExpressionNode result = rewrite.Visit(term);
 
 			assertTrue(result.getClass() == NumberNode.class);
-			assertTrue(((NumberNode) result).getValue().compareTo(BigDecimal.valueOf(-2.2)) ==0);
+			assertTrue(((NumberNode) result).getNumerator() == -224);
+			assertTrue(((NumberNode) result).getDenominator() == 3);
 
 		} catch (Exception e) {
 			System.out.println(e.getStackTrace());
@@ -462,7 +467,7 @@ public class TestRewriteProcess {
 		try {
 			rules.add(new Rule(lhs, new RuleVariableNode("n")));
 			RewriteProcess rewrite = new RewriteProcess(rules, ruleApplicationLimit);
-			ExpressionNode result = rewrite.Visit(term);
+			rewrite.Visit(term);
 			assertTrue(rewrite.ruleApplicationCount == 0);
 		} catch (Exception e) {
 			System.out.println(e.getStackTrace());

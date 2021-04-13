@@ -3,15 +3,17 @@ grammar RuleAlgebra;
 ruleTerm : expression EOF;
 
 expression
-   :  LPAREN expression RPAREN #Parenthetical  
+   :  value = VARIABLE  #Variable
+   | VARIDENTIFIER value = VARIABLE #RuleVariable
+   |  ('-')? numerator = INTEGER '/' ('-')? denominator = INTEGER #Rational 
+   |  value = INTEGER #Integer
+   |  value = DECIMALNUMBER #Decimal
+   |  LPAREN expression RPAREN #Parenthetical  
+   |  op = (OP_ADD | OP_SUB) expression #UnaryExpression
    |  left = expression  op = OP_POW right = expression #Operation
    |  left = expression  op = (OP_MUL | OP_DIV) right = expression #Operation
    |  left = expression  op = (OP_ADD | OP_SUB) right = expression #Operation
    |  func = VARIABLE LPAREN  arguments =  expression( COMMA expression)* RPAREN #FunctionExpression
-   |  op = (OP_ADD | OP_SUB) expression #UnaryExpression
-   |  value = VARIABLE #Variable
-   | VARIDENTIFIER value = VARIABLE #RuleVariable
-   |  value = NUMBER #Number
    ;
    
 OP_ADD: '+';
@@ -28,14 +30,19 @@ fragment VALID_ID_CHAR
    : ('a' .. 'z') | ('A' .. 'Z') 
    ;
 
- NUMBER
-   : UNSIGNED_INTEGER ('.' UNSIGNED_INTEGER)?
+ INTEGER
+   : UNSIGNED_INTEGER
+   ;
+
+
+ DECIMALNUMBER
+   : UNSIGNED_INTEGER ('.' UNSIGNED_INTEGER)
    ;
 
 fragment UNSIGNED_INTEGER
    : ('0' .. '9')+
    ;
-
+   
 COMMA
    : ','
    ;
