@@ -77,17 +77,17 @@ public class BuildConditionsVisitor extends ConditionsBaseVisitor<ExpressionNode
 	@Override
 	public ExpressionNode visitUnaryExpression(ConditionsParser.UnaryExpressionContext context) {
 		ExpressionNode node = null;
-
+		node = visit(context.expression());
 		switch (context.op.getType()) {
 		case ConditionsLexer.OP_ADD:
 			node = visit(context.expression());
 			break;
 
 		case ConditionsLexer.OP_SUB:
-			node = new UnaryNode(visit(context.expression()));
 			if (node instanceof NumberNode) {
 				return new NumberNode(((NumberNode)node).getNumerator()* -1 , ((NumberNode)node).getDenominator());
 			}
+			node = new UnaryNode(visit(context.expression()));
 			break;
 
 		default:

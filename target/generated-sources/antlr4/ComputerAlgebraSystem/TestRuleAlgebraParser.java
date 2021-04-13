@@ -219,6 +219,8 @@ public class TestRuleAlgebraParser {
 		}
 	}
 
+	
+	
 	@Test
 	public void testValidRuleNoConditions_Number_Variable() {
 		Program p = new Program();
@@ -247,6 +249,72 @@ public class TestRuleAlgebraParser {
 			e.printStackTrace();
 		}
 	}
+	
+	
+	@Test
+	public void testValidRuleNoConditions_PositiveUnary() {
+
+		Program p = new Program();
+		try {
+			Rule result = p.parseRule("+x = +x");
+			assertTrue(result.lhsNode instanceof VariableNode);
+			
+			assertTrue(result.rhsNode instanceof VariableNode);
+			assertTrue(result.conditionsNode == null);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	public void testValidRuleNoConditions_PositiveUnary_Number() {
+
+		Program p = new Program();
+		try {
+			Rule result = p.parseRule("+2 = +2");
+			assertTrue(result.lhsNode instanceof NumberNode);
+			
+			assertTrue(result.rhsNode instanceof NumberNode);
+			assertTrue(result.conditionsNode == null);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	@Test
+	public void testValidRuleNoConditions_Unary() {
+
+		Program p = new Program();
+		try {
+			Rule result = p.parseRule("-func(x, 3) = - func(x, 3)");
+			assertTrue(result.lhsNode instanceof UnaryNode);
+			
+			assertTrue(result.rhsNode instanceof UnaryNode);
+			assertTrue(result.conditionsNode == null);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	public void testValidRuleNoConditions_Parentheses() {
+
+		Program p = new Program();
+		try {
+			Rule result = p.parseRule("(-func(x, 3)) = (- func(x, 3))");
+			assertTrue(result.lhsNode instanceof UnaryNode);
+			
+			assertTrue(result.rhsNode instanceof UnaryNode);
+			assertTrue(result.conditionsNode == null);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
 
 	@Test
 	public void testValidRuleNoConditions_RuleVariablesNotCorrespond_Exception() {
@@ -345,6 +413,71 @@ public class TestRuleAlgebraParser {
 			assertTrue(result.lhsNode instanceof FunctionNode);
 			assertTrue(result.rhsNode instanceof PowerNode);
 			assertTrue(result.conditionsNode == null);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	public void testValidRuleValidConditions_Relop_Rational() {
+
+		Program p = new Program();
+		try {
+			Rule result = p.parseRule("x=1:1/3>0/2");
+			assertTrue(result.lhsNode instanceof VariableNode);
+			assertTrue(result.rhsNode instanceof NumberNode);
+			assertTrue(result.conditionsNode instanceof RelopNode);
+			assertEquals(((RelopNode) result.conditionsNode).relopText, ">");
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	@Test
+	public void testValidRuleValidConditions_Relop_Decimal() {
+
+		Program p = new Program();
+		try {
+			Rule result = p.parseRule("x=1:0.33>00.20");
+			assertTrue(result.lhsNode instanceof VariableNode);
+			assertTrue(result.rhsNode instanceof NumberNode);
+			assertTrue(result.conditionsNode instanceof RelopNode);
+			assertEquals(((RelopNode) result.conditionsNode).relopText, ">");
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	public void testValidRuleValidConditions_Relop_UnaryNumber() {
+		Program p = new Program();
+		try {
+			Rule result = p.parseRule("x=1:-(1.0)>-00.20");
+			assertTrue(result.lhsNode instanceof VariableNode);
+			assertTrue(result.rhsNode instanceof NumberNode);
+			assertTrue(result.conditionsNode instanceof RelopNode);
+			assertEquals(((RelopNode) result.conditionsNode).relopText, ">");
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	public void testValidRuleValidConditions_Relop_Unary() {
+
+		Program p = new Program();
+		try {
+			Rule result = p.parseRule("x=1:-x==-x");
+			System.out.println(result.conditionsNode.toString());
+			System.out.println(result.conditionsNode.getClass());
+			
+			assertTrue(result.conditionsNode instanceof RelopNode);
+			assertEquals(UnaryNode.class,((RelopNode) result.conditionsNode).left.getClass());
+			assertEquals(UnaryNode.class,((RelopNode) result.conditionsNode).right.getClass());
+			assertEquals(((RelopNode) result.conditionsNode).relopText, "==");
 
 		} catch (Exception e) {
 			e.printStackTrace();
