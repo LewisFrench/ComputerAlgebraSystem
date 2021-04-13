@@ -128,6 +128,23 @@ public class TestSimplifyNumericalOperations {
 		}
 	}
 	
+	@Test
+	public void testSimpleDivision_DivideByZero() {
+		ExpressionNode division = new DivisionNode(new NumberNode(2,1), new NumberNode(0,2));
+		SimplifyNumericalOperations s = new SimplifyNumericalOperations();
+
+		assertThrows(ArithmeticException.class ,() -> s.Visit(division));
+	}
+	
+	@Test
+	public void testComplexDivision_DivideByZero() {
+		AdditionNode add = new AdditionNode(new NumberNode(2) , new NumberNode(3));
+		SubtractionNode subtract = new SubtractionNode(add, new NumberNode(10,2));
+		ExpressionNode division = new DivisionNode(new NumberNode(2,1), subtract);
+		SimplifyNumericalOperations s = new SimplifyNumericalOperations();
+
+		assertThrows(ArithmeticException.class ,() -> s.Visit(division));
+	}
 	
 	@Test
 	public void testSimpleExponentiation_IntegerPower() {

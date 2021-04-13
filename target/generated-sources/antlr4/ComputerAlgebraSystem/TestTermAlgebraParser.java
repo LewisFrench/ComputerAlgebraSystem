@@ -142,6 +142,19 @@ public class TestTermAlgebraParser {
 		} catch (Exception e) { fail();}
 		
 	}
+	
+	@Test
+	public void testParseSimpleNumber_Rational_DenominatorZero() {
+		Program p = new Program();		
+		try {
+			assertThrows(ArithmeticException.class, () -> p.parseTerm("1/0"));
+			assertThrows(ArithmeticException.class, () -> p.parseTerm("3/0"));
+
+		} catch (ParseCancellationException e) {fail(); 
+		} catch (Exception e) { fail();}
+		
+	}
+
 
 	
 	

@@ -97,8 +97,8 @@ public class RewriteProcess extends TermVisitor<ExpressionNode> {
 		}
 		EvaluateTree argumentEvaluator;
 		if (rules != null) {
-			for (Rule r : rules) {
 			
+			for (Rule r : rules) {
 				boolean conditionsHold = false;
 				argumentEvaluator = new EvaluateTree();
 
@@ -140,6 +140,7 @@ public class RewriteProcess extends TermVisitor<ExpressionNode> {
 				}
 
 			}
+			
 
 		}
 

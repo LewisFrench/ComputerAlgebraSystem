@@ -131,6 +131,28 @@ public class TestSimplifyConditionNumericalExpressions {
 		}
 
 	}
+	
+	@Test
+	public void testSimpleDivision_DivideByZero() {
+		ExpressionNode division = new DivisionNode(new NumberNode(2,1), new NumberNode(0,2));
+		ExpressionNode relopGT = new RelopNode(new NumberNode(-0), division, ConditionsLexer.RELOP_GT, ">");
+		SimplifyConditionNumericalExpressions s = new SimplifyConditionNumericalExpressions();
+
+		assertThrows(ArithmeticException.class ,() -> s.Visit(relopGT));
+	}
+	
+	@Test
+	public void testComplexDivision_DivideByZero() {
+		AdditionNode add = new AdditionNode(new NumberNode(2) , new NumberNode(3));
+		SubtractionNode subtract = new SubtractionNode(add, new NumberNode(10,2));
+		ExpressionNode division = new DivisionNode(new NumberNode(2,1), subtract);
+		ExpressionNode relopGT = new RelopNode( new NumberNode(-0), division, ConditionsLexer.RELOP_GT, ">");
+		SimplifyConditionNumericalExpressions s = new SimplifyConditionNumericalExpressions();
+
+		assertThrows(ArithmeticException.class ,() -> s.Visit(relopGT));
+	}
+	
+	
 
 	@Test
 	public void testSimpleExponentiation() {

@@ -45,7 +45,7 @@ public class Program {
 			throw new StackOverflowError(
 					"Check for any infinitely-recursive rules or choose a lower rule application limit");
 		} catch (Exception e) {
-			throw new Exception("Rewrite Error: " + e.getMessage() + "  " + e.toString());
+			throw new Exception("Rewrite Error: " + e.getMessage());
 		}
 	}
 
@@ -120,9 +120,12 @@ public class Program {
 			if (!(r.variables.keySet().containsAll(f.variables.keySet()))) {
 				throw new Exception("A rule contains rule variables that don't correspond from LHS to RHS");
 			}
+		} catch (ArithmeticException ae) {
+			throw new ArithmeticException("Attempting to create a rule containing a rational number of denominator zero");
 
 		} catch (ParseCancellationException pce) {
 			throw new ParseCancellationException("Syntax error: Check the structure of your rules");
+		
 		} catch (Exception ex) {
 			throw new Exception("Rule Parse Error: " + ex.getMessage());
 		}
@@ -176,9 +179,12 @@ public class Program {
 			termAst = new BuildTermVisitor().visitTerm(termTree);
 		} catch (ParseCancellationException pce) {
 			throw new ParseCancellationException("Syntax error: Please check the syntax of your algebraic term");
+		} catch (ArithmeticException iae) {
+			throw new ArithmeticException("Attempted to create a rational number with a denominator of zero. Please check the structure of your term");		
 		} catch (Exception e) {
 			throw new Exception("Error when parsing algebraic term");
 		}
+		
 		return termAst;
 	}
 

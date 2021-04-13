@@ -125,6 +125,10 @@ class NumberNode extends ExpressionNode {
 	long denominator;
 
 	public NumberNode(long numerator, long denominator) {
+		if (Math.abs(denominator) == 0) {
+			throw new ArithmeticException("Attempted to create a rational with a denominator of 0");
+		}
+		
 		if (denominator < 0) {
 			numerator *= -1;
 			denominator *= -1;

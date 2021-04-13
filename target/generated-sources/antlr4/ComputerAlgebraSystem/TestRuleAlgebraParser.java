@@ -189,6 +189,20 @@ public class TestRuleAlgebraParser {
 	}
 
 	@Test
+	public void testParseSimpleNumber_Rational_DenominatorZero() {
+		Program p = new Program();		
+		try {
+			assertThrows(ArithmeticException.class, () -> p.parseRule("1/0 = 1"));
+			assertThrows(ArithmeticException.class, () -> p.parseRule("1 = 1/0"));
+			assertThrows(ArithmeticException.class, () -> p.parseRule("1 = 1 : 1/0 == 1"));
+			assertThrows(ArithmeticException.class, () -> p.parseRule("1 = 1 : 1 == 1/0"));
+
+		} catch (ParseCancellationException e) {fail(); 
+		} catch (Exception e) { fail();}
+		
+	}
+	
+	@Test
 	public void testValidRuleNoConditions_Variable_Number() {
 
 		Program p = new Program();
