@@ -86,6 +86,12 @@ public class SimplifyConditionNumericalExpressions extends ConditionVisitor<Expr
 	public ExpressionNode Visit(DivisionNode node) throws Exception {
 		ExpressionNode left = Visit(node.Left);
 		ExpressionNode right = Visit(node.Right);
+		// Divide by zero error
+		if (right instanceof NumberNode) {
+			if (((NumberNode)right).compareTo(new NumberNode(0)) == 0) {
+				throw new ArithmeticException("Attempted to divide by zero. Please check your rules");
+			}
+		}
 		if (left instanceof NumberNode && right instanceof NumberNode) {
 			return ((NumberNode)left).divide((NumberNode)right);
 		}

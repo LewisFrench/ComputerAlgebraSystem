@@ -1,6 +1,7 @@
 package ComputerAlgebraSystem;
 
 import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.Test;
 
@@ -44,6 +45,12 @@ public class TestRationalNumbers {
 	}
 	
 	
+	@Test
+	public void testConstructor_Numerator_DenominatorZero() {
+		assertThrows(ArithmeticException.class, () ->  new NumberNode(3, 0));
+		assertThrows(ArithmeticException.class, () ->  new NumberNode(0, 0));
+		
+	}
 	@Test
 	public void test_getReciprocal() {
 		NumberNode n = new NumberNode(6,11).getReciprocal();

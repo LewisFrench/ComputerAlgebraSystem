@@ -208,7 +208,7 @@ public class GUI implements ActionListener {
 				errorMessage.setText(pce.getMessage());
 			} catch (Exception ex) {
 				errorMessage.setText(ex.getMessage());
-				ex.printStackTrace();
+				//ex.printStackTrace();
 			}
 		}
 	}
