@@ -3,16 +3,24 @@ package ComputerAlgebraSystem;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
+/**
+ * Visitor class to fill a LinkedHashMap with a key of the string value of the
+ * rule variable node, and a null value. Traverses a tree and upon visiting a
+ * rule variable node, puts this instance in the LinkedHashMap variables.
+ * 
+ * @author lewis
+ *
+ */
 public class FetchConditionRuleVariables extends ConditionVisitor<ExpressionNode> {
 	LinkedHashMap<String, ExpressionNode> variables = new LinkedHashMap<>();
 
 	public FetchConditionRuleVariables() {
 	}
 
-	
-	public LinkedHashMap<String, ExpressionNode> getVariables(){
+	public LinkedHashMap<String, ExpressionNode> getVariables() {
 		return this.variables;
 	}
+
 	@Override
 	public ExpressionNode Visit(ConditionAndNode node) throws Exception {
 		ExpressionNode left = Visit(node.left);
@@ -87,12 +95,6 @@ public class FetchConditionRuleVariables extends ConditionVisitor<ExpressionNode
 
 		return new DivisionNode(left, right);
 	}
-
-//	@Override
-//	public ExpressionNode Visit(ParentheticalNode node) throws Exception {
-//		ExpressionNode innerNode = Visit(node.innerNode);
-//		return new ParentheticalNode(innerNode);
-//	}
 
 	@Override
 	public ExpressionNode Visit(UnaryNode node) throws Exception {

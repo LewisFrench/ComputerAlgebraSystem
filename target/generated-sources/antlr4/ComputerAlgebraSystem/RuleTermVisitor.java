@@ -1,5 +1,13 @@
 package ComputerAlgebraSystem;
-
+/**
+ * Visitor class that specifies nodes that can be visited while traversing the
+ * left-hand side or right-hand side of a rewrite rule.
+ * Throws exception if attempting to visit a node that is not specified 
+ * 
+ * @author Lewis
+ *
+ * @param <T> Generic type 
+ */
 abstract class RuleTermVisitor<T> {
 	public abstract T Visit(PowerNode node) throws Exception;
 
@@ -21,7 +29,13 @@ abstract class RuleTermVisitor<T> {
 
 	public abstract T Visit(RuleVariableNode node) throws Exception;
 
-	// Can talk about how this could be more efficient in C#, see bookmark page
+	/**
+	 * Visitor methods for the nodes present in the left-hand-side or right-hand side of a rewrite rule.
+	 * 
+	 * @param node A node present in the AST representing an rule.
+	 * @return
+	 * @throws IllegalArgumentException if attempting to visit a node that shouldn't be present in an rule.
+	 */
 	public T Visit(ExpressionNode node) throws Exception {
 		if (node instanceof PowerNode) {
 			return Visit((PowerNode) node);
@@ -44,7 +58,7 @@ abstract class RuleTermVisitor<T> {
 		} else if (node instanceof RuleVariableNode) {
 			return Visit((RuleVariableNode) node);
 		} else {
-			throw new Exception("Attempting to visit an unreachable node");
+			throw new IllegalArgumentException("Attempting to visit an unreachable node");
 		}
 	}
 }

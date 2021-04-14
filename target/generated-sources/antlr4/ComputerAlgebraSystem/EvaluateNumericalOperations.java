@@ -2,24 +2,33 @@ package ComputerAlgebraSystem;
 
 import java.util.ArrayList;
 
+/**
+ * Evaluates numerical operations present in an algebraic term or a rule RHS
+ * once the rule variables have been substituted. OperationNode nodes between
+ * two instances of NumberNode can often be evaluated.
+ * 
+ * @author lewis
+ *
+ */
 public class EvaluateNumericalOperations extends TermVisitor<ExpressionNode> {
-	
+
 	@Override
 	public ExpressionNode Visit(PowerNode node) throws Exception {
 		ExpressionNode left = Visit(node.getLeft());
 		ExpressionNode right = Visit(node.getRight());
 
 		if (left instanceof NumberNode && right instanceof NumberNode) {
-			return ((NumberNode)left).exponentiate((NumberNode)right);
+			return ((NumberNode) left).exponentiate((NumberNode) right);
 		}
 		return new PowerNode(left, right);
 	}
+
 	@Override
 	public ExpressionNode Visit(AdditionNode node) throws Exception {
 		ExpressionNode left = Visit(node.getLeft());
 		ExpressionNode right = Visit(node.getRight());
 		if (left instanceof NumberNode && right instanceof NumberNode) {
-			return ((NumberNode)left).add((NumberNode)right);
+			return ((NumberNode) left).add((NumberNode) right);
 		}
 		return new AdditionNode(left, right);
 	}
@@ -29,7 +38,7 @@ public class EvaluateNumericalOperations extends TermVisitor<ExpressionNode> {
 		ExpressionNode left = Visit(node.getLeft());
 		ExpressionNode right = Visit(node.getRight());
 		if (left instanceof NumberNode && right instanceof NumberNode) {
-			return ((NumberNode)left).subtract((NumberNode)right);
+			return ((NumberNode) left).subtract((NumberNode) right);
 		}
 		return new SubtractionNode(left, right);
 	}
@@ -39,7 +48,7 @@ public class EvaluateNumericalOperations extends TermVisitor<ExpressionNode> {
 		ExpressionNode left = Visit(node.getLeft());
 		ExpressionNode right = Visit(node.getRight());
 		if (left instanceof NumberNode && right instanceof NumberNode) {
-			return ((NumberNode)left).multiply((NumberNode)right);
+			return ((NumberNode) left).multiply((NumberNode) right);
 		}
 		return new MultiplicationNode(left, right);
 	}
@@ -48,26 +57,25 @@ public class EvaluateNumericalOperations extends TermVisitor<ExpressionNode> {
 	public ExpressionNode Visit(DivisionNode node) throws Exception {
 		ExpressionNode left = Visit(node.getLeft());
 		ExpressionNode right = Visit(node.getRight());
-		
+
 		// Divide by zero error
 		if (right instanceof NumberNode) {
-			if (((NumberNode)right).compareTo(new NumberNode(0)) == 0) {
+			if (((NumberNode) right).compareTo(new NumberNode(0)) == 0) {
 				throw new ArithmeticException("Attempted to divide by zero. Please check your rules");
 			}
 		}
 		if (left instanceof NumberNode && right instanceof NumberNode) {
-			return ((NumberNode)left).divide((NumberNode)right);
+			return ((NumberNode) left).divide((NumberNode) right);
 		}
 		return new DivisionNode(left, right);
 	}
 
-
 	@Override
 	public ExpressionNode Visit(UnaryNode node) throws Exception {
-		
+
 		ExpressionNode innerNode = Visit(node.innerNode);
 		if (innerNode instanceof NumberNode) {
-			return ((NumberNode)innerNode).multiply(new NumberNode(-1));
+			return ((NumberNode) innerNode).multiply(new NumberNode(-1));
 		}
 		return new UnaryNode(innerNode);
 	}

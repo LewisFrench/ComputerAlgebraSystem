@@ -22,7 +22,7 @@ public class TestRewriteProcess {
 			assertTrue(((NumberNode) result).getNumerator() == 2);
 			assertTrue(((NumberNode) result).getDenominator() == 1);
 		} catch (Exception e) {
-			System.out.println(e.getStackTrace());
+			fail();
 		}
 	}
 
@@ -38,7 +38,7 @@ public class TestRewriteProcess {
 			assertTrue(((NumberNode) result).getNumerator() == 2);
 			assertTrue(((NumberNode) result).getDenominator() == 1);
 		} catch (Exception e) {
-			System.out.println(e.getStackTrace());
+			fail();
 		}
 	}
 
@@ -59,7 +59,7 @@ public class TestRewriteProcess {
 			assertTrue(((NumberNode) result).getNumerator() == 2);
 			assertTrue(((NumberNode) result).getDenominator() == 1);
 		} catch (Exception e) {
-			System.out.println(e.getStackTrace());
+			fail();
 		}
 	}
 
@@ -79,7 +79,7 @@ public class TestRewriteProcess {
 			assertTrue(((NumberNode) result).getNumerator() == 3);
 			assertTrue(((NumberNode) result).getDenominator() == 1);
 		} catch (Exception e) {
-			System.out.println(e.getStackTrace());
+			fail();
 		}
 	}
 
@@ -98,7 +98,7 @@ public class TestRewriteProcess {
 			assertTrue(result.getClass() == VariableNode.class);
 			assertTrue(((VariableNode) result).value.equals("xy"));
 		} catch (Exception e) {
-			System.out.println(e.getStackTrace());
+			fail();
 		}
 	}
 
@@ -118,7 +118,7 @@ public class TestRewriteProcess {
 			assertTrue(((AdditionNode) result).getLeft() instanceof VariableNode);
 			assertTrue(((AdditionNode) result).getRight() instanceof VariableNode);
 		} catch (Exception e) {
-			System.out.println(e.getStackTrace());
+			fail();
 		}
 	}
 
@@ -138,7 +138,7 @@ public class TestRewriteProcess {
 			assertTrue(((SubtractionNode) result).getLeft() instanceof VariableNode);
 			assertTrue(((SubtractionNode) result).getRight() instanceof VariableNode);
 		} catch (Exception e) {
-			System.out.println(e.getStackTrace());
+			fail();
 		}
 	}
 
@@ -158,7 +158,7 @@ public class TestRewriteProcess {
 			assertTrue(((MultiplicationNode) result).getLeft() instanceof VariableNode);
 			assertTrue(((MultiplicationNode) result).getRight() instanceof VariableNode);
 		} catch (Exception e) {
-			System.out.println(e.getStackTrace());
+			fail();
 		}
 	}
 
@@ -178,7 +178,7 @@ public class TestRewriteProcess {
 			assertTrue(((DivisionNode) result).getLeft() instanceof VariableNode);
 			assertTrue(((DivisionNode) result).getRight() instanceof VariableNode);
 		} catch (Exception e) {
-			System.out.println(e.getStackTrace());
+			fail();
 		}
 	}
 
@@ -198,7 +198,7 @@ public class TestRewriteProcess {
 			assertTrue(((PowerNode) result).getLeft() instanceof VariableNode);
 			assertTrue(((PowerNode) result).getRight() instanceof VariableNode);
 		} catch (Exception e) {
-			System.out.println(e.getStackTrace());
+			fail();
 		}
 	}
 
@@ -223,7 +223,7 @@ public class TestRewriteProcess {
 			assertTrue(((VariableNode) unaryResult.innerNode).value.equals("y"));
 
 		} catch (Exception e) {
-			System.out.println(e.getStackTrace());
+			fail();
 		}
 	}
 
@@ -245,7 +245,7 @@ public class TestRewriteProcess {
 			assertTrue(((NumberNode) result).getDenominator() == 3);
 
 		} catch (Exception e) {
-			System.out.println(e.getStackTrace());
+			fail();
 		}
 	}
 
@@ -270,7 +270,7 @@ public class TestRewriteProcess {
 			assertTrue(((FunctionNode) result).function.equals("transformedFunction"));
 			assertTrue(((FunctionNode) result).getArguments().get(0) instanceof VariableNode);
 		} catch (Exception e) {
-			System.out.println(e.getStackTrace());
+			fail();
 		}
 	}
 
@@ -289,7 +289,7 @@ public class TestRewriteProcess {
 			assertTrue(result.getClass() == VariableNode.class);
 			assertTrue(((VariableNode) result).value.equals("xy"));
 		} catch (Exception e) {
-			System.out.println(e.getStackTrace());
+			fail();
 		}
 
 	}
@@ -309,7 +309,7 @@ public class TestRewriteProcess {
 			assertTrue(result.getClass() == VariableNode.class);
 			assertTrue(((VariableNode) result).getValue().equals("xy"));
 		} catch (Exception e) {
-			System.out.println(e.getStackTrace());
+			fail();
 		}
 
 	}
@@ -329,7 +329,7 @@ public class TestRewriteProcess {
 			assertTrue(result.getClass() == VariableNode.class);
 			assertTrue(((VariableNode) result).getValue().equals("xy"));
 		} catch (Exception e) {
-			System.out.println(e.getStackTrace());
+			fail();
 		}
 
 	}
@@ -350,7 +350,7 @@ public class TestRewriteProcess {
 			assertTrue(result.getClass() == VariableNode.class);
 			assertTrue(((VariableNode) result).getValue().equals("xy"));
 		} catch (Exception e) {
-			System.out.println(e.getStackTrace());
+			fail();
 		}
 
 	}
@@ -369,7 +369,7 @@ public class TestRewriteProcess {
 			assertTrue(result.getClass() == VariableNode.class);
 			assertTrue(((VariableNode) result).getValue().equals("xy"));
 		} catch (Exception e) {
-			System.out.println(e.getStackTrace());
+			fail();
 		}
 
 	}
@@ -389,7 +389,7 @@ public class TestRewriteProcess {
 			assertTrue(result.getClass() == VariableNode.class);
 			assertTrue(((VariableNode) result).getValue().equals("xy"));
 		} catch (Exception e) {
-			System.out.println(e.getStackTrace());
+			fail();
 		}
 
 	}
@@ -409,7 +409,7 @@ public class TestRewriteProcess {
 			assertTrue(result.getClass() == VariableNode.class);
 			assertTrue(((VariableNode) result).getValue().equals("xy"));
 		} catch (Exception e) {
-			System.out.println(e.getStackTrace());
+			fail();
 		}
 
 	}	
@@ -439,7 +439,7 @@ public class TestRewriteProcess {
 			assertTrue(result.getClass() == VariableNode.class);
 			assertTrue(((VariableNode) result).getValue().equals("xy"));
 		} catch (Exception e) {
-			System.out.println(e.getStackTrace());
+			fail();
 		}
 
 	}	
@@ -469,7 +469,7 @@ public class TestRewriteProcess {
 			rewrite.Visit(term);
 			assertTrue(rewrite.ruleApplicationCount == 0);
 		} catch (Exception e) {
-			System.out.println(e.getStackTrace());
+			fail();
 		}
 
 	}	
@@ -499,7 +499,7 @@ public class TestRewriteProcess {
 			assertTrue(result.getClass() == VariableNode.class);
 			assertTrue(((VariableNode) result).getValue().equals("xy"));
 		} catch (Exception e) {
-			System.out.println(e.getStackTrace());
+			fail();
 		}
 
 	}	
@@ -520,7 +520,7 @@ public class TestRewriteProcess {
 			assertTrue(result.getClass() == VariableNode.class);
 			assertTrue(((VariableNode) result).value.equals("xy"));
 		} catch (Exception e) {
-			System.out.println(e.getStackTrace());
+			fail();
 		}
 
 	}
@@ -540,7 +540,7 @@ public class TestRewriteProcess {
 			assertTrue(result.getClass() == NumberNode.class);
 			assertTrue(rewrite.ruleApplicationCount == 0);
 		} catch (Exception e) {
-			System.out.println(e.getStackTrace());
+			fail();
 		}
 
 	}

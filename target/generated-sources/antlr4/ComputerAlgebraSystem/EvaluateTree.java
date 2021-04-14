@@ -2,6 +2,18 @@ package ComputerAlgebraSystem;
 
 import java.util.ArrayList;
 
+/**
+ * Class that extends the AstComparator. Traverses the left-hand side of a
+ * rewrite role alongside the selected redex. Determines if the subtrees share
+ * the exact same structure except in the case of a rule ariable being present,
+ * in which case the rule variable matches unquestionably the corresponding
+ * subtree in the redex. Returns true if the structure of the LHS and redex are
+ * equivalent.
+ * 
+ * @author Lewis
+ *
+ * @param <T> Generic type
+ */
 public class EvaluateTree extends AstComparator<Boolean> {
 
 	ArrayList<ExpressionNode> arguments;
@@ -66,7 +78,7 @@ public class EvaluateTree extends AstComparator<Boolean> {
 	@Override
 	public Boolean Visit(NumberNode lhsNode, ExpressionNode node) {
 		if (lhsNode.getClass() == node.getClass()) {
-			return lhsNode.compareTo(((NumberNode)node)) == 0;
+			return lhsNode.compareTo(((NumberNode) node)) == 0;
 		}
 		return false;
 	}
@@ -78,14 +90,6 @@ public class EvaluateTree extends AstComparator<Boolean> {
 			match = Visit(lhsNode.innerNode, ((UnaryNode) node).innerNode);
 
 		}
-//		// Is this necessary??
-//		if (node instanceof NumberNode) {
-//			if (((NumberNode)node).getValue().compareTo(BigDecimal.valueOf(0)) <0) {
-//				return Visit(lhsNode.innerNode, node);
-//			}
-//		}
-		
-		 // if node is a number and lhsNode innernode is a number, match them instead
 		return match;
 	}
 

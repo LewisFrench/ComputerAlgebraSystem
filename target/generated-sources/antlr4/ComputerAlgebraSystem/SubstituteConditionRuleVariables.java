@@ -2,7 +2,12 @@ package ComputerAlgebraSystem;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
-
+/**
+ * Handles the traversal of the conditions of a rule, substituting instances of RuleVariableNode with their value in the LinkedHashMap containing their corresponding values
+ * E.g. conditions $n > 3  given LinkedHashMap "$n" : NumberNode(1)  --> 1 > 3
+ * @author lewis
+ *
+ */
 public class SubstituteConditionRuleVariables extends ConditionVisitor<ExpressionNode>{
 	LinkedHashMap<String, ExpressionNode> ruleVariables;
 	
@@ -85,12 +90,6 @@ public class SubstituteConditionRuleVariables extends ConditionVisitor<Expressio
 
 		return new DivisionNode(left, right);
 	}
-
-//	@Override	
-//	public ExpressionNode Visit(ParentheticalNode node) throws Exception {
-//		return new ParentheticalNode(Visit(node.innerNode));
-//
-//	}
 
 	@Override
 	public ExpressionNode Visit(UnaryNode node) throws Exception {

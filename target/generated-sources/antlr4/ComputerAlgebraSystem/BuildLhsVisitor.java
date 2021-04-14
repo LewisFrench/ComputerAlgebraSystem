@@ -8,6 +8,16 @@ import RuleAlgebra.RuleAlgebraBaseVisitor;
 import RuleAlgebra.RuleAlgebraLexer;
 import RuleAlgebra.RuleAlgebraParser;
 
+/**
+ * Visitor class that traverses the ANTLR4 parse tree that represents the left-hand side of the rule.  
+ * Converts the parse tree nodes under the 'expression' production rules into an AST structure comprised of ExpressionNode objects.
+ * Returns the root node of the converted AST structure. 
+ * 
+ * @author Lewis
+ *
+ * @param <T> Generic type 
+ */
+
 public class BuildLhsVisitor extends RuleAlgebraBaseVisitor<ExpressionNode> {
 	LinkedHashMap<String, ExpressionNode> variables;
 

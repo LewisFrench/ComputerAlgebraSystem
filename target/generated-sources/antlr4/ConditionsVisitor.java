@@ -113,4 +113,10 @@ public interface ConditionsVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitRuleVariable(ConditionsParser.RuleVariableContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link ConditionsParser#ruleTerm}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitRuleTerm(ConditionsParser.RuleTermContext ctx);
 }

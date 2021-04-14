@@ -3,49 +3,59 @@ package ComputerAlgebraSystem;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
+/**
+ * Handles the traversal of the RHS of a rule, substituting instances of
+ * RuleVariableNode with their value in the LinkedHashMap containing their
+ * corresponding values E.g. $n + a given LinkedHashMap "$n" : NumberNode(1) -->
+ * 1 + a
+ * 
+ * @author lewis
+ *
+ */
 public class SubstituteRuleVariables extends RuleTermVisitor<ExpressionNode> {
 
-	LinkedHashMap<String, ExpressionNode> variables ;
+	LinkedHashMap<String, ExpressionNode> variables;
+
 	public SubstituteRuleVariables(LinkedHashMap<String, ExpressionNode> variables) {
 		this.variables = variables;
 	}
-	
+
 	@Override
 	public ExpressionNode Visit(PowerNode node) throws Exception {
-		ExpressionNode left =  Visit(node.getLeft());
-		ExpressionNode right =  Visit(node.getRight());
+		ExpressionNode left = Visit(node.getLeft());
+		ExpressionNode right = Visit(node.getRight());
 
 		return new PowerNode(left, right);
 	}
 
 	@Override
 	public ExpressionNode Visit(AdditionNode node) throws Exception {
-		ExpressionNode left =  Visit(node.getLeft());
-		ExpressionNode right =  Visit(node.getRight());
-		
+		ExpressionNode left = Visit(node.getLeft());
+		ExpressionNode right = Visit(node.getRight());
+
 		return new AdditionNode(left, right);
 	}
 
 	@Override
 	public ExpressionNode Visit(SubtractionNode node) throws Exception {
-		ExpressionNode left =  Visit(node.getLeft());
-		ExpressionNode right =  Visit(node.getRight());
+		ExpressionNode left = Visit(node.getLeft());
+		ExpressionNode right = Visit(node.getRight());
 
 		return new SubtractionNode(left, right);
 	}
 
 	@Override
 	public ExpressionNode Visit(MultiplicationNode node) throws Exception {
-		ExpressionNode left =  Visit(node.getLeft());
-		ExpressionNode right =  Visit(node.getRight());
-		
+		ExpressionNode left = Visit(node.getLeft());
+		ExpressionNode right = Visit(node.getRight());
+
 		return new MultiplicationNode(left, right);
 	}
 
 	@Override
 	public ExpressionNode Visit(DivisionNode node) throws Exception {
-		ExpressionNode left =  Visit(node.getLeft());
-		ExpressionNode right =  Visit(node.getRight());
+		ExpressionNode left = Visit(node.getLeft());
+		ExpressionNode right = Visit(node.getRight());
 
 		return new DivisionNode(left, right);
 	}
@@ -80,9 +90,9 @@ public class SubstituteRuleVariables extends RuleTermVisitor<ExpressionNode> {
 	public ExpressionNode Visit(RuleVariableNode node) throws Exception {
 		if (this.variables.get(node.toString()) != null) {
 			return this.variables.get(node.toString());
-		} 
-		throw new Exception("Attemped to substitute null rule variable. Check the use of rule variables in your rewrite rules.");
+		}
+		throw new Exception(
+				"Attemped to substitute null rule variable. Check the use of rule variables in your rewrite rules.");
 	}
-	
 
 }

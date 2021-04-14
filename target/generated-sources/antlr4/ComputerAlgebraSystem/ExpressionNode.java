@@ -8,9 +8,21 @@ abstract class CompileUnitNode {
 
 }
 
+/**
+ * Superclass from which all AST nodes are derived
+ * 
+ * @author lewis
+ *
+ */
 public abstract class ExpressionNode {
 }
 
+/**
+ * Superclass from which all mathematical operations are derived (+, -, *, / ^)
+ * 
+ * @author lewis
+ *
+ */
 abstract class OperationNode extends ExpressionNode {
 
 	public ExpressionNode left;
@@ -28,9 +40,9 @@ abstract class OperationNode extends ExpressionNode {
 
 class PowerNode extends OperationNode {
 
-	public PowerNode(ExpressionNode Left, ExpressionNode Right) {
-		this.left = Left;
-		this.right = Right;
+	public PowerNode(ExpressionNode left, ExpressionNode right) {
+		this.left = left;
+		this.right = right;
 
 	}
 
@@ -41,9 +53,9 @@ class PowerNode extends OperationNode {
 
 class AdditionNode extends OperationNode {
 
-	public AdditionNode(ExpressionNode Left, ExpressionNode Right) {
-		this.left = Left;
-		this.right = Right;
+	public AdditionNode(ExpressionNode left, ExpressionNode right) {
+		this.left = left;
+		this.right = right;
 
 	}
 
@@ -53,9 +65,9 @@ class AdditionNode extends OperationNode {
 }
 
 class SubtractionNode extends OperationNode {
-	public SubtractionNode(ExpressionNode Left, ExpressionNode Right) {
-		this.left = Left;
-		this.right = Right;
+	public SubtractionNode(ExpressionNode left, ExpressionNode right) {
+		this.left = left;
+		this.right = right;
 
 	}
 
@@ -65,9 +77,9 @@ class SubtractionNode extends OperationNode {
 }
 
 class MultiplicationNode extends OperationNode {
-	public MultiplicationNode(ExpressionNode Left, ExpressionNode Right) {
-		this.left = Left;
-		this.right = Right;
+	public MultiplicationNode(ExpressionNode left, ExpressionNode right) {
+		this.left = left;
+		this.right = right;
 
 	}
 
@@ -77,9 +89,9 @@ class MultiplicationNode extends OperationNode {
 }
 
 class DivisionNode extends OperationNode {
-	public DivisionNode(ExpressionNode Left, ExpressionNode Right) {
-		this.left = Left;
-		this.right = Right;
+	public DivisionNode(ExpressionNode left, ExpressionNode right) {
+		this.left = left;
+		this.right = right;
 
 	}
 
@@ -118,6 +130,13 @@ class FunctionNode extends ExpressionNode {
 	}
 }
 
+/**
+ * Stores numerical values as rational numbers. Allows for generation as either
+ * integer(denominator of 1) or a rational number.
+ * 
+ * @author lewis
+ *
+ */
 class NumberNode extends ExpressionNode {
 
 	long numerator;
@@ -263,6 +282,7 @@ class ConditionOperationNode extends ExpressionNode {
 	public ExpressionNode getLeft() {
 		return this.left;
 	}
+
 	public ExpressionNode getRight() {
 		return this.right;
 	}
@@ -296,20 +316,21 @@ class RelopNode extends ExpressionNode {
 	int relop;
 	String relopText;
 
-	
 	public RelopNode(ExpressionNode left, ExpressionNode right, int relop, String relopText) {
 		this.left = left;
 		this.right = right;
 		this.relop = relop;
 		this.relopText = relopText;
 	}
+
 	public ExpressionNode getLeft() {
 		return this.left;
 	}
+
 	public ExpressionNode getRight() {
 		return this.right;
 	}
-	
+
 	public String toString() {
 		return left.toString() + relopText + right.toString();
 	}
