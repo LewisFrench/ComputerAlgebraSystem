@@ -1,6 +1,4 @@
 grammar Conditions;
-
-
 ruleConditions: condition EOF;
 	
 condition
@@ -23,12 +21,12 @@ expression
    |  left = expression  op = (OP_ADD | OP_SUB) right = expression #Operation
    |  func = VARIABLE LPAREN  arguments =  expression( COMMA expression)* RPAREN #FunctionExpression
    ;
+   
 OP_ADD: '+';
 OP_SUB: '-';
 OP_MUL: '*';
 OP_DIV: '/';
 OP_POW: '^';
-
 
 RELOP_EQ: '==';
 RELOP_NEQ: '!=';

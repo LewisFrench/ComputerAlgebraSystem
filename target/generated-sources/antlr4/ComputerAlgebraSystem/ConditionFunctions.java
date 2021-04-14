@@ -3,6 +3,12 @@ package ComputerAlgebraSystem;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
+/**
+ * Handles the determination and verification of the condition functions.
+ * 
+ * @author lewis
+ *
+ */
 class ConditionFunctionEvaluator {
 
 	LinkedHashMap<String, ExpressionNode> variables;
@@ -10,6 +16,19 @@ class ConditionFunctionEvaluator {
 	public ConditionFunctionEvaluator() {
 	}
 
+	/**
+	 * Switch statement determines the validity of the entered function name. If it
+	 * matches an existing condition function then the system attempts to carry out
+	 * that function with the arguments passed.
+	 * 
+	 * @param functionName String representing the name of the condition function
+	 * @param arguments    A list of nodes passed as arguments to the function
+	 * @return A boolean representing the truth of the function performed on the
+	 *         argument
+	 * @throws Exception Users cannot invoke a function that is not provided by the
+	 *                   system. Users cannot apply a condition function to an
+	 *                   incorrect number of arguments.
+	 */
 	public boolean determineFunction(String functionName, ArrayList<ExpressionNode> arguments) throws Exception {
 		ConditionFunction conditionFunction = null;
 		switch (functionName) {
@@ -70,7 +89,7 @@ class is_literal extends ConditionFunction {
 		if (arguments.size() == 1) {
 			return (arguments.get(0) instanceof VariableNode);
 		}
-		throw new Exception(
+		throw new IllegalArgumentException(
 				"Attempting to call a condition function with the incorrect number of arguments. Please consult the user guide for the syntax of these functions");
 	}
 }
@@ -81,7 +100,7 @@ class is_number extends ConditionFunction {
 		if (arguments.size() == 1) {
 			return (arguments.get(0) instanceof NumberNode);
 		}
-		throw new Exception(
+		throw new IllegalArgumentException(
 				"Attempting to call a condition function with the incorrect number of arguments. Please consult the user guide for the syntax of these functions");
 	}
 }
@@ -92,7 +111,7 @@ class is_addition extends ConditionFunction {
 		if (arguments.size() == 1) {
 			return (arguments.get(0) instanceof AdditionNode);
 		}
-		throw new Exception(
+		throw new IllegalArgumentException(
 				"Attempting to call _is_addition with the incorrect number of arguments. Please consult the user guide for the syntax of these functions");
 	}
 }
@@ -103,7 +122,7 @@ class is_subtraction extends ConditionFunction {
 		if (arguments.size() == 1) {
 			return (arguments.get(0) instanceof SubtractionNode);
 		}
-		throw new Exception(
+		throw new IllegalArgumentException(
 				"Attempting to call _is_subtraction with the incorrect number of arguments. Please consult the user guide for the syntax of these functions");
 	}
 }
@@ -114,7 +133,7 @@ class is_multiplication extends ConditionFunction {
 		if (arguments.size() == 1) {
 			return (arguments.get(0) instanceof MultiplicationNode);
 		}
-		throw new Exception(
+		throw new IllegalArgumentException(
 				"Attempting to call _is_multiplication with the incorrect number of arguments. Please consult the user guide for the syntax of these functions");
 	}
 }
@@ -125,7 +144,7 @@ class is_division extends ConditionFunction {
 		if (arguments.size() == 1) {
 			return (arguments.get(0) instanceof DivisionNode);
 		}
-		throw new Exception(
+		throw new IllegalArgumentException(
 				"Attempting to call _is_division with the incorrect number of arguments. Please consult the user guide for the syntax of these functions");
 	}
 }
@@ -136,7 +155,7 @@ class is_exponentiation extends ConditionFunction {
 		if (arguments.size() == 1) {
 			return (arguments.get(0) instanceof PowerNode);
 		}
-		throw new Exception(
+		throw new IllegalArgumentException(
 				"Attempting to call _is_exponentiation with the incorrect number of arguments. Please consult the user guide for the syntax of these functions");
 	}
 }
@@ -147,7 +166,7 @@ class is_unary extends ConditionFunction {
 		if (arguments.size() == 1) {
 			return (arguments.get(0) instanceof UnaryNode);
 		}
-		throw new Exception(
+		throw new IllegalArgumentException(
 				"Attempting to call _is_unary with the incorrect number of arguments. Please consult the user guide for the syntax of these functions");
 	}
 }
@@ -158,7 +177,7 @@ class is_function extends ConditionFunction {
 		if (arguments.size() == 1) {
 			return (arguments.get(0) instanceof FunctionNode);
 		}
-		throw new Exception(
+		throw new IllegalArgumentException(
 				"Attempting to call _is_function with the incorrect number of arguments. Please consult the user guide for the syntax of these functions");
 	}
 }
@@ -174,22 +193,23 @@ class is_integer extends ConditionFunction {
 				return false;
 			}
 		}
-		throw new Exception(
+		throw new IllegalArgumentException(
 				"Attempting to call is_integer with the incorrect number of arguments. Please consult the user guide for the syntax of these functions");
 	}
 
 }
+
 class is_even extends ConditionFunction {
 	@Override
 	boolean function(ArrayList<ExpressionNode> arguments) throws Exception {
 		if (arguments.size() == 1) {
 			if (arguments.get(0) instanceof NumberNode) {
-				return (new is_integer().function(arguments) && ((NumberNode)arguments.get(0)).numerator%2 == 0);
+				return (new is_integer().function(arguments) && ((NumberNode) arguments.get(0)).numerator % 2 == 0);
 			} else {
 				return false;
 			}
 		}
-		throw new Exception(
+		throw new IllegalArgumentException(
 				"Attempting to call is_integer with the incorrect number of arguments. Please consult the user guide for the syntax of these functions");
 	}
 }
@@ -200,7 +220,7 @@ class depends extends ConditionFunction {
 		if (arguments.size() == 2) {
 			return new DependsEvaluator(arguments.get(1)).Visit(arguments.get(0));
 		}
-		throw new Exception(
+		throw new IllegalArgumentException(
 				"Attempting to call _depends with the incorrect number of arguments. Please consult the user guide for the syntax of these functions");
 	}
 }

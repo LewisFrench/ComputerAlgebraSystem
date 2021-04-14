@@ -1,5 +1,13 @@
 package ComputerAlgebraSystem;
 
+/**
+ * Fulfills the function of the '_depends' condition function. A story passed as
+ * a subtree as a dependency and traverses a subtree to determine if the
+ * dependency subtree occurs anywhere within the visited subtree.
+ * 
+ * @author lewis
+ *
+ */
 public class DependsEvaluator extends TermVisitor<Boolean> {
 
 	ExpressionNode dependency;
@@ -62,16 +70,6 @@ public class DependsEvaluator extends TermVisitor<Boolean> {
 		return Visit(node.getLeft()) || Visit(node.getRight());
 	}
 
-//	@Override
-//	public Boolean Visit(ParentheticalNode node) throws Exception {
-//		if (node.getClass() == dependency.getClass()) {
-//			if (treeMatcher.Visit(node, dependency)) {
-//				return true;
-//			}
-//		}
-//		return Visit(node.innerNode);
-//	}
-
 	@Override
 	public Boolean Visit(NumberNode node) {
 		return node.getClass() == dependency.getClass() && node.compareTo((NumberNode) dependency) == 0;
@@ -102,7 +100,6 @@ public class DependsEvaluator extends TermVisitor<Boolean> {
 		}
 		return argumentMatch;
 	}
-
 
 	@Override
 	public Boolean Visit(VariableNode node) {

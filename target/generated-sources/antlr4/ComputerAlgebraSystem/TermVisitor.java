@@ -5,7 +5,7 @@ package ComputerAlgebraSystem;
  * 
  * @author Lewis
  *
- * @param <T>
+ * @param <T> Generic type 
  */
 abstract class TermVisitor<T> {
 	public abstract T Visit(PowerNode node) throws Exception;
@@ -25,7 +25,13 @@ abstract class TermVisitor<T> {
 	public abstract T Visit(VariableNode node) throws Exception;
 
 	public abstract T Visit(NumberNode node) throws Exception;
-
+	/**
+	 * Visitor methods for the algebraic term entered by a user.
+	 * 
+	 * @param node A node present in the AST representing an algebraic term
+	 * @return
+	 * @throws IllegalArgumentException if attempting to visit a node that shouldn't be present in an algebraic term
+	 */
 	public T Visit(ExpressionNode node) throws Exception {
 		if (node instanceof PowerNode) {
 			return Visit((PowerNode) node);
@@ -47,7 +53,7 @@ abstract class TermVisitor<T> {
 			return Visit((NumberNode) node);
 		}
 		else {
-			throw new Exception("Attempted to visit an unaccepted type of node.");
+			throw new IllegalArgumentException("Attempted to visit an unaccepted type of node.");
 		}
 	}
 }

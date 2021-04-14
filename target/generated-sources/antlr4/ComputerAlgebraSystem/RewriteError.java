@@ -1,5 +1,11 @@
 package ComputerAlgebraSystem;
 
+/**
+ * Custom Exception to output errors occurring during the rewrite process
+ * Contains the redex and rule that caused the error to occur. 
+ * @author lewis
+ *
+ */
 public class RewriteError extends Exception {
 	private static final long serialVersionUID = -690338710518143434L;
 	String errorMessage;

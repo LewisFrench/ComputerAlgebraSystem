@@ -3,6 +3,14 @@ package ComputerAlgebraSystem;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
+/**
+ * Visitor class to fill a LinkedHashMap with a key of the string value of the
+ * rule variable node, and a null value. Traverses a tree and upon visiting a
+ * rule variable node, puts this instance in the LinkedHashMap variables.
+ * 
+ * @author lewis
+ *
+ */
 public class FetchRuleVariables extends RuleTermVisitor<ExpressionNode> {
 
 	LinkedHashMap<String, ExpressionNode> variables = new LinkedHashMap<>();

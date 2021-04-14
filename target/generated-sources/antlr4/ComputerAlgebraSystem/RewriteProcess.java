@@ -3,11 +3,19 @@ package ComputerAlgebraSystem;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
+/**
+ * Class handling the traversal of nodes in a user's algebraic term, and the
+ * application of the rewrite process on the term.
+ * Visitor class traverses the tree and attempts to apply rewrite rules in a leftmost, innermost order. 
+ * @author lewis
+ *
+ */
 public class RewriteProcess extends TermVisitor<ExpressionNode> {
 	ArrayList<Rule> rules;
 	int ruleApplicationLimit;
 	int ruleApplicationCount = 0;
 	int nodeVisitCount = 0;
+
 	public RewriteProcess(ArrayList<Rule> ruleSet, int ruleApplicationLimit) {
 		rules = ruleSet;
 		this.ruleApplicationLimit = Integer.MAX_VALUE;
@@ -81,6 +89,22 @@ public class RewriteProcess extends TermVisitor<ExpressionNode> {
 		return rewrite(node);
 	}
 
+	/**
+	 * Carries out the rewriting process on the redex of an algebraic term currently
+	 * being visited. The subtree is compared to the left-hand side of each of the
+	 * rewrite rules. Each comparison checks if the redex and the LHS of a rule
+	 * match Then determines if the arguments represented by the rule variables in
+	 * the LHS match with the order they are presented e.g. rule LHS $x+$y+$x
+	 * matches with redex a+b+a, but not redex a+b+c The conditions for a rule are
+	 * then evaluated, and the rule is applied if these conditions hold. Algebraic
+	 * operations are evaluated, and the redex is replaced by the RHS of the applied
+	 * rule (with rule variables substituted).
+	 * 
+	 * @param node The root node of the redex being visited
+	 * @return an ExpressionNode of the rewritten redex, or the original redex if no
+	 *         rules can be applied.
+	 * @throws Exception
+	 */
 	public ExpressionNode rewrite(ExpressionNode node) throws Exception {
 		this.nodeVisitCount++;
 		System.out.println("Nodes Visitied count: " + this.nodeVisitCount);
@@ -103,14 +127,14 @@ public class RewriteProcess extends TermVisitor<ExpressionNode> {
 						boolean validArguments = argumentsValid(argumentEvaluator);
 						if (validArguments) {
 
-							// Construct linkedhashmap of rule varluabels and their corresponding values
+							// Construct LinkedHashMap of rule variables and their corresponding values.
 							LinkedHashMap<String, ExpressionNode> newRuleVariables = new LinkedHashMap<String, ExpressionNode>();
 							for (int i = 0; i < argumentEvaluator.variables.size(); i++) {
 								newRuleVariables.put(argumentEvaluator.variables.get(i),
 										argumentEvaluator.arguments.get(i));
 							}
 
-							// if rule has conditions, determine if they hold
+							// if rule has conditions, determine if they hold.
 							if (r.conditionsNode != null) {
 								ExpressionNode substitutedConditions = new SubstituteConditionRuleVariables(
 										newRuleVariables).Visit(r.conditionsNode);
@@ -148,8 +172,17 @@ public class RewriteProcess extends TermVisitor<ExpressionNode> {
 
 	}
 
+	/**
+	 * Determines if repeated instances of rule variables in the LHS of a rule are
+	 * complemented by repeating instances of subtrees of the redex being matched.
+	 * $x+$y+$x must be complemented by a subtree in which the nodes that correspond
+	 * to $x are identical
+	 * 
+	 * @param argumentEvaluator
+	 * @return
+	 * @throws Exception
+	 */
 	public static boolean argumentsValid(EvaluateTree argumentEvaluator) throws Exception {
-		// Maybe validate to check size are equal or something idk what this does
 		ArrayList<String> vars = argumentEvaluator.variables;
 		ArrayList<ExpressionNode> args = argumentEvaluator.arguments;
 		for (int i = 0; i < vars.size(); i++) {

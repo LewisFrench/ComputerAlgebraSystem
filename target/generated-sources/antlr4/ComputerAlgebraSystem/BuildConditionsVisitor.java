@@ -8,7 +8,15 @@ import java.util.LinkedHashMap;
 
 import Conditions.ConditionsLexer;
 import Conditions.ConditionsParser;
-
+/**
+ * Visitor class that traverses the ANTLR4 parse tree that represents the conditions of the rule.  
+ * Converts the parse tree nodes under the 'expression' production rules into an AST structure comprised of ExpressionNode objects.
+ * Returns the root node of the converted AST structure. 
+ * 
+ * @author Lewis
+ *
+ * @param <T> Generic type 
+ */
 public class BuildConditionsVisitor extends ConditionsBaseVisitor<ExpressionNode> {
 	LinkedHashMap<String, ExpressionNode> variables;
 

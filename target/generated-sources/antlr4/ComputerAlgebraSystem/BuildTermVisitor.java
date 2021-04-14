@@ -7,7 +7,15 @@ import Algebra.AlgebraBaseVisitor;
 import Algebra.AlgebraLexer;
 import Algebra.AlgebraParser;
 import RuleAlgebra.RuleAlgebraLexer;
-
+/**
+ * Visitor class that traverses the ANTLR4 parse tree that represents the algebraic term input by the user.  
+ * Converts the parse tree nodes under the 'expression' production rules into an AST structure comprised of ExpressionNode objects.
+ * Returns the root node of the converted AST structure. 
+ * 
+ * @author Lewis
+ *
+ * @param <T> Generic type 
+ */
 public class BuildTermVisitor extends AlgebraBaseVisitor<ExpressionNode> {
 
 	@Override
@@ -72,9 +80,6 @@ public class BuildTermVisitor extends AlgebraBaseVisitor<ExpressionNode> {
 				return new NumberNode(((NumberNode) node).getNumerator() * -1, ((NumberNode) node).getDenominator());
 			}
 			return new UnaryNode(node);
-
-//		default:
-//			break;
 		}
 		return node;
 	}

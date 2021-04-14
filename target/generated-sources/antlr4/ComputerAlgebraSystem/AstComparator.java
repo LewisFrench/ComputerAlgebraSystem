@@ -29,6 +29,13 @@ abstract class AstComparator<T> {
 
 	public abstract T Visit(NumberNode lhsNode, ExpressionNode node) throws Exception;
 
+	/**
+	 * 
+	 * @param lhsNode The node in the AST representing the left-hand side of a rule
+	 * @param node A node present in the redex of the algebraic term entered by the user
+	 * @return
+	 * @throws IllegalArgumentException if attempting to visit a node that shouldn't exist in either subtree 
+	 */
 	public T Visit(ExpressionNode lhsNode, ExpressionNode node) throws Exception {
 		if (lhsNode instanceof PowerNode) {
 			return Visit((PowerNode) lhsNode, node);
@@ -51,7 +58,7 @@ abstract class AstComparator<T> {
 		} else if (lhsNode instanceof NumberNode) {
 			return Visit((NumberNode) lhsNode, node);
 		} else {
-			throw new Exception("Attempted to visit an unaccepted type of node.");
+			throw new IllegalArgumentException("Attempted to visit an unaccepted type of node.");
 		}
 	}
 }

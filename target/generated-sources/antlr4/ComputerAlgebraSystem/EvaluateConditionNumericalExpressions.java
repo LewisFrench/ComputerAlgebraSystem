@@ -1,7 +1,13 @@
 package ComputerAlgebraSystem;
 
 import java.util.ArrayList;
-
+/**
+ * Evaluates numerical operations present in an conditions of a rewrite rule
+ * nodes between two instances of NumberNode can often be evaluated.
+ * 
+ * @author lewis
+ *
+ */
 public class EvaluateConditionNumericalExpressions extends ConditionVisitor<ExpressionNode> {
 
 	@Override
