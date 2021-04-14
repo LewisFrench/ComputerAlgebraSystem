@@ -73,10 +73,11 @@ public class Program {
 			throw new Exception("Rules must have symbols on their either side of the '=' ");
 		}
 		String[] splitByCondition = splitByEquals[1].split(":", 2);
-		if (splitByCondition[1].replaceAll(" ", "").equals("")) {
-			throw new Exception("Rules containing a : symbol should contain valid condition symbols");
-		}
+
 		if (splitByCondition.length > 1) {
+			if (splitByCondition[1].replaceAll(" ", "").equals("")) {
+				throw new Exception("Rules containing a : symbol should contain valid condition symbols");
+			}
 			return new String[] { splitByEquals[0], splitByCondition[0], splitByCondition[1] };
 		} else {
 			return new String[] { splitByEquals[0], splitByCondition[0] };
@@ -158,6 +159,7 @@ public class Program {
 			throw new ParseCancellationException("Syntax error: Check the structure of your rules");
 
 		} catch (Exception ex) {
+			ex.printStackTrace();
 			throw new Exception("Rule Parse Error: " + ex.getMessage());
 		}
 		return r;
