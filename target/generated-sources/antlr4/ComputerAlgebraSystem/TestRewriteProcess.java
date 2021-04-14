@@ -15,7 +15,7 @@ public class TestRewriteProcess {
 		ExpressionNode term = new NumberNode(2);
 		ArrayList<Rule> rules = new ArrayList<>();
 		int ruleApplicationLimit = 10;
-		RewriteProcess rewrite = new RewriteProcess(rules, ruleApplicationLimit);
+		RewriteProcess rewrite = new RewriteProcess(rules);
 		try {
 			ExpressionNode result = rewrite.Visit(term);
 			assertTrue(result.getClass() == NumberNode.class);
@@ -31,30 +31,9 @@ public class TestRewriteProcess {
 		ExpressionNode term = new NumberNode(2);
 		ArrayList<Rule> rules = new ArrayList<>();
 		int ruleApplicationLimit = 10;
-		RewriteProcess rewrite = new RewriteProcess(rules, ruleApplicationLimit);
+		RewriteProcess rewrite = new RewriteProcess(rules);
 		try {
 			ExpressionNode result = rewrite.Visit(term);
-			assertTrue(result.getClass() == NumberNode.class);
-			assertTrue(((NumberNode) result).getNumerator() == 2);
-			assertTrue(((NumberNode) result).getDenominator() == 1);
-		} catch (Exception e) {
-			fail();
-		}
-	}
-
-	@Test
-	public void testZero_RuleApplicationLimit() {
-		ExpressionNode term = new NumberNode(2);
-		ArrayList<Rule> rules = new ArrayList<>();
-		ExpressionNode ruleLhs = new NumberNode(2);
-		ExpressionNode ruleRhs = new NumberNode(3);
-
-		try {
-			rules.add(new Rule(ruleLhs, ruleRhs));
-			int ruleApplicationLimit = 0;
-			RewriteProcess rewrite = new RewriteProcess(rules, ruleApplicationLimit);
-			ExpressionNode result = rewrite.Visit(term);
-
 			assertTrue(result.getClass() == NumberNode.class);
 			assertTrue(((NumberNode) result).getNumerator() == 2);
 			assertTrue(((NumberNode) result).getDenominator() == 1);
@@ -70,10 +49,10 @@ public class TestRewriteProcess {
 		ExpressionNode ruleLhs = new NumberNode(2);
 		ExpressionNode ruleRhs = new NumberNode(3);
 
-		int ruleApplicationLimit = 1;
+		
 		try {
 			rules.add(new Rule(ruleLhs, ruleRhs));
-			RewriteProcess rewrite = new RewriteProcess(rules, ruleApplicationLimit);
+			RewriteProcess rewrite = new RewriteProcess(rules);
 			ExpressionNode result = rewrite.Visit(term);
 			assertTrue(result.getClass() == NumberNode.class);
 			assertTrue(((NumberNode) result).getNumerator() == 3);
@@ -90,10 +69,10 @@ public class TestRewriteProcess {
 		ExpressionNode ruleLhs = new VariableNode("x");
 		ExpressionNode ruleRhs = new VariableNode("xy");
 
-		int ruleApplicationLimit = 1;
+		
 		try {
 			rules.add(new Rule(ruleLhs, ruleRhs));
-			RewriteProcess rewrite = new RewriteProcess(rules, ruleApplicationLimit);
+			RewriteProcess rewrite = new RewriteProcess(rules);
 			ExpressionNode result = rewrite.Visit(term);
 			assertTrue(result.getClass() == VariableNode.class);
 			assertTrue(((VariableNode) result).value.equals("xy"));
@@ -109,10 +88,10 @@ public class TestRewriteProcess {
 		ExpressionNode ruleLhs = new AdditionNode(new NumberNode(2), new VariableNode("x"));
 		ExpressionNode ruleRhs = new AdditionNode(new VariableNode("z"), new VariableNode("c"));
 
-		int ruleApplicationLimit = 1;
+		
 		try {
 			rules.add(new Rule(ruleLhs, ruleRhs));
-			RewriteProcess rewrite = new RewriteProcess(rules, ruleApplicationLimit);
+			RewriteProcess rewrite = new RewriteProcess(rules);
 			ExpressionNode result = rewrite.Visit(term);
 			assertTrue(result.getClass() == AdditionNode.class);
 			assertTrue(((AdditionNode) result).getLeft() instanceof VariableNode);
@@ -129,10 +108,10 @@ public class TestRewriteProcess {
 		ExpressionNode ruleLhs = new SubtractionNode(new NumberNode(2), new VariableNode("x"));
 		ExpressionNode ruleRhs = new SubtractionNode(new VariableNode("z"), new VariableNode("c"));
 
-		int ruleApplicationLimit = 1;
+		
 		try {
 			rules.add(new Rule(ruleLhs, ruleRhs));
-			RewriteProcess rewrite = new RewriteProcess(rules, ruleApplicationLimit);
+			RewriteProcess rewrite = new RewriteProcess(rules);
 			ExpressionNode result = rewrite.Visit(term);
 			assertTrue(result.getClass() == SubtractionNode.class);
 			assertTrue(((SubtractionNode) result).getLeft() instanceof VariableNode);
@@ -149,10 +128,10 @@ public class TestRewriteProcess {
 		ExpressionNode ruleLhs = new MultiplicationNode(new NumberNode(2), new VariableNode("x"));
 		ExpressionNode ruleRhs = new MultiplicationNode(new VariableNode("z"), new VariableNode("c"));
 
-		int ruleApplicationLimit = 1;
+		
 		try {
 			rules.add(new Rule(ruleLhs, ruleRhs));
-			RewriteProcess rewrite = new RewriteProcess(rules, ruleApplicationLimit);
+			RewriteProcess rewrite = new RewriteProcess(rules);
 			ExpressionNode result = rewrite.Visit(term);
 			assertTrue(result.getClass() == MultiplicationNode.class);
 			assertTrue(((MultiplicationNode) result).getLeft() instanceof VariableNode);
@@ -169,10 +148,10 @@ public class TestRewriteProcess {
 		ExpressionNode ruleLhs = new DivisionNode(new NumberNode(2), new VariableNode("x"));
 		ExpressionNode ruleRhs = new DivisionNode(new VariableNode("z"), new VariableNode("c"));
 
-		int ruleApplicationLimit = 1;
+		
 		try {
 			rules.add(new Rule(ruleLhs, ruleRhs));
-			RewriteProcess rewrite = new RewriteProcess(rules, ruleApplicationLimit);
+			RewriteProcess rewrite = new RewriteProcess(rules);
 			ExpressionNode result = rewrite.Visit(term);
 			assertTrue(result.getClass() == DivisionNode.class);
 			assertTrue(((DivisionNode) result).getLeft() instanceof VariableNode);
@@ -189,10 +168,10 @@ public class TestRewriteProcess {
 		ExpressionNode ruleLhs = new PowerNode(new NumberNode(2), new VariableNode("x"));
 		ExpressionNode ruleRhs = new PowerNode(new VariableNode("z"), new VariableNode("c"));
 
-		int ruleApplicationLimit = 1;
+		
 		try {
 			rules.add(new Rule(ruleLhs, ruleRhs));
-			RewriteProcess rewrite = new RewriteProcess(rules, ruleApplicationLimit);
+			RewriteProcess rewrite = new RewriteProcess(rules);
 			ExpressionNode result = rewrite.Visit(term);
 			assertTrue(result.getClass() == PowerNode.class);
 			assertTrue(((PowerNode) result).getLeft() instanceof VariableNode);
@@ -211,10 +190,10 @@ public class TestRewriteProcess {
 		ExpressionNode ruleLhs = new UnaryNode(new VariableNode("x"));
 		ExpressionNode ruleRhs = new UnaryNode(new VariableNode("y"));
 
-		int ruleApplicationLimit = 1;
+		
 		try {
 			rules.add(new Rule(ruleLhs, ruleRhs));
-			RewriteProcess rewrite = new RewriteProcess(rules, ruleApplicationLimit);
+			RewriteProcess rewrite = new RewriteProcess(rules);
 			ExpressionNode result = rewrite.Visit(term);
 
 			assertTrue(result.getClass() == UnaryNode.class);
@@ -234,10 +213,10 @@ public class TestRewriteProcess {
 		ExpressionNode ruleLhs = new UnaryNode(new NumberNode(221,5));
 		ExpressionNode ruleRhs = new UnaryNode(new NumberNode(224,3));
 
-		int ruleApplicationLimit = 1;
+		
 		try {
 			rules.add(new Rule(ruleLhs, ruleRhs));
-			RewriteProcess rewrite = new RewriteProcess(rules, ruleApplicationLimit);
+			RewriteProcess rewrite = new RewriteProcess(rules);
 			ExpressionNode result = rewrite.Visit(term);
 
 			assertTrue(result.getClass() == NumberNode.class);
@@ -260,10 +239,10 @@ public class TestRewriteProcess {
 		ExpressionNode ruleLhs = new FunctionNode("testFunction", arguments);
 		ExpressionNode ruleRhs = new FunctionNode("transformedFunction", arguments);
 
-		int ruleApplicationLimit = 1;
+		
 		try {
 			rules.add(new Rule(ruleLhs, ruleRhs));
-			RewriteProcess rewrite = new RewriteProcess(rules, ruleApplicationLimit);
+			RewriteProcess rewrite = new RewriteProcess(rules);
 			ExpressionNode result = rewrite.Visit(term);
 			System.out.println("HERE " + result.toString());
 			assertTrue(result.getClass() == FunctionNode.class);
@@ -281,10 +260,10 @@ public class TestRewriteProcess {
 		ArrayList<Rule> rules = new ArrayList<>();
 		
 		
-		int ruleApplicationLimit = 1;
+		
 		try {
 			rules.add(new Rule(new RuleVariableNode("n"), new VariableNode("xy")));
-			RewriteProcess rewrite = new RewriteProcess(rules, ruleApplicationLimit);
+			RewriteProcess rewrite = new RewriteProcess(rules);
 			ExpressionNode result = rewrite.Visit(term);
 			assertTrue(result.getClass() == VariableNode.class);
 			assertTrue(((VariableNode) result).value.equals("xy"));
@@ -301,10 +280,10 @@ public class TestRewriteProcess {
 		ArrayList<Rule> rules = new ArrayList<>();
 		
 		ExpressionNode lhs = new AdditionNode(new NumberNode(2), new RuleVariableNode("n"));
-		int ruleApplicationLimit = 1;
+		
 		try {
 			rules.add(new Rule(lhs, new RuleVariableNode("n")));
-			RewriteProcess rewrite = new RewriteProcess(rules, ruleApplicationLimit);
+			RewriteProcess rewrite = new RewriteProcess(rules);
 			ExpressionNode result = rewrite.Visit(term);
 			assertTrue(result.getClass() == VariableNode.class);
 			assertTrue(((VariableNode) result).getValue().equals("xy"));
@@ -321,10 +300,10 @@ public class TestRewriteProcess {
 		ArrayList<Rule> rules = new ArrayList<>();
 		
 		ExpressionNode lhs = new SubtractionNode(new NumberNode(2), new RuleVariableNode("n"));
-		int ruleApplicationLimit = 1;
+		
 		try {
 			rules.add(new Rule(lhs, new RuleVariableNode("n")));
-			RewriteProcess rewrite = new RewriteProcess(rules, ruleApplicationLimit);
+			RewriteProcess rewrite = new RewriteProcess(rules);
 			ExpressionNode result = rewrite.Visit(term);
 			assertTrue(result.getClass() == VariableNode.class);
 			assertTrue(((VariableNode) result).getValue().equals("xy"));
@@ -342,10 +321,10 @@ public class TestRewriteProcess {
 		ArrayList<Rule> rules = new ArrayList<>();
 		
 		ExpressionNode lhs = new MultiplicationNode(new NumberNode(2), new RuleVariableNode("n"));
-		int ruleApplicationLimit = 1;
+		
 		try {
 			rules.add(new Rule(lhs, new RuleVariableNode("n")));
-			RewriteProcess rewrite = new RewriteProcess(rules, ruleApplicationLimit);
+			RewriteProcess rewrite = new RewriteProcess(rules);
 			ExpressionNode result = rewrite.Visit(term);
 			assertTrue(result.getClass() == VariableNode.class);
 			assertTrue(((VariableNode) result).getValue().equals("xy"));
@@ -361,10 +340,10 @@ public class TestRewriteProcess {
 		ArrayList<Rule> rules = new ArrayList<>();
 		
 		ExpressionNode lhs = new DivisionNode(new NumberNode(2), new RuleVariableNode("n"));
-		int ruleApplicationLimit = 1;
+		
 		try {
 			rules.add(new Rule(lhs, new RuleVariableNode("n")));
-			RewriteProcess rewrite = new RewriteProcess(rules, ruleApplicationLimit);
+			RewriteProcess rewrite = new RewriteProcess(rules);
 			ExpressionNode result = rewrite.Visit(term);
 			assertTrue(result.getClass() == VariableNode.class);
 			assertTrue(((VariableNode) result).getValue().equals("xy"));
@@ -381,10 +360,9 @@ public class TestRewriteProcess {
 		ArrayList<Rule> rules = new ArrayList<>();
 		
 		ExpressionNode lhs = new PowerNode(new NumberNode(2), new RuleVariableNode("n"));
-		int ruleApplicationLimit = 1;
 		try {
 			rules.add(new Rule(lhs, new RuleVariableNode("n")));
-			RewriteProcess rewrite = new RewriteProcess(rules, ruleApplicationLimit);
+			RewriteProcess rewrite = new RewriteProcess(rules);
 			ExpressionNode result = rewrite.Visit(term);
 			assertTrue(result.getClass() == VariableNode.class);
 			assertTrue(((VariableNode) result).getValue().equals("xy"));
@@ -401,10 +379,9 @@ public class TestRewriteProcess {
 		ArrayList<Rule> rules = new ArrayList<>();
 		
 		ExpressionNode lhs = new UnaryNode( new RuleVariableNode("n"));
-		int ruleApplicationLimit = 1;
 		try {
 			rules.add(new Rule(lhs, new RuleVariableNode("n")));
-			RewriteProcess rewrite = new RewriteProcess(rules, ruleApplicationLimit);
+			RewriteProcess rewrite = new RewriteProcess(rules);
 			ExpressionNode result = rewrite.Visit(term);
 			assertTrue(result.getClass() == VariableNode.class);
 			assertTrue(((VariableNode) result).getValue().equals("xy"));
@@ -431,10 +408,9 @@ public class TestRewriteProcess {
 		ArrayList<Rule> rules = new ArrayList<>();
 		
 		ExpressionNode lhs = new FunctionNode("testFunction", arguments);
-		int ruleApplicationLimit = 1;
 		try {
 			rules.add(new Rule(lhs, new RuleVariableNode("n")));
-			RewriteProcess rewrite = new RewriteProcess(rules, ruleApplicationLimit);
+			RewriteProcess rewrite = new RewriteProcess(rules);
 			ExpressionNode result = rewrite.Visit(term);
 			assertTrue(result.getClass() == VariableNode.class);
 			assertTrue(((VariableNode) result).getValue().equals("xy"));
@@ -462,10 +438,9 @@ public class TestRewriteProcess {
 		ArrayList<Rule> rules = new ArrayList<>();
 		
 		ExpressionNode lhs = new FunctionNode("testFunction", arguments);
-		int ruleApplicationLimit = 1;
 		try {
 			rules.add(new Rule(lhs, new RuleVariableNode("n")));
-			RewriteProcess rewrite = new RewriteProcess(rules, ruleApplicationLimit);
+			RewriteProcess rewrite = new RewriteProcess(rules);
 			rewrite.Visit(term);
 			assertTrue(rewrite.ruleApplicationCount == 0);
 		} catch (Exception e) {
@@ -491,10 +466,9 @@ public class TestRewriteProcess {
 		ArrayList<Rule> rules = new ArrayList<>();
 		
 		ExpressionNode lhs = new FunctionNode("testFunction", arguments);
-		int ruleApplicationLimit = 1;
 		try {
 			rules.add(new Rule(lhs, new RuleVariableNode("n")));
-			RewriteProcess rewrite = new RewriteProcess(rules, ruleApplicationLimit);
+			RewriteProcess rewrite = new RewriteProcess(rules);
 			ExpressionNode result = rewrite.Visit(term);
 			assertTrue(result.getClass() == VariableNode.class);
 			assertTrue(((VariableNode) result).getValue().equals("xy"));
@@ -512,10 +486,9 @@ public class TestRewriteProcess {
 		ArrayList<Rule> rules = new ArrayList<>();
 		
 		ExpressionNode conditionsNode = new RelopNode(new NumberNode(2), new NumberNode(3), ConditionsLexer.RELOP_LTE, "<");
-		int ruleApplicationLimit = 1;
 		try {
 			rules.add(new Rule(new RuleVariableNode("n"), new VariableNode("xy"), conditionsNode));
-			RewriteProcess rewrite = new RewriteProcess(rules, ruleApplicationLimit);
+			RewriteProcess rewrite = new RewriteProcess(rules);
 			ExpressionNode result = rewrite.Visit(term);
 			assertTrue(result.getClass() == VariableNode.class);
 			assertTrue(((VariableNode) result).value.equals("xy"));
@@ -532,10 +505,9 @@ public class TestRewriteProcess {
 		ArrayList<Rule> rules = new ArrayList<>();
 		
 		ExpressionNode conditionsNode = new RelopNode(new NumberNode(4), new NumberNode(3), ConditionsLexer.RELOP_LTE, "<");
-		int ruleApplicationLimit = 1;
 		try {
 			rules.add(new Rule(new RuleVariableNode("n"), new VariableNode("xy"), conditionsNode));
-			RewriteProcess rewrite = new RewriteProcess(rules, ruleApplicationLimit);
+			RewriteProcess rewrite = new RewriteProcess(rules);
 			ExpressionNode result = rewrite.Visit(term);
 			assertTrue(result.getClass() == NumberNode.class);
 			assertTrue(rewrite.ruleApplicationCount == 0);

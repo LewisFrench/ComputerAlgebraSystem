@@ -148,23 +148,34 @@ public class TestProgram {
 		Program p = new Program();
 		ArrayList<Rule> rules = new ArrayList<>();
 		try { 
-			Rule r= new Rule(new RuleVariableNode("x"), new NumberNode(1));
+			Rule r= new Rule(new VariableNode("x"), new NumberNode(1));
 			rules.add(r);
-			String result = p.Rewrite(rules,new VariableNode("p"), 100);
+			String result = p.Rewrite(rules,new VariableNode("x"));
 			assertTrue(result.equals("1"));
+		} catch (Exception e ) {fail();}
+
+	}
+	@Test
+	public void testRewrite_InfiniteRecursion_Exception() {
+		Program p = new Program();
+		ArrayList<Rule> rules = new ArrayList<>();
+		try { 
+			Rule r= new Rule(new VariableNode("x"), new NumberNode(1));
+			rules.add(r);
+			assertThrows(StackOverflowError.class, ()-> p.Rewrite(rules,new VariableNode("x")));
 		} catch (Exception e ) {fail();}
 
 	}
 	
 	
 	@Test
-	public void testRewrite_StackOverflow() {
+	public void testRewrite_StackOverflow_Exception() {
 		Program p = new Program();
 		ArrayList<Rule> rules = new ArrayList<>();
 		try { 
 			Rule r= new Rule(new RuleVariableNode("x"), new RuleVariableNode("x"));
 			rules.add(r);
-			assertThrows(StackOverflowError.class, () -> p.Rewrite(rules, new VariableNode("a"), Integer.MAX_VALUE-1));
+			assertThrows(StackOverflowError.class, () -> p.Rewrite(rules, new VariableNode("a")));
 			
 		} catch (Exception e ) {fail();}
 
@@ -177,7 +188,7 @@ public class TestProgram {
 		try { 
 			Rule r= new Rule(new RuleVariableNode("x"), new RuleVariableNode("x"));
 			rules.add(r);
-			assertThrows(Exception.class, () -> p.Rewrite(rules, new RuleVariableNode("a"), Integer.MAX_VALUE-1));
+			assertThrows(Exception.class, () -> p.Rewrite(rules, new RuleVariableNode("a")));
 			
 		} catch (Exception e ) {fail();}
 
