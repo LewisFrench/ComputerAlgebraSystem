@@ -1,5 +1,12 @@
 package ComputerAlgebraSystem;
-
+/**
+ * Visitor class that specifies nodes that can be visited while traversing an algebraic term.
+ * Throws exception if attempting to visit a node that is not specified 
+ * 
+ * @author Lewis
+ *
+ * @param <T>
+ */
 abstract class TermVisitor<T> {
 	public abstract T Visit(PowerNode node) throws Exception;
 
@@ -11,8 +18,6 @@ abstract class TermVisitor<T> {
 
 	public abstract T Visit(DivisionNode node) throws Exception;
 
-//	public abstract T Visit(ParentheticalNode node)throws Exception;
-
 	public abstract T Visit(UnaryNode node)throws Exception;
 
 	public abstract T Visit(FunctionNode node)throws Exception;
@@ -21,9 +26,6 @@ abstract class TermVisitor<T> {
 
 	public abstract T Visit(NumberNode node) throws Exception;
 
-	// public abstract T Visit(RuleVariableNode node);
-
-	// Can talk about how this could be more efficient in C#, see bookmark page
 	public T Visit(ExpressionNode node) throws Exception {
 		if (node instanceof PowerNode) {
 			return Visit((PowerNode) node);
@@ -35,8 +37,6 @@ abstract class TermVisitor<T> {
 			return Visit((MultiplicationNode) node);
 		} else if (node instanceof DivisionNode) {
 			return Visit((DivisionNode) node);
-//		} else if (node instanceof ParentheticalNode) {
-//			return Visit((ParentheticalNode) node);
 		} else if (node instanceof UnaryNode) {
 			return Visit((UnaryNode) node);
 		} else if (node instanceof FunctionNode) {
@@ -47,7 +47,7 @@ abstract class TermVisitor<T> {
 			return Visit((NumberNode) node);
 		}
 		else {
-			throw new Exception("Attempted to visit a valid node");
+			throw new Exception("Attempted to visit an unaccepted type of node.");
 		}
 	}
 }

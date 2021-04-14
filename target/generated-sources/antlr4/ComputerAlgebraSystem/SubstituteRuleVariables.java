@@ -15,9 +15,6 @@ public class SubstituteRuleVariables extends RuleTermVisitor<ExpressionNode> {
 		ExpressionNode left =  Visit(node.getLeft());
 		ExpressionNode right =  Visit(node.getRight());
 
-//		if (node.getLeft() instanceof NumberNode && node.getRight() instanceof NumberNode) {
-//			return new NumberNode(Math.pow(((NumberNode)node.getLeft()).getValue() , ((NumberNode)node.getRight()).getValue()));
-//		}
 		return new PowerNode(left, right);
 	}
 
@@ -26,10 +23,6 @@ public class SubstituteRuleVariables extends RuleTermVisitor<ExpressionNode> {
 		ExpressionNode left =  Visit(node.getLeft());
 		ExpressionNode right =  Visit(node.getRight());
 		
-//		if (node.getLeft() instanceof NumberNode && node.getRight() instanceof NumberNode) {
-//			return new NumberNode(((NumberNode)node.getLeft()).getValue() + ((NumberNode)node.getRight()).getValue() );
-//		}
-//		
 		return new AdditionNode(left, right);
 	}
 
@@ -38,9 +31,6 @@ public class SubstituteRuleVariables extends RuleTermVisitor<ExpressionNode> {
 		ExpressionNode left =  Visit(node.getLeft());
 		ExpressionNode right =  Visit(node.getRight());
 
-//		if (node.getLeft() instanceof NumberNode && node.getRight() instanceof NumberNode) {
-//			return new NumberNode(((NumberNode)node.getLeft()).getValue() - ((NumberNode)node.getRight()).getValue() );
-//		}
 		return new SubtractionNode(left, right);
 	}
 
@@ -48,10 +38,6 @@ public class SubstituteRuleVariables extends RuleTermVisitor<ExpressionNode> {
 	public ExpressionNode Visit(MultiplicationNode node) throws Exception {
 		ExpressionNode left =  Visit(node.getLeft());
 		ExpressionNode right =  Visit(node.getRight());
-
-//		if (node.getLeft() instanceof NumberNode && node.getRight() instanceof NumberNode) {
-//			return new NumberNode(((NumberNode)node.getLeft()).getValue() *((NumberNode)node.getRight()).getValue() );
-//		}
 		
 		return new MultiplicationNode(left, right);
 	}
@@ -61,18 +47,8 @@ public class SubstituteRuleVariables extends RuleTermVisitor<ExpressionNode> {
 		ExpressionNode left =  Visit(node.getLeft());
 		ExpressionNode right =  Visit(node.getRight());
 
-//		if (node.getLeft() instanceof NumberNode && node.getRight() instanceof NumberNode) {
-//			return new NumberNode(((NumberNode)node.getLeft()).getValue() /((NumberNode)node.getRight()).getValue() );
-//		}
 		return new DivisionNode(left, right);
 	}
-
-//	@Override
-//	public ExpressionNode Visit(ParentheticalNode node) throws Exception {
-//		return new ParentheticalNode(Visit(node.innerNode));
-//		
-//	}
-
 
 	@Override
 	public ExpressionNode Visit(UnaryNode node) throws Exception {

@@ -2,14 +2,51 @@ package ComputerAlgebraSystem;
 
 import java.util.ArrayList;
 
-public class SimplifyNumericalOperations extends TermVisitor<ExpressionNode> {
-	
+public class EvaluateConditionNumericalExpressions extends ConditionVisitor<ExpressionNode> {
+
+	@Override
+	public ExpressionNode Visit(ConditionAndNode node) throws Exception {
+		ExpressionNode left = Visit(node.getLeft());
+		ExpressionNode right = Visit(node.getRight());
+		return new ConditionAndNode(left, right);
+	}
+
+	@Override
+	public ExpressionNode Visit(ConditionOrNode node) throws Exception {
+		ExpressionNode left = Visit(node.getLeft());
+		ExpressionNode right = Visit(node.getRight());
+		return new ConditionOrNode(left, right);
+	}
+
+	@Override
+	public ExpressionNode Visit(NotNode node) throws Exception {
+		return new NotNode(Visit(node.innerNode));
+	}
+
+	@Override
+	public ExpressionNode Visit(RelopNode node) throws Exception {
+		ExpressionNode left = Visit(node.getLeft());
+		ExpressionNode right = Visit(node.getRight());
+		return new RelopNode(left, right, node.relop, node.relopText);
+	}
+
+	@Override
+	public ExpressionNode Visit(ConditionFunctionNode node) throws Exception {
+		ArrayList<ExpressionNode> arguments = new ArrayList<>();
+		for (int i = 0; i < node.getArguments().size(); i++) {
+			arguments.add(Visit(node.arguments.get(i)));
+
+		}
+
+		return new ConditionFunctionNode(node.functionName, arguments);
+	}
 	@Override
 	public ExpressionNode Visit(PowerNode node) throws Exception {
 		ExpressionNode left = Visit(node.getLeft());
 		ExpressionNode right = Visit(node.getRight());
 
 		if (left instanceof NumberNode && right instanceof NumberNode) {
+			
 			return ((NumberNode)left).exponentiate((NumberNode)right);
 		}
 		return new PowerNode(left, right);
@@ -48,7 +85,6 @@ public class SimplifyNumericalOperations extends TermVisitor<ExpressionNode> {
 	public ExpressionNode Visit(DivisionNode node) throws Exception {
 		ExpressionNode left = Visit(node.getLeft());
 		ExpressionNode right = Visit(node.getRight());
-		
 		// Divide by zero error
 		if (right instanceof NumberNode) {
 			if (((NumberNode)right).compareTo(new NumberNode(0)) == 0) {
@@ -60,7 +96,6 @@ public class SimplifyNumericalOperations extends TermVisitor<ExpressionNode> {
 		}
 		return new DivisionNode(left, right);
 	}
-
 
 	@Override
 	public ExpressionNode Visit(UnaryNode node) throws Exception {
@@ -91,6 +126,11 @@ public class SimplifyNumericalOperations extends TermVisitor<ExpressionNode> {
 	@Override
 	public ExpressionNode Visit(NumberNode node) {
 		return node;
+	}
+
+	@Override
+	public ExpressionNode Visit(RuleVariableNode node) throws Exception {
+		throw new Exception("Rulevariablenode persists in condition. Please check the structure of your rules. ");
 	}
 
 }

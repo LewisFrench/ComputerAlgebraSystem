@@ -23,28 +23,27 @@ public class BuildLhsVisitor extends RuleAlgebraBaseVisitor<ExpressionNode> {
 	@Override
 	public ExpressionNode visitDecimal(RuleAlgebraParser.DecimalContext context) {
 		BigDecimal b = new BigDecimal(context.getText());
-		
 		String formattedDecimal = b.stripTrailingZeros().toPlainString();
-		if (!(formattedDecimal.contains("."))){
+		if (!(formattedDecimal.contains("."))) {
 			return new NumberNode(Long.valueOf(formattedDecimal));
 		}
 
-		String[] splitByDecimalPoint = formattedDecimal.split("\\.");		
+		String[] splitByDecimalPoint = formattedDecimal.split("\\.");
 		long numerator = Long.valueOf(formattedDecimal.replaceAll("\\.", ""));
-		
+
 		int numberOfDecimalPlaces = splitByDecimalPoint[1].length();
 		long denominator = 1;
-		for (int i = 0; i < numberOfDecimalPlaces ; i ++) {
+		for (int i = 0; i < numberOfDecimalPlaces; i++) {
 			denominator *= 10;
 		}
 		return new NumberNode(numerator, denominator);
 	}
-	
+
 	@Override
 	public ExpressionNode visitInteger(RuleAlgebraParser.IntegerContext context) {
 		return new NumberNode(Long.valueOf(context.getText()));
 	}
-	
+
 	@Override
 	public ExpressionNode visitRational(RuleAlgebraParser.RationalContext context) {
 		String[] split = context.getText().split("/");
@@ -52,7 +51,6 @@ public class BuildLhsVisitor extends RuleAlgebraBaseVisitor<ExpressionNode> {
 		long denominator = Long.valueOf(split[1]);
 		return new NumberNode(numerator, denominator);
 	}
-	
 
 	@Override
 	public ExpressionNode visitParenthetical(RuleAlgebraParser.ParentheticalContext context) {
@@ -71,12 +69,10 @@ public class BuildLhsVisitor extends RuleAlgebraBaseVisitor<ExpressionNode> {
 			break;
 		case RuleAlgebraLexer.OP_ADD:
 			node = new AdditionNode(left, right);
-
 			break;
 
 		case RuleAlgebraLexer.OP_SUB:
 			node = new SubtractionNode(left, right);
-
 			break;
 
 		case RuleAlgebraLexer.OP_MUL:
@@ -102,7 +98,7 @@ public class BuildLhsVisitor extends RuleAlgebraBaseVisitor<ExpressionNode> {
 
 		case RuleAlgebraLexer.OP_SUB:
 			if (node instanceof NumberNode) {
-				return new NumberNode(((NumberNode)node).getNumerator()* -1 , ((NumberNode)node).getDenominator());
+				return new NumberNode(((NumberNode) node).getNumerator() * -1, ((NumberNode) node).getDenominator());
 			}
 			node = new UnaryNode(visit(context.expression()));
 			break;
@@ -113,7 +109,6 @@ public class BuildLhsVisitor extends RuleAlgebraBaseVisitor<ExpressionNode> {
 	@Override
 	public ExpressionNode visitRuleVariable(RuleAlgebraParser.RuleVariableContext context) {
 		variables.put(context.getText(), null);
-
 		return new RuleVariableNode(context.value.getText());
 	}
 
@@ -129,8 +124,7 @@ public class BuildLhsVisitor extends RuleAlgebraBaseVisitor<ExpressionNode> {
 			arguments.add(visit(context.expression(i)));
 		}
 
-		FunctionNode f = new FunctionNode(context.func.getText(), arguments);
-		return f;
+		return new FunctionNode(context.func.getText(), arguments);
 
 	}
 

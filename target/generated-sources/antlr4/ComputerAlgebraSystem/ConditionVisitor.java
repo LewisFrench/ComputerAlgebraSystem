@@ -24,8 +24,6 @@ abstract class ConditionVisitor<T> {
 
 	public abstract T Visit(DivisionNode node) throws Exception;
 
-//	public abstract T Visit(ParentheticalNode node) throws Exception;
-
 	public abstract T Visit(UnaryNode node) throws Exception;
 
 	public abstract T Visit(FunctionNode node) throws Exception;

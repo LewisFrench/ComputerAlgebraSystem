@@ -7,11 +7,7 @@ class ConditionFunctionEvaluator {
 
 	LinkedHashMap<String, ExpressionNode> variables;
 
-//	public ConditionFunctionEvaluator(LinkedHashMap<String, ExpressionNode> variables) {
-//		this.variables = variables;
-//	}
 	public ConditionFunctionEvaluator() {
-
 	}
 
 	public boolean determineFunction(String functionName, ArrayList<ExpressionNode> arguments) throws Exception {
@@ -20,15 +16,12 @@ class ConditionFunctionEvaluator {
 		case "_is_number":
 			conditionFunction = new is_number();
 			break;
-
 		case "_is_literal":
 			conditionFunction = new is_literal();
 			break;
-
 		case "_is_addition":
 			conditionFunction = new is_addition();
 			break;
-
 		case "_is_subtraction":
 			conditionFunction = new is_subtraction();
 			break;
@@ -44,14 +37,14 @@ class ConditionFunctionEvaluator {
 		case "_is_unary":
 			conditionFunction = new is_unary();
 			break;
-//		case "_is_parenthetical":
-//			conditionFunction = new is_parenthetical();
-//			break;
 		case "_is_function":
 			conditionFunction = new is_function();
 			break;
 		case "_is_integer":
 			conditionFunction = new is_integer();
+			break;
+		case "_is_even":
+			conditionFunction = new is_even();
 			break;
 		case "_depends":
 			conditionFunction = new depends();
@@ -60,7 +53,6 @@ class ConditionFunctionEvaluator {
 			throw new Exception(
 					"Attempting to apply a condition function that is not provided by the system.\nPlease check the user guide for a list of the provided functions.");
 		}
-
 		return conditionFunction.function(arguments);
 	}
 
@@ -75,7 +67,6 @@ abstract class ConditionFunction {
 class is_literal extends ConditionFunction {
 	@Override
 	boolean function(ArrayList<ExpressionNode> arguments) throws Exception {
-		System.out.println("\n\nHERE\n\n");
 		if (arguments.size() == 1) {
 			return (arguments.get(0) instanceof VariableNode);
 		}
@@ -178,7 +169,7 @@ class is_integer extends ConditionFunction {
 		if (arguments.size() == 1) {
 			if (arguments.get(0) instanceof NumberNode) {
 
-				return (((NumberNode)arguments.get(0)).getDenominator() ==1);
+				return (((NumberNode) arguments.get(0)).getDenominator() == 1);
 			} else {
 				return false;
 			}
@@ -187,6 +178,20 @@ class is_integer extends ConditionFunction {
 				"Attempting to call is_integer with the incorrect number of arguments. Please consult the user guide for the syntax of these functions");
 	}
 
+}
+class is_even extends ConditionFunction {
+	@Override
+	boolean function(ArrayList<ExpressionNode> arguments) throws Exception {
+		if (arguments.size() == 1) {
+			if (arguments.get(0) instanceof NumberNode) {
+				return (new is_integer().function(arguments) && ((NumberNode)arguments.get(0)).numerator%2 == 0);
+			} else {
+				return false;
+			}
+		}
+		throw new Exception(
+				"Attempting to call is_integer with the incorrect number of arguments. Please consult the user guide for the syntax of these functions");
+	}
 }
 
 class depends extends ConditionFunction {

@@ -388,6 +388,67 @@ public class TestConditionFunctions {
 		assertThrows(Exception.class, () -> c.determineFunction(functionName, arguments));
 	}
 	
+
+	@Test
+	public void testConditionFunctions_is_even_valid_true() {
+		String functionName = "_is_even";
+		ArrayList<ExpressionNode> arguments = new ArrayList<>();
+		arguments.add(new NumberNode((2)));
+		
+		ConditionFunctionEvaluator c = new ConditionFunctionEvaluator();
+		try {
+			assertTrue(c.determineFunction(functionName, arguments));
+			
+		} catch (Exception e) {fail();}
+	}
+	@Test
+	public void testConditionFunctions_is_even_valid_not_integer_False() {
+		String functionName = "_is_even";
+		ArrayList<ExpressionNode> arguments = new ArrayList<>();
+		arguments.add(new NumberNode(2, 4));
+		
+		ConditionFunctionEvaluator c = new ConditionFunctionEvaluator();
+		try {
+			assertFalse(c.determineFunction(functionName, arguments));
+			
+		} catch (Exception e) {fail();}
+	}
+	@Test
+	public void testConditionFunctions_is_even_valid_False() {
+		String functionName = "_is_even";
+		ArrayList<ExpressionNode> arguments = new ArrayList<>();
+		arguments.add(new NumberNode(11,2));
+		
+		ConditionFunctionEvaluator c = new ConditionFunctionEvaluator();
+		try {
+			assertFalse(c.determineFunction(functionName, arguments));
+			
+		} catch (Exception e) {fail();}
+	}
+	@Test
+	public void testConditionFunctions_is_even_valid_notNumber_False() {
+		String functionName = "_is_even";
+		ArrayList<ExpressionNode> arguments = new ArrayList<>();
+		arguments.add(new VariableNode("x"));
+		
+		ConditionFunctionEvaluator c = new ConditionFunctionEvaluator();
+		try {
+			assertFalse(c.determineFunction(functionName, arguments));
+			
+		} catch (Exception e) {fail();}
+	}
+	
+	@Test
+	public void testConditionFunctions_is_even_invalid_arguments() {
+		String functionName = "_is_even";
+		ArrayList<ExpressionNode> arguments = new ArrayList<>();
+		arguments.add(new NumberNode(2));
+		arguments.add(new NumberNode(2));
+		
+		ConditionFunctionEvaluator c = new ConditionFunctionEvaluator();
+		assertThrows(Exception.class, () -> c.determineFunction(functionName, arguments));
+	}
+	
 	@Test
 	public void testConditionFunctions_depends_valid_true() {
 		String functionName = "_depends";

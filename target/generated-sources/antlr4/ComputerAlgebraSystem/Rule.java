@@ -9,21 +9,22 @@ class Rule {
 	LinkedHashMap<String, ExpressionNode> variables;
 
 	public Rule(ExpressionNode lhsNode, ExpressionNode rhsNode) throws Exception {
-
-		this.lhsNode = lhsNode;
-		this.rhsNode = rhsNode;
 		FetchRuleVariables f = new FetchRuleVariables();
 		f.Visit(lhsNode); 
+		
+		this.lhsNode = lhsNode;
+		this.rhsNode = rhsNode;
 		this.variables = f.variables;
 		this.conditionsNode = null;
 	}
 
 	public Rule(ExpressionNode lhsNode, ExpressionNode rhsNode, ExpressionNode conditions) throws Exception {
+		FetchRuleVariables f = new FetchRuleVariables();
+		f.Visit(lhsNode);
+		
 		this.lhsNode = lhsNode;
 		this.rhsNode = rhsNode;
 		this.conditionsNode = conditions;
-		FetchRuleVariables f = new FetchRuleVariables();
-		f.Visit(lhsNode);
 		this.variables = f.variables;
 
 	}
@@ -44,5 +45,7 @@ class Rule {
 	public ExpressionNode getRhsNode() {
 		return this.rhsNode;
 	}
+	
+	
 
 }

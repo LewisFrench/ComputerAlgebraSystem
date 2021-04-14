@@ -24,29 +24,21 @@ public class Program {
 	}
 
 	public static void main(String[] args) {
-		//GUI g = new GUI();
+		// GUI g = new GUI();
 		new GUI();
 	}
 
 	public String Rewrite(ArrayList<Rule> rules, ExpressionNode termAst, int ruleApplicationLimit) throws Exception {
-		String outputValue = "";
 		try {
 			ExpressionNode ast2 = new RewriteProcess(rules, ruleApplicationLimit).Visit(termAst);
-			ExpressionNode simplified = new SimplifyNumericalOperations().Visit(ast2);
-			outputValue = new EvaluateExpressionVisitor().Visit(simplified);
-			return outputValue;
-
-			// Catch different type of exceptions here, determine if I can customise the
-			// error messages.
-			// if not - evaluate that I would've liked to dedicate more time to determining
-			// the causes of every issue, but time constraints.
+			ExpressionNode simplified = new EvaluateNumericalOperations().Visit(ast2);
+			return new EvaluateExpressionVisitor().Visit(simplified);
 		} catch (StackOverflowError soe) {
 			throw new StackOverflowError(
 					"Check for any infinitely-recursive rules or choose a lower rule application limit");
-		//} catch (RewriteError re) {
+			// } catch (RewriteError re) {
 			// Do I do anything here???
-		}	
-		 catch (Exception e) {
+		} catch (Exception e) {
 			throw new Exception("Rewrite Error: " + e.getMessage());
 		}
 	}
@@ -62,8 +54,7 @@ public class Program {
 			throw new Exception("Rules must have symbols on their either side of the '=' ");
 		}
 		String[] splitByCondition = splitByEquals[1].split(":", 2);
-		
-		// MAybe a check for balnk here? Can throw a better exception
+
 		if (splitByCondition.length > 1) {
 			return new String[] { splitByEquals[0], splitByCondition[0], splitByCondition[1] };
 		} else {
@@ -78,11 +69,9 @@ public class Program {
 		}
 		String[] splitRule;
 		try {
-
 			// Catch format exception here
 			splitRule = splitRuleString(ruleInput);
 
-			
 			RuleAlgebraParser lhsParser = getRuleParser(splitRule[0]);
 			RuleAlgebraParser rhsParser = getRuleParser(splitRule[1]);
 
@@ -94,7 +83,6 @@ public class Program {
 
 			ExpressionNode rhsNode = new BuildRhsVisitor().visitRuleTerm(rhs);
 
-
 			if (splitRule.length == 3) {
 
 				ConditionsParser conditionsParser = getConditionsParser(splitRule[2]);
@@ -103,7 +91,7 @@ public class Program {
 
 				r = (new Rule(lhsNode, rhsNode, conditionsNode));
 				r.variables = lhsVisitor.variables;
-				
+
 				// Check if rule variables correlate from LHS --> Conditions
 				FetchConditionRuleVariables fCond = new FetchConditionRuleVariables();
 				fCond.Visit(conditionsNode);
@@ -114,7 +102,8 @@ public class Program {
 				r = (new Rule(lhsNode, rhsNode));
 				r.variables = lhsVisitor.variables;
 			} else {
-				throw new ParseCancellationException("Rule entered with invalid length. Please check the structure of your rules");
+				throw new ParseCancellationException(
+						"Rule entered with invalid length. Please check the structure of your rules");
 			}
 
 			FetchRuleVariables f = new FetchRuleVariables();
@@ -122,12 +111,14 @@ public class Program {
 			if (!(r.variables.keySet().containsAll(f.variables.keySet()))) {
 				throw new Exception("A rule contains rule variables that don't correspond from LHS to RHS");
 			}
+
 		} catch (ArithmeticException ae) {
-			throw new ArithmeticException("Attempting to create a rule containing a rational number of denominator zero");
+			throw new ArithmeticException(
+					"Attempting to create a rule containing a rational number of denominator zero");
 
 		} catch (ParseCancellationException pce) {
 			throw new ParseCancellationException("Syntax error: Check the structure of your rules");
-		
+
 		} catch (Exception ex) {
 			throw new Exception("Rule Parse Error: " + ex.getMessage());
 		}
@@ -182,11 +173,12 @@ public class Program {
 		} catch (ParseCancellationException pce) {
 			throw new ParseCancellationException("Syntax error: Please check the syntax of your algebraic term");
 		} catch (ArithmeticException iae) {
-			throw new ArithmeticException("Attempted to create a rational number with a denominator of zero. Please check the structure of your term");		
+			throw new ArithmeticException(
+					"Attempted to create a rational number with a denominator of zero. Please check the structure of your term");
 		} catch (Exception e) {
 			throw new Exception("Error when parsing algebraic term");
 		}
-		
+
 		return termAst;
 	}
 

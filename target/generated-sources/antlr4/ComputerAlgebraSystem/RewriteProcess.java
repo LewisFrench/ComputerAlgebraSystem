@@ -7,10 +7,10 @@ public class RewriteProcess extends TermVisitor<ExpressionNode> {
 	ArrayList<Rule> rules;
 	int ruleApplicationLimit;
 	int ruleApplicationCount = 0;
-
+	int nodeVisitCount = 0;
 	public RewriteProcess(ArrayList<Rule> ruleSet, int ruleApplicationLimit) {
 		rules = ruleSet;
-		this.ruleApplicationLimit = ruleApplicationLimit;
+		this.ruleApplicationLimit = Integer.MAX_VALUE;
 	}
 
 	@Override
@@ -41,8 +41,6 @@ public class RewriteProcess extends TermVisitor<ExpressionNode> {
 	public ExpressionNode Visit(MultiplicationNode node) throws Exception {
 		ExpressionNode visitedLeft = (Visit(node.getLeft()));
 		ExpressionNode visitedRight = (Visit(node.getRight()));
-//		node.getLeft() = visitedLeft;
-//		node.getRight = visitedRight;
 
 		return rewrite(new MultiplicationNode(visitedLeft, visitedRight));
 	}
@@ -51,17 +49,9 @@ public class RewriteProcess extends TermVisitor<ExpressionNode> {
 	public ExpressionNode Visit(DivisionNode node) throws Exception {
 		ExpressionNode visitedLeft = (Visit(node.getLeft()));
 		ExpressionNode visitedRight = (Visit(node.getRight()));
-//		node.getLeft() = visitedLeft;
-//		node.getRight = visitedRight;
 
 		return rewrite(new DivisionNode(visitedLeft, visitedRight));
 	}
-
-//	@Override
-//	public ExpressionNode Visit(ParentheticalNode node) throws Exception {
-//
-//		return rewrite(new ParentheticalNode(Visit(node.innerNode)));
-//	}
 
 	@Override
 	public ExpressionNode Visit(NumberNode node) throws Exception {
@@ -92,6 +82,8 @@ public class RewriteProcess extends TermVisitor<ExpressionNode> {
 	}
 
 	public ExpressionNode rewrite(ExpressionNode node) throws Exception {
+		this.nodeVisitCount++;
+		System.out.println("Nodes Visitied count: " + this.nodeVisitCount);
 		if (!(this.ruleApplicationLimit > this.ruleApplicationCount)) {
 			return node;
 		}
@@ -123,7 +115,7 @@ public class RewriteProcess extends TermVisitor<ExpressionNode> {
 								ExpressionNode substitutedConditions = new SubstituteConditionRuleVariables(
 										newRuleVariables).Visit(r.conditionsNode);
 
-								ExpressionNode simplified = new SimplifyConditionNumericalExpressions()
+								ExpressionNode simplified = new EvaluateConditionNumericalExpressions()
 										.Visit(substitutedConditions);
 
 								conditionsHold = new EvaluateConditionsVisitor().Visit(simplified);
@@ -134,7 +126,7 @@ public class RewriteProcess extends TermVisitor<ExpressionNode> {
 								this.ruleApplicationCount++;
 								ExpressionNode substituted = new SubstituteRuleVariables(newRuleVariables)
 										.Visit(r.rhsNode);
-								ExpressionNode solved = new SimplifyNumericalOperations().Visit(substituted);
+								ExpressionNode solved = new EvaluateNumericalOperations().Visit(substituted);
 								return Visit(solved);
 							}
 

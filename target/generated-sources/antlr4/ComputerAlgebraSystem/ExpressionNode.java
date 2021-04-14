@@ -180,7 +180,6 @@ class NumberNode extends ExpressionNode {
 	}
 
 	public NumberNode multiply(NumberNode node) {
-		System.out.println("multipying " + this.toString() + "  *  " + node.toString());
 		return new NumberNode(this.numerator * node.getNumerator(), this.denominator * node.getDenominator());
 	}
 
