@@ -6,19 +6,13 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
-import Algebra.AlgebraParser;
 import Conditions.ConditionsLexer;
 import Conditions.ConditionsParser;
 
 public class BuildConditionsVisitor extends ConditionsBaseVisitor<ExpressionNode> {
 	LinkedHashMap<String, ExpressionNode> variables;
 
-//	public BuildConditionsVisitor(LinkedHashMap<String, ExpressionNode> variables) {
-//		this.variables = variables;
-//	}
-
 	public BuildConditionsVisitor() {
-
 	}
 
 	@Override
@@ -56,8 +50,6 @@ public class BuildConditionsVisitor extends ConditionsBaseVisitor<ExpressionNode
 		return visit(context.condition());
 	}
 
-	// Needs looking at - only my functions are allowed
-	// Comparisons to sin($A) etc. ?
 	@Override
 	public ExpressionNode visitConditionFunction(ConditionsParser.ConditionFunctionContext context) {
 		ArrayList<ExpressionNode> arguments = new ArrayList<>();
@@ -76,8 +68,8 @@ public class BuildConditionsVisitor extends ConditionsBaseVisitor<ExpressionNode
 
 	@Override
 	public ExpressionNode visitUnaryExpression(ConditionsParser.UnaryExpressionContext context) {
-		ExpressionNode node = null;
-		node = visit(context.expression());
+		ExpressionNode node = visit(context.expression());
+
 		switch (context.op.getType()) {
 		case ConditionsLexer.OP_ADD:
 			node = visit(context.expression());
@@ -85,13 +77,10 @@ public class BuildConditionsVisitor extends ConditionsBaseVisitor<ExpressionNode
 
 		case ConditionsLexer.OP_SUB:
 			if (node instanceof NumberNode) {
-				return new NumberNode(((NumberNode)node).getNumerator()* -1 , ((NumberNode)node).getDenominator());
+				return new NumberNode(((NumberNode) node).getNumerator() * -1, ((NumberNode) node).getDenominator());
 			}
 			node = new UnaryNode(visit(context.expression()));
 			break;
-
-		default:
-			return node;
 		}
 		return node;
 	}
@@ -101,18 +90,17 @@ public class BuildConditionsVisitor extends ConditionsBaseVisitor<ExpressionNode
 		OperationNode node = null;
 		ExpressionNode left = visit(context.left);
 		ExpressionNode right = visit(context.right);
+		
 		switch (context.op.getType()) {
 		case ConditionsLexer.OP_POW:
 			node = new PowerNode(left, right);
 			break;
 		case ConditionsLexer.OP_ADD:
 			node = new AdditionNode(left, right);
-
 			break;
 
 		case ConditionsLexer.OP_SUB:
 			node = new SubtractionNode(left, right);
-
 			break;
 
 		case ConditionsLexer.OP_MUL:
@@ -136,36 +124,35 @@ public class BuildConditionsVisitor extends ConditionsBaseVisitor<ExpressionNode
 			arguments.add(visit(context.expression(i)));
 		}
 
-		FunctionNode f = new FunctionNode(context.func.getText(), arguments);
-		return f;
+		return new FunctionNode(context.func.getText(), arguments);
 
 	}
 
 	@Override
 	public ExpressionNode visitDecimal(ConditionsParser.DecimalContext context) {
 		BigDecimal b = new BigDecimal(context.getText());
-		
+
 		String formattedDecimal = b.stripTrailingZeros().toPlainString();
-		if (!(formattedDecimal.contains("."))){
+		if (!(formattedDecimal.contains("."))) {
 			return new NumberNode(Long.valueOf(formattedDecimal));
 		}
 
-		String[] splitByDecimalPoint = formattedDecimal.split("\\.");		
+		String[] splitByDecimalPoint = formattedDecimal.split("\\.");
 		long numerator = Long.valueOf(formattedDecimal.replaceAll("\\.", ""));
-		
+
 		int numberOfDecimalPlaces = splitByDecimalPoint[1].length();
 		long denominator = 1;
-		for (int i = 0; i < numberOfDecimalPlaces ; i ++) {
+		for (int i = 0; i < numberOfDecimalPlaces; i++) {
 			denominator *= 10;
 		}
 		return new NumberNode(numerator, denominator);
 	}
-	
+
 	@Override
 	public ExpressionNode visitInteger(ConditionsParser.IntegerContext context) {
 		return new NumberNode(Long.valueOf(context.getText()));
 	}
-	
+
 	@Override
 	public ExpressionNode visitRational(ConditionsParser.RationalContext context) {
 		String[] split = context.getText().split("/");

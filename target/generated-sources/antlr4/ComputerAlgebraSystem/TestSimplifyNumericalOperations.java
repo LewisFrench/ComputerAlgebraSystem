@@ -5,8 +5,6 @@ import static org.junit.Assert.*;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
 
 import org.junit.Test;
 
@@ -16,7 +14,7 @@ public class TestSimplifyNumericalOperations {
 	@Test
 	public void testSimpleAddition_can_simplify() {
 		ExpressionNode addition = new AdditionNode(new NumberNode(2,1), new NumberNode(3,2));
-		SimplifyNumericalOperations s = new SimplifyNumericalOperations();
+		EvaluateNumericalOperations s = new EvaluateNumericalOperations();
 
 		try {
 			ExpressionNode result = s.Visit(addition);
@@ -30,7 +28,7 @@ public class TestSimplifyNumericalOperations {
 	@Test
 	public void testSimpleAddition_cannot_simplify() {
 		ExpressionNode addition = new AdditionNode(new NumberNode(2,1), new VariableNode("x"));
-		SimplifyNumericalOperations s = new SimplifyNumericalOperations();
+		EvaluateNumericalOperations s = new EvaluateNumericalOperations();
 
 		try {
 			ExpressionNode result = s.Visit(addition);
@@ -44,7 +42,7 @@ public class TestSimplifyNumericalOperations {
 	@Test
 	public void testSimpleSubtraction() {
 		ExpressionNode subtraction = new SubtractionNode(new NumberNode(2,1), new NumberNode(3,2));
-		SimplifyNumericalOperations s = new SimplifyNumericalOperations();
+		EvaluateNumericalOperations s = new EvaluateNumericalOperations();
 
 		try {
 			ExpressionNode result = s.Visit(subtraction);
@@ -58,7 +56,7 @@ public class TestSimplifyNumericalOperations {
 	@Test
 	public void testSimpleSubtraction_cannot_simplify() {
 		ExpressionNode subtraction = new SubtractionNode(new NumberNode(2,1), new VariableNode("x"));
-		SimplifyNumericalOperations s = new SimplifyNumericalOperations();
+		EvaluateNumericalOperations s = new EvaluateNumericalOperations();
 
 		try {
 			ExpressionNode result = s.Visit(subtraction);
@@ -73,7 +71,7 @@ public class TestSimplifyNumericalOperations {
 	@Test
 	public void testSimpleMultiplication() {
 		ExpressionNode multiplication = new MultiplicationNode(new NumberNode(2,1), new NumberNode(3,2));
-		SimplifyNumericalOperations s = new SimplifyNumericalOperations();
+		EvaluateNumericalOperations s = new EvaluateNumericalOperations();
 
 		try {
 			ExpressionNode result = s.Visit(multiplication);
@@ -86,7 +84,7 @@ public class TestSimplifyNumericalOperations {
 	@Test
 	public void testSimpleMultiplication_cannot_simplify() {
 		ExpressionNode multiplication = new MultiplicationNode(new NumberNode(2,1), new VariableNode("x"));
-		SimplifyNumericalOperations s = new SimplifyNumericalOperations();
+		EvaluateNumericalOperations s = new EvaluateNumericalOperations();
 
 		try {
 			ExpressionNode result = s.Visit(multiplication);
@@ -102,7 +100,7 @@ public class TestSimplifyNumericalOperations {
 	@Test
 	public void testSimpleDivision() {
 		ExpressionNode division = new DivisionNode(new NumberNode(2,1), new NumberNode(3,2));
-		SimplifyNumericalOperations s = new SimplifyNumericalOperations();
+		EvaluateNumericalOperations s = new EvaluateNumericalOperations();
 
 		try {
 			ExpressionNode result = s.Visit(division);
@@ -116,7 +114,7 @@ public class TestSimplifyNumericalOperations {
 	@Test
 	public void testSimpleDivision_cannot_simplify() {
 		ExpressionNode division = new DivisionNode(new NumberNode(2,1), new VariableNode("x"));
-		SimplifyNumericalOperations s = new SimplifyNumericalOperations();
+		EvaluateNumericalOperations s = new EvaluateNumericalOperations();
 
 		try {
 			ExpressionNode result = s.Visit(division);
@@ -131,7 +129,7 @@ public class TestSimplifyNumericalOperations {
 	@Test
 	public void testSimpleDivision_DivideByZero() {
 		ExpressionNode division = new DivisionNode(new NumberNode(2,1), new NumberNode(0,2));
-		SimplifyNumericalOperations s = new SimplifyNumericalOperations();
+		EvaluateNumericalOperations s = new EvaluateNumericalOperations();
 
 		assertThrows(ArithmeticException.class ,() -> s.Visit(division));
 	}
@@ -141,7 +139,7 @@ public class TestSimplifyNumericalOperations {
 		AdditionNode add = new AdditionNode(new NumberNode(2) , new NumberNode(3));
 		SubtractionNode subtract = new SubtractionNode(add, new NumberNode(10,2));
 		ExpressionNode division = new DivisionNode(new NumberNode(2,1), subtract);
-		SimplifyNumericalOperations s = new SimplifyNumericalOperations();
+		EvaluateNumericalOperations s = new EvaluateNumericalOperations();
 
 		assertThrows(ArithmeticException.class ,() -> s.Visit(division));
 	}
@@ -149,7 +147,7 @@ public class TestSimplifyNumericalOperations {
 	@Test
 	public void testSimpleExponentiation_IntegerPower() {
 		ExpressionNode exponentiation = new PowerNode(new NumberNode(2,3), new NumberNode(2));
-		SimplifyNumericalOperations s = new SimplifyNumericalOperations();
+		EvaluateNumericalOperations s = new EvaluateNumericalOperations();
 
 		try {
 			ExpressionNode result = s.Visit(exponentiation);
@@ -165,7 +163,7 @@ public class TestSimplifyNumericalOperations {
 	@Test
 	public void testSimpleExponentiation_NegativeIntegerPower() {
 		ExpressionNode exponentiation = new PowerNode(new NumberNode(2,3), new NumberNode(-2,1));
-		SimplifyNumericalOperations s = new SimplifyNumericalOperations();
+		EvaluateNumericalOperations s = new EvaluateNumericalOperations();
 
 		try {
 			ExpressionNode result = s.Visit(exponentiation);
@@ -182,7 +180,7 @@ public class TestSimplifyNumericalOperations {
 	@Test
 	public void testSimpleExponentiation_cannot_Evaluate_FractionalPower() {
 		ExpressionNode exponentiation = new PowerNode(new NumberNode(2,1), new NumberNode(1,2));
-		SimplifyNumericalOperations s = new SimplifyNumericalOperations();
+		EvaluateNumericalOperations s = new EvaluateNumericalOperations();
 
 		try {
 			ExpressionNode result = s.Visit(exponentiation);
@@ -197,7 +195,7 @@ public class TestSimplifyNumericalOperations {
 	@Test
 	public void testSimpleExponentiation_cannot_Evaluate() {
 		ExpressionNode exponentiation = new PowerNode(new NumberNode(2,1), new VariableNode("x"));
-		SimplifyNumericalOperations s = new SimplifyNumericalOperations();
+		EvaluateNumericalOperations s = new EvaluateNumericalOperations();
 
 		try {
 			ExpressionNode result = s.Visit(exponentiation);
@@ -214,7 +212,7 @@ public class TestSimplifyNumericalOperations {
 
 		ExpressionNode subAddition = new AdditionNode(new NumberNode(2,1), new NumberNode(3,2));
 		ExpressionNode addition = new AdditionNode(new NumberNode(1), subAddition);
-		SimplifyNumericalOperations s = new SimplifyNumericalOperations();
+		EvaluateNumericalOperations s = new EvaluateNumericalOperations();
 
 		try {
 			ExpressionNode result = s.Visit(addition);
@@ -229,7 +227,7 @@ public class TestSimplifyNumericalOperations {
 	public void testUnary() {
 		UnaryNode unaryNode = new UnaryNode(new NumberNode(1,5));
 
-		SimplifyNumericalOperations s = new SimplifyNumericalOperations();
+		EvaluateNumericalOperations s = new EvaluateNumericalOperations();
 		try {
 			ExpressionNode result = s.Visit(unaryNode);
 			assertTrue(result.getClass() == NumberNode.class);
@@ -246,7 +244,7 @@ public class TestSimplifyNumericalOperations {
 	public void testUnaryNumberAddition() {
 		UnaryNode unaryNode = new UnaryNode(new NumberNode(1,6));
 		AdditionNode unaryAddition = new AdditionNode(unaryNode, new NumberNode(4,6));
-		SimplifyNumericalOperations s = new SimplifyNumericalOperations();
+		EvaluateNumericalOperations s = new EvaluateNumericalOperations();
 		try {
 			ExpressionNode result = s.Visit(unaryAddition);
 			assertTrue(result.getClass() == NumberNode.class);
@@ -265,7 +263,7 @@ public class TestSimplifyNumericalOperations {
 		UnaryNode unaryNode2 = new UnaryNode(new NumberNode(2));
 
 		ExpressionNode unaryAddition = new AdditionNode(unaryNode, unaryNode2);
-		SimplifyNumericalOperations s = new SimplifyNumericalOperations();
+		EvaluateNumericalOperations s = new EvaluateNumericalOperations();
 		try {
 			ExpressionNode result = s.Visit(unaryAddition);
 			assertTrue(result.getClass() == NumberNode.class);
@@ -284,7 +282,7 @@ public class TestSimplifyNumericalOperations {
 		UnaryNode unaryNode2 = new UnaryNode(new VariableNode("x"));
 
 		ExpressionNode unaryAddition = new AdditionNode(unaryNode, unaryNode2);
-		SimplifyNumericalOperations s = new SimplifyNumericalOperations();
+		EvaluateNumericalOperations s = new EvaluateNumericalOperations();
 		try {
 			ExpressionNode result = s.Visit(unaryAddition);
 			assertTrue(result.getClass() == AdditionNode.class);
@@ -304,7 +302,7 @@ public class TestSimplifyNumericalOperations {
 		UnaryNode unaryNode2 = new UnaryNode(new NumberNode(2));
 
 		ExpressionNode unarySubtraction = new SubtractionNode(unaryNode, unaryNode2);
-		SimplifyNumericalOperations s = new SimplifyNumericalOperations();
+		EvaluateNumericalOperations s = new EvaluateNumericalOperations();
 		try {
 			ExpressionNode result = s.Visit(unarySubtraction);
 			System.out.println(result);
@@ -325,7 +323,7 @@ public class TestSimplifyNumericalOperations {
 		UnaryNode unaryNode2 = new UnaryNode(new NumberNode(2));
 
 		ExpressionNode unaryMultiplication = new MultiplicationNode(unaryNode, unaryNode2);
-		SimplifyNumericalOperations s = new SimplifyNumericalOperations();
+		EvaluateNumericalOperations s = new EvaluateNumericalOperations();
 		try {
 			ExpressionNode result = s.Visit(unaryMultiplication);
 			assertTrue(result.getClass() == NumberNode.class);
@@ -345,7 +343,7 @@ public class TestSimplifyNumericalOperations {
 		UnaryNode unaryNode2 = new UnaryNode(new NumberNode(2));
 
 		ExpressionNode unaryDivisionNode = new DivisionNode(unaryNode, unaryNode2);
-		SimplifyNumericalOperations s = new SimplifyNumericalOperations();
+		EvaluateNumericalOperations s = new EvaluateNumericalOperations();
 		try {
 			ExpressionNode result = s.Visit(unaryDivisionNode);
 			assertTrue(result.getClass() == NumberNode.class);
@@ -367,7 +365,7 @@ public class TestSimplifyNumericalOperations {
 		
 		ExpressionNode rv = new RuleVariableNode("x");
 
-		SimplifyNumericalOperations s = new SimplifyNumericalOperations();
+		EvaluateNumericalOperations s = new EvaluateNumericalOperations();
 		assertThrows(Exception.class, () -> s.Visit(rv));
 	}
 	

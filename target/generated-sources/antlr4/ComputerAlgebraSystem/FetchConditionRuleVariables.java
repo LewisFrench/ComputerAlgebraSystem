@@ -52,38 +52,38 @@ public class FetchConditionRuleVariables extends ConditionVisitor<ExpressionNode
 
 	@Override
 	public ExpressionNode Visit(PowerNode node) throws Exception {
-		ExpressionNode left = Visit(node.Left);
-		ExpressionNode right = Visit(node.Right);
+		ExpressionNode left = Visit(node.getLeft());
+		ExpressionNode right = Visit(node.getRight());
 
 		return new PowerNode(left, right);
 	}
 
 	@Override
 	public ExpressionNode Visit(AdditionNode node) throws Exception {
-		ExpressionNode left = Visit(node.Left);
-		ExpressionNode right = Visit(node.Right);
+		ExpressionNode left = Visit(node.getLeft());
+		ExpressionNode right = Visit(node.getRight());
 
 		return new AdditionNode(left, right);
 	}
 
 	@Override
 	public ExpressionNode Visit(SubtractionNode node) throws Exception {
-		ExpressionNode left = Visit(node.Left);
-		ExpressionNode right = Visit(node.Right);
+		ExpressionNode left = Visit(node.getLeft());
+		ExpressionNode right = Visit(node.getRight());
 		return new SubtractionNode(left, right);
 	}
 
 	@Override
 	public ExpressionNode Visit(MultiplicationNode node) throws Exception {
-		ExpressionNode left = Visit(node.Left);
-		ExpressionNode right = Visit(node.Right);
+		ExpressionNode left = Visit(node.getLeft());
+		ExpressionNode right = Visit(node.getRight());
 		return new MultiplicationNode(left, right);
 	}
 
 	@Override
 	public ExpressionNode Visit(DivisionNode node) throws Exception {
-		ExpressionNode left = Visit(node.Left);
-		ExpressionNode right = Visit(node.Right);
+		ExpressionNode left = Visit(node.getLeft());
+		ExpressionNode right = Visit(node.getRight());
 
 		return new DivisionNode(left, right);
 	}

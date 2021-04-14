@@ -1,21 +1,20 @@
 package ComputerAlgebraSystem;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 
-public class SimplifyConditionNumericalExpressions extends ConditionVisitor<ExpressionNode> {
+public class EvaluateConditionNumericalExpressions extends ConditionVisitor<ExpressionNode> {
 
 	@Override
 	public ExpressionNode Visit(ConditionAndNode node) throws Exception {
-		ExpressionNode left = Visit(node.left);
-		ExpressionNode right = Visit(node.right);
+		ExpressionNode left = Visit(node.getLeft());
+		ExpressionNode right = Visit(node.getRight());
 		return new ConditionAndNode(left, right);
 	}
 
 	@Override
 	public ExpressionNode Visit(ConditionOrNode node) throws Exception {
-		ExpressionNode left = Visit(node.left);
-		ExpressionNode right = Visit(node.right);
+		ExpressionNode left = Visit(node.getLeft());
+		ExpressionNode right = Visit(node.getRight());
 		return new ConditionOrNode(left, right);
 	}
 
@@ -26,8 +25,8 @@ public class SimplifyConditionNumericalExpressions extends ConditionVisitor<Expr
 
 	@Override
 	public ExpressionNode Visit(RelopNode node) throws Exception {
-		ExpressionNode left = Visit(node.left);
-		ExpressionNode right = Visit(node.right);
+		ExpressionNode left = Visit(node.getLeft());
+		ExpressionNode right = Visit(node.getRight());
 		return new RelopNode(left, right, node.relop, node.relopText);
 	}
 
@@ -43,8 +42,8 @@ public class SimplifyConditionNumericalExpressions extends ConditionVisitor<Expr
 	}
 	@Override
 	public ExpressionNode Visit(PowerNode node) throws Exception {
-		ExpressionNode left = Visit(node.Left);
-		ExpressionNode right = Visit(node.Right);
+		ExpressionNode left = Visit(node.getLeft());
+		ExpressionNode right = Visit(node.getRight());
 
 		if (left instanceof NumberNode && right instanceof NumberNode) {
 			
@@ -54,8 +53,8 @@ public class SimplifyConditionNumericalExpressions extends ConditionVisitor<Expr
 	}
 	@Override
 	public ExpressionNode Visit(AdditionNode node) throws Exception {
-		ExpressionNode left = Visit(node.Left);
-		ExpressionNode right = Visit(node.Right);
+		ExpressionNode left = Visit(node.getLeft());
+		ExpressionNode right = Visit(node.getRight());
 		if (left instanceof NumberNode && right instanceof NumberNode) {
 			return ((NumberNode)left).add((NumberNode)right);
 		}
@@ -64,8 +63,8 @@ public class SimplifyConditionNumericalExpressions extends ConditionVisitor<Expr
 
 	@Override
 	public ExpressionNode Visit(SubtractionNode node) throws Exception {
-		ExpressionNode left = Visit(node.Left);
-		ExpressionNode right = Visit(node.Right);
+		ExpressionNode left = Visit(node.getLeft());
+		ExpressionNode right = Visit(node.getRight());
 		if (left instanceof NumberNode && right instanceof NumberNode) {
 			return ((NumberNode)left).subtract((NumberNode)right);
 		}
@@ -74,8 +73,8 @@ public class SimplifyConditionNumericalExpressions extends ConditionVisitor<Expr
 
 	@Override
 	public ExpressionNode Visit(MultiplicationNode node) throws Exception {
-		ExpressionNode left = Visit(node.Left);
-		ExpressionNode right = Visit(node.Right);
+		ExpressionNode left = Visit(node.getLeft());
+		ExpressionNode right = Visit(node.getRight());
 		if (left instanceof NumberNode && right instanceof NumberNode) {
 			return ((NumberNode)left).multiply((NumberNode)right);
 		}
@@ -84,8 +83,8 @@ public class SimplifyConditionNumericalExpressions extends ConditionVisitor<Expr
 
 	@Override
 	public ExpressionNode Visit(DivisionNode node) throws Exception {
-		ExpressionNode left = Visit(node.Left);
-		ExpressionNode right = Visit(node.Right);
+		ExpressionNode left = Visit(node.getLeft());
+		ExpressionNode right = Visit(node.getRight());
 		// Divide by zero error
 		if (right instanceof NumberNode) {
 			if (((NumberNode)right).compareTo(new NumberNode(0)) == 0) {

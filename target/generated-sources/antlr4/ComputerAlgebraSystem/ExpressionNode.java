@@ -1,6 +1,5 @@
 package ComputerAlgebraSystem;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -14,24 +13,24 @@ public abstract class ExpressionNode {
 
 abstract class OperationNode extends ExpressionNode {
 
-	public ExpressionNode Left;
-	public ExpressionNode Right;
+	public ExpressionNode left;
+	public ExpressionNode right;
 	public String operator;
 
 	public ExpressionNode getLeft() {
-		return Left;
+		return left;
 	}
 
 	public ExpressionNode getRight() {
-		return Right;
+		return right;
 	}
 }
 
 class PowerNode extends OperationNode {
 
 	public PowerNode(ExpressionNode Left, ExpressionNode Right) {
-		this.Left = Left;
-		this.Right = Right;
+		this.left = Left;
+		this.right = Right;
 
 	}
 
@@ -43,8 +42,8 @@ class PowerNode extends OperationNode {
 class AdditionNode extends OperationNode {
 
 	public AdditionNode(ExpressionNode Left, ExpressionNode Right) {
-		this.Left = Left;
-		this.Right = Right;
+		this.left = Left;
+		this.right = Right;
 
 	}
 
@@ -55,8 +54,8 @@ class AdditionNode extends OperationNode {
 
 class SubtractionNode extends OperationNode {
 	public SubtractionNode(ExpressionNode Left, ExpressionNode Right) {
-		this.Left = Left;
-		this.Right = Right;
+		this.left = Left;
+		this.right = Right;
 
 	}
 
@@ -67,8 +66,8 @@ class SubtractionNode extends OperationNode {
 
 class MultiplicationNode extends OperationNode {
 	public MultiplicationNode(ExpressionNode Left, ExpressionNode Right) {
-		this.Left = Left;
-		this.Right = Right;
+		this.left = Left;
+		this.right = Right;
 
 	}
 
@@ -79,8 +78,8 @@ class MultiplicationNode extends OperationNode {
 
 class DivisionNode extends OperationNode {
 	public DivisionNode(ExpressionNode Left, ExpressionNode Right) {
-		this.Left = Left;
-		this.Right = Right;
+		this.left = Left;
+		this.right = Right;
 
 	}
 
@@ -128,7 +127,7 @@ class NumberNode extends ExpressionNode {
 		if (Math.abs(denominator) == 0) {
 			throw new ArithmeticException("Attempted to create a rational with a denominator of 0");
 		}
-		
+
 		if (denominator < 0) {
 			numerator *= -1;
 			denominator *= -1;
@@ -155,8 +154,8 @@ class NumberNode extends ExpressionNode {
 	}
 
 	public int compareTo(NumberNode n) {
-		long lhs = this.numerator * n.denominator;
-		long rhs = this.denominator * n.numerator;
+		long lhs = this.numerator * n.getDenominator();
+		long rhs = this.denominator * n.getNumerator();
 		if (lhs < rhs) {
 			return -1;
 		} else if (lhs > rhs) {
@@ -171,34 +170,35 @@ class NumberNode extends ExpressionNode {
 	}
 
 	public NumberNode add(NumberNode node) {
-		return new NumberNode((this.numerator * node.denominator) + (this.denominator * node.numerator),
-				this.denominator * node.denominator);
+		return new NumberNode((this.numerator * node.getDenominator()) + (this.denominator * node.getNumerator()),
+				this.denominator * node.getDenominator());
 	}
 
 	public NumberNode subtract(NumberNode node) {
-		return new NumberNode(this.numerator * node.denominator - this.denominator * node.numerator,
-				this.denominator * node.denominator);
+		return new NumberNode(this.numerator * node.getDenominator() - this.denominator * node.getNumerator(),
+				this.denominator * node.getDenominator());
 	}
 
 	public NumberNode multiply(NumberNode node) {
-		System.out.println("multipying " + this.toString() + "  *  " + node.toString());
-		return new NumberNode(this.numerator * node.numerator, this.denominator * node.denominator);
+		return new NumberNode(this.numerator * node.getNumerator(), this.denominator * node.getDenominator());
 	}
 
 	public NumberNode divide(NumberNode node) {
 		return this.multiply(node.getReciprocal());
 	}
-	
+
 	public ExpressionNode exponentiate(NumberNode node) {
 		if (node.isInteger()) {
-			
+
 			long exponent = node.getNumerator();
 			if (node.getNumerator() < 0) {
 				// Here
-			
-				return new NumberNode(LongMath.raiseToPowerLong(this.getDenominator(), Math.abs(exponent)) , LongMath.raiseToPowerLong(this.getNumerator(), Math.abs(exponent)));
+
+				return new NumberNode(LongMath.raiseToPowerLong(this.getDenominator(), Math.abs(exponent)),
+						LongMath.raiseToPowerLong(this.getNumerator(), Math.abs(exponent)));
 			} else {
-				return new NumberNode(LongMath.raiseToPowerLong(this.getNumerator(), exponent) , LongMath.raiseToPowerLong(this.getDenominator(), exponent));
+				return new NumberNode(LongMath.raiseToPowerLong(this.getNumerator(), exponent),
+						LongMath.raiseToPowerLong(this.getDenominator(), exponent));
 			}
 		}
 		return new PowerNode(this, node);
@@ -260,6 +260,12 @@ class ConditionOperationNode extends ExpressionNode {
 	ExpressionNode left;
 	ExpressionNode right;
 
+	public ExpressionNode getLeft() {
+		return this.left;
+	}
+	public ExpressionNode getRight() {
+		return this.right;
+	}
 }
 
 class ConditionAndNode extends ConditionOperationNode {
@@ -290,13 +296,20 @@ class RelopNode extends ExpressionNode {
 	int relop;
 	String relopText;
 
+	
 	public RelopNode(ExpressionNode left, ExpressionNode right, int relop, String relopText) {
 		this.left = left;
 		this.right = right;
 		this.relop = relop;
 		this.relopText = relopText;
 	}
-
+	public ExpressionNode getLeft() {
+		return this.left;
+	}
+	public ExpressionNode getRight() {
+		return this.right;
+	}
+	
 	public String toString() {
 		return left.toString() + relopText + right.toString();
 	}

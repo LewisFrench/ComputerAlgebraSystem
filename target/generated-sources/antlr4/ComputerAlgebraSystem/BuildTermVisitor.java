@@ -2,7 +2,6 @@ package ComputerAlgebraSystem;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import Algebra.AlgebraBaseVisitor;
 import Algebra.AlgebraLexer;
@@ -19,28 +18,28 @@ public class BuildTermVisitor extends AlgebraBaseVisitor<ExpressionNode> {
 	@Override
 	public ExpressionNode visitDecimal(AlgebraParser.DecimalContext context) {
 		BigDecimal b = new BigDecimal(context.getText());
-		
+
 		String formattedDecimal = b.stripTrailingZeros().toPlainString();
-		if (!(formattedDecimal.contains("."))){
+		if (!(formattedDecimal.contains("."))) {
 			return new NumberNode(Long.valueOf(formattedDecimal));
 		}
 
-		String[] splitByDecimalPoint = formattedDecimal.split("\\.");		
+		String[] splitByDecimalPoint = formattedDecimal.split("\\.");
 		long numerator = Long.valueOf(formattedDecimal.replaceAll("\\.", ""));
-		
+
 		int numberOfDecimalPlaces = splitByDecimalPoint[1].length();
 		long denominator = 1;
-		for (int i = 0; i < numberOfDecimalPlaces ; i ++) {
+		for (int i = 0; i < numberOfDecimalPlaces; i++) {
 			denominator *= 10;
 		}
 		return new NumberNode(numerator, denominator);
 	}
-	
+
 	@Override
 	public ExpressionNode visitInteger(AlgebraParser.IntegerContext context) {
 		return new NumberNode(Long.valueOf(context.getText()));
 	}
-	
+
 	@Override
 	public ExpressionNode visitRational(AlgebraParser.RationalContext context) {
 		String[] split = context.getText().split("/");
@@ -48,40 +47,34 @@ public class BuildTermVisitor extends AlgebraBaseVisitor<ExpressionNode> {
 		long denominator = Long.valueOf(split[1]);
 		return new NumberNode(numerator, denominator);
 	}
-	
-	
+
 	@Override
 	public ExpressionNode visitVariable(AlgebraParser.VariableContext context) {
-
 		VariableNode node = new VariableNode(context.getText());
 		return node;
 	}
 
 	@Override
 	public ExpressionNode visitParenthetical(AlgebraParser.ParentheticalContext context) {
-
-		return (visit(context.expression()));
+		return visit(context.expression());
 	}
 
 	@Override
 	public ExpressionNode visitUnaryExpression(AlgebraParser.UnaryExpressionContext context) {
-		System.out.println("\nVisiting Unary for some reason");
 		ExpressionNode node = visit(context.expression());
-		
+
 		switch (context.op.getType()) {
 		case AlgebraLexer.OP_ADD:
 			return node;
-			
 
 		case AlgebraLexer.OP_SUB:
 			if (node instanceof NumberNode) {
-				return new NumberNode(((NumberNode)node).getNumerator()* -1 , ((NumberNode)node).getDenominator());
+				return new NumberNode(((NumberNode) node).getNumerator() * -1, ((NumberNode) node).getDenominator());
 			}
 			return new UnaryNode(node);
-			
 
-		default:
-			break;
+//		default:
+//			break;
 		}
 		return node;
 	}
@@ -115,9 +108,6 @@ public class BuildTermVisitor extends AlgebraBaseVisitor<ExpressionNode> {
 
 		}
 
-//		node.Left = visit(context.left);
-//		node.Right = visit(context.right);
-
 		return node;
 	}
 
@@ -128,8 +118,7 @@ public class BuildTermVisitor extends AlgebraBaseVisitor<ExpressionNode> {
 			arguments.add(visit(context.expression(i)));
 		}
 
-		FunctionNode node = new FunctionNode(context.func.getText(), arguments);
-		return node;
+		return new FunctionNode(context.func.getText(), arguments);
 	}
 
 }

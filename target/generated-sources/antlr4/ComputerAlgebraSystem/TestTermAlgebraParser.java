@@ -5,8 +5,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.math.BigDecimal;
-
 import org.antlr.v4.runtime.misc.ParseCancellationException;
 import org.junit.Test;
 
@@ -188,7 +186,7 @@ public class TestTermAlgebraParser {
 			ExpressionNode left = (((AdditionNode)n).getLeft());
 			ExpressionNode right = (((AdditionNode)n).getRight());
 			assertTrue(left instanceof VariableNode);
-			assertTrue(((AdditionNode)n).Right instanceof NumberNode);
+			assertTrue(((AdditionNode)n).getRight() instanceof NumberNode);
 			assertEquals(((VariableNode)left).getValue(), "a");
 			assertTrue(((NumberNode) right).getNumerator() == 1);
 			assertTrue(((NumberNode) right).getDenominator() == 1);
@@ -207,7 +205,7 @@ public class TestTermAlgebraParser {
 			ExpressionNode left = (((SubtractionNode)n).getLeft());
 			ExpressionNode right = (((SubtractionNode)n).getRight());
 			assertTrue(left instanceof VariableNode);
-			assertTrue(((SubtractionNode)n).Right instanceof NumberNode);
+			assertTrue(((SubtractionNode)n).getRight() instanceof NumberNode);
 			assertEquals(((VariableNode)left).getValue(), "a");
 			assertTrue(((NumberNode) right).getNumerator() == 4);
 			assertTrue(((NumberNode) right).getDenominator() == 3);
@@ -282,7 +280,7 @@ public class TestTermAlgebraParser {
 			ExpressionNode left = (((MultiplicationNode)n).getLeft());
 			ExpressionNode right = (((MultiplicationNode)n).getRight());
 			assertTrue(left instanceof VariableNode);
-			assertTrue(((MultiplicationNode)n).Right instanceof NumberNode);
+			assertTrue(((MultiplicationNode)n).getRight() instanceof NumberNode);
 			assertEquals(((VariableNode)left).getValue(), "a");
 			assertTrue(right instanceof NumberNode);
 			System.out.println(n.toString());
@@ -303,7 +301,7 @@ public class TestTermAlgebraParser {
 			ExpressionNode left = (((DivisionNode)n).getLeft());
 			ExpressionNode right = (((DivisionNode)n).getRight());
 			assertTrue(left instanceof VariableNode);
-			assertTrue(((DivisionNode)n).Right instanceof NumberNode);
+			assertTrue(((DivisionNode)n).getRight() instanceof NumberNode);
 			assertEquals(((VariableNode)left).getValue(), "a");
 			assertTrue(((NumberNode) right).getNumerator() == 1);
 			assertTrue(((NumberNode) right).getDenominator() == 1);
@@ -321,7 +319,7 @@ public class TestTermAlgebraParser {
 			ExpressionNode left = (((PowerNode)n).getLeft());
 			ExpressionNode right = (((PowerNode)n).getRight());
 			assertTrue(left instanceof VariableNode);
-			assertTrue(((PowerNode)n).Right instanceof NumberNode);
+			assertTrue(((PowerNode)n).getRight() instanceof NumberNode);
 			assertEquals(((VariableNode)left).getValue(), "a");
 			assertTrue(((NumberNode) right).getNumerator() == 1);
 			assertTrue(((NumberNode) right).getDenominator() == 1);

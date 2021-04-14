@@ -5,8 +5,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.math.BigDecimal;
-
 import org.antlr.v4.runtime.misc.ParseCancellationException;
 import org.junit.Test;
 
@@ -213,7 +211,7 @@ public class TestRuleAlgebraParser {
 			assertTrue(result.conditionsNode == null);
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			fail();
 		}
 	}
 
@@ -229,7 +227,7 @@ public class TestRuleAlgebraParser {
 			assertTrue(result.conditionsNode == null);
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			fail();
 		}
 	}
 
@@ -245,7 +243,7 @@ public class TestRuleAlgebraParser {
 			assertTrue(result.conditionsNode == null);
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			fail();
 		}
 	}
 
@@ -260,7 +258,7 @@ public class TestRuleAlgebraParser {
 			assertTrue(result.conditionsNode == null);
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			fail();
 		}
 	}
 	
@@ -277,7 +275,7 @@ public class TestRuleAlgebraParser {
 			assertTrue(result.conditionsNode == null);
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			fail();
 		}
 	}
 	
@@ -293,7 +291,7 @@ public class TestRuleAlgebraParser {
 			assertTrue(result.conditionsNode == null);
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			fail();
 		}
 	}
 	@Test
@@ -308,7 +306,7 @@ public class TestRuleAlgebraParser {
 			assertTrue(result.conditionsNode == null);
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			fail();
 		}
 	}
 	
@@ -324,7 +322,7 @@ public class TestRuleAlgebraParser {
 			assertTrue(result.conditionsNode == null);
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			fail();
 		}
 	}
 	
@@ -348,7 +346,7 @@ public class TestRuleAlgebraParser {
 			assertTrue(result.conditionsNode == null);
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			fail();
 		}
 	}
 
@@ -369,7 +367,7 @@ public class TestRuleAlgebraParser {
 			assertTrue(result.rhsNode instanceof SubtractionNode);
 			assertTrue(result.conditionsNode == null);
 		} catch (Exception e) {
-			e.printStackTrace();
+			fail();
 		}
 	}
 
@@ -384,7 +382,7 @@ public class TestRuleAlgebraParser {
 			assertTrue(result.conditionsNode == null);
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			fail();
 		}
 	}
 
@@ -399,7 +397,7 @@ public class TestRuleAlgebraParser {
 			assertTrue(result.conditionsNode == null);
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			fail();
 		}
 	}
 
@@ -414,7 +412,7 @@ public class TestRuleAlgebraParser {
 			assertTrue(result.conditionsNode == null);
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			fail();
 		}
 	}
 
@@ -429,7 +427,7 @@ public class TestRuleAlgebraParser {
 			assertTrue(result.conditionsNode == null);
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			fail();
 		}
 	}
 	
@@ -445,7 +443,7 @@ public class TestRuleAlgebraParser {
 			assertEquals(((RelopNode) result.conditionsNode).relopText, ">");
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			fail();
 		}
 	}
 	@Test
@@ -460,7 +458,7 @@ public class TestRuleAlgebraParser {
 			assertEquals(((RelopNode) result.conditionsNode).relopText, ">");
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			fail();
 		}
 	}
 	
@@ -475,7 +473,7 @@ public class TestRuleAlgebraParser {
 			assertEquals(((RelopNode) result.conditionsNode).relopText, ">");
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			fail();
 		}
 	}
 	
@@ -494,7 +492,7 @@ public class TestRuleAlgebraParser {
 			assertEquals(((RelopNode) result.conditionsNode).relopText, "==");
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			fail();
 		}
 	}
 
@@ -510,7 +508,7 @@ public class TestRuleAlgebraParser {
 			assertEquals(((RelopNode) result.conditionsNode).relopText, ">");
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			fail();
 		}
 	}
 
@@ -526,7 +524,7 @@ public class TestRuleAlgebraParser {
 			assertEquals(((RelopNode) result.conditionsNode).relopText, ">=");
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			fail();
 		}
 	}
 
@@ -542,7 +540,7 @@ public class TestRuleAlgebraParser {
 			assertEquals(((RelopNode) result.conditionsNode).relopText, "<");
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			fail();
 		}
 	}
 
@@ -558,7 +556,7 @@ public class TestRuleAlgebraParser {
 			assertEquals(((RelopNode) result.conditionsNode).relopText, "<=");
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			fail();
 		}
 	}
 
@@ -574,7 +572,7 @@ public class TestRuleAlgebraParser {
 			assertEquals(((RelopNode) result.conditionsNode).relopText, "==");
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			fail();
 		}
 	}
 
@@ -590,7 +588,7 @@ public class TestRuleAlgebraParser {
 			assertEquals(((RelopNode) result.conditionsNode).relopText, "!=");
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			fail();
 		}
 	}
 
@@ -606,7 +604,7 @@ public class TestRuleAlgebraParser {
 			assertTrue(((ConditionFunctionNode) result.conditionsNode).functionName.equals("_depends"));
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			fail();
 		}
 	}
 
@@ -622,7 +620,7 @@ public class TestRuleAlgebraParser {
 			assertEquals(((ConditionFunctionNode) result.conditionsNode).functionName, ("_is_literal"));
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			fail();
 		}
 	}
 
@@ -638,7 +636,7 @@ public class TestRuleAlgebraParser {
 			assertTrue(((ConditionFunctionNode) result.conditionsNode).functionName.equals("_is_number"));
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			fail();
 		}
 	}
 
@@ -654,7 +652,7 @@ public class TestRuleAlgebraParser {
 			assertTrue(((ConditionFunctionNode) result.conditionsNode).functionName.equals("_is_integer"));
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			fail();
 		}
 	}
 
@@ -667,7 +665,7 @@ public class TestRuleAlgebraParser {
 			assertTrue(result.conditionsNode instanceof ConditionOrNode);
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			fail();
 		}
 	}
 
@@ -680,7 +678,7 @@ public class TestRuleAlgebraParser {
 			assertTrue(result.conditionsNode instanceof ConditionAndNode);
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			fail();
 		}
 	}
 
@@ -693,7 +691,7 @@ public class TestRuleAlgebraParser {
 			assertTrue(result.conditionsNode instanceof NotNode);
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			fail();
 		}
 	}
 
@@ -706,7 +704,7 @@ public class TestRuleAlgebraParser {
 			assertTrue(result.conditionsNode instanceof RelopNode);
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			fail();
 		}
 	}
 
@@ -720,7 +718,7 @@ public class TestRuleAlgebraParser {
 			assertTrue(((RelopNode) result.conditionsNode).left instanceof AdditionNode);
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			fail();
 		}
 	}
 
@@ -734,7 +732,7 @@ public class TestRuleAlgebraParser {
 			assertTrue(((RelopNode) result.conditionsNode).left instanceof SubtractionNode);
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			fail();
 		}
 	}
 
@@ -748,7 +746,7 @@ public class TestRuleAlgebraParser {
 			assertTrue(((RelopNode) result.conditionsNode).left instanceof MultiplicationNode);
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			fail();
 		}
 	}
 
@@ -762,7 +760,7 @@ public class TestRuleAlgebraParser {
 			assertTrue(((RelopNode) result.conditionsNode).left instanceof DivisionNode);
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			fail();
 		}
 	}
 
@@ -776,7 +774,7 @@ public class TestRuleAlgebraParser {
 			assertTrue(((RelopNode) result.conditionsNode).left instanceof PowerNode);
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			fail();
 		}
 	}
 
@@ -791,7 +789,7 @@ public class TestRuleAlgebraParser {
 			assertTrue(((RelopNode) result.conditionsNode).left instanceof FunctionNode);
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			fail();
 		}
 	}
 
@@ -806,7 +804,7 @@ public class TestRuleAlgebraParser {
 			assertTrue(((RelopNode) result.conditionsNode).left instanceof RuleVariableNode);
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			fail();
 		}
 	}
 
@@ -819,7 +817,7 @@ public class TestRuleAlgebraParser {
 			assertTrue(result.conditionsNode instanceof RelopNode);
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			fail();
 		}
 	}
 

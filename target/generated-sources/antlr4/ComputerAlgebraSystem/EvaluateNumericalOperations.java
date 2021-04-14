@@ -1,15 +1,13 @@
 package ComputerAlgebraSystem;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.ArrayList;
 
-public class SimplifyNumericalOperations extends TermVisitor<ExpressionNode> {
+public class EvaluateNumericalOperations extends TermVisitor<ExpressionNode> {
 	
 	@Override
 	public ExpressionNode Visit(PowerNode node) throws Exception {
-		ExpressionNode left = Visit(node.Left);
-		ExpressionNode right = Visit(node.Right);
+		ExpressionNode left = Visit(node.getLeft());
+		ExpressionNode right = Visit(node.getRight());
 
 		if (left instanceof NumberNode && right instanceof NumberNode) {
 			return ((NumberNode)left).exponentiate((NumberNode)right);
@@ -18,8 +16,8 @@ public class SimplifyNumericalOperations extends TermVisitor<ExpressionNode> {
 	}
 	@Override
 	public ExpressionNode Visit(AdditionNode node) throws Exception {
-		ExpressionNode left = Visit(node.Left);
-		ExpressionNode right = Visit(node.Right);
+		ExpressionNode left = Visit(node.getLeft());
+		ExpressionNode right = Visit(node.getRight());
 		if (left instanceof NumberNode && right instanceof NumberNode) {
 			return ((NumberNode)left).add((NumberNode)right);
 		}
@@ -28,8 +26,8 @@ public class SimplifyNumericalOperations extends TermVisitor<ExpressionNode> {
 
 	@Override
 	public ExpressionNode Visit(SubtractionNode node) throws Exception {
-		ExpressionNode left = Visit(node.Left);
-		ExpressionNode right = Visit(node.Right);
+		ExpressionNode left = Visit(node.getLeft());
+		ExpressionNode right = Visit(node.getRight());
 		if (left instanceof NumberNode && right instanceof NumberNode) {
 			return ((NumberNode)left).subtract((NumberNode)right);
 		}
@@ -38,8 +36,8 @@ public class SimplifyNumericalOperations extends TermVisitor<ExpressionNode> {
 
 	@Override
 	public ExpressionNode Visit(MultiplicationNode node) throws Exception {
-		ExpressionNode left = Visit(node.Left);
-		ExpressionNode right = Visit(node.Right);
+		ExpressionNode left = Visit(node.getLeft());
+		ExpressionNode right = Visit(node.getRight());
 		if (left instanceof NumberNode && right instanceof NumberNode) {
 			return ((NumberNode)left).multiply((NumberNode)right);
 		}
@@ -48,8 +46,8 @@ public class SimplifyNumericalOperations extends TermVisitor<ExpressionNode> {
 
 	@Override
 	public ExpressionNode Visit(DivisionNode node) throws Exception {
-		ExpressionNode left = Visit(node.Left);
-		ExpressionNode right = Visit(node.Right);
+		ExpressionNode left = Visit(node.getLeft());
+		ExpressionNode right = Visit(node.getRight());
 		
 		// Divide by zero error
 		if (right instanceof NumberNode) {

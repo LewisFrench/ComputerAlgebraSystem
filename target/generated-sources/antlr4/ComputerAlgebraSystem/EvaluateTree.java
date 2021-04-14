@@ -1,6 +1,5 @@
 package ComputerAlgebraSystem;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 
 public class EvaluateTree extends AstComparator<Boolean> {
@@ -16,8 +15,8 @@ public class EvaluateTree extends AstComparator<Boolean> {
 	@Override
 	public Boolean Visit(PowerNode lhsNode, ExpressionNode node) throws Exception {
 		if (lhsNode.getClass() == node.getClass()) {
-			boolean l = Visit(lhsNode.Left, ((PowerNode) node).Left);
-			boolean r = Visit(lhsNode.Right, ((PowerNode) node).Right);
+			boolean l = Visit(lhsNode.getLeft(), ((PowerNode) node).getLeft());
+			boolean r = Visit(lhsNode.getRight(), ((PowerNode) node).getRight());
 			return l && r;
 		}
 		return false;
@@ -26,8 +25,8 @@ public class EvaluateTree extends AstComparator<Boolean> {
 	@Override
 	public Boolean Visit(AdditionNode lhsNode, ExpressionNode node) throws Exception {
 		if (lhsNode.getClass() == node.getClass()) {
-			boolean l = Visit(lhsNode.Left, ((AdditionNode) node).Left);
-			boolean r = Visit(lhsNode.Right, ((AdditionNode) node).Right);
+			boolean l = Visit(lhsNode.getLeft(), ((AdditionNode) node).getLeft());
+			boolean r = Visit(lhsNode.getRight(), ((AdditionNode) node).getRight());
 			return l && r;
 		}
 		return false;
@@ -36,8 +35,8 @@ public class EvaluateTree extends AstComparator<Boolean> {
 	@Override
 	public Boolean Visit(SubtractionNode lhsNode, ExpressionNode node) throws Exception {
 		if (lhsNode.getClass() == node.getClass()) {
-			boolean l = Visit(lhsNode.Left, ((SubtractionNode) node).Left);
-			boolean r = Visit(lhsNode.Right, ((SubtractionNode) node).Right);
+			boolean l = Visit(lhsNode.getLeft(), ((SubtractionNode) node).getLeft());
+			boolean r = Visit(lhsNode.getRight(), ((SubtractionNode) node).getRight());
 			return l && r;
 		}
 		return false;
@@ -46,8 +45,8 @@ public class EvaluateTree extends AstComparator<Boolean> {
 	@Override
 	public Boolean Visit(MultiplicationNode lhsNode, ExpressionNode node) throws Exception {
 		if (lhsNode.getClass() == node.getClass()) {
-			boolean l = Visit(lhsNode.Left, ((MultiplicationNode) node).Left);
-			boolean r = Visit(lhsNode.Right, ((MultiplicationNode) node).Right);
+			boolean l = Visit(lhsNode.getLeft(), ((MultiplicationNode) node).getLeft());
+			boolean r = Visit(lhsNode.getRight(), ((MultiplicationNode) node).getRight());
 			return l && r;
 		}
 		return false;
@@ -56,8 +55,8 @@ public class EvaluateTree extends AstComparator<Boolean> {
 	@Override
 	public Boolean Visit(DivisionNode lhsNode, ExpressionNode node) throws Exception {
 		if (lhsNode.getClass() == node.getClass()) {
-			boolean l = Visit(lhsNode.Left, ((DivisionNode) node).Left);
-			boolean r = Visit(lhsNode.Right, ((DivisionNode) node).Right);
+			boolean l = Visit(lhsNode.getLeft(), ((DivisionNode) node).getLeft());
+			boolean r = Visit(lhsNode.getRight(), ((DivisionNode) node).getRight());
 			return l && r;
 		}
 		return false;

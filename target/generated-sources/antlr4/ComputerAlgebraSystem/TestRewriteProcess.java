@@ -2,7 +2,6 @@ package ComputerAlgebraSystem;
 
 import static org.junit.Assert.*;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 
 import org.junit.Test;
@@ -116,8 +115,8 @@ public class TestRewriteProcess {
 			RewriteProcess rewrite = new RewriteProcess(rules, ruleApplicationLimit);
 			ExpressionNode result = rewrite.Visit(term);
 			assertTrue(result.getClass() == AdditionNode.class);
-			assertTrue(((AdditionNode) result).Left instanceof VariableNode);
-			assertTrue(((AdditionNode) result).Right instanceof VariableNode);
+			assertTrue(((AdditionNode) result).getLeft() instanceof VariableNode);
+			assertTrue(((AdditionNode) result).getRight() instanceof VariableNode);
 		} catch (Exception e) {
 			System.out.println(e.getStackTrace());
 		}
@@ -136,8 +135,8 @@ public class TestRewriteProcess {
 			RewriteProcess rewrite = new RewriteProcess(rules, ruleApplicationLimit);
 			ExpressionNode result = rewrite.Visit(term);
 			assertTrue(result.getClass() == SubtractionNode.class);
-			assertTrue(((SubtractionNode) result).Left instanceof VariableNode);
-			assertTrue(((SubtractionNode) result).Right instanceof VariableNode);
+			assertTrue(((SubtractionNode) result).getLeft() instanceof VariableNode);
+			assertTrue(((SubtractionNode) result).getRight() instanceof VariableNode);
 		} catch (Exception e) {
 			System.out.println(e.getStackTrace());
 		}
@@ -156,8 +155,8 @@ public class TestRewriteProcess {
 			RewriteProcess rewrite = new RewriteProcess(rules, ruleApplicationLimit);
 			ExpressionNode result = rewrite.Visit(term);
 			assertTrue(result.getClass() == MultiplicationNode.class);
-			assertTrue(((MultiplicationNode) result).Left instanceof VariableNode);
-			assertTrue(((MultiplicationNode) result).Right instanceof VariableNode);
+			assertTrue(((MultiplicationNode) result).getLeft() instanceof VariableNode);
+			assertTrue(((MultiplicationNode) result).getRight() instanceof VariableNode);
 		} catch (Exception e) {
 			System.out.println(e.getStackTrace());
 		}
@@ -176,8 +175,8 @@ public class TestRewriteProcess {
 			RewriteProcess rewrite = new RewriteProcess(rules, ruleApplicationLimit);
 			ExpressionNode result = rewrite.Visit(term);
 			assertTrue(result.getClass() == DivisionNode.class);
-			assertTrue(((DivisionNode) result).Left instanceof VariableNode);
-			assertTrue(((DivisionNode) result).Right instanceof VariableNode);
+			assertTrue(((DivisionNode) result).getLeft() instanceof VariableNode);
+			assertTrue(((DivisionNode) result).getRight() instanceof VariableNode);
 		} catch (Exception e) {
 			System.out.println(e.getStackTrace());
 		}
@@ -196,8 +195,8 @@ public class TestRewriteProcess {
 			RewriteProcess rewrite = new RewriteProcess(rules, ruleApplicationLimit);
 			ExpressionNode result = rewrite.Visit(term);
 			assertTrue(result.getClass() == PowerNode.class);
-			assertTrue(((PowerNode) result).Left instanceof VariableNode);
-			assertTrue(((PowerNode) result).Right instanceof VariableNode);
+			assertTrue(((PowerNode) result).getLeft() instanceof VariableNode);
+			assertTrue(((PowerNode) result).getRight() instanceof VariableNode);
 		} catch (Exception e) {
 			System.out.println(e.getStackTrace());
 		}

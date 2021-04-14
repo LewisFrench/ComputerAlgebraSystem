@@ -7,61 +7,51 @@ public class RewriteProcess extends TermVisitor<ExpressionNode> {
 	ArrayList<Rule> rules;
 	int ruleApplicationLimit;
 	int ruleApplicationCount = 0;
-
+	int nodeVisitCount = 0;
 	public RewriteProcess(ArrayList<Rule> ruleSet, int ruleApplicationLimit) {
 		rules = ruleSet;
-		this.ruleApplicationLimit = ruleApplicationLimit;
+		this.ruleApplicationLimit = Integer.MAX_VALUE;
 	}
 
 	@Override
 	public ExpressionNode Visit(PowerNode node) throws Exception {
-		ExpressionNode visitedLeft = (Visit(node.Left));
-		ExpressionNode visitedRight = (Visit(node.Right));
+		ExpressionNode visitedLeft = (Visit(node.getLeft()));
+		ExpressionNode visitedRight = (Visit(node.getRight()));
 
 		return rewrite(new PowerNode(visitedLeft, visitedRight));
 	}
 
 	@Override
 	public ExpressionNode Visit(AdditionNode node) throws Exception {
-		ExpressionNode visitedLeft = (Visit(node.Left));
-		ExpressionNode visitedRight = (Visit(node.Right));
+		ExpressionNode visitedLeft = (Visit(node.getLeft()));
+		ExpressionNode visitedRight = (Visit(node.getRight()));
 
 		return rewrite(new AdditionNode(visitedLeft, visitedRight));
 	}
 
 	@Override
 	public ExpressionNode Visit(SubtractionNode node) throws Exception {
-		ExpressionNode visitedLeft = (Visit(node.Left));
-		ExpressionNode visitedRight = (Visit(node.Right));
+		ExpressionNode visitedLeft = (Visit(node.getLeft()));
+		ExpressionNode visitedRight = (Visit(node.getRight()));
 
 		return rewrite(new SubtractionNode(visitedLeft, visitedRight));
 	}
 
 	@Override
 	public ExpressionNode Visit(MultiplicationNode node) throws Exception {
-		ExpressionNode visitedLeft = (Visit(node.Left));
-		ExpressionNode visitedRight = (Visit(node.Right));
-		node.Left = visitedLeft;
-		node.Right = visitedRight;
+		ExpressionNode visitedLeft = (Visit(node.getLeft()));
+		ExpressionNode visitedRight = (Visit(node.getRight()));
 
 		return rewrite(new MultiplicationNode(visitedLeft, visitedRight));
 	}
 
 	@Override
 	public ExpressionNode Visit(DivisionNode node) throws Exception {
-		ExpressionNode visitedLeft = (Visit(node.Left));
-		ExpressionNode visitedRight = (Visit(node.Right));
-		node.Left = visitedLeft;
-		node.Right = visitedRight;
+		ExpressionNode visitedLeft = (Visit(node.getLeft()));
+		ExpressionNode visitedRight = (Visit(node.getRight()));
 
 		return rewrite(new DivisionNode(visitedLeft, visitedRight));
 	}
-
-//	@Override
-//	public ExpressionNode Visit(ParentheticalNode node) throws Exception {
-//
-//		return rewrite(new ParentheticalNode(Visit(node.innerNode)));
-//	}
 
 	@Override
 	public ExpressionNode Visit(NumberNode node) throws Exception {
@@ -92,55 +82,65 @@ public class RewriteProcess extends TermVisitor<ExpressionNode> {
 	}
 
 	public ExpressionNode rewrite(ExpressionNode node) throws Exception {
+		this.nodeVisitCount++;
+		System.out.println("Nodes Visitied count: " + this.nodeVisitCount);
 		if (!(this.ruleApplicationLimit > this.ruleApplicationCount)) {
 			return node;
 		}
 		EvaluateTree argumentEvaluator;
 		if (rules != null) {
-			
+
 			for (Rule r : rules) {
-				boolean conditionsHold = false;
-				argumentEvaluator = new EvaluateTree();
+				try {
+					boolean conditionsHold = false;
+					argumentEvaluator = new EvaluateTree();
 
-				// compare rule to redex
-				boolean ruleMatches = argumentEvaluator.Visit(r.lhsNode, node);
-				if (ruleMatches) {
-					
-					// determine if rule repeated rule variables are valid
-					boolean validArguments = argumentsValid(argumentEvaluator);
-					if (validArguments) {
-						
-						// Construct linkedhashmap of rule varluabels and their corresponding values
-						LinkedHashMap<String, ExpressionNode> newRuleVariables = new LinkedHashMap<String, ExpressionNode>();
-						for (int i = 0; i < argumentEvaluator.variables.size(); i++) {
-							newRuleVariables.put(argumentEvaluator.variables.get(i),
-									argumentEvaluator.arguments.get(i));
+					// compare rule to redex
+					boolean ruleMatches = argumentEvaluator.Visit(r.lhsNode, node);
+					if (ruleMatches) {
+
+						// determine if rule repeated rule variables are valid
+						boolean validArguments = argumentsValid(argumentEvaluator);
+						if (validArguments) {
+
+							// Construct linkedhashmap of rule varluabels and their corresponding values
+							LinkedHashMap<String, ExpressionNode> newRuleVariables = new LinkedHashMap<String, ExpressionNode>();
+							for (int i = 0; i < argumentEvaluator.variables.size(); i++) {
+								newRuleVariables.put(argumentEvaluator.variables.get(i),
+										argumentEvaluator.arguments.get(i));
+							}
+
+							// if rule has conditions, determine if they hold
+							if (r.conditionsNode != null) {
+								ExpressionNode substitutedConditions = new SubstituteConditionRuleVariables(
+										newRuleVariables).Visit(r.conditionsNode);
+
+								ExpressionNode simplified = new EvaluateConditionNumericalExpressions()
+										.Visit(substitutedConditions);
+
+								conditionsHold = new EvaluateConditionsVisitor().Visit(simplified);
+
+							}
+							// rewrite the subtree with the substituted RHS of the rule
+							if (conditionsHold || r.conditionsNode == null) {
+								this.ruleApplicationCount++;
+								ExpressionNode substituted = new SubstituteRuleVariables(newRuleVariables)
+										.Visit(r.rhsNode);
+								ExpressionNode solved = new EvaluateNumericalOperations().Visit(substituted);
+								return Visit(solved);
+							}
+
 						}
-
-						// if rule has conditions, determine if they hold
-						if (r.conditionsNode != null) {
-							ExpressionNode substitutedConditions = new SubstituteConditionRuleVariables(
-									newRuleVariables).Visit(r.conditionsNode);
-
-							ExpressionNode simplified = new SimplifyConditionNumericalExpressions()
-									.Visit(substitutedConditions);
-
-							conditionsHold = new EvaluateConditionsVisitor().Visit(simplified);
-
-						}
-						// rewrite the subtree with the substituted RHS of the rule
-						if (conditionsHold || r.conditionsNode == null) {
-							this.ruleApplicationCount++;
-							ExpressionNode substituted = new SubstituteRuleVariables(newRuleVariables).Visit(r.rhsNode);
-							ExpressionNode solved = new SimplifyNumericalOperations().Visit(substituted);
-							return Visit(solved);
-						}
-
+					}
+				} catch (Exception e) {
+					if (!(e.getClass().equals(RewriteError.class))) {
+						throw new RewriteError(e.getMessage(), r, node);
+					} else {
+						throw e;
 					}
 				}
 
 			}
-			
 
 		}
 

@@ -17,7 +17,7 @@ public class TestSimplifyConditionNumericalExpressions {
 	public void testSimpleAddition() {
 		ExpressionNode addition = new AdditionNode(new NumberNode(1,2), new NumberNode(1));
 		ExpressionNode relopGT = new RelopNode(addition, new NumberNode(0), ConditionsLexer.RELOP_GT, ">");
-		SimplifyConditionNumericalExpressions s = new SimplifyConditionNumericalExpressions();
+		EvaluateConditionNumericalExpressions s = new EvaluateConditionNumericalExpressions();
 
 		try {
 			ExpressionNode result = s.Visit(relopGT);
@@ -34,7 +34,7 @@ public class TestSimplifyConditionNumericalExpressions {
 	public void testSimpleAddition_cannot_simplify() {
 		ExpressionNode addition = new AdditionNode(new VariableNode("q"), new NumberNode(1));
 		ExpressionNode relopGT = new RelopNode(addition, new NumberNode(0), ConditionsLexer.RELOP_GT, ">");
-		SimplifyConditionNumericalExpressions s = new SimplifyConditionNumericalExpressions();
+		EvaluateConditionNumericalExpressions s = new EvaluateConditionNumericalExpressions();
 
 		try {
 			ExpressionNode result = s.Visit(relopGT);
@@ -50,7 +50,7 @@ public class TestSimplifyConditionNumericalExpressions {
 	public void testSimpleSubtraction() {
 		ExpressionNode subtraction = new SubtractionNode(new NumberNode(1,2), new NumberNode(1));
 		ExpressionNode relopGT = new RelopNode(subtraction, new NumberNode(0), ConditionsLexer.RELOP_GT, ">");
-		SimplifyConditionNumericalExpressions s = new SimplifyConditionNumericalExpressions();
+		EvaluateConditionNumericalExpressions s = new EvaluateConditionNumericalExpressions();
 
 		try {
 			ExpressionNode result = s.Visit(relopGT);
@@ -67,7 +67,7 @@ public class TestSimplifyConditionNumericalExpressions {
 	public void testSimpleSubtraction_cannot_simplify() {
 		ExpressionNode subtraction = new SubtractionNode(new NumberNode(1), new VariableNode("q"));
 		ExpressionNode relopGT = new RelopNode(subtraction, new NumberNode(0), ConditionsLexer.RELOP_GT, ">");
-		SimplifyConditionNumericalExpressions s = new SimplifyConditionNumericalExpressions();
+		EvaluateConditionNumericalExpressions s = new EvaluateConditionNumericalExpressions();
 
 		try {
 			ExpressionNode result = s.Visit(relopGT);
@@ -83,7 +83,7 @@ public class TestSimplifyConditionNumericalExpressions {
 	public void testSimpleMultiplication() {
 		ExpressionNode multiplication = new MultiplicationNode(new NumberNode(1,2), new NumberNode(1));
 		ExpressionNode relopGT = new RelopNode(multiplication, new NumberNode(0), ConditionsLexer.RELOP_GT, ">");
-		SimplifyConditionNumericalExpressions s = new SimplifyConditionNumericalExpressions();
+		EvaluateConditionNumericalExpressions s = new EvaluateConditionNumericalExpressions();
 
 		try {
 			ExpressionNode result = s.Visit(relopGT);
@@ -103,7 +103,7 @@ public class TestSimplifyConditionNumericalExpressions {
 		ExpressionNode multiplication = new MultiplicationNode(new NumberNode(1),
 				new FunctionNode("TestFunc", arguments));
 		ExpressionNode relopGT = new RelopNode(multiplication, new NumberNode(-0), ConditionsLexer.RELOP_GT, ">");
-		SimplifyConditionNumericalExpressions s = new SimplifyConditionNumericalExpressions();
+		EvaluateConditionNumericalExpressions s = new EvaluateConditionNumericalExpressions();
 
 		try {
 			ExpressionNode result = s.Visit(relopGT);
@@ -119,7 +119,7 @@ public class TestSimplifyConditionNumericalExpressions {
 	public void testSimpleDivision() {
 		ExpressionNode division = new DivisionNode(new NumberNode(11,2), new NumberNode(1));
 		ExpressionNode relopGT = new RelopNode(division, new NumberNode(-0), ConditionsLexer.RELOP_GT, ">");
-		SimplifyConditionNumericalExpressions s = new SimplifyConditionNumericalExpressions();
+		EvaluateConditionNumericalExpressions s = new EvaluateConditionNumericalExpressions();
 
 		try {
 			ExpressionNode result = s.Visit(relopGT);
@@ -136,7 +136,7 @@ public class TestSimplifyConditionNumericalExpressions {
 	public void testSimpleDivision_DivideByZero() {
 		ExpressionNode division = new DivisionNode(new NumberNode(2,1), new NumberNode(0,2));
 		ExpressionNode relopGT = new RelopNode(new NumberNode(-0), division, ConditionsLexer.RELOP_GT, ">");
-		SimplifyConditionNumericalExpressions s = new SimplifyConditionNumericalExpressions();
+		EvaluateConditionNumericalExpressions s = new EvaluateConditionNumericalExpressions();
 
 		assertThrows(ArithmeticException.class ,() -> s.Visit(relopGT));
 	}
@@ -147,7 +147,7 @@ public class TestSimplifyConditionNumericalExpressions {
 		SubtractionNode subtract = new SubtractionNode(add, new NumberNode(10,2));
 		ExpressionNode division = new DivisionNode(new NumberNode(2,1), subtract);
 		ExpressionNode relopGT = new RelopNode( new NumberNode(-0), division, ConditionsLexer.RELOP_GT, ">");
-		SimplifyConditionNumericalExpressions s = new SimplifyConditionNumericalExpressions();
+		EvaluateConditionNumericalExpressions s = new EvaluateConditionNumericalExpressions();
 
 		assertThrows(ArithmeticException.class ,() -> s.Visit(relopGT));
 	}
@@ -158,7 +158,7 @@ public class TestSimplifyConditionNumericalExpressions {
 	public void testSimpleExponentiation() {
 		ExpressionNode power = new PowerNode(new NumberNode(12), new NumberNode(1));
 		ExpressionNode relopGT = new RelopNode(power, new NumberNode(03), ConditionsLexer.RELOP_GT, ">");
-		SimplifyConditionNumericalExpressions s = new SimplifyConditionNumericalExpressions();
+		EvaluateConditionNumericalExpressions s = new EvaluateConditionNumericalExpressions();
 
 		try {
 			ExpressionNode result = s.Visit(relopGT);
@@ -195,7 +195,7 @@ public class TestSimplifyConditionNumericalExpressions {
 		ExpressionNode power = new PowerNode(new NumberNode(1,2), new NumberNode(1));
 		ExpressionNode unary = new UnaryNode(power);
 		ExpressionNode relopGT = new RelopNode(unary, new NumberNode(0), ConditionsLexer.RELOP_GT, ">");
-		SimplifyConditionNumericalExpressions s = new SimplifyConditionNumericalExpressions();
+		EvaluateConditionNumericalExpressions s = new EvaluateConditionNumericalExpressions();
 
 		try {
 			ExpressionNode result = s.Visit(relopGT);
@@ -213,7 +213,7 @@ public class TestSimplifyConditionNumericalExpressions {
 		ExpressionNode power = new DivisionNode(new UnaryNode(new VariableNode("o")), new NumberNode(1));
 		ExpressionNode unary = new UnaryNode(power);
 		ExpressionNode relopGT = new RelopNode(unary, new NumberNode(3), ConditionsLexer.RELOP_GT, ">");
-		SimplifyConditionNumericalExpressions s = new SimplifyConditionNumericalExpressions();
+		EvaluateConditionNumericalExpressions s = new EvaluateConditionNumericalExpressions();
 		
 		try {
 			ExpressionNode result = s.Visit(relopGT);
@@ -233,7 +233,7 @@ public class TestSimplifyConditionNumericalExpressions {
 		ExpressionNode unaryNode = new UnaryNode(parenthetical);
 		ExpressionNode addition = new AdditionNode(new NumberNode(1), unaryNode);
 		ExpressionNode relopGT = new RelopNode(addition, new NumberNode(88,3), ConditionsLexer.RELOP_GT, ">");
-		SimplifyConditionNumericalExpressions s = new SimplifyConditionNumericalExpressions();
+		EvaluateConditionNumericalExpressions s = new EvaluateConditionNumericalExpressions();
 		try {
 			ExpressionNode result = s.Visit(relopGT);
 			assertTrue(result instanceof RelopNode);
@@ -248,7 +248,7 @@ public class TestSimplifyConditionNumericalExpressions {
 	public void testNonNumericalExpression_False() {
 		ExpressionNode addition = new AdditionNode(new VariableNode("x"), new NumberNode(1));
 		ExpressionNode relopGT = new RelopNode(addition, new NumberNode(044,2), ConditionsLexer.RELOP_GT, ">");
-		SimplifyConditionNumericalExpressions s = new SimplifyConditionNumericalExpressions();
+		EvaluateConditionNumericalExpressions s = new EvaluateConditionNumericalExpressions();
 		try {
 			ExpressionNode result = s.Visit(relopGT);
 			assertFalse(((RelopNode) result).left instanceof NumberNode);
@@ -263,7 +263,7 @@ public class TestSimplifyConditionNumericalExpressions {
 		ExpressionNode conditionAndNode = new ConditionAndNode(
 				new RelopNode(addition, new NumberNode(53,2), ConditionsLexer.RELOP_GT, ">"),
 				new RelopNode(addition, new NumberNode(0), ConditionsLexer.RELOP_GT, ">"));
-		SimplifyConditionNumericalExpressions s = new SimplifyConditionNumericalExpressions();
+		EvaluateConditionNumericalExpressions s = new EvaluateConditionNumericalExpressions();
 		try {
 			ExpressionNode result = s.Visit(conditionAndNode);
 			assertFalse(((ConditionAndNode) result).left instanceof NumberNode);
@@ -281,7 +281,7 @@ public class TestSimplifyConditionNumericalExpressions {
 		ExpressionNode conditionOrNode = new ConditionOrNode(
 				new RelopNode(addition, new NumberNode(0), ConditionsLexer.RELOP_GT, ">"),
 				new ConditionFunctionNode("_is_number", conditionFunctionArguments));
-		SimplifyConditionNumericalExpressions s = new SimplifyConditionNumericalExpressions();
+		EvaluateConditionNumericalExpressions s = new EvaluateConditionNumericalExpressions();
 		try {
 			ExpressionNode result = s.Visit(conditionOrNode);
 			assertTrue(((ConditionOrNode) result).left instanceof RelopNode);
@@ -301,7 +301,7 @@ public class TestSimplifyConditionNumericalExpressions {
 				new RelopNode(subtraction, new VariableNode("p"), ConditionsLexer.RELOP_GT, ">"),
 				new RelopNode(subtraction, new NumberNode(0), ConditionsLexer.RELOP_GT, ">"));
 		ExpressionNode not = new NotNode(conditionOrNode);
-		SimplifyConditionNumericalExpressions s = new SimplifyConditionNumericalExpressions();
+		EvaluateConditionNumericalExpressions s = new EvaluateConditionNumericalExpressions();
 		try {
 			ExpressionNode result = s.Visit(not);
 			NotNode notResult = (NotNode) result;
@@ -320,7 +320,7 @@ public class TestSimplifyConditionNumericalExpressions {
 	@Test 
 	public void testVisitRuleVariable_Exception() {
 		ExpressionNode rv = new RuleVariableNode("c");
-		SimplifyConditionNumericalExpressions s = new SimplifyConditionNumericalExpressions();
+		EvaluateConditionNumericalExpressions s = new EvaluateConditionNumericalExpressions();
 		
 		ExpressionNode relop = new RelopNode(new PowerNode(new NumberNode(2,3), new VariableNode("x")), rv,ConditionsLexer.RELOP_GT, ">");
 		assertThrows(Exception.class, () -> s.Visit(relop) );

@@ -106,7 +106,7 @@ public class TestSubstituteConditionRuleVariables {
 			assertTrue(andResult.right instanceof RelopNode);
 			RelopNode rightRelop = (RelopNode)andResult.right;
 			MultiplicationNode relopMult = (MultiplicationNode)rightRelop.right;
-			assertTrue(relopMult.Right instanceof VariableNode);
+			assertTrue(relopMult.getRight() instanceof VariableNode);
 			
 		} catch (Exception e ) {fail();}
 	}
@@ -130,7 +130,7 @@ public class TestSubstituteConditionRuleVariables {
 			assertTrue(andResult.right instanceof RelopNode);
 			RelopNode rightRelop = (RelopNode)andResult.right;
 			PowerNode relopPow = (PowerNode)rightRelop.right;
-			assertTrue(relopPow.Right instanceof VariableNode);
+			assertTrue(relopPow.getRight() instanceof VariableNode);
 			
 		} catch (Exception e ) {fail();}
 	}
