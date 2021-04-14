@@ -31,16 +31,15 @@ public class Program {
 	 * Applies the rewrite process to the algebraic term entered by the user,
 	 * evaluates any algebraic operations and returns the produced output.
 	 * 
-	 * @param rules                An arraylist containing the rewrite rules
-	 * @param termAst              The root node of the AST representing the user's
-	 *                             algebraic term.
-	 * @param ruleApplicationLimit
-	 * @return
+	 * @param rules   An arraylist containing the rewrite rules
+	 * @param termAst The root node of the AST representing the user's algebraic
+	 *                term.
+	 * @return String representation of the rewritten AST
 	 * @throws Exception Catches a rewrite error and throws to be caught by the GUI
 	 */
-	public String Rewrite(ArrayList<Rule> rules, ExpressionNode termAst, int ruleApplicationLimit) throws Exception {
+	public String Rewrite(ArrayList<Rule> rules, ExpressionNode termAst) throws Exception {
 		try {
-			ExpressionNode ast2 = new RewriteProcess(rules, ruleApplicationLimit).Visit(termAst);
+			ExpressionNode ast2 = new RewriteProcess(rules).Visit(termAst);
 			ExpressionNode simplified = new EvaluateNumericalOperations().Visit(ast2);
 			return new EvaluateExpressionVisitor().Visit(simplified);
 		} catch (StackOverflowError soe) {
@@ -59,7 +58,7 @@ public class Program {
 	 * 
 	 * @param ruleString String containing a rule from the rewrite rule txt file
 	 * @return String[] Rule split into two or three parts for each part to be
-	 *         parsed.
+	 *         parsed. {LHS, RHS} or {LHS, RHS, Conditions}
 	 * @throws Exception if the rule does not contain the necessary components.
 	 */
 	private static String[] splitRuleString(String ruleString) throws Exception {
@@ -90,9 +89,12 @@ public class Program {
 	 * RHS, and conditions (where applicable).
 	 * 
 	 * @param ruleInput
-	 * @return
+	 * @return Rule object containing AST represents of LHS, RHS and optional
+	 *         Conditions
 	 * @throws ParseCancellationException
-	 * @throws Exception
+	 * @throws Exception                  if the LHS, RHS, or conditions do not
+	 *                                    follow the rules defined by the grammars
+	 *                                    (RuleAlgebra.g4 and Conditions.g4)
 	 */
 	public Rule parseRule(String ruleInput) throws ParseCancellationException, Exception {
 		Rule r = null;

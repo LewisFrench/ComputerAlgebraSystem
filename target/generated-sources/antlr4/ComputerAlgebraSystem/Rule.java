@@ -1,7 +1,11 @@
 package ComputerAlgebraSystem;
 
 import java.util.LinkedHashMap;
-
+/**
+ * Class storing the components of a rewrite rule in AST format
+ * @author lewis
+ *
+ */
 class Rule {
 	ExpressionNode lhsNode;
 	ExpressionNode rhsNode;

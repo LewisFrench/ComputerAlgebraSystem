@@ -147,7 +147,7 @@ public class GUI implements ActionListener {
 				ArrayList<Rule> rules = this.getRules(ruleStringList, p);
 				if (rules != null) {
 					ExpressionNode term = p.parseTerm(enterTerm.getText());
-					String output = p.Rewrite(rules, term, Integer.MAX_VALUE - 1);
+					String output = p.Rewrite(rules, term);
 					result.setText(output);
 
 				}
@@ -155,9 +155,6 @@ public class GUI implements ActionListener {
 			// Most of these are probably unnecessary
 			} catch (StackOverflowError soe) {
 				errorMessage.setText(soe.getLocalizedMessage());
-			} catch (NumberFormatException nfe) {
-				errorMessage.setText("Please select a valid positive integer below " + Integer.MAX_VALUE
-						+ " as the rule application limit");
 			} catch (FileNotFoundException fnfe) {
 				errorMessage.setText("ERROR : " + fnfe.getMessage());
 			} catch (NullPointerException npe) {

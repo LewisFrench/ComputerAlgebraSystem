@@ -5,20 +5,20 @@ import java.util.LinkedHashMap;
 
 /**
  * Class handling the traversal of nodes in a user's algebraic term, and the
- * application of the rewrite process on the term.
- * Visitor class traverses the tree and attempts to apply rewrite rules in a leftmost, innermost order. 
+ * application of the rewrite process on the term. Visitor class traverses the
+ * tree and attempts to apply rewrite rules in a leftmost, innermost order.
+ * 
  * @author lewis
  *
  */
 public class RewriteProcess extends TermVisitor<ExpressionNode> {
 	ArrayList<Rule> rules;
-	int ruleApplicationLimit;
+	static final int RULE_APPLICATION_LIMIT = Integer.MAX_VALUE-1;
 	int ruleApplicationCount = 0;
-	int nodeVisitCount = 0;
 
-	public RewriteProcess(ArrayList<Rule> ruleSet, int ruleApplicationLimit) {
+	public RewriteProcess(ArrayList<Rule> ruleSet) {
 		rules = ruleSet;
-		this.ruleApplicationLimit = Integer.MAX_VALUE;
+
 	}
 
 	@Override
@@ -106,9 +106,7 @@ public class RewriteProcess extends TermVisitor<ExpressionNode> {
 	 * @throws Exception
 	 */
 	public ExpressionNode rewrite(ExpressionNode node) throws Exception {
-		this.nodeVisitCount++;
-		System.out.println("Nodes Visitied count: " + this.nodeVisitCount);
-		if (!(this.ruleApplicationLimit > this.ruleApplicationCount)) {
+		if (!(RULE_APPLICATION_LIMIT > this.ruleApplicationCount)) {
 			return node;
 		}
 		EvaluateTree argumentEvaluator;
