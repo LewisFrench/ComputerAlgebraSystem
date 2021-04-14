@@ -1,5 +1,4 @@
 grammar Conditions;
-import RuleAlgebra;
 ruleConditions: condition EOF;
 	
 condition
