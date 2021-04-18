@@ -1,6 +1,5 @@
 package ComputerAlgebraSystem;
 
-import java.util.ArrayList;
 
 /**
  * Class that extends the AstComparator. Traverses the left-hand side of a
@@ -16,12 +15,7 @@ import java.util.ArrayList;
  */
 public class EvaluateTree extends VisitAstComparison<Boolean> {
 
-//	ArrayList<ExpressionNode> arguments;
-//	ArrayList<String> variables;
-
 	public EvaluateTree() {
-//		this.arguments = new ArrayList<>();
-//		this.variables = new ArrayList<>();
 	}
 
 	@Override
@@ -87,7 +81,7 @@ public class EvaluateTree extends VisitAstComparison<Boolean> {
 	public Boolean Visit(UnaryNode lhsNode, ExpressionNode node) throws Exception {
 		boolean match = false;
 		if (lhsNode.getClass() == node.getClass()) {
-			match = Visit(lhsNode.innerNode, ((UnaryNode) node).innerNode);
+			match = Visit(lhsNode.getInnerNode(), ((UnaryNode) node).getInnerNode());
 
 		}
 		return match;
@@ -97,11 +91,11 @@ public class EvaluateTree extends VisitAstComparison<Boolean> {
 	public Boolean Visit(FunctionNode lhsNode, ExpressionNode node) throws Exception {
 		boolean argumentsMatch = false;
 		if (lhsNode.getClass() == node.getClass()) {
-			if (lhsNode.arguments.size() == ((FunctionNode) node).arguments.size()) {
+			if (lhsNode.getArguments().size() == ((FunctionNode) node).getArguments().size()) {
 				argumentsMatch = lhsNode.function.equals(((FunctionNode) node).function);
-				for (int i = 0; i < lhsNode.arguments.size(); i++) {
+				for (int i = 0; i < lhsNode.getArguments().size(); i++) {
 					argumentsMatch = argumentsMatch
-							&& Visit(lhsNode.arguments.get(i), ((FunctionNode) node).arguments.get(i));
+							&& Visit(lhsNode.getArguments().get(i), ((FunctionNode) node).getArguments().get(i));
 				}
 			}
 		}
@@ -113,8 +107,7 @@ public class EvaluateTree extends VisitAstComparison<Boolean> {
 		if (node instanceof RuleVariableNode) {
 			throw new Exception("Attempted to match rule variable. Please check the structure of your rules");
 		}
-//		this.arguments.add(node);
-//		this.variables.add(lhsNode.toString());
+
 		return true;
 	}
 

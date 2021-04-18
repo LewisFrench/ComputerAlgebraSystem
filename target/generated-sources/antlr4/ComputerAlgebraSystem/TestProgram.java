@@ -113,6 +113,7 @@ public class TestProgram {
 		Program p = new Program();
 		try {
 			ExpressionNode node = p.parseTerm("x+1");
+			assertTrue(node instanceof AdditionNode);
 		} catch (ParseCancellationException e) {
 			fail();
 		} catch (Exception e) {

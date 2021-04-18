@@ -123,7 +123,9 @@ class FunctionNode extends ExpressionNode {
 		this.function = function;
 		this.arguments = arguments;
 	}
-
+	public String getFunction() {
+		return this.function;
+	}
 	public ArrayList<ExpressionNode> getArguments() {
 		return this.arguments;
 	}
@@ -347,7 +349,10 @@ class ConditionFunctionNode extends ExpressionNode {
 		this.functionName = functionName;
 		this.arguments = arguments;
 	}
-
+	public String getFunctionName() {
+		return this.functionName;
+	}
+	
 	public ArrayList<ExpressionNode> getArguments() {
 		return this.arguments;
 	}
@@ -364,6 +369,9 @@ class NotNode extends ExpressionNode {
 
 	public NotNode(ExpressionNode innerNode) {
 		this.innerNode = innerNode;
+	}
+	public ExpressionNode getInnerNode() {
+		return this.innerNode;
 	}
 
 	public String toString() {

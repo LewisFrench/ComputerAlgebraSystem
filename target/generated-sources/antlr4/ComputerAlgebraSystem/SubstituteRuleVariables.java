@@ -69,11 +69,11 @@ public class SubstituteRuleVariables extends VisitRuleTerm<ExpressionNode> {
 	public ExpressionNode Visit(FunctionNode node) throws Exception {
 		ArrayList<ExpressionNode> arguments = new ArrayList<>();
 		for (int i = 0; i < node.getArguments().size(); i++) {
-			arguments.add(Visit(node.arguments.get(i)));
+			arguments.add(Visit(node.getArguments().get(i)));
 
 		}
 
-		return new FunctionNode(node.function, arguments);
+		return new FunctionNode(node.getFunction(), arguments);
 	}
 
 	@Override
