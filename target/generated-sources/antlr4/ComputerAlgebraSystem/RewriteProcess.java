@@ -11,9 +11,9 @@ import java.util.LinkedHashMap;
  * @author lewis
  *
  */
-public class RewriteProcess extends TermVisitor<ExpressionNode> {
+public class RewriteProcess extends VisitTerm<ExpressionNode> {
 	ArrayList<Rule> rules;
-	static final int RULE_APPLICATION_LIMIT = Integer.MAX_VALUE-1;
+	static final int RULE_APPLICATION_LIMIT = Integer.MAX_VALUE - 1;
 	int ruleApplicationCount = 0;
 
 	public RewriteProcess(ArrayList<Rule> ruleSet) {
@@ -122,14 +122,14 @@ public class RewriteProcess extends TermVisitor<ExpressionNode> {
 					if (ruleMatches) {
 
 						// determine if rule repeated rule variables are valid
-						boolean validArguments = argumentsValid(argumentEvaluator);
+						FetchComparisonArguments f = new FetchComparisonArguments();
+						f.Visit(r.lhsNode, node);
+						boolean validArguments = argumentsValid(f.getRuleVariables(), f.getRuleArguments());
 						if (validArguments) {
-
 							// Construct LinkedHashMap of rule variables and their corresponding values.
 							LinkedHashMap<String, ExpressionNode> newRuleVariables = new LinkedHashMap<String, ExpressionNode>();
-							for (int i = 0; i < argumentEvaluator.variables.size(); i++) {
-								newRuleVariables.put(argumentEvaluator.variables.get(i),
-										argumentEvaluator.arguments.get(i));
+							for (int i = 0; i < f.getRuleVariables().size(); i++) {
+								newRuleVariables.put(f.getRuleVariables().get(i), f.getRuleArguments().get(i));
 							}
 
 							// if rule has conditions, determine if they hold.
@@ -137,10 +137,10 @@ public class RewriteProcess extends TermVisitor<ExpressionNode> {
 								ExpressionNode substitutedConditions = new SubstituteConditionRuleVariables(
 										newRuleVariables).Visit(r.conditionsNode);
 
-								ExpressionNode simplified = new EvaluateConditionNumericalExpressions()
+								ExpressionNode evaluated = new EvaluateConditionNumericalExpressions()
 										.Visit(substitutedConditions);
 
-								conditionsHold = new EvaluateConditionsVisitor().Visit(simplified);
+								conditionsHold = new EvaluateConditionsVisitor().Visit(evaluated);
 
 							}
 							// rewrite the subtree with the substituted RHS of the rule
@@ -180,12 +180,11 @@ public class RewriteProcess extends TermVisitor<ExpressionNode> {
 	 * @return
 	 * @throws Exception
 	 */
-	public static boolean argumentsValid(EvaluateTree argumentEvaluator) throws Exception {
-		ArrayList<String> vars = argumentEvaluator.variables;
-		ArrayList<ExpressionNode> args = argumentEvaluator.arguments;
-		for (int i = 0; i < vars.size(); i++) {
-			if (i != vars.indexOf(vars.get(i))) {
-				if (!(argumentEvaluator.Visit(args.get(i), args.get(vars.indexOf(vars.get(i)))))) {
+	public static boolean argumentsValid(ArrayList<String> variables, ArrayList<ExpressionNode> arguments)
+			throws Exception {
+		for (int i = 0; i < variables.size(); i++) {
+			if (i != variables.indexOf(variables.get(i))) {
+				if (!(new EvaluateTree().Visit(arguments.get(i), arguments.get(variables.indexOf(variables.get(i)))))) {
 					return false;
 				}
 			}

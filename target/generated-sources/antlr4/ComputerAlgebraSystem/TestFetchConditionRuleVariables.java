@@ -19,7 +19,7 @@ public class TestFetchConditionRuleVariables {
 
 		try {
 			f.Visit(rv);
-			assertTrue(f.getVariables().keySet().contains("$n"));
+			assertTrue(f.getRuleVariables().contains("$n"));
 		} catch (Exception e) {fail();}	
 
 	}
@@ -32,7 +32,7 @@ public class TestFetchConditionRuleVariables {
 
 		try {
 			f.Visit(v);
-			assertTrue(f.getVariables().keySet().isEmpty());
+			assertTrue(f.getRuleVariables().isEmpty());
 		} catch (Exception e) {fail();}	
 
 	}
@@ -44,7 +44,7 @@ public class TestFetchConditionRuleVariables {
 
 		try {
 			f.Visit(v);
-			assertTrue(f.getVariables().keySet().isEmpty());
+			assertTrue(f.getRuleVariables().isEmpty());
 		} catch (Exception e) {fail();}	
 
 	}
@@ -58,7 +58,7 @@ public class TestFetchConditionRuleVariables {
 
 		try {
 			f.Visit(subtraction);
-			assertTrue(f.getVariables().keySet().contains("$n"));
+			assertTrue(f.getRuleVariables().contains("$n"));
 		} catch (Exception e) {fail();}	
 
 	}
@@ -71,7 +71,7 @@ public class TestFetchConditionRuleVariables {
 
 		try {
 			f.Visit(multiplication);
-			assertTrue(f.getVariables().keySet().contains("$n"));
+			assertTrue(f.getRuleVariables().contains("$n"));
 		} catch (Exception e) {fail();}	
 
 	}
@@ -84,7 +84,7 @@ public class TestFetchConditionRuleVariables {
 
 		try {
 			f.Visit(division);
-			assertTrue(f.getVariables().keySet().contains("$n"));
+			assertTrue(f.getRuleVariables().contains("$n"));
 		} catch (Exception e) {fail();}	
 
 	}
@@ -97,7 +97,7 @@ public class TestFetchConditionRuleVariables {
 
 		try {
 			f.Visit(addition);
-			assertTrue(f.getVariables().keySet().contains("$n"));
+			assertTrue(f.getRuleVariables().contains("$n"));
 		} catch (Exception e) {fail();}	
 
 	}
@@ -110,7 +110,7 @@ public class TestFetchConditionRuleVariables {
 
 		try {
 			f.Visit(power);
-			assertTrue(f.getVariables().keySet().contains("$n"));
+			assertTrue(f.getRuleVariables().contains("$n"));
 		} catch (Exception e) {fail();}	
 
 	}
@@ -125,7 +125,7 @@ public class TestFetchConditionRuleVariables {
 
 		try {
 			f.Visit(addition);
-			assertTrue(f.getVariables().keySet().isEmpty());
+			assertTrue(f.getRuleVariables().isEmpty());
 		} catch (Exception e) {fail();}	
 
 	}
@@ -139,7 +139,7 @@ public class TestFetchConditionRuleVariables {
 
 		try {
 			f.Visit(unary);
-			assertTrue(f.getVariables().keySet().contains("$n"));
+			assertTrue(f.getRuleVariables().contains("$n"));
 		} catch (Exception e) {fail();}	
 
 	}
@@ -153,7 +153,7 @@ public class TestFetchConditionRuleVariables {
 //
 //		try {
 //			f.Visit(unary);
-//			assertTrue(f.getVariables().keySet().contains("$n"));
+//			assertTrue(f.getRuleVariables().contains("$n"));
 //		} catch (Exception e) {fail();}	
 //
 //	}
@@ -169,7 +169,7 @@ public class TestFetchConditionRuleVariables {
 
 		try {
 			f.Visit(unary);
-			assertTrue(f.getVariables().keySet().contains("$n"));
+			assertTrue(f.getRuleVariables().contains("$n"));
 		} catch (Exception e) {fail();}	
 
 	}
@@ -185,7 +185,7 @@ public class TestFetchConditionRuleVariables {
 
 		try {
 			f.Visit(unary);
-			assertTrue(f.getVariables().keySet().contains("$n"));
+			assertTrue(f.getRuleVariables().contains("$n"));
 		} catch (Exception e) {fail();}	
 
 	}
@@ -201,7 +201,7 @@ public class TestFetchConditionRuleVariables {
 
 		try {
 			f.Visit(not);
-			assertTrue(f.getVariables().keySet().contains("$n"));
+			assertTrue(f.getRuleVariables().contains("$n"));
 		} catch (Exception e) {fail();}	
 
 	}
@@ -217,8 +217,8 @@ public class TestFetchConditionRuleVariables {
 
 		try {
 			f.Visit(and);
-			assertTrue(f.getVariables().keySet().contains("$n"));
-			assertTrue(f.getVariables().keySet().contains("$a"));
+			assertTrue(f.getRuleVariables().contains("$n"));
+			assertTrue(f.getRuleVariables().contains("$a"));
 		} catch (Exception e) {fail();}	
 
 	}
@@ -234,10 +234,10 @@ public class TestFetchConditionRuleVariables {
 
 		try {
 			f.Visit(or);
-			assertTrue(f.getVariables().keySet().contains("$n"));
-			assertTrue(f.getVariables().keySet().contains("$a"));
-			assertTrue(f.getVariables().keySet().contains("$q"));
-			assertTrue(f.getVariables().keySet().contains("$w"));
+			assertTrue(f.getRuleVariables().contains("$n"));
+			assertTrue(f.getRuleVariables().contains("$a"));
+			assertTrue(f.getRuleVariables().contains("$q"));
+			assertTrue(f.getRuleVariables().contains("$w"));
 		} catch (Exception e) {fail();}	
 
 	}
@@ -252,7 +252,7 @@ public class TestFetchConditionRuleVariables {
 
 		try {
 			f.Visit(cf);
-			assertTrue(f.getVariables().keySet().contains("$n"));
+			assertTrue(f.getRuleVariables().contains("$n"));
 		} catch (Exception e) {fail();}	
 
 	}

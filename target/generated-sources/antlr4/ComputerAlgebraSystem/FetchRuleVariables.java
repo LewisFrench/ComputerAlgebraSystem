@@ -1,99 +1,88 @@
 package ComputerAlgebraSystem;
 
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 
 /**
- * Visitor class to fill a LinkedHashMap with a key of the string value of the
+ * Visitor class to fill a ArrayList with a key of the string value of the
  * rule variable node, and a null value. Traverses a tree and upon visiting a
  * rule variable node, puts this instance in the LinkedHashMap variables.
  * 
  * @author lewis
  *
  */
-public class FetchRuleVariables extends RuleTermVisitor<ExpressionNode> {
+public final class FetchRuleVariables extends VisitRuleTerm<Void> {
 
-	LinkedHashMap<String, ExpressionNode> variables = new LinkedHashMap<>();
+	ArrayList<String> ruleVariables = new ArrayList<>();
 
-	public FetchRuleVariables() {
-
-	}
-
-	public LinkedHashMap<String, ExpressionNode> getVariables() {
-		return this.variables;
+	public ArrayList<String> getRuleVariables() {
+		return this.ruleVariables;
 	}
 
 	@Override
-	public ExpressionNode Visit(PowerNode node) throws Exception {
-		ExpressionNode left = Visit(node.getLeft());
-		ExpressionNode right = Visit(node.getRight());
-		return new PowerNode(left, right);
+	public Void Visit(PowerNode node) throws Exception {
+		Visit(node.getLeft());
+		Visit(node.getRight());
+		return null;
 	}
 
 	@Override
-	public ExpressionNode Visit(AdditionNode node) throws Exception {
-		ExpressionNode left = Visit(node.getLeft());
-		ExpressionNode right = Visit(node.getRight());
-		return new AdditionNode(left, right);
+	public Void Visit(AdditionNode node) throws Exception {
+		Visit(node.getLeft());
+		Visit(node.getRight());
+		return null;
 	}
 
 	@Override
-	public ExpressionNode Visit(SubtractionNode node) throws Exception {
-		ExpressionNode left = Visit(node.getLeft());
-		ExpressionNode right = Visit(node.getRight());
-		return new SubtractionNode(left, right);
+	public Void Visit(SubtractionNode node) throws Exception {
+		Visit(node.getLeft());
+		Visit(node.getRight());
+		return null;
 	}
 
 	@Override
-	public ExpressionNode Visit(MultiplicationNode node) throws Exception {
-		ExpressionNode left = Visit(node.getLeft());
-		ExpressionNode right = Visit(node.getRight());
-		return new MultiplicationNode(left, right);
+	public Void Visit(MultiplicationNode node) throws Exception {
+		Visit(node.getLeft());
+		Visit(node.getRight());
+		return null;
 	}
 
 	@Override
-	public ExpressionNode Visit(DivisionNode node) throws Exception {
-		ExpressionNode left = Visit(node.getLeft());
-		ExpressionNode right = Visit(node.getRight());
+	public Void Visit(DivisionNode node) throws Exception {
+		Visit(node.getLeft());
+		Visit(node.getRight());
 
-		return new DivisionNode(left, right);
-	}
-
-//	@Override
-//	public ExpressionNode Visit(ParentheticalNode node) throws Exception {
-//		return new ParentheticalNode(Visit(node.innerNode));
-//	}
-
-	@Override
-	public ExpressionNode Visit(UnaryNode node) throws Exception {
-		return new UnaryNode(Visit(node.innerNode));
+		return null;
 	}
 
 	@Override
-	public ExpressionNode Visit(FunctionNode node) throws Exception {
-		ArrayList<ExpressionNode> arguments = new ArrayList<>();
+	public Void Visit(UnaryNode node) throws Exception {
+		Visit(node.innerNode);
+		return null;
+	}
+
+	@Override
+	public Void Visit(FunctionNode node) throws Exception {
 		for (int i = 0; i < node.getArguments().size(); i++) {
-			arguments.add(Visit(node.arguments.get(i)));
+			Visit(node.arguments.get(i));
 
 		}
-
-		return new FunctionNode(node.function, arguments);
+		return null;
 	}
 
 	@Override
-	public ExpressionNode Visit(VariableNode node) {
-		return node;
+	public Void Visit(VariableNode node) {
+		return null;
 	}
 
 	@Override
-	public ExpressionNode Visit(NumberNode node) {
-		return node;
+	public Void Visit(NumberNode node) {
+		return null;
 	}
 
 	@Override
-	public ExpressionNode Visit(RuleVariableNode node) {
-		this.variables.put(node.toString(), null);
-		return node;
+	public Void Visit(RuleVariableNode node) {
+		this.ruleVariables.add(node.toString());
+		return null;
 	}
 
 }

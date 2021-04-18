@@ -110,6 +110,9 @@ class UnaryNode extends ExpressionNode {
 	public String toString() {
 		return "-" + this.innerNode.toString();
 	}
+	public ExpressionNode getInnerNode() {
+		return this.innerNode;
+	}
 }
 
 class FunctionNode extends ExpressionNode {

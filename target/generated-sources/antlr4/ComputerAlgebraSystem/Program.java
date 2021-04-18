@@ -40,13 +40,13 @@ public class Program {
 	public String Rewrite(ArrayList<Rule> rules, ExpressionNode termAst) throws Exception {
 		try {
 			ExpressionNode ast2 = new RewriteProcess(rules).Visit(termAst);
-			ExpressionNode simplified = new EvaluateNumericalOperations().Visit(ast2);
-			return new EvaluateExpressionVisitor().Visit(simplified);
+			ExpressionNode evaluated = new EvaluateNumericalOperations().Visit(ast2);
+			return new EvaluateExpressionVisitor().Visit(evaluated);
 		} catch (StackOverflowError soe) {
 			throw new StackOverflowError(
-					"Check for any infinitely-recursive rules or choose a lower rule application limit");
-			// } catch (RewriteError re) {
-			// Do I do anything here???
+					"Check for any infinitely-recursive rules");
+		} catch (RewriteError re) {
+			throw re;
 		} catch (Exception e) {
 			throw new Exception("Rewrite Error: " + e.getMessage());
 		}
@@ -56,7 +56,7 @@ public class Program {
 	 * Takes the string value of an input rule and splits the string into the LHS,
 	 * RHS, and Conditions (if applicable)
 	 * 
-	 * @param ruleString String containing a rule from the rewrite rule txt file
+	 * @param ruleString String containing a rule from the rewrite rule .txt file
 	 * @return String[] Rule split into two or three parts for each part to be
 	 *         parsed. {LHS, RHS} or {LHS, RHS, Conditions}
 	 * @throws Exception if the rule does not contain the necessary components.
@@ -117,6 +117,13 @@ public class Program {
 			ExpressionNode lhsNode = lhsVisitor.visitRuleTerm(lhs);
 			ExpressionNode rhsNode = new BuildRhsVisitor().visitRuleTerm(rhs);
 
+			FetchRuleVariables fetchLhsRuleVariables = new FetchRuleVariables();
+			FetchRuleVariables fetchRhsRuleVariables = new FetchRuleVariables();
+			fetchLhsRuleVariables.Visit(lhsNode);
+			fetchRhsRuleVariables.Visit(rhsNode);
+			if (!(fetchLhsRuleVariables.getRuleVariables().containsAll(fetchRhsRuleVariables.getRuleVariables()))) {
+				throw new Exception("A rule contains rule variables that don't correspond from LHS to RHS");
+			}
 			// If rule contains conditions
 			if (splitRule.length == 3) {
 				// Create an AST representation of the conditions
@@ -124,21 +131,23 @@ public class Program {
 				RuleConditionsContext conditions = conditionsParser.ruleConditions();
 				ExpressionNode conditionsNode = new BuildConditionsVisitor().visit(conditions);
 
-				//
-				r = (new Rule(lhsNode, rhsNode, conditionsNode));
-				r.variables = lhsVisitor.variables;
-
+				
 				// Throws exception if rule variables found in conditions are not a subset of
 				// those in the LHS of the rule
-				FetchConditionRuleVariables fCond = new FetchConditionRuleVariables();
-				fCond.Visit(conditionsNode);
-				if (!(r.variables.keySet().containsAll(fCond.variables.keySet()))) {
+				FetchConditionRuleVariables fetchConditionRuleVariables = new FetchConditionRuleVariables();
+				fetchConditionRuleVariables.Visit(conditionsNode);
+				if (!(fetchLhsRuleVariables.getRuleVariables())
+						.containsAll(fetchConditionRuleVariables.getRuleVariables())) {
 					throw new Exception("Condition contains a rule variable that isn't present in the LHS of a rule");
 				}
+				
+				// Create rule
+				r = (new Rule(lhsNode, rhsNode, conditionsNode));
+
+			
 				// If rule has no conditions, create a rule object from the LHS and RHS nodes
 			} else if (splitRule.length == 2) {
 				r = (new Rule(lhsNode, rhsNode));
-				r.variables = lhsVisitor.variables;
 				// Throw exception if rule is in invalid form.
 			} else {
 				throw new ParseCancellationException(
@@ -147,11 +156,7 @@ public class Program {
 
 			// Throw exception if rule variables found in RHS are not a subset of those
 			// found in LHS of rule.
-			FetchRuleVariables f = new FetchRuleVariables();
-			f.Visit(rhsNode);
-			if (!(r.variables.keySet().containsAll(f.variables.keySet()))) {
-				throw new Exception("A rule contains rule variables that don't correspond from LHS to RHS");
-			}
+			
 			// Divide by zero error
 		} catch (ArithmeticException ae) {
 			throw new ArithmeticException(
@@ -161,7 +166,6 @@ public class Program {
 			throw new ParseCancellationException("Syntax error: Check the structure of your rules");
 
 		} catch (Exception ex) {
-			ex.printStackTrace();
 			throw new Exception("Rule Parse Error: " + ex.getMessage());
 		}
 		return r;

@@ -14,7 +14,6 @@ public class TestRewriteProcess {
 	public void testEmptyRuleSet() {
 		ExpressionNode term = new NumberNode(2);
 		ArrayList<Rule> rules = new ArrayList<>();
-		int ruleApplicationLimit = 10;
 		RewriteProcess rewrite = new RewriteProcess(rules);
 		try {
 			ExpressionNode result = rewrite.Visit(term);
@@ -30,7 +29,6 @@ public class TestRewriteProcess {
 	public void testNullRuleSet() {
 		ExpressionNode term = new NumberNode(2);
 		ArrayList<Rule> rules = new ArrayList<>();
-		int ruleApplicationLimit = 10;
 		RewriteProcess rewrite = new RewriteProcess(rules);
 		try {
 			ExpressionNode result = rewrite.Visit(term);
@@ -256,17 +254,18 @@ public class TestRewriteProcess {
 	@Test
 	public void testRuleVariableTransformation_Variable() {
 		
-		ExpressionNode term = new NumberNode(2);
+		ExpressionNode term = new AdditionNode(new NumberNode(2), new VariableNode("z"));
 		ArrayList<Rule> rules = new ArrayList<>();
 		
 		
 		
 		try {
-			rules.add(new Rule(new RuleVariableNode("n"), new VariableNode("xy")));
+			rules.add(new Rule(new AdditionNode(new RuleVariableNode("n"), new VariableNode("z")), new VariableNode("xy")));
 			RewriteProcess rewrite = new RewriteProcess(rules);
 			ExpressionNode result = rewrite.Visit(term);
-			assertTrue(result.getClass() == VariableNode.class);
-			assertTrue(((VariableNode) result).value.equals("xy"));
+			assertEquals(VariableNode.class, result.getClass());
+			assertEquals("xy", ((VariableNode)result).getValue());
+			
 		} catch (Exception e) {
 			fail();
 		}
@@ -453,7 +452,6 @@ public class TestRewriteProcess {
 	public void testRuleVariableTransformation_ArgumentsMatchTrue_RuleApplied() {
 		ArrayList<ExpressionNode> arguments = new ArrayList<>();
 		arguments.add(new VariableNode("x"));
-		
 		arguments.add(new RuleVariableNode("n"));
 		arguments.add(new RuleVariableNode("n"));
 		
@@ -462,14 +460,16 @@ public class TestRewriteProcess {
 		termArguments.add(new VariableNode("xy"));
 		termArguments.add(new VariableNode("xy"));
 		
-		ExpressionNode term = new FunctionNode("testFunction", termArguments);
+		
 		ArrayList<Rule> rules = new ArrayList<>();
 		
 		ExpressionNode lhs = new FunctionNode("testFunction", arguments);
+		ExpressionNode term = new FunctionNode("testFunction", termArguments);
 		try {
 			rules.add(new Rule(lhs, new RuleVariableNode("n")));
 			RewriteProcess rewrite = new RewriteProcess(rules);
 			ExpressionNode result = rewrite.Visit(term);
+			
 			assertTrue(result.getClass() == VariableNode.class);
 			assertTrue(((VariableNode) result).getValue().equals("xy"));
 		} catch (Exception e) {
@@ -482,12 +482,12 @@ public class TestRewriteProcess {
 	@Test
 	public void testRuleVariableTransformation_ConditionsHold() {
 		
-		ExpressionNode term = new NumberNode(2);
+		ExpressionNode term = new UnaryNode(new NumberNode(2));
 		ArrayList<Rule> rules = new ArrayList<>();
 		
 		ExpressionNode conditionsNode = new RelopNode(new NumberNode(2), new NumberNode(3), ConditionsLexer.RELOP_LTE, "<");
 		try {
-			rules.add(new Rule(new RuleVariableNode("n"), new VariableNode("xy"), conditionsNode));
+			rules.add(new Rule(new UnaryNode(new RuleVariableNode("p")), new VariableNode("xy"), conditionsNode));
 			RewriteProcess rewrite = new RewriteProcess(rules);
 			ExpressionNode result = rewrite.Visit(term);
 			assertTrue(result.getClass() == VariableNode.class);

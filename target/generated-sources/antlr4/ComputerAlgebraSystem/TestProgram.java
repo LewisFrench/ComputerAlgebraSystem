@@ -160,7 +160,7 @@ public class TestProgram {
 		Program p = new Program();
 		ArrayList<Rule> rules = new ArrayList<>();
 		try { 
-			Rule r= new Rule(new VariableNode("x"), new NumberNode(1));
+			Rule r= new Rule(new RuleVariableNode("x"), new NumberNode(1));
 			rules.add(r);
 			assertThrows(StackOverflowError.class, ()-> p.Rewrite(rules,new VariableNode("x")));
 		} catch (Exception e ) {fail();}
