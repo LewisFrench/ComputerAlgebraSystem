@@ -2,8 +2,8 @@ grammar Conditions;
 ruleConditions: condition EOF;
 	
 condition
-	: left = condition op = (OP_AND | OP_OR) right = condition #ConditionOperation
-	| LPAREN condition RPAREN #ConditionParenthetical
+	: LPAREN condition RPAREN #ConditionParenthetical
+	| left = condition op = (OP_AND | OP_OR) right = condition #ConditionOperation
 	|  OP_NOT  LPAREN  value = condition RPAREN #Not
     |  left = expression relop=(RELOP_EQ | RELOP_NEQ | RELOP_GT | RELOP_GTE | RELOP_LT | RELOP_LTE) right =expression  #ConditionRelop
 	| function = CONDITION_VARIABLE LPAREN arguments= expression ( ',' expression)* RPAREN #ConditionFunction

@@ -2,6 +2,9 @@ grammar Algebra;
 
 term : expression EOF;
 
+/**
+ * Definition of the series of algebraic expressions supported by the system
+ */
 expression
    :  value = VARIABLE  #Variable
    |  ('-')? numerator = INTEGER '/' ('-')? denominator = INTEGER #Rational 
@@ -15,11 +18,7 @@ expression
    |  func = VARIABLE LPAREN  arguments =  expression( COMMA expression)* RPAREN #FunctionExpression
    ;
    
-OP_ADD: '+';
-OP_SUB: '-';
-OP_MUL: '*';
-OP_DIV: '/';
-OP_POW: '^';
+
 
  INTEGER
    : UNSIGNED_INTEGER
@@ -42,8 +41,11 @@ VARIABLE
 fragment VALID_ID_CHAR
    : ('a' .. 'z') | ('A' .. 'Z') 
    ;
-
-
+OP_ADD: '+';
+OP_SUB: '-';
+OP_MUL: '*';
+OP_DIV: '/';
+OP_POW: '^';
 
 COMMA
    : ','

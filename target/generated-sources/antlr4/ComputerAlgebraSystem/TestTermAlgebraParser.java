@@ -182,6 +182,7 @@ public class TestTermAlgebraParser {
 		
 		try {
 			ExpressionNode n = p.parseTerm("a+1");
+			System.out.println(n.toString());
 			assertTrue(n instanceof AdditionNode);
 			ExpressionNode left = (((AdditionNode)n).getLeft());
 			ExpressionNode right = (((AdditionNode)n).getRight());
@@ -201,6 +202,7 @@ public class TestTermAlgebraParser {
 		
 		try {
 			ExpressionNode n = p.parseTerm("a-4/3");
+			System.out.println(n.toString());
 			assertTrue(n instanceof SubtractionNode);
 			ExpressionNode left = (((SubtractionNode)n).getLeft());
 			ExpressionNode right = (((SubtractionNode)n).getRight());
@@ -315,6 +317,7 @@ public class TestTermAlgebraParser {
 		
 		try {
 			ExpressionNode n = p.parseTerm("a^1");
+			System.out.println(n.toString());
 			assertTrue(n instanceof PowerNode);
 			ExpressionNode left = (((PowerNode)n).getLeft());
 			ExpressionNode right = (((PowerNode)n).getRight());
