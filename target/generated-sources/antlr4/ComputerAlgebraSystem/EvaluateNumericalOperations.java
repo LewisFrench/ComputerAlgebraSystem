@@ -10,7 +10,7 @@ import java.util.ArrayList;
  * @author lewis
  *
  */
-public class EvaluateNumericalOperations extends TermVisitor<ExpressionNode> {
+public class EvaluateNumericalOperations extends VisitTerm<ExpressionNode> {
 
 	@Override
 	public ExpressionNode Visit(PowerNode node) throws Exception {

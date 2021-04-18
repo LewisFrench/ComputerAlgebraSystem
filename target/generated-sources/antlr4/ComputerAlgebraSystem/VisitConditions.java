@@ -6,7 +6,7 @@ package ComputerAlgebraSystem;
  *
  * @param <T>
  */
-abstract class ConditionVisitor<T> {
+abstract class VisitConditions<T> {
 
 	public abstract T Visit(ConditionAndNode node)throws Exception;
 
