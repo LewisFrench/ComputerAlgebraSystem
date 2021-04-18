@@ -8,7 +8,7 @@ import java.util.ArrayList;
  * @author lewis
  *
  */
-public class EvaluateConditionNumericalExpressions extends ConditionVisitor<ExpressionNode> {
+public class EvaluateConditionNumericalExpressions extends VisitConditions<ExpressionNode> {
 
 	@Override
 	public ExpressionNode Visit(ConditionAndNode node) throws Exception {

@@ -12,7 +12,7 @@ import java.util.LinkedHashMap;
  * @author lewis
  *
  */
-public class SubstituteRuleVariables extends RuleTermVisitor<ExpressionNode> {
+public class SubstituteRuleVariables extends VisitRuleTerm<ExpressionNode> {
 
 	LinkedHashMap<String, ExpressionNode> variables;
 

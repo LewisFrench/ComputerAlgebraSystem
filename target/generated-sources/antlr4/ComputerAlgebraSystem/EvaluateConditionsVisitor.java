@@ -5,7 +5,7 @@ import Conditions.ConditionsLexer;
 // Could likely split the AstVisitor into two visitors, one for the expression only nodes, and one for conditionnodes
 // Assuming I don't need them all for the is_literal() implementation
 
-public class EvaluateConditionsVisitor extends ConditionVisitor<Boolean> {
+public class EvaluateConditionsVisitor extends VisitConditions<Boolean> {
 	ConditionFunctionEvaluator conditionFunctions;
 
 	public EvaluateConditionsVisitor() {

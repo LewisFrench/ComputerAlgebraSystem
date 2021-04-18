@@ -1,36 +1,40 @@
 package ComputerAlgebraSystem;
 /**
- * Visitor class that specifies nodes that can be visited while traversing an algebraic term.
+ * Visitor class that specifies nodes that can be visited while traversing the
+ * left-hand side or right-hand side of a rewrite rule.
  * Throws exception if attempting to visit a node that is not specified 
  * 
  * @author Lewis
  *
  * @param <T> Generic type 
  */
-abstract class TermVisitor<T> {
+abstract class VisitRuleTerm<T> {
 	public abstract T Visit(PowerNode node) throws Exception;
 
-	public abstract T Visit(AdditionNode node)throws Exception;
+	public abstract T Visit(AdditionNode node) throws Exception;
 
 	public abstract T Visit(SubtractionNode node) throws Exception;
 
-	public abstract T Visit(MultiplicationNode node)throws Exception;
+	public abstract T Visit(MultiplicationNode node) throws Exception;
 
 	public abstract T Visit(DivisionNode node) throws Exception;
 
-	public abstract T Visit(UnaryNode node)throws Exception;
+	public abstract T Visit(UnaryNode node) throws Exception;
 
-	public abstract T Visit(FunctionNode node)throws Exception;
+	public abstract T Visit(FunctionNode node) throws Exception;
 
 	public abstract T Visit(VariableNode node) throws Exception;
 
 	public abstract T Visit(NumberNode node) throws Exception;
+
+	public abstract T Visit(RuleVariableNode node) throws Exception;
+
 	/**
-	 * Visitor methods for the algebraic term entered by a user.
+	 * Visitor methods for the nodes present in the left-hand-side or right-hand side of a rewrite rule.
 	 * 
-	 * @param node A node present in the AST representing an algebraic term
+	 * @param node A node present in the AST representing an rule.
 	 * @return
-	 * @throws IllegalArgumentException if attempting to visit a node that shouldn't be present in an algebraic term
+	 * @throws IllegalArgumentException if attempting to visit a node that shouldn't be present in an rule.
 	 */
 	public T Visit(ExpressionNode node) throws Exception {
 		if (node instanceof PowerNode) {
@@ -51,9 +55,10 @@ abstract class TermVisitor<T> {
 			return Visit((VariableNode) node);
 		} else if (node instanceof NumberNode) {
 			return Visit((NumberNode) node);
-		}
-		else {
-			throw new IllegalArgumentException("Attempted to visit an unaccepted type of node.");
+		} else if (node instanceof RuleVariableNode) {
+			return Visit((RuleVariableNode) node);
+		} else {
+			throw new IllegalArgumentException("Attempting to visit an unreachable node");
 		}
 	}
 }
