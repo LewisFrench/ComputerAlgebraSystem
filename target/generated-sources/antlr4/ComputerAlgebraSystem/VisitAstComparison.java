@@ -8,7 +8,7 @@ package ComputerAlgebraSystem;
  *
  * @param <T>
  */
-abstract class AstComparator<T> {
+abstract class VisitAstComparison<T> {
 	public abstract T Visit(PowerNode LhsNode, ExpressionNode node) throws Exception;
 
 	public abstract T Visit(AdditionNode LhsNode, ExpressionNode node) throws Exception;

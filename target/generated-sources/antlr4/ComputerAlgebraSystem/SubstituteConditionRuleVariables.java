@@ -8,7 +8,7 @@ import java.util.LinkedHashMap;
  * @author lewis
  *
  */
-public class SubstituteConditionRuleVariables extends ConditionVisitor<ExpressionNode>{
+public class SubstituteConditionRuleVariables extends VisitConditions<ExpressionNode>{
 	LinkedHashMap<String, ExpressionNode> ruleVariables;
 	
 	

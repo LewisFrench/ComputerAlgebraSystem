@@ -8,7 +8,7 @@ package ComputerAlgebraSystem;
  * @author lewis
  *
  */
-public class DependsEvaluator extends TermVisitor<Boolean> {
+public class DependsEvaluator extends VisitTerm<Boolean> {
 
 	ExpressionNode dependency;
 	EvaluateTree treeMatcher = new EvaluateTree();

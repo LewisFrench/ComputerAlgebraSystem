@@ -1,6 +1,6 @@
 package ComputerAlgebraSystem;
 
-class EvaluateExpressionVisitor extends TermVisitor<String> {
+class EvaluateExpressionVisitor extends VisitTerm<String> {
 
 	@Override
 	public String Visit(PowerNode node) throws Exception {
