@@ -14,14 +14,14 @@ import java.util.ArrayList;
  *
  * @param <T> Generic type
  */
-public class EvaluateTree extends AstComparator<Boolean> {
+public class EvaluateTree extends VisitAstComparison<Boolean> {
 
-	ArrayList<ExpressionNode> arguments;
-	ArrayList<String> variables;
+//	ArrayList<ExpressionNode> arguments;
+//	ArrayList<String> variables;
 
 	public EvaluateTree() {
-		this.arguments = new ArrayList<>();
-		this.variables = new ArrayList<>();
+//		this.arguments = new ArrayList<>();
+//		this.variables = new ArrayList<>();
 	}
 
 	@Override
@@ -113,8 +113,8 @@ public class EvaluateTree extends AstComparator<Boolean> {
 		if (node instanceof RuleVariableNode) {
 			throw new Exception("Attempted to match rule variable. Please check the structure of your rules");
 		}
-		this.arguments.add(node);
-		this.variables.add(lhsNode.toString());
+//		this.arguments.add(node);
+//		this.variables.add(lhsNode.toString());
 		return true;
 	}
 

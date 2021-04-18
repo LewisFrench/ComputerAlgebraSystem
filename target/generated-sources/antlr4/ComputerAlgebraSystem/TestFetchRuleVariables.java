@@ -16,7 +16,7 @@ public class TestFetchRuleVariables {
 
 		try {
 			f.Visit(rv);
-			assertTrue(f.getVariables().keySet().contains("$n"));
+			assertTrue(f.getRuleVariables().contains("$n"));
 		} catch (Exception e) {fail();}	
 
 	}
@@ -29,7 +29,7 @@ public class TestFetchRuleVariables {
 
 		try {
 			f.Visit(v);
-			assertTrue(f.getVariables().keySet().isEmpty());
+			assertTrue(f.getRuleVariables().isEmpty());
 		} catch (Exception e) {fail();}	
 
 	}
@@ -41,7 +41,7 @@ public class TestFetchRuleVariables {
 
 		try {
 			f.Visit(v);
-			assertTrue(f.getVariables().keySet().isEmpty());
+			assertTrue(f.getRuleVariables().isEmpty());
 		} catch (Exception e) {fail();}	
 
 	}
@@ -55,7 +55,7 @@ public class TestFetchRuleVariables {
 
 		try {
 			f.Visit(subtraction);
-			assertTrue(f.getVariables().keySet().contains("$n"));
+			assertTrue(f.getRuleVariables().contains("$n"));
 		} catch (Exception e) {fail();}	
 
 	}
@@ -68,7 +68,7 @@ public class TestFetchRuleVariables {
 
 		try {
 			f.Visit(multiplication);
-			assertTrue(f.getVariables().keySet().contains("$n"));
+			assertTrue(f.getRuleVariables().contains("$n"));
 		} catch (Exception e) {fail();}	
 
 	}
@@ -81,7 +81,7 @@ public class TestFetchRuleVariables {
 
 		try {
 			f.Visit(division);
-			assertTrue(f.getVariables().keySet().contains("$n"));
+			assertTrue(f.getRuleVariables().contains("$n"));
 		} catch (Exception e) {fail();}	
 
 	}
@@ -94,7 +94,7 @@ public class TestFetchRuleVariables {
 
 		try {
 			f.Visit(addition);
-			assertTrue(f.getVariables().keySet().contains("$n"));
+			assertTrue(f.getRuleVariables().contains("$n"));
 		} catch (Exception e) {fail();}	
 
 	}
@@ -107,7 +107,7 @@ public class TestFetchRuleVariables {
 
 		try {
 			f.Visit(power);
-			assertTrue(f.getVariables().keySet().contains("$n"));
+			assertTrue(f.getRuleVariables().contains("$n"));
 		} catch (Exception e) {fail();}	
 
 	}
@@ -121,7 +121,7 @@ public class TestFetchRuleVariables {
 
 		try {
 			f.Visit(unary);
-			assertTrue(f.getVariables().keySet().contains("$n"));
+			assertTrue(f.getRuleVariables().contains("$n"));
 		} catch (Exception e) {fail();}	
 
 	}
@@ -138,7 +138,7 @@ public class TestFetchRuleVariables {
 
 		try {
 			f.Visit(unary);
-			assertTrue(f.getVariables().keySet().contains("$n"));
+			assertTrue(f.getRuleVariables().contains("$n"));
 		} catch (Exception e) {fail();}	
 
 	}

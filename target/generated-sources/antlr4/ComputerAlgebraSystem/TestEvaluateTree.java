@@ -206,22 +206,22 @@ public class TestEvaluateTree {
 		}
 	}
 		
-	@Test
-	public void testEvaluateTree_RuleVariable_AddsRuleVariable () {
-		ExpressionNode l = new RuleVariableNode("x");
-		ExpressionNode r = new VariableNode("x");
-		EvaluateTree treeMatcher = new EvaluateTree();
-		try { 
-			treeMatcher.Visit(l, r);
-			assertTrue(treeMatcher.variables.size() > 0);
-			assertTrue ( treeMatcher.variables.get(0).equals(l.toString()));
-			assertTrue(treeMatcher.arguments.get(0) instanceof VariableNode);
-			assertTrue(((VariableNode)treeMatcher.arguments.get(0)).getValue().equals(((VariableNode)r).getValue()) );
-		} catch(Exception e) {
-			fail();
-		}
-		
-	}
+//	@Test
+//	public void testEvaluateTree_RuleVariable_AddsRuleVariable () {
+//		ExpressionNode l = new RuleVariableNode("x");
+//		ExpressionNode r = new VariableNode("x");
+//		EvaluateTree treeMatcher = new EvaluateTree();
+//		try { 
+//			treeMatcher.Visit(l, r);
+//			assertTrue(treeMatcher.variables.size() > 0);
+//			assertTrue ( treeMatcher.variables.get(0).equals(l.toString()));
+//			assertTrue(treeMatcher.arguments.get(0) instanceof VariableNode);
+//			assertTrue(((VariableNode)treeMatcher.arguments.get(0)).getValue().equals(((VariableNode)r).getValue()) );
+//		} catch(Exception e) {
+//			fail();
+//		}
+//		
+//	}
 	
 	
 	
@@ -234,27 +234,27 @@ public class TestEvaluateTree {
 		
 	}
 	
-	@Test
-	public void testEvaluateTree_Complex_Addition_Unary () {
-		ExpressionNode innerNode = new RuleVariableNode("x");
-		ExpressionNode unaryNode = new UnaryNode(innerNode);
-		ExpressionNode additionNode = new AdditionNode(new VariableNode("xy"), unaryNode);
-		
-		ExpressionNode innerNode2 = new VariableNode("x");
-		ExpressionNode unaryNode2 = new UnaryNode(innerNode2);
-		ExpressionNode additionNode2 = new AdditionNode(new VariableNode("xy"), unaryNode2);
-		EvaluateTree treeMatcher = new EvaluateTree();
-		try {
-			assertTrue(treeMatcher.Visit(additionNode, additionNode2));
-			assertEquals(treeMatcher.variables.get(0), "$x");
-			assertTrue(treeMatcher.arguments.get(0) instanceof VariableNode);
-			assertTrue(((VariableNode)treeMatcher.arguments.get(0)).getValue().equals("x"));
-			
-		} catch (Exception e) {
-			fail();
-		}
-		
-		
-		
-	}
+//	@Test
+//	public void testEvaluateTree_Complex_Addition_Unary () {
+//		ExpressionNode innerNode = new RuleVariableNode("x");
+//		ExpressionNode unaryNode = new UnaryNode(innerNode);
+//		ExpressionNode additionNode = new AdditionNode(new VariableNode("xy"), unaryNode);
+//		
+//		ExpressionNode innerNode2 = new VariableNode("x");
+//		ExpressionNode unaryNode2 = new UnaryNode(innerNode2);
+//		ExpressionNode additionNode2 = new AdditionNode(new VariableNode("xy"), unaryNode2);
+//		EvaluateTree treeMatcher = new EvaluateTree();
+//		try {
+//			assertTrue(treeMatcher.Visit(additionNode, additionNode2));
+//			assertEquals(treeMatcher.variables.get(0), "$x");
+//			assertTrue(treeMatcher.arguments.get(0) instanceof VariableNode);
+//			assertTrue(((VariableNode)treeMatcher.arguments.get(0)).getValue().equals("x"));
+//			
+//		} catch (Exception e) {
+//			fail();
+//		}
+//		
+//		
+//		
+//	}
 }
