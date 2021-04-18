@@ -36,7 +36,7 @@ public class FetchConditionRuleVariables extends VisitConditions<Void> {
 
 	@Override
 	public Void Visit(NotNode node) throws Exception {
-		Visit(node.innerNode);
+		Visit(node.getInnerNode());
 		return null;
 	}
 
@@ -50,7 +50,7 @@ public class FetchConditionRuleVariables extends VisitConditions<Void> {
 	@Override
 	public Void Visit(ConditionFunctionNode node) throws Exception {
 		for (int i = 0; i < node.getArguments().size(); i++) {
-			Visit(node.arguments.get(i));
+			Visit(node.getArguments().get(i));
 		}
 		return null;
 	}
@@ -93,14 +93,14 @@ public class FetchConditionRuleVariables extends VisitConditions<Void> {
 	@Override
 	public Void Visit(UnaryNode node) throws Exception {
 
-		Visit(node.innerNode);
+		Visit(node.getInnerNode());
 		return null;
 	}
 
 	@Override
 	public Void Visit(FunctionNode node) throws Exception {
 		for (int i = 0; i < node.getArguments().size(); i++) {
-			Visit(node.arguments.get(i));
+			Visit(node.getArguments().get(i));
 		}
 		return null;
 	}

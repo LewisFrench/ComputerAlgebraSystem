@@ -68,7 +68,7 @@ public class RewriteProcess extends VisitTerm<ExpressionNode> {
 
 	@Override
 	public ExpressionNode Visit(UnaryNode node) throws Exception {
-		ExpressionNode innerNode = Visit(node.innerNode);
+		ExpressionNode innerNode = Visit(node.getInnerNode());
 		return rewrite(new UnaryNode(innerNode));
 
 	}
@@ -77,7 +77,7 @@ public class RewriteProcess extends VisitTerm<ExpressionNode> {
 	public ExpressionNode Visit(FunctionNode node) throws Exception {
 		ArrayList<ExpressionNode> arguments = new ArrayList<>();
 		for (int i = 0; i < node.getArguments().size(); i++) {
-			arguments.add(Visit(node.arguments.get(i)));
+			arguments.add(Visit(node.getArguments().get(i)));
 
 		}
 

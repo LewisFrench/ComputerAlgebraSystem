@@ -18,15 +18,15 @@ public class SubstituteConditionRuleVariables extends VisitConditions<Expression
 	
 	@Override
 	public ExpressionNode Visit(ConditionAndNode node) throws Exception {
-		ExpressionNode left = Visit(node.left);
-		ExpressionNode right = Visit(node.right);
+		ExpressionNode left = Visit(node.getLeft());
+		ExpressionNode right = Visit(node.getRight());
 		return new ConditionAndNode(left, right);
 	}
 
 	@Override
 	public ExpressionNode Visit(ConditionOrNode node) throws Exception {
-		ExpressionNode left = Visit(node.left);
-		ExpressionNode right = Visit(node.right);
+		ExpressionNode left = Visit(node.getLeft());
+		ExpressionNode right = Visit(node.getRight());
 		return new ConditionOrNode(left, right);
 	}
 
@@ -37,8 +37,8 @@ public class SubstituteConditionRuleVariables extends VisitConditions<Expression
 
 	@Override
 	public ExpressionNode Visit(RelopNode node) throws Exception {
-		ExpressionNode left = Visit(node.left);
-		ExpressionNode right = Visit(node.right);
+		ExpressionNode left = Visit(node.getLeft());
+		ExpressionNode right = Visit(node.getRight());
 		return new RelopNode(left, right, node.relop, node.relopText);
 	}
 
@@ -46,10 +46,10 @@ public class SubstituteConditionRuleVariables extends VisitConditions<Expression
 	public ExpressionNode Visit(ConditionFunctionNode node) throws Exception {
 		ArrayList<ExpressionNode> arguments = new ArrayList<>();
 		for (int i = 0; i < node.getArguments().size(); i++) {
-			arguments.add(Visit(node.arguments.get(i)));
+			arguments.add(Visit(node.getArguments().get(i)));
 		}
 
-		return new ConditionFunctionNode(node.functionName, arguments);
+		return new ConditionFunctionNode(node.getFunctionName(), arguments);
 	}
 	
 	@Override
@@ -93,17 +93,16 @@ public class SubstituteConditionRuleVariables extends VisitConditions<Expression
 
 	@Override
 	public ExpressionNode Visit(UnaryNode node) throws Exception {
-		return new UnaryNode(Visit(node.innerNode));
+		return new UnaryNode(Visit(node.getInnerNode()));
 	}
 
 	@Override
 	public ExpressionNode Visit(FunctionNode node) throws Exception {
 		ArrayList<ExpressionNode> arguments = new ArrayList<>();
 		for (int i = 0; i < node.getArguments().size(); i++) {
-			arguments.add(Visit(node.arguments.get(i)));
+			arguments.add(Visit(node.getArguments().get(i)));
 
 		}
-
 		return new FunctionNode(node.function, arguments);
 	}
 
