@@ -18,6 +18,18 @@ public interface ConditionsListener extends ParseTreeListener {
 	 */
 	void exitRuleConditions(ConditionsParser.RuleConditionsContext ctx);
 	/**
+	 * Enter a parse tree produced by the {@code ConditionNotOperation}
+	 * labeled alternative in {@link ConditionsParser#condition}.
+	 * @param ctx the parse tree
+	 */
+	void enterConditionNotOperation(ConditionsParser.ConditionNotOperationContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code ConditionNotOperation}
+	 * labeled alternative in {@link ConditionsParser#condition}.
+	 * @param ctx the parse tree
+	 */
+	void exitConditionNotOperation(ConditionsParser.ConditionNotOperationContext ctx);
+	/**
 	 * Enter a parse tree produced by the {@code ConditionRelop}
 	 * labeled alternative in {@link ConditionsParser#condition}.
 	 * @param ctx the parse tree
@@ -54,18 +66,6 @@ public interface ConditionsListener extends ParseTreeListener {
 	 */
 	void exitConditionParenthetical(ConditionsParser.ConditionParentheticalContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code Not}
-	 * labeled alternative in {@link ConditionsParser#condition}.
-	 * @param ctx the parse tree
-	 */
-	void enterNot(ConditionsParser.NotContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code Not}
-	 * labeled alternative in {@link ConditionsParser#condition}.
-	 * @param ctx the parse tree
-	 */
-	void exitNot(ConditionsParser.NotContext ctx);
-	/**
 	 * Enter a parse tree produced by the {@code ConditionOperation}
 	 * labeled alternative in {@link ConditionsParser#condition}.
 	 * @param ctx the parse tree
@@ -90,6 +90,18 @@ public interface ConditionsListener extends ParseTreeListener {
 	 */
 	void exitInteger(ConditionsParser.IntegerContext ctx);
 	/**
+	 * Enter a parse tree produced by the {@code Function}
+	 * labeled alternative in {@link ConditionsParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterFunction(ConditionsParser.FunctionContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code Function}
+	 * labeled alternative in {@link ConditionsParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitFunction(ConditionsParser.FunctionContext ctx);
+	/**
 	 * Enter a parse tree produced by the {@code Variable}
 	 * labeled alternative in {@link ConditionsParser#expression}.
 	 * @param ctx the parse tree
@@ -101,18 +113,6 @@ public interface ConditionsListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitVariable(ConditionsParser.VariableContext ctx);
-	/**
-	 * Enter a parse tree produced by the {@code FunctionExpression}
-	 * labeled alternative in {@link ConditionsParser#expression}.
-	 * @param ctx the parse tree
-	 */
-	void enterFunctionExpression(ConditionsParser.FunctionExpressionContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code FunctionExpression}
-	 * labeled alternative in {@link ConditionsParser#expression}.
-	 * @param ctx the parse tree
-	 */
-	void exitFunctionExpression(ConditionsParser.FunctionExpressionContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code Rational}
 	 * labeled alternative in {@link ConditionsParser#expression}.
@@ -150,18 +150,6 @@ public interface ConditionsListener extends ParseTreeListener {
 	 */
 	void exitParenthetical(ConditionsParser.ParentheticalContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code UnaryExpression}
-	 * labeled alternative in {@link ConditionsParser#expression}.
-	 * @param ctx the parse tree
-	 */
-	void enterUnaryExpression(ConditionsParser.UnaryExpressionContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code UnaryExpression}
-	 * labeled alternative in {@link ConditionsParser#expression}.
-	 * @param ctx the parse tree
-	 */
-	void exitUnaryExpression(ConditionsParser.UnaryExpressionContext ctx);
-	/**
 	 * Enter a parse tree produced by the {@code Operation}
 	 * labeled alternative in {@link ConditionsParser#expression}.
 	 * @param ctx the parse tree
@@ -173,6 +161,18 @@ public interface ConditionsListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitOperation(ConditionsParser.OperationContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code Unary}
+	 * labeled alternative in {@link ConditionsParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterUnary(ConditionsParser.UnaryContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code Unary}
+	 * labeled alternative in {@link ConditionsParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitUnary(ConditionsParser.UnaryContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code RuleVariable}
 	 * labeled alternative in {@link ConditionsParser#expression}.

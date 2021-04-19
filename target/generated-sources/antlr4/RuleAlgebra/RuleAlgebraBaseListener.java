@@ -40,6 +40,18 @@ public class RuleAlgebraBaseListener implements RuleAlgebraListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterFunction(RuleAlgebraParser.FunctionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitFunction(RuleAlgebraParser.FunctionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterVariable(RuleAlgebraParser.VariableContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -47,18 +59,6 @@ public class RuleAlgebraBaseListener implements RuleAlgebraListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitVariable(RuleAlgebraParser.VariableContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterFunctionExpression(RuleAlgebraParser.FunctionExpressionContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitFunctionExpression(RuleAlgebraParser.FunctionExpressionContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -100,18 +100,6 @@ public class RuleAlgebraBaseListener implements RuleAlgebraListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterUnaryExpression(RuleAlgebraParser.UnaryExpressionContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitUnaryExpression(RuleAlgebraParser.UnaryExpressionContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void enterOperation(RuleAlgebraParser.OperationContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -119,6 +107,18 @@ public class RuleAlgebraBaseListener implements RuleAlgebraListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitOperation(RuleAlgebraParser.OperationContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterUnary(RuleAlgebraParser.UnaryContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitUnary(RuleAlgebraParser.UnaryContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

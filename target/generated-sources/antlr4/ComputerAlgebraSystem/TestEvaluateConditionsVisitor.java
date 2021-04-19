@@ -191,10 +191,10 @@ public class TestEvaluateConditionsVisitor {
 	public void testSimple_Relop_LogicalNOT() {
 		EvaluateConditionsVisitor e = new EvaluateConditionsVisitor();
 		ExpressionNode relop = new RelopNode(new NumberNode((2)), new NumberNode((0)), ConditionsLexer.RELOP_GT, ">");
-		ExpressionNode not = new NotNode(relop);
+		ExpressionNode not = new ConditionNotNode(relop);
 		try {
 			assertFalse(e.Visit(not));
-			assertTrue(e.Visit(new NotNode(not)));
+			assertTrue(e.Visit(new ConditionNotNode(not)));
 
 		} catch (Exception e1) {
 			e1.printStackTrace();

@@ -8,19 +8,31 @@ import java.util.LinkedHashMap;
 
 import Conditions.ConditionsLexer;
 import Conditions.ConditionsParser;
+
 /**
- * Visitor class that traverses the ANTLR4 parse tree that represents the conditions of the rule.  
- * Converts the parse tree nodes under the 'expression' production rules into an AST structure comprised of ExpressionNode objects.
- * Returns the root node of the converted AST structure. 
+ * Visitor class that traverses the ANTLR4 parse tree that represents the
+ * conditions of the rule. Converts the parse tree nodes under the 'expression'
+ * production rules into an AST structure comprised of ExpressionNode objects.
+ * Returns the root node of the converted AST structure.
  * 
  * @author Lewis
  *
- * @param <T> Generic type 
+ * @param <T> Generic type
  */
 public class BuildConditionsVisitor extends ConditionsBaseVisitor<ExpressionNode> {
 	LinkedHashMap<String, ExpressionNode> variables;
 
 	public BuildConditionsVisitor() {
+	}
+
+	@Override
+	public ExpressionNode visitRuleConditions(ConditionsParser.RuleConditionsContext context) {
+		return visit(context.condition());
+	}
+
+	@Override
+	public ExpressionNode visitConditionParenthetical(ConditionsParser.ConditionParentheticalContext context) {
+		return visit(context.condition());
 	}
 
 	@Override
@@ -38,24 +50,16 @@ public class BuildConditionsVisitor extends ConditionsBaseVisitor<ExpressionNode
 	}
 
 	@Override
-	public ExpressionNode visitRuleConditions(ConditionsParser.RuleConditionsContext context) {
-		return visit(context.condition());
+	public ExpressionNode visitConditionNotOperation(ConditionsParser.ConditionNotOperationContext context) {
+
+		return new ConditionNotNode(visit(context.condition()));
 	}
 
 	@Override
-	public ExpressionNode visitNot(ConditionsParser.NotContext context) {
-
-		return new NotNode(visit(context.condition()));
-	}
-
-	@Override
-	public ExpressionNode visitParenthetical(ConditionsParser.ParentheticalContext context) {
-		return visit(context.expression());
-	}
-
-	@Override
-	public ExpressionNode visitConditionParenthetical(ConditionsParser.ConditionParentheticalContext context) {
-		return visit(context.condition());
+	public ExpressionNode visitConditionRelop(ConditionsParser.ConditionRelopContext context) {
+		ExpressionNode left = visit(context.left);
+		ExpressionNode right = visit(context.right);
+		return new RelopNode(left, right, context.relop.getType(), context.relop.getText());
 	}
 
 	@Override
@@ -68,72 +72,26 @@ public class BuildConditionsVisitor extends ConditionsBaseVisitor<ExpressionNode
 	}
 
 	@Override
-	public ExpressionNode visitConditionRelop(ConditionsParser.ConditionRelopContext context) {
-		ExpressionNode left = visit(context.left);
-		ExpressionNode right = visit(context.right);
-		return new RelopNode(left, right, context.relop.getType(), context.relop.getText());
+	public ExpressionNode visitVariable(ConditionsParser.VariableContext context) {
+		return new VariableNode(context.value.getText());
 	}
 
 	@Override
-	public ExpressionNode visitUnaryExpression(ConditionsParser.UnaryExpressionContext context) {
-		ExpressionNode node = visit(context.expression());
-
-		switch (context.op.getType()) {
-		case ConditionsLexer.OP_ADD:
-			node = visit(context.expression());
-			break;
-
-		case ConditionsLexer.OP_SUB:
-			if (node instanceof NumberNode) {
-				return new NumberNode(((NumberNode) node).getNumerator() * -1, ((NumberNode) node).getDenominator());
-			}
-			node = new UnaryNode(visit(context.expression()));
-			break;
-		}
-		return node;
+	public ExpressionNode visitRuleVariable(ConditionsParser.RuleVariableContext context) {
+		return new RuleVariableNode(context.value.getText());
 	}
 
 	@Override
-	public ExpressionNode visitOperation(ConditionsParser.OperationContext context) {
-		OperationNode node = null;
-		ExpressionNode left = visit(context.left);
-		ExpressionNode right = visit(context.right);
-		
-		switch (context.op.getType()) {
-		case ConditionsLexer.OP_POW:
-			node = new PowerNode(left, right);
-			break;
-		case ConditionsLexer.OP_ADD:
-			node = new AdditionNode(left, right);
-			break;
-
-		case ConditionsLexer.OP_SUB:
-			node = new SubtractionNode(left, right);
-			break;
-
-		case ConditionsLexer.OP_MUL:
-			node = new MultiplicationNode(left, right);
-			break;
-
-		case ConditionsLexer.OP_DIV:
-			node = new DivisionNode(left, right);
-			break;
-
-		default:
-			return node;
-		}
-
-		return node;
+	public ExpressionNode visitRational(ConditionsParser.RationalContext context) {
+		String[] split = context.getText().split("/");
+		long numerator = Long.valueOf(split[0]);
+		long denominator = Long.valueOf(split[1]);
+		return new NumberNode(numerator, denominator);
 	}
 
-	public ExpressionNode visitFunctionExpression(ConditionsParser.FunctionExpressionContext context) {
-		ArrayList<ExpressionNode> arguments = new ArrayList<>();
-		for (int i = 0; i < context.expression().size(); i++) {
-			arguments.add(visit(context.expression(i)));
-		}
-
-		return new FunctionNode(context.func.getText(), arguments);
-
+	@Override
+	public ExpressionNode visitInteger(ConditionsParser.IntegerContext context) {
+		return new NumberNode(Long.valueOf(context.getText()));
 	}
 
 	@Override
@@ -157,25 +115,79 @@ public class BuildConditionsVisitor extends ConditionsBaseVisitor<ExpressionNode
 	}
 
 	@Override
-	public ExpressionNode visitInteger(ConditionsParser.IntegerContext context) {
-		return new NumberNode(Long.valueOf(context.getText()));
+	public ExpressionNode visitParenthetical(ConditionsParser.ParentheticalContext context) {
+		return visit(context.expression());
 	}
 
 	@Override
-	public ExpressionNode visitRational(ConditionsParser.RationalContext context) {
-		String[] split = context.getText().split("/");
-		long numerator = Long.valueOf(split[0]);
-		long denominator = Long.valueOf(split[1]);
-		return new NumberNode(numerator, denominator);
+	public ExpressionNode visitUnary(ConditionsParser.UnaryContext context) {
+		ExpressionNode node = visit(context.expression());
+
+		switch (context.op.getType()) {
+		case ConditionsLexer.OP_ADD:
+			node = visit(context.expression());
+			break;
+
+		case ConditionsLexer.OP_SUB:
+			if (node instanceof UnaryNode) {
+				return ((UnaryNode)node).getInnerNode();
+			}
+			if (node instanceof NumberNode) {
+				return new NumberNode(((NumberNode) node).getNumerator() * -1, ((NumberNode) node).getDenominator());
+			}
+			node = new UnaryNode(visit(context.expression()));
+			break;
+		}
+		return node;
 	}
 
 	@Override
-	public ExpressionNode visitRuleVariable(ConditionsParser.RuleVariableContext context) {
-		return new RuleVariableNode(context.value.getText());
+	public ExpressionNode visitOperation(ConditionsParser.OperationContext context) {
+		OperationNode node = null;
+		ExpressionNode left = visit(context.left);
+		ExpressionNode right = visit(context.right);
+
+		switch (context.op.getType()) {
+		case ConditionsLexer.OP_POW:
+			node = new PowerNode(left, right);
+			break;
+		case ConditionsLexer.OP_ADD:
+			node = new AdditionNode(left, right);
+			break;
+
+		case ConditionsLexer.OP_SUB:
+			node = new SubtractionNode(left, right);
+			break;
+
+		case ConditionsLexer.OP_MUL:
+			node = new MultiplicationNode(left, right);
+			break;
+
+		case ConditionsLexer.OP_DIV:
+			// Case of multiple unary denominators causing recognition as division rather than rational
+			if (left instanceof NumberNode && right instanceof NumberNode) {
+				if (((NumberNode)left).getDenominator() == 1 && ((NumberNode)right).getDenominator() == 1){
+					return new NumberNode(((NumberNode)left).getNumerator(), ((NumberNode)right).getNumerator());
+				}
+			}
+			node = new DivisionNode(left, right);
+			break;
+
+		default:
+			return node;
+		}
+
+		return node;
 	}
 
-	@Override
-	public ExpressionNode visitVariable(ConditionsParser.VariableContext context) {
-		return new VariableNode(context.value.getText());
+	public ExpressionNode visitFunction(ConditionsParser.FunctionContext context) {
+		ArrayList<ExpressionNode> arguments = new ArrayList<>();
+		for (int i = 0; i < context.expression().size(); i++) {
+			arguments.add(visit(context.expression(i)));
+		}
+
+		return new FunctionNode(context.func.getText(), arguments);
+
 	}
+
 }

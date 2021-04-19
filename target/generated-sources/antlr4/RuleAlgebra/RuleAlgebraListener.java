@@ -30,6 +30,18 @@ public interface RuleAlgebraListener extends ParseTreeListener {
 	 */
 	void exitInteger(RuleAlgebraParser.IntegerContext ctx);
 	/**
+	 * Enter a parse tree produced by the {@code Function}
+	 * labeled alternative in {@link RuleAlgebraParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterFunction(RuleAlgebraParser.FunctionContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code Function}
+	 * labeled alternative in {@link RuleAlgebraParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitFunction(RuleAlgebraParser.FunctionContext ctx);
+	/**
 	 * Enter a parse tree produced by the {@code Variable}
 	 * labeled alternative in {@link RuleAlgebraParser#expression}.
 	 * @param ctx the parse tree
@@ -41,18 +53,6 @@ public interface RuleAlgebraListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitVariable(RuleAlgebraParser.VariableContext ctx);
-	/**
-	 * Enter a parse tree produced by the {@code FunctionExpression}
-	 * labeled alternative in {@link RuleAlgebraParser#expression}.
-	 * @param ctx the parse tree
-	 */
-	void enterFunctionExpression(RuleAlgebraParser.FunctionExpressionContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code FunctionExpression}
-	 * labeled alternative in {@link RuleAlgebraParser#expression}.
-	 * @param ctx the parse tree
-	 */
-	void exitFunctionExpression(RuleAlgebraParser.FunctionExpressionContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code Rational}
 	 * labeled alternative in {@link RuleAlgebraParser#expression}.
@@ -90,18 +90,6 @@ public interface RuleAlgebraListener extends ParseTreeListener {
 	 */
 	void exitParenthetical(RuleAlgebraParser.ParentheticalContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code UnaryExpression}
-	 * labeled alternative in {@link RuleAlgebraParser#expression}.
-	 * @param ctx the parse tree
-	 */
-	void enterUnaryExpression(RuleAlgebraParser.UnaryExpressionContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code UnaryExpression}
-	 * labeled alternative in {@link RuleAlgebraParser#expression}.
-	 * @param ctx the parse tree
-	 */
-	void exitUnaryExpression(RuleAlgebraParser.UnaryExpressionContext ctx);
-	/**
 	 * Enter a parse tree produced by the {@code Operation}
 	 * labeled alternative in {@link RuleAlgebraParser#expression}.
 	 * @param ctx the parse tree
@@ -113,6 +101,18 @@ public interface RuleAlgebraListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitOperation(RuleAlgebraParser.OperationContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code Unary}
+	 * labeled alternative in {@link RuleAlgebraParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterUnary(RuleAlgebraParser.UnaryContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code Unary}
+	 * labeled alternative in {@link RuleAlgebraParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitUnary(RuleAlgebraParser.UnaryContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code RuleVariable}
 	 * labeled alternative in {@link RuleAlgebraParser#expression}.

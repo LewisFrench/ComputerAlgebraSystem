@@ -25,6 +25,25 @@ public class BuildTermVisitor extends AlgebraBaseVisitor<ExpressionNode> {
 	}
 
 	@Override
+	public ExpressionNode visitVariable(AlgebraParser.VariableContext context) {
+		VariableNode node = new VariableNode(context.value.getText());
+		return node;
+	}
+
+	@Override
+	public ExpressionNode visitRational(AlgebraParser.RationalContext context) {
+		String[] split = context.getText().split("/");
+		long numerator = Long.valueOf(split[0]);
+		long denominator = Long.valueOf(split[1]);
+		return new NumberNode(numerator, denominator);
+	}
+
+	@Override
+	public ExpressionNode visitInteger(AlgebraParser.IntegerContext context) {
+		return new NumberNode(Long.valueOf(context.getText()));
+	}
+
+	@Override
 	public ExpressionNode visitDecimal(AlgebraParser.DecimalContext context) {
 		BigDecimal b = new BigDecimal(context.getText());
 		// Format decimal input, remove unnecessary zeroes
@@ -48,25 +67,6 @@ public class BuildTermVisitor extends AlgebraBaseVisitor<ExpressionNode> {
 	}
 
 	@Override
-	public ExpressionNode visitInteger(AlgebraParser.IntegerContext context) {
-		return new NumberNode(Long.valueOf(context.getText()));
-	}
-
-	@Override
-	public ExpressionNode visitRational(AlgebraParser.RationalContext context) {
-		String[] split = context.getText().split("/");
-		long numerator = Long.valueOf(split[0]);
-		long denominator = Long.valueOf(split[1]);
-		return new NumberNode(numerator, denominator);
-	}
-
-	@Override
-	public ExpressionNode visitVariable(AlgebraParser.VariableContext context) {
-		VariableNode node = new VariableNode(context.getText());
-		return node;
-	}
-
-	@Override
 	public ExpressionNode visitParenthetical(AlgebraParser.ParentheticalContext context) {
 		return visit(context.expression());
 	}
@@ -76,10 +76,14 @@ public class BuildTermVisitor extends AlgebraBaseVisitor<ExpressionNode> {
 		ExpressionNode node = visit(context.expression());
 
 		switch (context.op.getType()) {
+		// ignore hanging + symbols before expressions
 		case AlgebraLexer.OP_ADD:
 			return node;
-
+		
 		case AlgebraLexer.OP_SUB:
+			if (node instanceof UnaryNode) {
+				return ((UnaryNode)node).getInnerNode();
+			}
 			if (node instanceof NumberNode) {
 				return new NumberNode(((NumberNode) node).getNumerator() * -1, ((NumberNode) node).getDenominator());
 			}
@@ -112,6 +116,12 @@ public class BuildTermVisitor extends AlgebraBaseVisitor<ExpressionNode> {
 			break;
 
 		case AlgebraLexer.OP_DIV:
+			// Case of multiple unary denominators causing recognition as division rather than rational
+			if (left instanceof NumberNode && right instanceof NumberNode) {
+				if (((NumberNode)left).getDenominator() == 1 && ((NumberNode)right).getDenominator() == 1){
+					return new NumberNode(((NumberNode)left).getNumerator(), ((NumberNode)right).getNumerator());
+				}
+			}
 			node = new DivisionNode(left, right);
 			break;
 

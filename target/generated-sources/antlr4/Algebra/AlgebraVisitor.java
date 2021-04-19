@@ -24,19 +24,19 @@ public interface AlgebraVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitInteger(AlgebraParser.IntegerContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code Function}
+	 * labeled alternative in {@link AlgebraParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitFunction(AlgebraParser.FunctionContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code Variable}
 	 * labeled alternative in {@link AlgebraParser#expression}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitVariable(AlgebraParser.VariableContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code FunctionExpression}
-	 * labeled alternative in {@link AlgebraParser#expression}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitFunctionExpression(AlgebraParser.FunctionExpressionContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code Rational}
 	 * labeled alternative in {@link AlgebraParser#expression}.
@@ -59,17 +59,17 @@ public interface AlgebraVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitParenthetical(AlgebraParser.ParentheticalContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code UnaryExpression}
-	 * labeled alternative in {@link AlgebraParser#expression}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitUnaryExpression(AlgebraParser.UnaryExpressionContext ctx);
-	/**
 	 * Visit a parse tree produced by the {@code Operation}
 	 * labeled alternative in {@link AlgebraParser#expression}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitOperation(AlgebraParser.OperationContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code Unary}
+	 * labeled alternative in {@link AlgebraParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitUnary(AlgebraParser.UnaryContext ctx);
 }

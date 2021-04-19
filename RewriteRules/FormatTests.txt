@@ -1,1 +1,1 @@
-$x = 1/$x
+$x = y : _is_number($x)

@@ -300,11 +300,11 @@ public class TestSimplifyConditionNumericalExpressions {
 		ExpressionNode conditionOrNode = new ConditionOrNode(
 				new RelopNode(subtraction, new VariableNode("p"), ConditionsLexer.RELOP_GT, ">"),
 				new RelopNode(subtraction, new NumberNode(0), ConditionsLexer.RELOP_GT, ">"));
-		ExpressionNode not = new NotNode(conditionOrNode);
+		ExpressionNode not = new ConditionNotNode(conditionOrNode);
 		EvaluateConditionNumericalExpressions s = new EvaluateConditionNumericalExpressions();
 		try {
 			ExpressionNode result = s.Visit(not);
-			NotNode notResult = (NotNode) result;
+			ConditionNotNode notResult = (ConditionNotNode) result;
 			assertTrue(notResult.innerNode instanceof ConditionOrNode);
 			RelopNode leftRelop = (RelopNode) (((ConditionOrNode) notResult.innerNode).left);
 			RelopNode rightRelop = (RelopNode) (((ConditionOrNode) notResult.innerNode).right);

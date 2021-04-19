@@ -335,6 +335,10 @@ class RelopNode extends ExpressionNode {
 	public ExpressionNode getRight() {
 		return this.right;
 	}
+	
+	public int getRelop() {
+		return this.relop;
+	}
 
 	public String toString() {
 		return left.toString() + relopText + right.toString();
@@ -363,11 +367,11 @@ class ConditionFunctionNode extends ExpressionNode {
 
 }
 
-class NotNode extends ExpressionNode {
+class ConditionNotNode extends ExpressionNode {
 
 	public ExpressionNode innerNode;
 
-	public NotNode(ExpressionNode innerNode) {
+	public ConditionNotNode(ExpressionNode innerNode) {
 		this.innerNode = innerNode;
 	}
 	public ExpressionNode getInnerNode() {

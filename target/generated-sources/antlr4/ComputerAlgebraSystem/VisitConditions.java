@@ -12,7 +12,7 @@ abstract class VisitConditions<T> {
 
 	public abstract T Visit(ConditionOrNode node)throws Exception;
 
-	public abstract T Visit(NotNode node)throws Exception;
+	public abstract T Visit(ConditionNotNode node)throws Exception;
 
 	public abstract T Visit(RelopNode node) throws Exception;
 
@@ -49,8 +49,8 @@ abstract class VisitConditions<T> {
 			return Visit((ConditionAndNode) node);
 		} else if (node instanceof ConditionOrNode) {
 			return Visit((ConditionOrNode) node);
-		} else if (node instanceof NotNode) {
-			return Visit((NotNode) node);
+		} else if (node instanceof ConditionNotNode) {
+			return Visit((ConditionNotNode) node);
 		} else if (node instanceof RelopNode) {
 			return Visit((RelopNode) node);
 		} else if (node instanceof ConditionFunctionNode) {

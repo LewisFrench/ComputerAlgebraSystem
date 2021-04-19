@@ -144,19 +144,7 @@ public class TestFetchConditionRuleVariables {
 
 	}
 	
-//	
-//	@Test
-//	public void testFetchComplexRuleVariable_Parenthetical() {
-//		ExpressionNode rv = new RuleVariableNode("n");
-//		ExpressionNode unary = new UnaryNode(rv);
-//		FetchConditionRuleVariables f = new FetchConditionRuleVariables();
-//
-//		try {
-//			f.Visit(unary);
-//			assertTrue(f.getRuleVariables().contains("$n"));
-//		} catch (Exception e) {fail();}	
-//
-//	}
+
 	@Test
 	public void testFetchComplexRuleVariable_Function() {
 		ExpressionNode rv = new RuleVariableNode("n");
@@ -196,7 +184,7 @@ public class TestFetchConditionRuleVariables {
 		ExpressionNode rv = new RuleVariableNode("n");
 		
 		ExpressionNode relop = new RelopNode(new NumberNode(2,1), rv, ConditionsLexer.RELOP_GT, ">");
-		ExpressionNode not = new NotNode(relop);
+		ExpressionNode not = new ConditionNotNode(relop);
 		FetchConditionRuleVariables f = new FetchConditionRuleVariables();
 
 		try {
