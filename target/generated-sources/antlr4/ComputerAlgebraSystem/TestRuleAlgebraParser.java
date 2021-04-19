@@ -604,6 +604,7 @@ public class TestRuleAlgebraParser {
 			assertTrue(((ConditionFunctionNode) result.conditionsNode).functionName.equals("_depends"));
 
 		} catch (Exception e) {
+			e.printStackTrace();
 			fail();
 		}
 	}

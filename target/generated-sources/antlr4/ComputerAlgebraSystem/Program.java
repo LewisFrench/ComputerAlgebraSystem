@@ -165,42 +165,8 @@ public class Program {
 		}
 		return r;
 	}
-
-	/**
-	 * Creates the ANTLR4 parser for the generation of the parse tree for the LHS
-	 * and RHS of a rule. Performs lexical analysis on the input string and
-	 * generates a stream of tokens. Returns a parser created from these tokens. and
-	 * RHS of a rewrite rule.
-	 * 
-	 * @param expression
-	 * @return RuleAlgebraParser
-	 * @throws ParseCancellationException when input string does not align with the
-	 *                                    rules of the grammar RuleAlgebra.g4
-	 */
-	private static RuleAlgebraParser getRuleParser(String expression) throws ParseCancellationException {
-
-		RuleAlgebraParser parser = null;
-		CharStream input;
-		input = CharStreams.fromString(expression);
-		try {
-			// Perform lexical analysis
-			RuleAlgebraLexer lexer = new RuleAlgebraLexer(input);
-			lexer.removeErrorListeners();
-			lexer.addErrorListener(ThrowingErrorListener.INSTANCE);
-
-			// Generate tokens from lexer
-			CommonTokenStream tokens = new CommonTokenStream(lexer);
-
-			// Create from tokens
-			parser = new RuleAlgebraParser(tokens);
-			parser.removeErrorListeners();
-			parser.addErrorListener(ThrowingErrorListener.INSTANCE);
-
-		} catch (ParseCancellationException pce) {
-			throw new ParseCancellationException(pce.getMessage());
-		}
-		return parser;
-	}
+	
+	
 
 	/**
 	 * Converts the string entered by the user into a parse tree using the ANTLR4
@@ -248,6 +214,44 @@ public class Program {
 
 		return termAst;
 	}
+	
+
+	/**
+	 * Creates the ANTLR4 parser for the generation of the parse tree for the LHS
+	 * and RHS of a rule. Performs lexical analysis on the input string and
+	 * generates a stream of tokens. Returns a parser created from these tokens. and
+	 * RHS of a rewrite rule.
+	 * 
+	 * @param expression
+	 * @return RuleAlgebraParser
+	 * @throws ParseCancellationException when input string does not align with the
+	 *                                    rules of the grammar RuleAlgebra.g4
+	 */
+	private static RuleAlgebraParser getRuleParser(String expression) throws ParseCancellationException {
+
+		RuleAlgebraParser parser = null;
+		CharStream input;
+		input = CharStreams.fromString(expression);
+		try {
+			// Perform lexical analysis
+			RuleAlgebraLexer lexer = new RuleAlgebraLexer(input);
+			lexer.removeErrorListeners();
+			lexer.addErrorListener(ThrowingErrorListener.INSTANCE);
+
+			// Generate tokens from lexer
+			CommonTokenStream tokens = new CommonTokenStream(lexer);
+
+			// Create from tokens
+			parser = new RuleAlgebraParser(tokens);
+			parser.removeErrorListeners();
+			parser.addErrorListener(ThrowingErrorListener.INSTANCE);
+
+		} catch (ParseCancellationException pce) {
+			throw new ParseCancellationException(pce.getMessage());
+		}
+		return parser;
+	}
+
 
 	/**
 	 * Creates the ANTLR4 parser for the generation of the parse tree for the
