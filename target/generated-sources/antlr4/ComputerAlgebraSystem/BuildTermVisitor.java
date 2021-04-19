@@ -80,6 +80,9 @@ public class BuildTermVisitor extends AlgebraBaseVisitor<ExpressionNode> {
 			return node;
 
 		case AlgebraLexer.OP_SUB:
+			if (node instanceof UnaryNode) {
+				return ((UnaryNode)node).getInnerNode();
+			}
 			if (node instanceof NumberNode) {
 				return new NumberNode(((NumberNode) node).getNumerator() * -1, ((NumberNode) node).getDenominator());
 			}

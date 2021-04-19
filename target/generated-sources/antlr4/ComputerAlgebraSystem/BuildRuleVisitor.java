@@ -85,6 +85,9 @@ public class BuildRuleVisitor extends RuleAlgebraBaseVisitor<ExpressionNode> {
 			break;
 
 		case RuleAlgebraLexer.OP_SUB:
+			if (node instanceof UnaryNode) {
+				return ((UnaryNode)node).getInnerNode();
+			}
 			if (node instanceof NumberNode) {
 				return new NumberNode(((NumberNode) node).getNumerator() * -1, ((NumberNode) node).getDenominator());
 			}

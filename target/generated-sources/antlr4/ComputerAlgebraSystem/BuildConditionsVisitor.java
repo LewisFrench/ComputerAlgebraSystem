@@ -129,6 +129,9 @@ public class BuildConditionsVisitor extends ConditionsBaseVisitor<ExpressionNode
 			break;
 
 		case ConditionsLexer.OP_SUB:
+			if (node instanceof UnaryNode) {
+				return ((UnaryNode)node).getInnerNode();
+			}
 			if (node instanceof NumberNode) {
 				return new NumberNode(((NumberNode) node).getNumerator() * -1, ((NumberNode) node).getDenominator());
 			}
