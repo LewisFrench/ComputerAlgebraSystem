@@ -752,11 +752,25 @@ public class TestRuleAlgebraParser {
 	}
 
 	@Test
-	public void testValidRuleValidConditions_Division_relop() {
+	public void testValidRuleValidConditions_Division_relop_Rational() {
 
 		Program p = new Program();
 		try {
 			Rule result = p.parseRule("x=1:(1)/3>0");
+			assertTrue(result.conditionsNode instanceof RelopNode);
+			assertTrue(((RelopNode) result.conditionsNode).left instanceof NumberNode);
+
+		} catch (Exception e) {
+			fail();
+		}
+	}
+	
+	@Test
+	public void testValidRuleValidConditions_Division_relop() {
+
+		Program p = new Program();
+		try {
+			Rule result = p.parseRule("x=1:(1/3)/4>0");
 			assertTrue(result.conditionsNode instanceof RelopNode);
 			assertTrue(((RelopNode) result.conditionsNode).left instanceof DivisionNode);
 

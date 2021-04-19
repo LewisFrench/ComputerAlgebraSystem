@@ -26,7 +26,7 @@ public class BuildTermVisitor extends AlgebraBaseVisitor<ExpressionNode> {
 
 	@Override
 	public ExpressionNode visitVariable(AlgebraParser.VariableContext context) {
-		VariableNode node = new VariableNode(context.getText());
+		VariableNode node = new VariableNode(context.value.getText());
 		return node;
 	}
 
@@ -112,6 +112,12 @@ public class BuildTermVisitor extends AlgebraBaseVisitor<ExpressionNode> {
 			break;
 
 		case AlgebraLexer.OP_DIV:
+			// Case of multiple unary denominators causing recognition as division rather than rational
+			if (left instanceof NumberNode && right instanceof NumberNode) {
+				if (((NumberNode)left).getDenominator() == 1 && ((NumberNode)right).getDenominator() == 1){
+					return new NumberNode(((NumberNode)left).getNumerator(), ((NumberNode)right).getNumerator());
+				}
+			}
 			node = new DivisionNode(left, right);
 			break;
 

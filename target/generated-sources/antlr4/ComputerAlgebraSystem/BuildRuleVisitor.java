@@ -117,6 +117,12 @@ public class BuildRuleVisitor extends RuleAlgebraBaseVisitor<ExpressionNode> {
 			break;
 
 		case RuleAlgebraLexer.OP_DIV:
+			// Case of multiple unary denominators causing recognition as division rather than rational
+			if (left instanceof NumberNode && right instanceof NumberNode) {
+				if (((NumberNode)left).getDenominator() == 1 && ((NumberNode)right).getDenominator() == 1){
+					return new NumberNode(((NumberNode)left).getNumerator(), ((NumberNode)right).getNumerator());
+				}
+			}
 			node = new DivisionNode(left, right);
 			break;
 		}
