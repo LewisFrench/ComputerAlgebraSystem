@@ -8,13 +8,14 @@ import RuleAlgebra.RuleAlgebraLexer;
 import RuleAlgebra.RuleAlgebraParser;
 
 /**
- * Visitor class that traverses the ANTLR4 parse tree that represents the left-hand side of the rule.  
- * Converts the parse tree nodes under the 'expression' production rules into an AST structure comprised of ExpressionNode objects.
- * Returns the root node of the converted AST structure. 
+ * Visitor class that traverses the ANTLR4 parse tree that represents the
+ * left-hand side of the rule. Converts the parse tree nodes under the
+ * 'expression' production rules into an AST structure comprised of
+ * ExpressionNode objects. Returns the root node of the converted AST structure.
  * 
  * @author Lewis
  *
- * @param <T> Generic type 
+ * @param <T> Generic type
  */
 
 public class BuildRuleVisitor extends RuleAlgebraBaseVisitor<ExpressionNode> {
@@ -25,6 +26,29 @@ public class BuildRuleVisitor extends RuleAlgebraBaseVisitor<ExpressionNode> {
 	@Override
 	public ExpressionNode visitRuleTerm(RuleAlgebraParser.RuleTermContext context) {
 		return visit(context.expression());
+	}
+
+	@Override
+	public ExpressionNode visitVariable(RuleAlgebraParser.VariableContext context) {
+		return new VariableNode(context.value.getText());
+	}
+
+	@Override
+	public ExpressionNode visitRuleVariable(RuleAlgebraParser.RuleVariableContext context) {
+		return new RuleVariableNode(context.value.getText());
+	}
+
+	@Override
+	public ExpressionNode visitRational(RuleAlgebraParser.RationalContext context) {
+		String[] split = context.getText().split("/");
+		long numerator = Long.valueOf(split[0]);
+		long denominator = Long.valueOf(split[1]);
+		return new NumberNode(numerator, denominator);
+	}
+
+	@Override
+	public ExpressionNode visitInteger(RuleAlgebraParser.IntegerContext context) {
+		return new NumberNode(Long.valueOf(context.getText()));
 	}
 
 	@Override
@@ -47,21 +71,27 @@ public class BuildRuleVisitor extends RuleAlgebraBaseVisitor<ExpressionNode> {
 	}
 
 	@Override
-	public ExpressionNode visitInteger(RuleAlgebraParser.IntegerContext context) {
-		return new NumberNode(Long.valueOf(context.getText()));
-	}
-
-	@Override
-	public ExpressionNode visitRational(RuleAlgebraParser.RationalContext context) {
-		String[] split = context.getText().split("/");
-		long numerator = Long.valueOf(split[0]);
-		long denominator = Long.valueOf(split[1]);
-		return new NumberNode(numerator, denominator);
-	}
-
-	@Override
 	public ExpressionNode visitParenthetical(RuleAlgebraParser.ParentheticalContext context) {
 		return (visit(context.expression()));
+	}
+
+	@Override
+	public ExpressionNode visitUnary(RuleAlgebraParser.UnaryContext context) {
+
+		ExpressionNode node = visit(context.expression());
+		switch (context.op.getType()) {
+		case RuleAlgebraLexer.OP_ADD:
+			node = visit(context.expression());
+			break;
+
+		case RuleAlgebraLexer.OP_SUB:
+			if (node instanceof NumberNode) {
+				return new NumberNode(((NumberNode) node).getNumerator() * -1, ((NumberNode) node).getDenominator());
+			}
+			node = new UnaryNode(visit(context.expression()));
+			break;
+		}
+		return node;
 	}
 
 	@Override
@@ -95,36 +125,7 @@ public class BuildRuleVisitor extends RuleAlgebraBaseVisitor<ExpressionNode> {
 	}
 
 	@Override
-	public ExpressionNode visitUnaryExpression(RuleAlgebraParser.UnaryExpressionContext context) {
-
-		ExpressionNode node = visit(context.expression());
-		switch (context.op.getType()) {
-		case RuleAlgebraLexer.OP_ADD:
-			node = visit(context.expression());
-			break;
-
-		case RuleAlgebraLexer.OP_SUB:
-			if (node instanceof NumberNode) {
-				return new NumberNode(((NumberNode) node).getNumerator() * -1, ((NumberNode) node).getDenominator());
-			}
-			node = new UnaryNode(visit(context.expression()));
-			break;
-		}
-		return node;
-	}
-
-	@Override
-	public ExpressionNode visitRuleVariable(RuleAlgebraParser.RuleVariableContext context) {
-		return new RuleVariableNode(context.value.getText());
-	}
-
-	@Override
-	public ExpressionNode visitVariable(RuleAlgebraParser.VariableContext context) {
-		return new VariableNode(context.value.getText());
-	}
-
-	@Override
-	public ExpressionNode visitFunctionExpression(RuleAlgebraParser.FunctionExpressionContext context) {
+	public ExpressionNode visitFunction(RuleAlgebraParser.FunctionContext context) {
 		ArrayList<ExpressionNode> arguments = new ArrayList<>();
 		for (int i = 0; i < context.expression().size(); i++) {
 			arguments.add(visit(context.expression(i)));

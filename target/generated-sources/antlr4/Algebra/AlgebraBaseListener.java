@@ -40,6 +40,18 @@ public class AlgebraBaseListener implements AlgebraListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterFunction(AlgebraParser.FunctionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitFunction(AlgebraParser.FunctionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterVariable(AlgebraParser.VariableContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -47,18 +59,6 @@ public class AlgebraBaseListener implements AlgebraListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitVariable(AlgebraParser.VariableContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterFunctionExpression(AlgebraParser.FunctionExpressionContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitFunctionExpression(AlgebraParser.FunctionExpressionContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -100,18 +100,6 @@ public class AlgebraBaseListener implements AlgebraListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterUnaryExpression(AlgebraParser.UnaryExpressionContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitUnaryExpression(AlgebraParser.UnaryExpressionContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void enterOperation(AlgebraParser.OperationContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -119,6 +107,18 @@ public class AlgebraBaseListener implements AlgebraListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitOperation(AlgebraParser.OperationContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterUnary(AlgebraParser.UnaryContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitUnary(AlgebraParser.UnaryContext ctx) { }
 
 	/**
 	 * {@inheritDoc}

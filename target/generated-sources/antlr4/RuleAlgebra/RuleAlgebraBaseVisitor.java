@@ -31,14 +31,14 @@ public class RuleAlgebraBaseVisitor<T> extends AbstractParseTreeVisitor<T> imple
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitVariable(RuleAlgebraParser.VariableContext ctx) { return visitChildren(ctx); }
+	@Override public T visitFunction(RuleAlgebraParser.FunctionContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitFunctionExpression(RuleAlgebraParser.FunctionExpressionContext ctx) { return visitChildren(ctx); }
+	@Override public T visitVariable(RuleAlgebraParser.VariableContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -66,14 +66,14 @@ public class RuleAlgebraBaseVisitor<T> extends AbstractParseTreeVisitor<T> imple
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitUnaryExpression(RuleAlgebraParser.UnaryExpressionContext ctx) { return visitChildren(ctx); }
+	@Override public T visitOperation(RuleAlgebraParser.OperationContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitOperation(RuleAlgebraParser.OperationContext ctx) { return visitChildren(ctx); }
+	@Override public T visitUnary(RuleAlgebraParser.UnaryContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *

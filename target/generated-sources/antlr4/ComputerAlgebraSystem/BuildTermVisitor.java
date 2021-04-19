@@ -25,6 +25,25 @@ public class BuildTermVisitor extends AlgebraBaseVisitor<ExpressionNode> {
 	}
 
 	@Override
+	public ExpressionNode visitVariable(AlgebraParser.VariableContext context) {
+		VariableNode node = new VariableNode(context.getText());
+		return node;
+	}
+
+	@Override
+	public ExpressionNode visitRational(AlgebraParser.RationalContext context) {
+		String[] split = context.getText().split("/");
+		long numerator = Long.valueOf(split[0]);
+		long denominator = Long.valueOf(split[1]);
+		return new NumberNode(numerator, denominator);
+	}
+
+	@Override
+	public ExpressionNode visitInteger(AlgebraParser.IntegerContext context) {
+		return new NumberNode(Long.valueOf(context.getText()));
+	}
+
+	@Override
 	public ExpressionNode visitDecimal(AlgebraParser.DecimalContext context) {
 		BigDecimal b = new BigDecimal(context.getText());
 		// Format decimal input, remove unnecessary zeroes
@@ -45,25 +64,6 @@ public class BuildTermVisitor extends AlgebraBaseVisitor<ExpressionNode> {
 			denominator *= 10;
 		}
 		return new NumberNode(numerator, denominator);
-	}
-
-	@Override
-	public ExpressionNode visitInteger(AlgebraParser.IntegerContext context) {
-		return new NumberNode(Long.valueOf(context.getText()));
-	}
-
-	@Override
-	public ExpressionNode visitRational(AlgebraParser.RationalContext context) {
-		String[] split = context.getText().split("/");
-		long numerator = Long.valueOf(split[0]);
-		long denominator = Long.valueOf(split[1]);
-		return new NumberNode(numerator, denominator);
-	}
-
-	@Override
-	public ExpressionNode visitVariable(AlgebraParser.VariableContext context) {
-		VariableNode node = new VariableNode(context.getText());
-		return node;
 	}
 
 	@Override

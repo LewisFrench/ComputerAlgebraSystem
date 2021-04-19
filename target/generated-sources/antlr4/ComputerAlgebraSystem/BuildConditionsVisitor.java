@@ -8,19 +8,31 @@ import java.util.LinkedHashMap;
 
 import Conditions.ConditionsLexer;
 import Conditions.ConditionsParser;
+
 /**
- * Visitor class that traverses the ANTLR4 parse tree that represents the conditions of the rule.  
- * Converts the parse tree nodes under the 'expression' production rules into an AST structure comprised of ExpressionNode objects.
- * Returns the root node of the converted AST structure. 
+ * Visitor class that traverses the ANTLR4 parse tree that represents the
+ * conditions of the rule. Converts the parse tree nodes under the 'expression'
+ * production rules into an AST structure comprised of ExpressionNode objects.
+ * Returns the root node of the converted AST structure.
  * 
  * @author Lewis
  *
- * @param <T> Generic type 
+ * @param <T> Generic type
  */
 public class BuildConditionsVisitor extends ConditionsBaseVisitor<ExpressionNode> {
 	LinkedHashMap<String, ExpressionNode> variables;
 
 	public BuildConditionsVisitor() {
+	}
+
+	@Override
+	public ExpressionNode visitRuleConditions(ConditionsParser.RuleConditionsContext context) {
+		return visit(context.condition());
+	}
+
+	@Override
+	public ExpressionNode visitConditionParenthetical(ConditionsParser.ConditionParentheticalContext context) {
+		return visit(context.condition());
 	}
 
 	@Override
@@ -38,24 +50,16 @@ public class BuildConditionsVisitor extends ConditionsBaseVisitor<ExpressionNode
 	}
 
 	@Override
-	public ExpressionNode visitRuleConditions(ConditionsParser.RuleConditionsContext context) {
-		return visit(context.condition());
-	}
-
-	@Override
-	public ExpressionNode visitNot(ConditionsParser.NotContext context) {
+	public ExpressionNode visitConditionNotOperation(ConditionsParser.ConditionNotOperationContext context) {
 
 		return new NotNode(visit(context.condition()));
 	}
 
 	@Override
-	public ExpressionNode visitParenthetical(ConditionsParser.ParentheticalContext context) {
-		return visit(context.expression());
-	}
-
-	@Override
-	public ExpressionNode visitConditionParenthetical(ConditionsParser.ConditionParentheticalContext context) {
-		return visit(context.condition());
+	public ExpressionNode visitConditionRelop(ConditionsParser.ConditionRelopContext context) {
+		ExpressionNode left = visit(context.left);
+		ExpressionNode right = visit(context.right);
+		return new RelopNode(left, right, context.relop.getType(), context.relop.getText());
 	}
 
 	@Override
@@ -68,14 +72,55 @@ public class BuildConditionsVisitor extends ConditionsBaseVisitor<ExpressionNode
 	}
 
 	@Override
-	public ExpressionNode visitConditionRelop(ConditionsParser.ConditionRelopContext context) {
-		ExpressionNode left = visit(context.left);
-		ExpressionNode right = visit(context.right);
-		return new RelopNode(left, right, context.relop.getType(), context.relop.getText());
+	public ExpressionNode visitVariable(ConditionsParser.VariableContext context) {
+		return new VariableNode(context.value.getText());
 	}
 
 	@Override
-	public ExpressionNode visitUnaryExpression(ConditionsParser.UnaryExpressionContext context) {
+	public ExpressionNode visitRuleVariable(ConditionsParser.RuleVariableContext context) {
+		return new RuleVariableNode(context.value.getText());
+	}
+
+	@Override
+	public ExpressionNode visitRational(ConditionsParser.RationalContext context) {
+		String[] split = context.getText().split("/");
+		long numerator = Long.valueOf(split[0]);
+		long denominator = Long.valueOf(split[1]);
+		return new NumberNode(numerator, denominator);
+	}
+
+	@Override
+	public ExpressionNode visitInteger(ConditionsParser.IntegerContext context) {
+		return new NumberNode(Long.valueOf(context.getText()));
+	}
+
+	@Override
+	public ExpressionNode visitDecimal(ConditionsParser.DecimalContext context) {
+		BigDecimal b = new BigDecimal(context.getText());
+
+		String formattedDecimal = b.stripTrailingZeros().toPlainString();
+		if (!(formattedDecimal.contains("."))) {
+			return new NumberNode(Long.valueOf(formattedDecimal));
+		}
+
+		String[] splitByDecimalPoint = formattedDecimal.split("\\.");
+		long numerator = Long.valueOf(formattedDecimal.replaceAll("\\.", ""));
+
+		int numberOfDecimalPlaces = splitByDecimalPoint[1].length();
+		long denominator = 1;
+		for (int i = 0; i < numberOfDecimalPlaces; i++) {
+			denominator *= 10;
+		}
+		return new NumberNode(numerator, denominator);
+	}
+
+	@Override
+	public ExpressionNode visitParenthetical(ConditionsParser.ParentheticalContext context) {
+		return visit(context.expression());
+	}
+
+	@Override
+	public ExpressionNode visitUnary(ConditionsParser.UnaryContext context) {
 		ExpressionNode node = visit(context.expression());
 
 		switch (context.op.getType()) {
@@ -98,7 +143,7 @@ public class BuildConditionsVisitor extends ConditionsBaseVisitor<ExpressionNode
 		OperationNode node = null;
 		ExpressionNode left = visit(context.left);
 		ExpressionNode right = visit(context.right);
-		
+
 		switch (context.op.getType()) {
 		case ConditionsLexer.OP_POW:
 			node = new PowerNode(left, right);
@@ -126,7 +171,7 @@ public class BuildConditionsVisitor extends ConditionsBaseVisitor<ExpressionNode
 		return node;
 	}
 
-	public ExpressionNode visitFunctionExpression(ConditionsParser.FunctionExpressionContext context) {
+	public ExpressionNode visitFunction(ConditionsParser.FunctionContext context) {
 		ArrayList<ExpressionNode> arguments = new ArrayList<>();
 		for (int i = 0; i < context.expression().size(); i++) {
 			arguments.add(visit(context.expression(i)));
@@ -136,46 +181,4 @@ public class BuildConditionsVisitor extends ConditionsBaseVisitor<ExpressionNode
 
 	}
 
-	@Override
-	public ExpressionNode visitDecimal(ConditionsParser.DecimalContext context) {
-		BigDecimal b = new BigDecimal(context.getText());
-
-		String formattedDecimal = b.stripTrailingZeros().toPlainString();
-		if (!(formattedDecimal.contains("."))) {
-			return new NumberNode(Long.valueOf(formattedDecimal));
-		}
-
-		String[] splitByDecimalPoint = formattedDecimal.split("\\.");
-		long numerator = Long.valueOf(formattedDecimal.replaceAll("\\.", ""));
-
-		int numberOfDecimalPlaces = splitByDecimalPoint[1].length();
-		long denominator = 1;
-		for (int i = 0; i < numberOfDecimalPlaces; i++) {
-			denominator *= 10;
-		}
-		return new NumberNode(numerator, denominator);
-	}
-
-	@Override
-	public ExpressionNode visitInteger(ConditionsParser.IntegerContext context) {
-		return new NumberNode(Long.valueOf(context.getText()));
-	}
-
-	@Override
-	public ExpressionNode visitRational(ConditionsParser.RationalContext context) {
-		String[] split = context.getText().split("/");
-		long numerator = Long.valueOf(split[0]);
-		long denominator = Long.valueOf(split[1]);
-		return new NumberNode(numerator, denominator);
-	}
-
-	@Override
-	public ExpressionNode visitRuleVariable(ConditionsParser.RuleVariableContext context) {
-		return new RuleVariableNode(context.value.getText());
-	}
-
-	@Override
-	public ExpressionNode visitVariable(ConditionsParser.VariableContext context) {
-		return new VariableNode(context.value.getText());
-	}
 }

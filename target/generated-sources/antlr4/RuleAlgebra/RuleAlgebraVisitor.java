@@ -24,19 +24,19 @@ public interface RuleAlgebraVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitInteger(RuleAlgebraParser.IntegerContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code Function}
+	 * labeled alternative in {@link RuleAlgebraParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitFunction(RuleAlgebraParser.FunctionContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code Variable}
 	 * labeled alternative in {@link RuleAlgebraParser#expression}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitVariable(RuleAlgebraParser.VariableContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code FunctionExpression}
-	 * labeled alternative in {@link RuleAlgebraParser#expression}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitFunctionExpression(RuleAlgebraParser.FunctionExpressionContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code Rational}
 	 * labeled alternative in {@link RuleAlgebraParser#expression}.
@@ -59,19 +59,19 @@ public interface RuleAlgebraVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitParenthetical(RuleAlgebraParser.ParentheticalContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code UnaryExpression}
-	 * labeled alternative in {@link RuleAlgebraParser#expression}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitUnaryExpression(RuleAlgebraParser.UnaryExpressionContext ctx);
-	/**
 	 * Visit a parse tree produced by the {@code Operation}
 	 * labeled alternative in {@link RuleAlgebraParser#expression}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitOperation(RuleAlgebraParser.OperationContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code Unary}
+	 * labeled alternative in {@link RuleAlgebraParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitUnary(RuleAlgebraParser.UnaryContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code RuleVariable}
 	 * labeled alternative in {@link RuleAlgebraParser#expression}.
