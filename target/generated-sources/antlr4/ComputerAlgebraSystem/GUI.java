@@ -53,7 +53,6 @@ public class GUI implements ActionListener {
 		fileChooser.setDialogTitle("Open Rewrite Rules");
 		FileNameExtensionFilter filter = new FileNameExtensionFilter("Text Files", "txt", "text");
 		fileChooser.setFileFilter(filter);
-		// panel.add(fileChooser, BorderLayout.PAGE_START);
 
 		openFileButton = new JButton("Load Rules");
 		openFileButton.addActionListener(this);
@@ -185,10 +184,6 @@ public class GUI implements ActionListener {
 		}
 		return null;
 	}
-
-//	public void setOutput(String output) {
-//		result.setText(output);
-//	}
 
 	public static ArrayList<String> readRules(File f) throws FileNotFoundException, Exception {
 

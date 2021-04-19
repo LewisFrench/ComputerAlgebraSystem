@@ -17,8 +17,8 @@ public class RuleAlgebraParser extends Parser {
 	protected static final PredictionContextCache _sharedContextCache =
 		new PredictionContextCache();
 	public static final int
-		OP_ADD=1, OP_SUB=2, OP_MUL=3, OP_DIV=4, OP_POW=5, VARIABLE=6, INTEGER=7, 
-		DECIMALNUMBER=8, COMMA=9, LPAREN=10, VARIDENTIFIER=11, RPAREN=12, POINT=13, 
+		INTEGER=1, DECIMALNUMBER=2, VARIABLE=3, OP_POW=4, OP_MUL=5, OP_DIV=6, 
+		OP_ADD=7, OP_SUB=8, COMMA=9, LPAREN=10, RPAREN=11, POINT=12, RULEVARIDENTIFIER=13, 
 		WS=14;
 	public static final int
 		RULE_ruleTerm = 0, RULE_expression = 1;
@@ -31,15 +31,15 @@ public class RuleAlgebraParser extends Parser {
 
 	private static String[] makeLiteralNames() {
 		return new String[] {
-			null, "'+'", "'-'", "'*'", "'/'", "'^'", null, null, null, "','", "'('", 
-			"'$'", "')'", "'.'"
+			null, null, null, null, "'^'", "'*'", "'/'", "'+'", "'-'", "','", "'('", 
+			"')'", "'.'", "'$'"
 		};
 	}
 	private static final String[] _LITERAL_NAMES = makeLiteralNames();
 	private static String[] makeSymbolicNames() {
 		return new String[] {
-			null, "OP_ADD", "OP_SUB", "OP_MUL", "OP_DIV", "OP_POW", "VARIABLE", "INTEGER", 
-			"DECIMALNUMBER", "COMMA", "LPAREN", "VARIDENTIFIER", "RPAREN", "POINT", 
+			null, "INTEGER", "DECIMALNUMBER", "VARIABLE", "OP_POW", "OP_MUL", "OP_DIV", 
+			"OP_ADD", "OP_SUB", "COMMA", "LPAREN", "RPAREN", "POINT", "RULEVARIDENTIFIER", 
 			"WS"
 		};
 	}
@@ -170,25 +170,7 @@ public class RuleAlgebraParser extends Parser {
 			else return visitor.visitChildren(this);
 		}
 	}
-	public static class VariableContext extends ExpressionContext {
-		public Token value;
-		public TerminalNode VARIABLE() { return getToken(RuleAlgebraParser.VARIABLE, 0); }
-		public VariableContext(ExpressionContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof RuleAlgebraListener ) ((RuleAlgebraListener)listener).enterVariable(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof RuleAlgebraListener ) ((RuleAlgebraListener)listener).exitVariable(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof RuleAlgebraVisitor ) return ((RuleAlgebraVisitor<? extends T>)visitor).visitVariable(this);
-			else return visitor.visitChildren(this);
-		}
-	}
-	public static class FunctionExpressionContext extends ExpressionContext {
+	public static class FunctionContext extends ExpressionContext {
 		public Token func;
 		public ExpressionContext arguments;
 		public TerminalNode LPAREN() { return getToken(RuleAlgebraParser.LPAREN, 0); }
@@ -204,18 +186,36 @@ public class RuleAlgebraParser extends Parser {
 		public TerminalNode COMMA(int i) {
 			return getToken(RuleAlgebraParser.COMMA, i);
 		}
-		public FunctionExpressionContext(ExpressionContext ctx) { copyFrom(ctx); }
+		public FunctionContext(ExpressionContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof RuleAlgebraListener ) ((RuleAlgebraListener)listener).enterFunctionExpression(this);
+			if ( listener instanceof RuleAlgebraListener ) ((RuleAlgebraListener)listener).enterFunction(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof RuleAlgebraListener ) ((RuleAlgebraListener)listener).exitFunctionExpression(this);
+			if ( listener instanceof RuleAlgebraListener ) ((RuleAlgebraListener)listener).exitFunction(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof RuleAlgebraVisitor ) return ((RuleAlgebraVisitor<? extends T>)visitor).visitFunctionExpression(this);
+			if ( visitor instanceof RuleAlgebraVisitor ) return ((RuleAlgebraVisitor<? extends T>)visitor).visitFunction(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class VariableContext extends ExpressionContext {
+		public Token value;
+		public TerminalNode VARIABLE() { return getToken(RuleAlgebraParser.VARIABLE, 0); }
+		public VariableContext(ExpressionContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof RuleAlgebraListener ) ((RuleAlgebraListener)listener).enterVariable(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof RuleAlgebraListener ) ((RuleAlgebraListener)listener).exitVariable(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof RuleAlgebraVisitor ) return ((RuleAlgebraVisitor<? extends T>)visitor).visitVariable(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -285,28 +285,6 @@ public class RuleAlgebraParser extends Parser {
 			else return visitor.visitChildren(this);
 		}
 	}
-	public static class UnaryExpressionContext extends ExpressionContext {
-		public Token op;
-		public ExpressionContext expression() {
-			return getRuleContext(ExpressionContext.class,0);
-		}
-		public TerminalNode OP_ADD() { return getToken(RuleAlgebraParser.OP_ADD, 0); }
-		public TerminalNode OP_SUB() { return getToken(RuleAlgebraParser.OP_SUB, 0); }
-		public UnaryExpressionContext(ExpressionContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof RuleAlgebraListener ) ((RuleAlgebraListener)listener).enterUnaryExpression(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof RuleAlgebraListener ) ((RuleAlgebraListener)listener).exitUnaryExpression(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof RuleAlgebraVisitor ) return ((RuleAlgebraVisitor<? extends T>)visitor).visitUnaryExpression(this);
-			else return visitor.visitChildren(this);
-		}
-	}
 	public static class OperationContext extends ExpressionContext {
 		public ExpressionContext left;
 		public Token op;
@@ -337,9 +315,31 @@ public class RuleAlgebraParser extends Parser {
 			else return visitor.visitChildren(this);
 		}
 	}
+	public static class UnaryContext extends ExpressionContext {
+		public Token op;
+		public ExpressionContext expression() {
+			return getRuleContext(ExpressionContext.class,0);
+		}
+		public TerminalNode OP_ADD() { return getToken(RuleAlgebraParser.OP_ADD, 0); }
+		public TerminalNode OP_SUB() { return getToken(RuleAlgebraParser.OP_SUB, 0); }
+		public UnaryContext(ExpressionContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof RuleAlgebraListener ) ((RuleAlgebraListener)listener).enterUnary(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof RuleAlgebraListener ) ((RuleAlgebraListener)listener).exitUnary(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof RuleAlgebraVisitor ) return ((RuleAlgebraVisitor<? extends T>)visitor).visitUnary(this);
+			else return visitor.visitChildren(this);
+		}
+	}
 	public static class RuleVariableContext extends ExpressionContext {
 		public Token value;
-		public TerminalNode VARIDENTIFIER() { return getToken(RuleAlgebraParser.VARIDENTIFIER, 0); }
+		public TerminalNode RULEVARIDENTIFIER() { return getToken(RuleAlgebraParser.RULEVARIDENTIFIER, 0); }
 		public TerminalNode VARIABLE() { return getToken(RuleAlgebraParser.VARIABLE, 0); }
 		public RuleVariableContext(ExpressionContext ctx) { copyFrom(ctx); }
 		@Override
@@ -392,7 +392,7 @@ public class RuleAlgebraParser extends Parser {
 				_ctx = _localctx;
 				_prevctx = _localctx;
 				setState(9);
-				match(VARIDENTIFIER);
+				match(RULEVARIDENTIFIER);
 				setState(10);
 				((RuleVariableContext)_localctx).value = match(VARIABLE);
 				}
@@ -463,14 +463,14 @@ public class RuleAlgebraParser extends Parser {
 				break;
 			case 7:
 				{
-				_localctx = new UnaryExpressionContext(_localctx);
+				_localctx = new UnaryContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
 				setState(26);
-				((UnaryExpressionContext)_localctx).op = _input.LT(1);
+				((UnaryContext)_localctx).op = _input.LT(1);
 				_la = _input.LA(1);
 				if ( !(_la==OP_ADD || _la==OP_SUB) ) {
-					((UnaryExpressionContext)_localctx).op = (Token)_errHandler.recoverInline(this);
+					((UnaryContext)_localctx).op = (Token)_errHandler.recoverInline(this);
 				}
 				else {
 					if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
@@ -483,15 +483,15 @@ public class RuleAlgebraParser extends Parser {
 				break;
 			case 8:
 				{
-				_localctx = new FunctionExpressionContext(_localctx);
+				_localctx = new FunctionContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
 				setState(28);
-				((FunctionExpressionContext)_localctx).func = match(VARIABLE);
+				((FunctionContext)_localctx).func = match(VARIABLE);
 				setState(29);
 				match(LPAREN);
 				setState(30);
-				((FunctionExpressionContext)_localctx).arguments = expression(0);
+				((FunctionContext)_localctx).arguments = expression(0);
 				setState(35);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
@@ -626,19 +626,19 @@ public class RuleAlgebraParser extends Parser {
 		"\3\3\2\3\2\3\2\3\3\3\3\3\3\3\3\3\3\5\3\17\n\3\3\3\3\3\3\3\5\3\24\n\3\3"+
 		"\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\7\3$\n\3\f\3\16"+
 		"\3\'\13\3\3\3\3\3\5\3+\n\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\7\3\66"+
-		"\n\3\f\3\16\39\13\3\3\3\2\3\4\4\2\4\2\4\3\2\3\4\3\2\5\6\2E\2\6\3\2\2\2"+
-		"\4*\3\2\2\2\6\7\5\4\3\2\7\b\7\2\2\3\b\3\3\2\2\2\t\n\b\3\1\2\n+\7\b\2\2"+
-		"\13\f\7\r\2\2\f+\7\b\2\2\r\17\7\4\2\2\16\r\3\2\2\2\16\17\3\2\2\2\17\20"+
-		"\3\2\2\2\20\21\7\t\2\2\21\23\7\6\2\2\22\24\7\4\2\2\23\22\3\2\2\2\23\24"+
-		"\3\2\2\2\24\25\3\2\2\2\25+\7\t\2\2\26+\7\t\2\2\27+\7\n\2\2\30\31\7\f\2"+
-		"\2\31\32\5\4\3\2\32\33\7\16\2\2\33+\3\2\2\2\34\35\t\2\2\2\35+\5\4\3\7"+
-		"\36\37\7\b\2\2\37 \7\f\2\2 %\5\4\3\2!\"\7\13\2\2\"$\5\4\3\2#!\3\2\2\2"+
-		"$\'\3\2\2\2%#\3\2\2\2%&\3\2\2\2&(\3\2\2\2\'%\3\2\2\2()\7\16\2\2)+\3\2"+
-		"\2\2*\t\3\2\2\2*\13\3\2\2\2*\16\3\2\2\2*\26\3\2\2\2*\27\3\2\2\2*\30\3"+
-		"\2\2\2*\34\3\2\2\2*\36\3\2\2\2+\67\3\2\2\2,-\f\6\2\2-.\7\7\2\2.\66\5\4"+
-		"\3\7/\60\f\5\2\2\60\61\t\3\2\2\61\66\5\4\3\6\62\63\f\4\2\2\63\64\t\2\2"+
-		"\2\64\66\5\4\3\5\65,\3\2\2\2\65/\3\2\2\2\65\62\3\2\2\2\669\3\2\2\2\67"+
-		"\65\3\2\2\2\678\3\2\2\28\5\3\2\2\29\67\3\2\2\2\b\16\23%*\65\67";
+		"\n\3\f\3\16\39\13\3\3\3\2\3\4\4\2\4\2\4\3\2\t\n\3\2\7\b\2E\2\6\3\2\2\2"+
+		"\4*\3\2\2\2\6\7\5\4\3\2\7\b\7\2\2\3\b\3\3\2\2\2\t\n\b\3\1\2\n+\7\5\2\2"+
+		"\13\f\7\17\2\2\f+\7\5\2\2\r\17\7\n\2\2\16\r\3\2\2\2\16\17\3\2\2\2\17\20"+
+		"\3\2\2\2\20\21\7\3\2\2\21\23\7\b\2\2\22\24\7\n\2\2\23\22\3\2\2\2\23\24"+
+		"\3\2\2\2\24\25\3\2\2\2\25+\7\3\2\2\26+\7\3\2\2\27+\7\4\2\2\30\31\7\f\2"+
+		"\2\31\32\5\4\3\2\32\33\7\r\2\2\33+\3\2\2\2\34\35\t\2\2\2\35+\5\4\3\7\36"+
+		"\37\7\5\2\2\37 \7\f\2\2 %\5\4\3\2!\"\7\13\2\2\"$\5\4\3\2#!\3\2\2\2$\'"+
+		"\3\2\2\2%#\3\2\2\2%&\3\2\2\2&(\3\2\2\2\'%\3\2\2\2()\7\r\2\2)+\3\2\2\2"+
+		"*\t\3\2\2\2*\13\3\2\2\2*\16\3\2\2\2*\26\3\2\2\2*\27\3\2\2\2*\30\3\2\2"+
+		"\2*\34\3\2\2\2*\36\3\2\2\2+\67\3\2\2\2,-\f\6\2\2-.\7\6\2\2.\66\5\4\3\7"+
+		"/\60\f\5\2\2\60\61\t\3\2\2\61\66\5\4\3\6\62\63\f\4\2\2\63\64\t\2\2\2\64"+
+		"\66\5\4\3\5\65,\3\2\2\2\65/\3\2\2\2\65\62\3\2\2\2\669\3\2\2\2\67\65\3"+
+		"\2\2\2\678\3\2\2\28\5\3\2\2\29\67\3\2\2\2\b\16\23%*\65\67";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

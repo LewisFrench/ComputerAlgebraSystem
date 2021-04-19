@@ -87,7 +87,6 @@ public class TestTermAlgebraParser {
 		
 		try {
 			ExpressionNode n = p.parseTerm("3.00000000000");
-			System.out.println(n.toString());
 			assertTrue(n instanceof NumberNode);
 			assertTrue(((NumberNode) n).numerator == 3);
 			assertTrue(((NumberNode) n).denominator == 1);
@@ -119,19 +118,16 @@ public class TestTermAlgebraParser {
 		
 		try {
 			ExpressionNode n = p.parseTerm("3.7");
-			System.out.println(n.toString());
 			assertTrue(n instanceof NumberNode);
 			assertTrue(((NumberNode) n).numerator == 37);
 			assertTrue(((NumberNode) n).denominator == 10);
 			
 			n = p.parseTerm("-3.2001");
-			System.out.println(n.toString());
 			assertTrue(n instanceof NumberNode);
 			assertTrue(((NumberNode) n).numerator == -32001);
 			assertTrue(((NumberNode) n).denominator == 10000);
 			
 			n = p.parseTerm("-0.0001");
-			System.out.println(n.toString());
 			assertTrue(n instanceof NumberNode);
 			assertTrue(((NumberNode) n).numerator == -1);
 			assertTrue(((NumberNode) n).denominator == 10000);
@@ -283,7 +279,6 @@ public class TestTermAlgebraParser {
 			assertTrue(((MultiplicationNode)n).getRight() instanceof NumberNode);
 			assertEquals(((VariableNode)left).getValue(), "a");
 			assertTrue(right instanceof NumberNode);
-			System.out.println(n.toString());
 			assertTrue(((NumberNode) right).getNumerator() == 1);
 			assertTrue(((NumberNode) right).getDenominator() == 1);
 		} catch (ParseCancellationException e) {fail(); 

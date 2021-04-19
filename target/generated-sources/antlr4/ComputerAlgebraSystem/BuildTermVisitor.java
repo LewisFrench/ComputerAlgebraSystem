@@ -6,15 +6,16 @@ import java.util.ArrayList;
 import Algebra.AlgebraBaseVisitor;
 import Algebra.AlgebraLexer;
 import Algebra.AlgebraParser;
-import RuleAlgebra.RuleAlgebraLexer;
+
 /**
- * Visitor class that traverses the ANTLR4 parse tree that represents the algebraic term input by the user.  
- * Converts the parse tree nodes under the 'expression' production rules into an AST structure comprised of ExpressionNode objects.
- * Returns the root node of the converted AST structure. 
+ * Visitor class that traverses the ANTLR4 parse tree that represents the
+ * algebraic term input by the user. Converts the parse tree nodes under the
+ * 'expression' production rules into an AST structure comprised of
+ * ExpressionNode objects. Returns the root node of the converted AST structure.
  * 
  * @author Lewis
  *
- * @param <T> Generic type 
+ * @param <T> Generic type
  */
 public class BuildTermVisitor extends AlgebraBaseVisitor<ExpressionNode> {
 
@@ -26,15 +27,18 @@ public class BuildTermVisitor extends AlgebraBaseVisitor<ExpressionNode> {
 	@Override
 	public ExpressionNode visitDecimal(AlgebraParser.DecimalContext context) {
 		BigDecimal b = new BigDecimal(context.getText());
+		// Format decimal input, remove unnecessary zeroes
 
 		String formattedDecimal = b.stripTrailingZeros().toPlainString();
+		// process as integer if fractional part is zero
 		if (!(formattedDecimal.contains("."))) {
 			return new NumberNode(Long.valueOf(formattedDecimal));
 		}
-
+		// Split into integer and fraction part
 		String[] splitByDecimalPoint = formattedDecimal.split("\\.");
+		// set numerator to integer part
 		long numerator = Long.valueOf(formattedDecimal.replaceAll("\\.", ""));
-
+		// Scale denominator to number of decimal places
 		int numberOfDecimalPlaces = splitByDecimalPoint[1].length();
 		long denominator = 1;
 		for (int i = 0; i < numberOfDecimalPlaces; i++) {
@@ -68,7 +72,7 @@ public class BuildTermVisitor extends AlgebraBaseVisitor<ExpressionNode> {
 	}
 
 	@Override
-	public ExpressionNode visitUnaryExpression(AlgebraParser.UnaryExpressionContext context) {
+	public ExpressionNode visitUnary(AlgebraParser.UnaryContext context) {
 		ExpressionNode node = visit(context.expression());
 
 		switch (context.op.getType()) {
@@ -90,24 +94,24 @@ public class BuildTermVisitor extends AlgebraBaseVisitor<ExpressionNode> {
 		ExpressionNode right = visit(context.right);
 		OperationNode node = null;
 		switch (context.op.getType()) {
-		case RuleAlgebraLexer.OP_POW:
+		case AlgebraLexer.OP_POW:
 			node = new PowerNode(left, right);
 			break;
-		case RuleAlgebraLexer.OP_ADD:
+		case AlgebraLexer.OP_ADD:
 			node = new AdditionNode(left, right);
 
 			break;
 
-		case RuleAlgebraLexer.OP_SUB:
+		case AlgebraLexer.OP_SUB:
 			node = new SubtractionNode(left, right);
 
 			break;
 
-		case RuleAlgebraLexer.OP_MUL:
+		case AlgebraLexer.OP_MUL:
 			node = new MultiplicationNode(left, right);
 			break;
 
-		case RuleAlgebraLexer.OP_DIV:
+		case AlgebraLexer.OP_DIV:
 			node = new DivisionNode(left, right);
 			break;
 
@@ -117,7 +121,7 @@ public class BuildTermVisitor extends AlgebraBaseVisitor<ExpressionNode> {
 	}
 
 	@Override
-	public ExpressionNode visitFunctionExpression(AlgebraParser.FunctionExpressionContext context) {
+	public ExpressionNode visitFunction(AlgebraParser.FunctionContext context) {
 		ArrayList<ExpressionNode> arguments = new ArrayList<>();
 		for (int i = 0; i < context.expression().size(); i++) {
 			arguments.add(visit(context.expression(i)));
