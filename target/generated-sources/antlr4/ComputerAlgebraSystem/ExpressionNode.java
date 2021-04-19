@@ -335,6 +335,10 @@ class RelopNode extends ExpressionNode {
 	public ExpressionNode getRight() {
 		return this.right;
 	}
+	
+	public int getRelop() {
+		return this.relop;
+	}
 
 	public String toString() {
 		return left.toString() + relopText + right.toString();
