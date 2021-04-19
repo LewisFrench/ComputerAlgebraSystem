@@ -363,11 +363,11 @@ class ConditionFunctionNode extends ExpressionNode {
 
 }
 
-class NotNode extends ExpressionNode {
+class ConditionNotNode extends ExpressionNode {
 
 	public ExpressionNode innerNode;
 
-	public NotNode(ExpressionNode innerNode) {
+	public ConditionNotNode(ExpressionNode innerNode) {
 		this.innerNode = innerNode;
 	}
 	public ExpressionNode getInnerNode() {

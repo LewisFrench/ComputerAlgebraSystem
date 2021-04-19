@@ -76,9 +76,10 @@ public class BuildTermVisitor extends AlgebraBaseVisitor<ExpressionNode> {
 		ExpressionNode node = visit(context.expression());
 
 		switch (context.op.getType()) {
+		// ignore hanging + symbols before expressions
 		case AlgebraLexer.OP_ADD:
 			return node;
-
+		
 		case AlgebraLexer.OP_SUB:
 			if (node instanceof UnaryNode) {
 				return ((UnaryNode)node).getInnerNode();

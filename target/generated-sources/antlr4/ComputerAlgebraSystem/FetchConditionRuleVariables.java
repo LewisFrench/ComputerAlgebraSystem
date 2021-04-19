@@ -35,7 +35,7 @@ public class FetchConditionRuleVariables extends VisitConditions<Void> {
 	}
 
 	@Override
-	public Void Visit(NotNode node) throws Exception {
+	public Void Visit(ConditionNotNode node) throws Exception {
 		Visit(node.getInnerNode());
 		return null;
 	}

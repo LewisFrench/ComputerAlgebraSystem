@@ -31,8 +31,8 @@ public class SubstituteConditionRuleVariables extends VisitConditions<Expression
 	}
 
 	@Override
-	public ExpressionNode Visit(NotNode node) throws Exception {
-		return new NotNode(Visit(node.innerNode));
+	public ExpressionNode Visit(ConditionNotNode node) throws Exception {
+		return new ConditionNotNode(Visit(node.innerNode));
 	}
 
 	@Override

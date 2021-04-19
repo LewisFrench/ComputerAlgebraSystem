@@ -52,7 +52,7 @@ public class BuildConditionsVisitor extends ConditionsBaseVisitor<ExpressionNode
 	@Override
 	public ExpressionNode visitConditionNotOperation(ConditionsParser.ConditionNotOperationContext context) {
 
-		return new NotNode(visit(context.condition()));
+		return new ConditionNotNode(visit(context.condition()));
 	}
 
 	@Override

@@ -36,12 +36,12 @@ public class TestSubstituteConditionRuleVariables {
 		variables.put("$n", new VariableNode("x"));
 		ExpressionNode subtraction = new SubtractionNode(new VariableNode("Var"), new RuleVariableNode("n"));
 		ExpressionNode relop = new RelopNode(subtraction, new NumberNode(2), ConditionsLexer.RELOP_GTE, ">=");
-		ExpressionNode not = new NotNode(relop);
+		ExpressionNode not = new ConditionNotNode(relop);
 		SubstituteConditionRuleVariables s = new SubstituteConditionRuleVariables(variables);
 		
 		try { 
 			ExpressionNode result = s.Visit(not);
-			NotNode notResult = (NotNode) result;
+			ConditionNotNode notResult = (ConditionNotNode) result;
 			assertTrue(notResult.innerNode instanceof RelopNode);
 			
 			assertTrue(((RelopNode)notResult.innerNode).left instanceof SubtractionNode);

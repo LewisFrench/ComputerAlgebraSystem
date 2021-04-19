@@ -689,7 +689,7 @@ public class TestRuleAlgebraParser {
 		Program p = new Program();
 		try {
 			Rule result = p.parseRule("x=1:!(1>0)");
-			assertTrue(result.conditionsNode instanceof NotNode);
+			assertTrue(result.conditionsNode instanceof ConditionNotNode);
 
 		} catch (Exception e) {
 			fail();
