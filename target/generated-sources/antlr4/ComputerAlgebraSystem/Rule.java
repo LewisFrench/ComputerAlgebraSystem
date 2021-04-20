@@ -1,11 +1,12 @@
 package ComputerAlgebraSystem;
 
+import Nodes.*;
 /**
  * Class storing the components of a rewrite rule in AST format
  * @author lewis
  *
  */
-class Rule {
+public class Rule {
 	ExpressionNode lhsNode;
 	ExpressionNode rhsNode;
 	ExpressionNode conditionsNode;
@@ -40,7 +41,7 @@ class Rule {
 		return this.rhsNode;
 	}
 	
-	public ExpressionNode getConditions() {
+	public ExpressionNode getConditionsNode() {
 		return this.conditionsNode;
 	}
 	
