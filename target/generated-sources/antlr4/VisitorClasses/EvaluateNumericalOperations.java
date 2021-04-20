@@ -62,7 +62,7 @@ public class EvaluateNumericalOperations extends VisitTerm<ExpressionNode> {
 		// Divide by zero error
 		if (right instanceof NumberNode) {
 			if (((NumberNode) right).compareTo(new NumberNode(0)) == 0) {
-				throw new ArithmeticException("Attempted to divide by zero. Please check your rules");
+				throw new ArithmeticException("Attempted to divide by zero. Check that your algebraic term does not attempt this division.");
 			}
 		}
 		if (left instanceof NumberNode && right instanceof NumberNode) {

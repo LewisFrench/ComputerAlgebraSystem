@@ -1,1 +1,1 @@
-$x = y : _is_number($x)
+test($a, $b) = test($a, $b-1) + $a/$b

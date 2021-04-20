@@ -160,6 +160,9 @@ public class GUI implements ActionListener {
 				errorMessage.setText("ERROR : " + npe.getMessage());
 			} catch (ParseCancellationException pce) {
 				errorMessage.setText(pce.getMessage());
+			} catch (RewriteError re) {
+				System.out.println("Rewrite Error");
+				errorMessage.setText(re.getMessage());
 			} catch (Exception ex) {
 				errorMessage.setText(ex.getMessage());
 			}

@@ -109,25 +109,26 @@ public class RewriteProcess extends VisitTerm<ExpressionNode> {
 	 *         rules can be applied.
 	 * @throws Exception
 	 */
-	public ExpressionNode rewrite(ExpressionNode node) throws Exception {
+	public ExpressionNode rewrite(ExpressionNode redex) throws Exception {
+		/* Do not apply rule if rule application limit is reached */
 		if (!(RULE_APPLICATION_LIMIT > this.ruleApplicationCount)) {
-			return node;
+			return redex;
 		}
-		EvaluateTree argumentEvaluator;
+		EvaluateTree treeMatcher;
 		if (rules != null) {
 
 			for (Rule r : rules) {
 				try {
 					boolean conditionsHold = false;
-					argumentEvaluator = new EvaluateTree();
+					treeMatcher = new EvaluateTree();
 
 					// compare rule to redex
-					boolean ruleMatches = argumentEvaluator.Visit(r.getLhsNode(), node);
+					boolean ruleMatches = treeMatcher.Visit(r.getLhsNode(), redex);
 					if (ruleMatches) {
 
 						// determine if rule repeated rule variables are valid
 						FetchComparisonArguments f = new FetchComparisonArguments();
-						f.Visit(r.getLhsNode(), node);
+						f.Visit(r.getLhsNode(), redex);
 						boolean validArguments = argumentsValid(f.getRuleVariables(), f.getRuleArguments());
 						if (validArguments) {
 							// Construct LinkedHashMap of rule variables and their corresponding values.
@@ -138,16 +139,17 @@ public class RewriteProcess extends VisitTerm<ExpressionNode> {
 
 							// if rule has conditions, determine if they hold.
 							if (r.getConditionsNode() != null) {
+								// Substitute rule variable values into the conditions tree
 								ExpressionNode substitutedConditions = new SubstituteConditionRuleVariables(
 										newRuleVariables).Visit(r.getConditionsNode());
-
+								// perform any available numerical evaluations in the conditions tree
 								ExpressionNode evaluated = new EvaluateConditionNumericalExpressions()
 										.Visit(substitutedConditions);
-
+								// Verify if the conditions are true or falase
 								conditionsHold = new EvaluateConditionsVisitor().Visit(evaluated);
 
 							}
-							// rewrite the subtree with the substituted RHS of the rule
+							// rewrite the subtree with the substituted RHS of the rule if conditions are not false;
 							if (conditionsHold || r.getConditionsNode() == null) {
 								this.ruleApplicationCount++;
 								ExpressionNode substituted = new SubstituteRuleVariables(newRuleVariables)
@@ -160,7 +162,7 @@ public class RewriteProcess extends VisitTerm<ExpressionNode> {
 					}
 				} catch (Exception e) {
 					if (!(e.getClass().equals(RewriteError.class))) {
-						throw new RewriteError(e.getMessage(), r, node);
+						throw new RewriteError(e.getMessage(), r, redex);
 					} else {
 						throw e;
 					}
@@ -169,8 +171,8 @@ public class RewriteProcess extends VisitTerm<ExpressionNode> {
 			}
 
 		}
-
-		return node;
+		// Return input redex if no rules can be applied
+		return redex;
 
 	}
 

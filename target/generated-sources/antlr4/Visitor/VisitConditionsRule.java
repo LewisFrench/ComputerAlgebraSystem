@@ -77,7 +77,7 @@ public abstract class VisitConditionsRule<T> {
 		} else if (node instanceof RuleVariableNode) {
 			return Visit((RuleVariableNode) node);
 		} else {
-			throw new Exception("Attempted to visit invalid node. Please check the struture of your rules");
+			throw new IllegalArgumentException("Attempted to visit invalid node. Please check the struture of your rules");
 		}
 	}
 }

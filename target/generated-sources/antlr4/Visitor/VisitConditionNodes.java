@@ -25,7 +25,7 @@ public abstract class VisitConditionNodes<T> {
 		} else if (node instanceof ConditionFunctionNode) {
 			return Visit((ConditionFunctionNode) node);
 		} else {
-			throw new Exception("Attempted to visit invalid node. Please check the struture of your rules");
+			throw new IllegalArgumentException("Attempted to visit invalid node. Please check the struture of your rules");
 		}
 	}
 }

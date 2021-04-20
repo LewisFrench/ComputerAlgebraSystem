@@ -78,7 +78,7 @@ public abstract class VisitConditionsTerm<T> {
 		} else if (node instanceof NumberNode) {
 			return Visit((NumberNode) node);
 		} else {
-			throw new Exception("Attempted to visit invalid node. Please check the struture of your rules");
+			throw new IllegalArgumentException("Attempted to visit invalid node. Please check the struture of your rules");
 		}
 	}
 }

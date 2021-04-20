@@ -21,7 +21,7 @@ public class EvaluateTermOutput extends VisitTerm<String> {
 
 	@Override
 	public String Visit(AdditionNode node) throws Exception {
-		return "(" + Visit(node.getLeft()) + "+" + Visit(node.getRight()) + ")";
+		return Visit(node.getLeft()) + "+" + Visit(node.getRight()) ;
 	}
 
 	@Override

@@ -46,9 +46,9 @@ public class Program {
 	 */
 	public String Rewrite(ArrayList<Rule> rules, ExpressionNode termAst) throws Exception {
 		try {
-			ExpressionNode ast2 = new RewriteProcess(rules).Visit(termAst);
-			ExpressionNode evaluated = new EvaluateNumericalOperations().Visit(ast2);
-			return new EvaluateTermOutput().Visit(evaluated);
+			ExpressionNode rewrittenTerm = new RewriteProcess(rules).Visit(termAst);
+			ExpressionNode evaluatedTerm = new EvaluateNumericalOperations().Visit(rewrittenTerm);
+			return new EvaluateTermOutput().Visit(evaluatedTerm);
 		} catch (StackOverflowError soe) {
 			throw new StackOverflowError(
 					"Check for any infinitely-recursive rules");
