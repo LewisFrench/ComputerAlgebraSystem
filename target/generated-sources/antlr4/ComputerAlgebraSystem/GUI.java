@@ -21,7 +21,7 @@ import javax.swing.JTextField;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import org.antlr.v4.runtime.misc.ParseCancellationException;
-
+import Nodes.*;
 public class GUI implements ActionListener {
 	JFileChooser fileChooser;
 	JButton openFileButton;

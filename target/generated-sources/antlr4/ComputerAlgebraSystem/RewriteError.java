@@ -1,5 +1,7 @@
 package ComputerAlgebraSystem;
 
+import Nodes.*;
+
 /**
  * Custom Exception to output errors occurring during the rewrite process
  * Contains the redex and rule that caused the error to occur. 

@@ -10,13 +10,21 @@ import org.antlr.v4.runtime.misc.ParseCancellationException;
 import Algebra.AlgebraLexer;
 import Algebra.AlgebraParser;
 import Algebra.AlgebraParser.TermContext;
+import AstConversion.BuildConditionsVisitor;
+import AstConversion.BuildRuleVisitor;
+import AstConversion.BuildTermVisitor;
 import Conditions.ConditionsLexer;
 import Conditions.ConditionsParser;
 import Conditions.ConditionsParser.RuleConditionsContext;
 import RuleAlgebra.RuleAlgebraLexer;
 import RuleAlgebra.RuleAlgebraParser;
 import RuleAlgebra.RuleAlgebraParser.RuleTermContext;
-
+import VisitorClasses.EvaluateNumericalOperations;
+import VisitorClasses.EvaluateTermOutput;
+import VisitorClasses.FetchConditionRuleVariables;
+import VisitorClasses.FetchRuleVariables;
+import VisitorClasses.RewriteProcess;
+import Nodes.*;
 public class Program {
 	public Program() {
 
@@ -40,7 +48,7 @@ public class Program {
 		try {
 			ExpressionNode ast2 = new RewriteProcess(rules).Visit(termAst);
 			ExpressionNode evaluated = new EvaluateNumericalOperations().Visit(ast2);
-			return new EvaluateExpressionVisitor().Visit(evaluated);
+			return new EvaluateTermOutput().Visit(evaluated);
 		} catch (StackOverflowError soe) {
 			throw new StackOverflowError(
 					"Check for any infinitely-recursive rules");
