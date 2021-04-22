@@ -244,7 +244,6 @@ public class TestRewriteProcess {
 			rules.add(new Rule(ruleLhs, ruleRhs));
 			RewriteProcess rewrite = new RewriteProcess(rules);
 			ExpressionNode result = rewrite.Visit(term);
-			System.out.println("HERE " + result.toString());
 			assertTrue(result.getClass() == FunctionNode.class);
 			assertTrue(((FunctionNode) result).function.equals("transformedFunction"));
 			assertTrue(((FunctionNode) result).getArguments().get(0) instanceof VariableNode);

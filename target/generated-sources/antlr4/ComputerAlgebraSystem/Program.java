@@ -44,10 +44,30 @@ public class Program {
 	 * @return String representation of the rewritten AST
 	 * @throws Exception Catches a rewrite error and throws to be caught by the GUI
 	 */
-	public String Rewrite(ArrayList<Rule> rules, ExpressionNode termAst) throws Exception {
+	public String Rewrite(ArrayList<Rule> rules, ExpressionNode termAst, int ruleApplicationLimit) throws Exception {
 		try {
-			ExpressionNode rewrittenTerm = new RewriteProcess(rules).Visit(termAst);
-			ExpressionNode evaluatedTerm = new EvaluateNumericalOperations().Visit(rewrittenTerm);
+			//int ruleApplicationLimit = 100;
+			int ruleApplicationCount = 0;
+			boolean ruleApplied = true;
+			ExpressionNode term = termAst;
+			System.out.println("_----------------------");
+			// For or while loop here : until rule application limit or while rule can still be applied? 
+			// While rule can still be applied and rule application limit.
+			RewriteProcess r = new RewriteProcess(rules);
+			
+			while (ruleApplied && ruleApplicationCount < ruleApplicationLimit) {
+				r.setRuleApplied(false);
+				term =r.Visit(term);
+				System.out.println(ruleApplicationCount);
+				ruleApplied = r.getRuleApplied();
+				if (ruleApplied) {
+					ruleApplicationCount ++;
+				}
+				
+			}
+			//ExpressionNode rewrittenTerm = new RewriteProcess(rules).Visit(termAst);
+			//ExpressionNode evaluatedTerm = new EvaluateNumericalOperations().Visit(rewrittenTerm);
+			ExpressionNode evaluatedTerm = new EvaluateNumericalOperations().Visit(term);
 			return new EvaluateTermOutput().Visit(evaluatedTerm);
 		} catch (StackOverflowError soe) {
 			throw new StackOverflowError(
@@ -55,6 +75,8 @@ public class Program {
 		} catch (RewriteError re) {
 			throw re;
 		} catch (Exception e) {
+			
+			
 			throw new Exception("Rewrite Error: " + e.getMessage());
 		}
 	}

@@ -41,7 +41,6 @@ public class EvaluateConditions extends VisitConditionNodes<Boolean> {
 
 	@Override
 	public Boolean Visit(RelopNode node) throws Exception {
-		System.out.println("Visiting right : " + node.toString());
 		boolean relopResult = evaluateRelop(node);
 		return relopResult;
 	}

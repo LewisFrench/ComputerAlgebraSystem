@@ -19,13 +19,13 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.filechooser.FileNameExtensionFilter;
-
 import org.antlr.v4.runtime.misc.ParseCancellationException;
 import Nodes.*;
+
 public class GUI implements ActionListener {
 	JFileChooser fileChooser;
 	JButton openFileButton;
-	JTextField enterTerm;
+	JTextArea enterTerm;
 	JButton beginRewriteButton;
 	JLabel termLabel;
 	JLabel term;
@@ -38,7 +38,10 @@ public class GUI implements ActionListener {
 	JTextArea errorMessage;
 
 	JTextField enterRuleApplicationLimit;
-
+	
+	JLabel limitLabel;
+	JTextField enterLimit;
+	
 	public GUI() {
 
 		JFrame frame = new JFrame();
@@ -60,7 +63,29 @@ public class GUI implements ActionListener {
 		c.weightx = 0.5;
 		c.gridx = 0;
 		c.gridy = 0;
+		c.ipadx = 50;
 		panel.add(openFileButton, c);
+		
+		
+		limitLabel = new JLabel("Rule Application Limit:");
+		c.fill = GridBagConstraints.VERTICAL;
+		c.weightx = 0.5;
+		c.gridx = 1;
+		c.gridy = 0;
+		c.ipadx = 0;
+		panel.add(limitLabel, c);
+		
+		
+		enterLimit = new JTextField("1000");
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.weightx = 0.5;
+		c.gridx = 2;
+		c.ipady = 10;
+		c.gridy = 0;
+		c.gridwidth = 1;
+		panel.add(enterLimit, c);
+		
+		
 
 		termLabel = new JLabel("Enter an algebraic term:");
 		c.fill = GridBagConstraints.HORIZONTAL;
@@ -70,7 +95,7 @@ public class GUI implements ActionListener {
 		c.gridwidth = 1;
 		panel.add(termLabel, c);
 
-		enterTerm = new JTextField("enter term");
+		enterTerm = new JTextArea("enter term");
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.weightx = 0.5;
 		c.gridx = 0;
@@ -141,19 +166,26 @@ public class GUI implements ActionListener {
 			result.setText("");
 			Program p = new Program();
 			try {
-
+				int ruleApplicationLimit;
+				if (!(validateRuleApplicationLimit(enterLimit.getText()))) {
+					throw new NumberFormatException();
+				} else { 
+					ruleApplicationLimit = Integer.valueOf(enterLimit.getText());
+				}
+				
 				ArrayList<String> ruleStringList = readRules(fileChooser.getSelectedFile());
 				ArrayList<Rule> rules = this.getRules(ruleStringList, p);
 				if (rules != null) {
 					ExpressionNode term = p.parseTerm(enterTerm.getText());
-					String output = p.Rewrite(rules, term);
+					String output = p.Rewrite(rules, term, ruleApplicationLimit);
 					result.setText(output);
-
 				}
 				
 			// Most of these are probably unnecessary
 			} catch (StackOverflowError soe) {
 				errorMessage.setText(soe.getLocalizedMessage());
+			} catch (NumberFormatException nfe) {
+				errorMessage.setText("Rule Application Limit must be an integer greater than zero");
 			} catch (FileNotFoundException fnfe) {
 				errorMessage.setText("ERROR : " + fnfe.getMessage());
 			} catch (NullPointerException npe) {
@@ -166,6 +198,15 @@ public class GUI implements ActionListener {
 			} catch (Exception ex) {
 				errorMessage.setText(ex.getMessage());
 			}
+		}
+	}
+	/* AINOAWINDOIAWND AWOIN */ 
+	public static boolean validateRuleApplicationLimit(String limit) {
+		try { 
+			int limitInt =  Integer.valueOf(limit);
+			return (limitInt > 0);
+		} catch (NumberFormatException nfe) {
+			return false;
 		}
 	}
 

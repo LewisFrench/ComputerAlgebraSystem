@@ -17,12 +17,21 @@ import Visitor.VisitTerm;
  */
 public class RewriteProcess extends VisitTerm<ExpressionNode> {
 	ArrayList<Rule> rules;
-	static final int RULE_APPLICATION_LIMIT = Integer.MAX_VALUE - 1;
-	int ruleApplicationCount = 0;
+	boolean ruleApplied = false;
+	int nodeVisitedCount = 0; // Add a count on every node visited
+	//static final int RULE_APPLICATION_LIMIT = Integer.MAX_VALUE - 1;
+	//int ruleApplicationCount = 0;
 
 	public RewriteProcess(ArrayList<Rule> ruleSet) {
 		rules = ruleSet;
 
+	}
+	
+	public boolean getRuleApplied() {
+		return this.ruleApplied;
+	}
+	public void setRuleApplied(boolean b) {
+		this.ruleApplied = b;
 	}
 
 	@Override
@@ -85,7 +94,7 @@ public class RewriteProcess extends VisitTerm<ExpressionNode> {
 
 		}
 
-		return rewrite(new FunctionNode(node.function, arguments));
+		return rewrite(new FunctionNode(node.getFunction(), arguments));
 	}
 
 	@Override
@@ -110,13 +119,15 @@ public class RewriteProcess extends VisitTerm<ExpressionNode> {
 	 * @throws Exception
 	 */
 	public ExpressionNode rewrite(ExpressionNode redex) throws Exception {
-		/* Do not apply rule if rule application limit is reached */
-		if (!(RULE_APPLICATION_LIMIT > this.ruleApplicationCount)) {
-			return redex;
-		}
+//		/* Do not apply rule if rule application limit is reached */
+//		if (!(RULE_APPLICATION_LIMIT > this.ruleApplicationCount)) {
+//			return redex;
+//		}
 		EvaluateTree treeMatcher;
 		if (rules != null) {
-
+			if (this.ruleApplied) {
+				return redex;
+			}
 			for (Rule r : rules) {
 				try {
 					boolean conditionsHold = false;
@@ -151,11 +162,11 @@ public class RewriteProcess extends VisitTerm<ExpressionNode> {
 							}
 							// rewrite the subtree with the substituted RHS of the rule if conditions are not false;
 							if (conditionsHold || r.getConditionsNode() == null) {
-								this.ruleApplicationCount++;
 								ExpressionNode substituted = new SubstituteRuleVariables(newRuleVariables)
 										.Visit(r.getRhsNode());
 								ExpressionNode solved = new EvaluateNumericalOperations().Visit(substituted);
-								return Visit(solved);
+								this.setRuleApplied(true);
+								return solved;
 							}
 
 						}
