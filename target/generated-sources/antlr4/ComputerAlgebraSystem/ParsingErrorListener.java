@@ -5,8 +5,15 @@ import org.antlr.v4.runtime.RecognitionException;
 import org.antlr.v4.runtime.Recognizer;
 import org.antlr.v4.runtime.misc.ParseCancellationException;
 
-public class ThrowingErrorListener extends BaseErrorListener {
-	public static final ThrowingErrorListener INSTANCE = new ThrowingErrorListener();
+/**
+ * Extends the BaseErrorListener to catch ParseCancellationExceptions occurring during
+ * the parsing of input by the ANTLR4 parsers. 
+ * 
+ * @author lewis
+ *
+ */
+public class ParsingErrorListener extends BaseErrorListener {
+	public static final ParsingErrorListener INSTANCE = new ParsingErrorListener();
 
 	@Override
 	public void syntaxError(Recognizer<?, ?> recognizer, Object offendingSymbol, int line, int charPositionInLine,

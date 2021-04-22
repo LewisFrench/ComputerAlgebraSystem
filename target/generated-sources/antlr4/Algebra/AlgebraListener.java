@@ -54,18 +54,6 @@ public interface AlgebraListener extends ParseTreeListener {
 	 */
 	void exitVariable(AlgebraParser.VariableContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code Rational}
-	 * labeled alternative in {@link AlgebraParser#expression}.
-	 * @param ctx the parse tree
-	 */
-	void enterRational(AlgebraParser.RationalContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code Rational}
-	 * labeled alternative in {@link AlgebraParser#expression}.
-	 * @param ctx the parse tree
-	 */
-	void exitRational(AlgebraParser.RationalContext ctx);
-	/**
 	 * Enter a parse tree produced by the {@code Decimal}
 	 * labeled alternative in {@link AlgebraParser#expression}.
 	 * @param ctx the parse tree

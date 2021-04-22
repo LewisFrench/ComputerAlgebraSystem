@@ -64,18 +64,6 @@ public class AlgebraBaseListener implements AlgebraListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterRational(AlgebraParser.RationalContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitRational(AlgebraParser.RationalContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void enterDecimal(AlgebraParser.DecimalContext ctx) { }
 	/**
 	 * {@inheritDoc}

@@ -12,10 +12,10 @@ import Visitor.VisitConditionNodes;
  * @author lewis
  *
  */
-public class EvaluateConditionsVisitor extends VisitConditionNodes<Boolean> {
+public class EvaluateConditions extends VisitConditionNodes<Boolean> {
 	ConditionFunctionEvaluator conditionFunctions;
 
-	public EvaluateConditionsVisitor() {
+	public EvaluateConditions() {
 		this.conditionFunctions = new ConditionFunctionEvaluator();
 	}
 
@@ -41,11 +41,12 @@ public class EvaluateConditionsVisitor extends VisitConditionNodes<Boolean> {
 
 	@Override
 	public Boolean Visit(RelopNode node) throws Exception {
-		boolean relopResult = calculateRelop(node);
+		System.out.println("Visiting right : " + node.toString());
+		boolean relopResult = evaluateRelop(node);
 		return relopResult;
 	}
 
-	public boolean calculateRelop(RelopNode relopNode) throws Exception {
+	public boolean evaluateRelop(RelopNode relopNode) throws Exception {
 
 		// Decide equivalence between any two nodes
 		EvaluateTree treeMatcher = new EvaluateTree();
@@ -55,11 +56,18 @@ public class EvaluateConditionsVisitor extends VisitConditionNodes<Boolean> {
 			return !(treeMatcher.Visit(relopNode.getLeft(), relopNode.getRight()));
 		}
 
-		if (!(relopNode.getLeft() instanceof NumberNode && relopNode.getRight() instanceof NumberNode)) {
+		// Simplify numerical expressions for inequality comparison
+		ExpressionNode evaluatedLeft = new EvaluateNumericalOperations().Visit(relopNode.getLeft());
+		ExpressionNode evaluatedRight = new EvaluateNumericalOperations().Visit(relopNode.getRight());
+
+		// Throw exception if trying to compare non-numerical values
+		if (!(evaluatedLeft instanceof NumberNode && evaluatedRight instanceof NumberNode)) {
 			throw new Exception("Check your rule conditions. You cannot evaluate inequalities of non-numerical terms");
 		}
-		NumberNode l = (NumberNode) (relopNode.getLeft());
-		NumberNode r = (NumberNode) (relopNode.getRight());
+
+		// If numerical, cast as such and carry out comparison.
+		NumberNode l = (NumberNode) (evaluatedLeft);
+		NumberNode r = (NumberNode) (evaluatedRight);
 
 		boolean relopResult = false;
 

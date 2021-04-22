@@ -81,13 +81,13 @@ public class BuildConditionsVisitor extends ConditionsBaseVisitor<ExpressionNode
 		return new RuleVariableNode(context.value.getText());
 	}
 
-	@Override
-	public ExpressionNode visitRational(ConditionsParser.RationalContext context) {
-		String[] split = context.getText().split("/");
-		long numerator = Long.valueOf(split[0]);
-		long denominator = Long.valueOf(split[1]);
-		return new NumberNode(numerator, denominator);
-	}
+//	@Override
+//	public ExpressionNode visitRational(ConditionsParser.RationalContext context) {
+//		String[] split = context.getText().split("/");
+//		long numerator = Long.valueOf(split[0]);
+//		long denominator = Long.valueOf(split[1]);
+//		return new NumberNode(numerator, denominator);
+//	}
 
 	@Override
 	public ExpressionNode visitInteger(ConditionsParser.IntegerContext context) {
@@ -102,7 +102,6 @@ public class BuildConditionsVisitor extends ConditionsBaseVisitor<ExpressionNode
 		if (!(formattedDecimal.contains("."))) {
 			return new NumberNode(Long.valueOf(formattedDecimal));
 		}
-
 		String[] splitByDecimalPoint = formattedDecimal.split("\\.");
 		long numerator = Long.valueOf(formattedDecimal.replaceAll("\\.", ""));
 

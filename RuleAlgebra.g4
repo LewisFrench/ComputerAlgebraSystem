@@ -8,7 +8,7 @@ ruleTerm : expression EOF;
 expression
    :  value = VARIABLE  #Variable
    | RULEVARIDENTIFIER value = VARIABLE #RuleVariable
-   |  numerator = INTEGER OP_DIV denominator = INTEGER #Rational 
+   //|  numerator = INTEGER OP_DIV denominator = INTEGER #Rational 
    |  value = INTEGER #Integer
    |  value = DECIMALNUMBER #Decimal
    |  LPAREN expression RPAREN #Parenthetical  

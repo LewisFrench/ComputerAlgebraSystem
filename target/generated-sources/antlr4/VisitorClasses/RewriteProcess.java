@@ -143,10 +143,10 @@ public class RewriteProcess extends VisitTerm<ExpressionNode> {
 								ExpressionNode substitutedConditions = new SubstituteConditionRuleVariables(
 										newRuleVariables).Visit(r.getConditionsNode());
 								// perform any available numerical evaluations in the conditions tree
-								ExpressionNode evaluated = new EvaluateConditionNumericalExpressions()
-										.Visit(substitutedConditions);
-								// Verify if the conditions are true or falase
-								conditionsHold = new EvaluateConditionsVisitor().Visit(evaluated);
+								//ExpressionNode evaluated = new EvaluateConditionNumericalExpressions()
+								//		.Visit(substitutedConditions);
+								// Verify if the conditions are true or false
+								conditionsHold = new EvaluateConditions().Visit(substitutedConditions);
 
 							}
 							// rewrite the subtree with the substituted RHS of the rule if conditions are not false;

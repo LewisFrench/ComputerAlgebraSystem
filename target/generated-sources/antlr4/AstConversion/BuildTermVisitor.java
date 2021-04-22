@@ -30,14 +30,14 @@ public class BuildTermVisitor extends AlgebraBaseVisitor<ExpressionNode> {
 		VariableNode node = new VariableNode(context.value.getText());
 		return node;
 	}
-
-	@Override
-	public ExpressionNode visitRational(AlgebraParser.RationalContext context) {
-		String[] split = context.getText().split("/");
-		long numerator = Long.valueOf(split[0]);
-		long denominator = Long.valueOf(split[1]);
-		return new NumberNode(numerator, denominator);
-	}
+//
+//	@Override
+//	public ExpressionNode visitRational(AlgebraParser.RationalContext context) {
+//		String[] split = context.getText().split("/");
+//		long numerator = Long.valueOf(split[0]);
+//		long denominator = Long.valueOf(split[1]);
+//		return new NumberNode(numerator, denominator);
+//	}
 
 	@Override
 	public ExpressionNode visitInteger(AlgebraParser.IntegerContext context) {
@@ -77,7 +77,7 @@ public class BuildTermVisitor extends AlgebraBaseVisitor<ExpressionNode> {
 		ExpressionNode node = visit(context.expression());
 
 		switch (context.op.getType()) {
-		// ignore hanging + symbols before expressions
+		// ignore hanging '+' symbols before expressions
 		case AlgebraLexer.OP_ADD:
 			return node;
 		

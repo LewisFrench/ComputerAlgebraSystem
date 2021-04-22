@@ -38,13 +38,6 @@ public interface RuleAlgebraVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitVariable(RuleAlgebraParser.VariableContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code Rational}
-	 * labeled alternative in {@link RuleAlgebraParser#expression}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitRational(RuleAlgebraParser.RationalContext ctx);
-	/**
 	 * Visit a parse tree produced by the {@code Decimal}
 	 * labeled alternative in {@link RuleAlgebraParser#expression}.
 	 * @param ctx the parse tree

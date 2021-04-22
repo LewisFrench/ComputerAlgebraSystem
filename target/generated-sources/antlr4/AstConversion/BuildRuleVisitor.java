@@ -38,13 +38,13 @@ public class BuildRuleVisitor extends RuleAlgebraBaseVisitor<ExpressionNode> {
 		return new RuleVariableNode(context.value.getText());
 	}
 
-	@Override
-	public ExpressionNode visitRational(RuleAlgebraParser.RationalContext context) {
-		String[] split = context.getText().split("/");
-		long numerator = Long.valueOf(split[0]);
-		long denominator = Long.valueOf(split[1]);
-		return new NumberNode(numerator, denominator);
-	}
+//	@Override
+//	public ExpressionNode visitRational(RuleAlgebraParser.RationalContext context) {
+//		String[] split = context.getText().split("/");
+//		long numerator = Long.valueOf(split[0]);
+//		long denominator = Long.valueOf(split[1]);
+//		return new NumberNode(numerator, denominator);
+//	}
 
 	@Override
 	public ExpressionNode visitInteger(RuleAlgebraParser.IntegerContext context) {

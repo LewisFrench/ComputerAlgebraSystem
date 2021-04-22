@@ -166,7 +166,7 @@ public class Program {
 					"Attempting to create a rule containing a rational number of denominator zero");
 			// Rule in invalid format
 		} catch (ParseCancellationException pce) {
-			throw new ParseCancellationException("Syntax error: Check the structure of your rules");
+			throw new ParseCancellationException("Syntax error!\nRule: " + ruleInput + "\nis not syntactically valid.");
 
 		} catch (Exception ex) {
 			throw new Exception("Rule Parse Error: " + ex.getMessage());
@@ -199,7 +199,7 @@ public class Program {
 			// Perform lexical analysis
 			AlgebraLexer lexer = new AlgebraLexer(input);
 			lexer.removeErrorListeners();
-			lexer.addErrorListener(ThrowingErrorListener.INSTANCE);
+			lexer.addErrorListener(ParsingErrorListener.INSTANCE);
 
 			// Generate tokens from lexer
 			CommonTokenStream tokens = new CommonTokenStream(lexer);
@@ -207,7 +207,7 @@ public class Program {
 			// Create from tokens
 			AlgebraParser parser = new AlgebraParser(tokens);
 			parser.removeErrorListeners();
-			parser.addErrorListener(ThrowingErrorListener.INSTANCE);
+			parser.addErrorListener(ParsingErrorListener.INSTANCE);
 			TermContext termTree = parser.term();
 			termAst = new BuildTermVisitor().visitTerm(termTree);
 
@@ -244,7 +244,7 @@ public class Program {
 			// Perform lexical analysis
 			RuleAlgebraLexer lexer = new RuleAlgebraLexer(input);
 			lexer.removeErrorListeners();
-			lexer.addErrorListener(ThrowingErrorListener.INSTANCE);
+			lexer.addErrorListener(ParsingErrorListener.INSTANCE);
 
 			// Generate tokens from lexer
 			CommonTokenStream tokens = new CommonTokenStream(lexer);
@@ -252,7 +252,7 @@ public class Program {
 			// Create from tokens
 			parser = new RuleAlgebraParser(tokens);
 			parser.removeErrorListeners();
-			parser.addErrorListener(ThrowingErrorListener.INSTANCE);
+			parser.addErrorListener(ParsingErrorListener.INSTANCE);
 
 		} catch (ParseCancellationException pce) {
 			throw new ParseCancellationException(pce.getMessage());
@@ -283,7 +283,7 @@ public class Program {
 			// Perform lexical analysis
 			ConditionsLexer lexer = new ConditionsLexer(input);
 			lexer.removeErrorListeners();
-			lexer.addErrorListener(ThrowingErrorListener.INSTANCE);
+			lexer.addErrorListener(ParsingErrorListener.INSTANCE);
 
 			// Generate tokens from lexer
 			CommonTokenStream tokens = new CommonTokenStream(lexer);
@@ -291,7 +291,7 @@ public class Program {
 			// Create from tokens
 			parser = new ConditionsParser(tokens);
 			parser.removeErrorListeners();
-			parser.addErrorListener(ThrowingErrorListener.INSTANCE);
+			parser.addErrorListener(ParsingErrorListener.INSTANCE);
 		} catch (ParseCancellationException pce) {
 			throw new ParseCancellationException("Syntax error: Please check the syntax of your algebraic term");
 		} catch (ArithmeticException iae) {

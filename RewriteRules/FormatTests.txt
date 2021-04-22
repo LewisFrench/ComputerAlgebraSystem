@@ -1,1 +1,6 @@
-test($a, $b) = test($a, $b-1) + $a/$b
+$x = $x
+
+Make entry multiple lines
+
+Apply once a rule from the given sets
+once applied, go back and apply another until no rules are applied. 
