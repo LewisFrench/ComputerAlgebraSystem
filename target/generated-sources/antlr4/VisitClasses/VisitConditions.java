@@ -1,4 +1,4 @@
-package Visitor;
+package VisitClasses;
 import Nodes.*;
 /**
  * Visitor class that specifies nodes that can be visited while traversing the conditions of a rule.
@@ -7,7 +7,7 @@ import Nodes.*;
  *
  * @param <T>
  */
-public abstract class VisitConditionsRule<T> {
+public abstract class VisitConditions<T> {
 
 	public abstract T Visit(ConditionAndNode node)throws Exception;
 

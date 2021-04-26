@@ -1,0 +1,4 @@
+fib(1, 0) = 1
+fib(2, 1) = 2
+fib($n) = fib($n-1, $n-2)
+fib($n, $m) = fib($n-1, $n-2) + fib($m-1, $m-2)

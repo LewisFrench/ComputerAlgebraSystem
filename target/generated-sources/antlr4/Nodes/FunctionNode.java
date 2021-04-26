@@ -3,7 +3,13 @@ package Nodes;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-
+/**
+ * Node representing function expressions in an AST
+ * Stores the name of the function
+ * Stores an ArrayList of ExpressionNodes for each argument of the function. 
+ * @author lewis
+ *
+ */
 public class FunctionNode extends ExpressionNode {
 	public String function;
 	public ArrayList<ExpressionNode> arguments;

@@ -2,7 +2,7 @@ package VisitorClasses;
 
 import java.util.ArrayList;
 import Nodes.*;
-import Visitor.VisitRuleTerm;
+import VisitClasses.VisitRule;
 /**
  * Visitor class to fill a ArrayList with a key of the string value of the
  * rule variable node, and a null value. Traverses a tree and upon visiting a
@@ -11,7 +11,7 @@ import Visitor.VisitRuleTerm;
  * @author lewis
  *
  */
-public final class FetchRuleVariables extends VisitRuleTerm<Void> {
+public final class FetchRuleVariables extends VisitRule<Void> {
 
 	ArrayList<String> ruleVariables = new ArrayList<>();
 
@@ -80,6 +80,7 @@ public final class FetchRuleVariables extends VisitRuleTerm<Void> {
 		return null;
 	}
 
+	// Adds string representation of RuleVariable instances to ArrayList ruleVariables
 	@Override
 	public Void Visit(RuleVariableNode node) {
 		this.ruleVariables.add(node.toString());

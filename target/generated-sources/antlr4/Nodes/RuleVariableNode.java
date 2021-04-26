@@ -1,6 +1,11 @@
 package Nodes;
 
-
+/**
+ * Class storing instances of rule variables in an AST. 
+ * Stores a string denoting the value of the rule variable. 
+ * 
+ * @author lewis
+ */
 public class RuleVariableNode extends ExpressionNode {
 	public String value;
 

@@ -1,4 +1,4 @@
-package Visitor;
+package VisitClasses;
 import Nodes.*;
 /**
  * Visitor class that specifies the comparison of two nodes at each visit.

@@ -1,6 +1,15 @@
-package Visitor;
+package VisitClasses;
+
 import Nodes.*;
 
+/**
+ * Abstract class specifying the visitation of only nodes pertaining to the
+ * conditions of a rule.
+ * 
+ * @author lewis
+ *
+ * @param <T>
+ */
 public abstract class VisitConditionNodes<T> {
 
 	public abstract T Visit(ConditionAndNode node) throws Exception;
@@ -25,7 +34,8 @@ public abstract class VisitConditionNodes<T> {
 		} else if (node instanceof ConditionFunctionNode) {
 			return Visit((ConditionFunctionNode) node);
 		} else {
-			throw new IllegalArgumentException("Attempted to visit invalid node. Please check the struture of your rules");
+			throw new IllegalArgumentException(
+					"Attempted to visit invalid node. Please check the struture of your rules");
 		}
 	}
 }

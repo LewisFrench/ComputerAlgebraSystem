@@ -1,7 +1,7 @@
 package VisitorClasses;
 
 import Nodes.*;
-import Visitor.VisitAstComparison;
+import VisitClasses.VisitAstComparison;
 /**
  * Class that extends the AstComparator. Traverses the left-hand side of a
  * rewrite role alongside the selected redex. Determines if the subtrees share
@@ -19,6 +19,13 @@ public class EvaluateTree extends VisitAstComparison<Boolean> {
 	public EvaluateTree() {
 	}
 
+	/**
+	 * Comparison of binary operations
+	 * Confirms left-hand side of each tree matches
+	 * Confirms right-hand side of each tree matches
+	 * returns true of both match
+	 * 
+	 */
 	@Override
 	public Boolean Visit(PowerNode lhsNode, ExpressionNode node) throws Exception {
 		if (lhsNode.getClass() == node.getClass()) {
@@ -70,6 +77,7 @@ public class EvaluateTree extends VisitAstComparison<Boolean> {
 
 	}
 
+	// Match if both nodes are NumberNodes and both hold the same value
 	@Override
 	public Boolean Visit(NumberNode lhsNode, ExpressionNode node) {
 		if (lhsNode.getClass() == node.getClass()) {
@@ -78,6 +86,7 @@ public class EvaluateTree extends VisitAstComparison<Boolean> {
 		return false;
 	}
 
+	// Match if both nodes are instances of UnaryNode and their innerNodes match
 	@Override
 	public Boolean Visit(UnaryNode lhsNode, ExpressionNode node) throws Exception {
 		boolean match = false;
@@ -88,12 +97,13 @@ public class EvaluateTree extends VisitAstComparison<Boolean> {
 		return match;
 	}
 
+	// Match if both nodes are functions, both their function name attributes match, and if their arguments match
 	@Override
 	public Boolean Visit(FunctionNode lhsNode, ExpressionNode node) throws Exception {
 		boolean argumentsMatch = false;
 		if (lhsNode.getClass() == node.getClass()) {
 			if (lhsNode.getArguments().size() == ((FunctionNode) node).getArguments().size()) {
-				argumentsMatch = lhsNode.function.equals(((FunctionNode) node).function);
+				argumentsMatch = lhsNode.getFunction().equals(((FunctionNode) node).getFunction());
 				for (int i = 0; i < lhsNode.getArguments().size(); i++) {
 					argumentsMatch = argumentsMatch
 							&& Visit(lhsNode.getArguments().get(i), ((FunctionNode) node).getArguments().get(i));
@@ -102,7 +112,9 @@ public class EvaluateTree extends VisitAstComparison<Boolean> {
 		}
 		return argumentsMatch;
 	}
-
+	
+	// Throw exception if RuleVariablenode found in term
+	// Match in any other case. 
 	@Override
 	public Boolean Visit(RuleVariableNode lhsNode, ExpressionNode node) throws Exception {
 		if (node instanceof RuleVariableNode) {
@@ -112,6 +124,7 @@ public class EvaluateTree extends VisitAstComparison<Boolean> {
 		return true;
 	}
 
+	// Match if both nodes are VariableNode instances and their values are equivalent
 	@Override
 	public Boolean Visit(VariableNode lhsNode, ExpressionNode node) {
 		if (lhsNode.getClass() == node.getClass()) {

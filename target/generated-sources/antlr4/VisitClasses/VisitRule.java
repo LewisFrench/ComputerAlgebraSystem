@@ -1,27 +1,15 @@
-package Visitor;
-
+package VisitClasses;
 import Nodes.*;
-
 /**
  * Visitor class that specifies nodes that can be visited while traversing the
- * conditions of a rule.
+ * left-hand side or right-hand side of a rewrite rule.
+ * Throws exception if attempting to visit a node that is not specified 
  * 
  * @author Lewis
  *
- * @param <T>
+ * @param <T> Generic type 
  */
-public abstract class VisitConditionsTerm<T> {
-
-	public abstract T Visit(ConditionAndNode node) throws Exception;
-
-	public abstract T Visit(ConditionOrNode node) throws Exception;
-
-	public abstract T Visit(ConditionNotNode node) throws Exception;
-
-	public abstract T Visit(RelopNode node) throws Exception;
-
-	public abstract T Visit(ConditionFunctionNode node) throws Exception;
-
+public abstract class VisitRule<T> {
 	public abstract T Visit(PowerNode node) throws Exception;
 
 	public abstract T Visit(AdditionNode node) throws Exception;
@@ -40,26 +28,17 @@ public abstract class VisitConditionsTerm<T> {
 
 	public abstract T Visit(NumberNode node) throws Exception;
 
+	public abstract T Visit(RuleVariableNode node) throws Exception;
+
 	/**
-	 * Visitor methods for a rule condition.
+	 * Visitor methods for the nodes present in the left-hand-side or right-hand side of a rewrite rule.
 	 * 
-	 * @param node The root node of the AST representing a condition
-	 * @return
-	 * @throws Exception if attempting to visit a node not specified in
-	 *                   ConditionVisitor.
+	 * @param node A node present in the AST representing an rule.
+	 * @return Generic type specific in subclasses
+	 * @throws IllegalArgumentException if attempting to visit a node that shouldn't be present in an rule.
 	 */
 	public T Visit(ExpressionNode node) throws Exception {
-		if (node instanceof ConditionAndNode) {
-			return Visit((ConditionAndNode) node);
-		} else if (node instanceof ConditionOrNode) {
-			return Visit((ConditionOrNode) node);
-		} else if (node instanceof ConditionNotNode) {
-			return Visit((ConditionNotNode) node);
-		} else if (node instanceof RelopNode) {
-			return Visit((RelopNode) node);
-		} else if (node instanceof ConditionFunctionNode) {
-			return Visit((ConditionFunctionNode) node);
-		} else if (node instanceof PowerNode) {
+		if (node instanceof PowerNode) {
 			return Visit((PowerNode) node);
 		} else if (node instanceof AdditionNode) {
 			return Visit((AdditionNode) node);
@@ -77,8 +56,10 @@ public abstract class VisitConditionsTerm<T> {
 			return Visit((VariableNode) node);
 		} else if (node instanceof NumberNode) {
 			return Visit((NumberNode) node);
+		} else if (node instanceof RuleVariableNode) {
+			return Visit((RuleVariableNode) node);
 		} else {
-			throw new IllegalArgumentException("Attempted to visit invalid node. Please check the struture of your rules");
+			throw new IllegalArgumentException("Attempting to visit an unreachable node");
 		}
 	}
 }

@@ -6,7 +6,8 @@ import java.util.LinkedHashMap;
 import ComputerAlgebraSystem.RewriteError;
 import ComputerAlgebraSystem.Rule;
 import Nodes.*;
-import Visitor.VisitTerm;
+import VisitClasses.VisitTerm;
+
 /**
  * Class handling the traversal of nodes in a user's algebraic term, and the
  * application of the rewrite process on the term. Visitor class traverses the
@@ -18,18 +19,16 @@ import Visitor.VisitTerm;
 public class RewriteProcess extends VisitTerm<ExpressionNode> {
 	ArrayList<Rule> rules;
 	boolean ruleApplied = false;
-	int nodeVisitedCount = 0; // Add a count on every node visited
-	//static final int RULE_APPLICATION_LIMIT = Integer.MAX_VALUE - 1;
-	//int ruleApplicationCount = 0;
 
 	public RewriteProcess(ArrayList<Rule> ruleSet) {
 		rules = ruleSet;
 
 	}
-	
+
 	public boolean getRuleApplied() {
 		return this.ruleApplied;
 	}
+
 	public void setRuleApplied(boolean b) {
 		this.ruleApplied = b;
 	}
@@ -38,7 +37,6 @@ public class RewriteProcess extends VisitTerm<ExpressionNode> {
 	public ExpressionNode Visit(PowerNode node) throws Exception {
 		ExpressionNode visitedLeft = (Visit(node.getLeft()));
 		ExpressionNode visitedRight = (Visit(node.getRight()));
-
 		return rewrite(new PowerNode(visitedLeft, visitedRight));
 	}
 
@@ -119,12 +117,9 @@ public class RewriteProcess extends VisitTerm<ExpressionNode> {
 	 * @throws Exception
 	 */
 	public ExpressionNode rewrite(ExpressionNode redex) throws Exception {
-//		/* Do not apply rule if rule application limit is reached */
-//		if (!(RULE_APPLICATION_LIMIT > this.ruleApplicationCount)) {
-//			return redex;
-//		}
 		EvaluateTree treeMatcher;
 		if (rules != null) {
+			// do not apply rule is a rule has already been applied
 			if (this.ruleApplied) {
 				return redex;
 			}
@@ -154,13 +149,14 @@ public class RewriteProcess extends VisitTerm<ExpressionNode> {
 								ExpressionNode substitutedConditions = new SubstituteConditionRuleVariables(
 										newRuleVariables).Visit(r.getConditionsNode());
 								// perform any available numerical evaluations in the conditions tree
-								//ExpressionNode evaluated = new EvaluateConditionNumericalExpressions()
-								//		.Visit(substitutedConditions);
+								// ExpressionNode evaluated = new EvaluateConditionNumericalExpressions()
+								// .Visit(substitutedConditions);
 								// Verify if the conditions are true or false
 								conditionsHold = new EvaluateConditions().Visit(substitutedConditions);
 
 							}
-							// rewrite the subtree with the substituted RHS of the rule if conditions are not false;
+							// rewrite the subtree with the substituted RHS of the rule if conditions are
+							// not false;
 							if (conditionsHold || r.getConditionsNode() == null) {
 								ExpressionNode substituted = new SubstituteRuleVariables(newRuleVariables)
 										.Visit(r.getRhsNode());
@@ -199,10 +195,13 @@ public class RewriteProcess extends VisitTerm<ExpressionNode> {
 	 */
 	public static boolean argumentsValid(ArrayList<String> variables, ArrayList<ExpressionNode> arguments)
 			throws Exception {
-		for (int i = 0; i < variables.size(); i++) {
-			if (i != variables.indexOf(variables.get(i))) {
-				if (!(new EvaluateTree().Visit(arguments.get(i), arguments.get(variables.indexOf(variables.get(i)))))) {
-					return false;
+		if (variables.size() == arguments.size()) {
+			for (int i = 0; i < variables.size(); i++) {
+				if (i != variables.indexOf(variables.get(i))) {
+					if (!(new EvaluateTree().Visit(arguments.get(i),
+							arguments.get(variables.indexOf(variables.get(i)))))) {
+						return false;
+					}
 				}
 			}
 		}

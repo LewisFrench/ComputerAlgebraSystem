@@ -3,7 +3,7 @@ package VisitorClasses;
 import ConditionFunctions.ConditionFunctionEvaluator;
 import Conditions.ConditionsLexer;
 import Nodes.*;
-import Visitor.VisitConditionNodes;
+import VisitClasses.VisitConditionNodes;
 
 /**
  * Traverses the condition node of a rule and determines if the conditions
@@ -69,7 +69,8 @@ public class EvaluateConditions extends VisitConditionNodes<Boolean> {
 		NumberNode r = (NumberNode) (evaluatedRight);
 
 		boolean relopResult = false;
-
+		
+		// perform comparisons based on type of operator
 		switch (relopNode.getRelop()) {
 
 		case ConditionsLexer.RELOP_LT:

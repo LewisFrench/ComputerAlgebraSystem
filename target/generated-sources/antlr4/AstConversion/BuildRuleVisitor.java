@@ -23,16 +23,33 @@ public class BuildRuleVisitor extends RuleAlgebraBaseVisitor<ExpressionNode> {
 	public BuildRuleVisitor() {
 	}
 
+	/**
+	 * Visit root of parse tree
+	 * 
+	 * @return Abstract syntax tree after conversion.
+	 */
 	@Override
 	public ExpressionNode visitRuleTerm(RuleAlgebraParser.RuleTermContext context) {
 		return visit(context.expression());
 	}
 
+	/**
+	 * Conversion of variable to AST node. Stores a string representation of the
+	 * variable
+	 * 
+	 * @return VariableNode instance
+	 */
 	@Override
 	public ExpressionNode visitVariable(RuleAlgebraParser.VariableContext context) {
 		return new VariableNode(context.value.getText());
 	}
 
+	/**
+	 * Conversion of rule variable to AST node. Stores a string representation of
+	 * the rule variable
+	 * 
+	 * @return RuleVariableNode instance
+	 */
 	@Override
 	public ExpressionNode visitRuleVariable(RuleAlgebraParser.RuleVariableContext context) {
 		return new RuleVariableNode(context.value.getText());
@@ -46,22 +63,38 @@ public class BuildRuleVisitor extends RuleAlgebraBaseVisitor<ExpressionNode> {
 //		return new NumberNode(numerator, denominator);
 //	}
 
+	/**
+	 * Conversion of integer input to rational number
+	 * Calls NumberNode constructor accepting numerator
+	 * 
+	 * @return NumberNode representing integer value.
+	 */
 	@Override
 	public ExpressionNode visitInteger(RuleAlgebraParser.IntegerContext context) {
 		return new NumberNode(Long.valueOf(context.getText()));
 	}
 
+	/**
+	 * Handles conversion of decimal input to rational number.
+	 * 
+	 * @return instance of NumberNode storing rational representation of decimal
+	 * 
+	 */
 	@Override
 	public ExpressionNode visitDecimal(RuleAlgebraParser.DecimalContext context) {
 		BigDecimal b = new BigDecimal(context.getText());
+		// Format decimal input, remove unnecessary zeroes
+
 		String formattedDecimal = b.stripTrailingZeros().toPlainString();
+		// process as integer if fractional part is zero
 		if (!(formattedDecimal.contains("."))) {
 			return new NumberNode(Long.valueOf(formattedDecimal));
 		}
-
+		// Split into integer and fraction part
 		String[] splitByDecimalPoint = formattedDecimal.split("\\.");
+		// set numerator to integer part
 		long numerator = Long.valueOf(formattedDecimal.replaceAll("\\.", ""));
-
+		// Scale denominator to number of decimal places
 		int numberOfDecimalPlaces = splitByDecimalPoint[1].length();
 		long denominator = 1;
 		for (int i = 0; i < numberOfDecimalPlaces; i++) {
@@ -70,11 +103,22 @@ public class BuildRuleVisitor extends RuleAlgebraBaseVisitor<ExpressionNode> {
 		return new NumberNode(numerator, denominator);
 	}
 
+	/**
+	 * Parentheses in parse tree are not represented in AST. Returns the expression
+	 * within the parentheses.
+	 * 
+	 * @return ExpressionNode representing expression contained in parentheses
+	 */
 	@Override
 	public ExpressionNode visitParenthetical(RuleAlgebraParser.ParentheticalContext context) {
 		return (visit(context.expression()));
 	}
 
+	/**
+	 * Unary negation node conversion.
+	 * 
+	 * @return Unary node storing the expression being negated.
+	 */
 	@Override
 	public ExpressionNode visitUnary(RuleAlgebraParser.UnaryContext context) {
 
@@ -97,6 +141,13 @@ public class BuildRuleVisitor extends RuleAlgebraBaseVisitor<ExpressionNode> {
 		return node;
 	}
 
+	/**
+	 * Conversion of operations into AST nodes. Switch statement determines which
+	 * operator is present in operation, and creates an instance of the
+	 * corresponding AST node.
+	 * 
+	 * @return Converted ExpressionNode instance representing operation.
+	 */
 	@Override
 	public ExpressionNode visitOperation(RuleAlgebraParser.OperationContext context) {
 		ExpressionNode left = visit(context.left);
@@ -120,12 +171,10 @@ public class BuildRuleVisitor extends RuleAlgebraBaseVisitor<ExpressionNode> {
 			break;
 
 		case RuleAlgebraLexer.OP_DIV:
-			// Case of multiple unary denominators causing recognition as division rather than rational
-//			if (left instanceof NumberNode && right instanceof NumberNode) {
-//				if (((NumberNode)left).getDenominator() == 1 && ((NumberNode)right).getDenominator() == 1){
-//					return new NumberNode(((NumberNode)left).getNumerator(), ((NumberNode)right).getNumerator());
-//				}
-//			}
+			// Throw division by zero error
+			if (right instanceof NumberNode && ((NumberNode)right).getNumerator() == 0){
+				throw new ArithmeticException();
+			}
 			node = new DivisionNode(left, right);
 			break;
 		}
@@ -133,6 +182,12 @@ public class BuildRuleVisitor extends RuleAlgebraBaseVisitor<ExpressionNode> {
 		return node;
 	}
 
+	/**
+	 * Visits each argument of the function in the parse tree, storing them in a
+	 * FunctionNode instance's array of arguments
+	 * 
+	 * @return FunctionNode of converted parse tree function
+	 */
 	@Override
 	public ExpressionNode visitFunction(RuleAlgebraParser.FunctionContext context) {
 		ArrayList<ExpressionNode> arguments = new ArrayList<>();

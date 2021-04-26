@@ -1,11 +1,14 @@
 package VisitorClasses;
 
 import Nodes.*;
-import Visitor.VisitTerm;
+import VisitClasses.VisitTerm;
 /**
  * Fulfills the function of the '_depends' condition function. A story passed as
  * a subtree as a dependency and traverses a subtree to determine if the
  * dependency subtree occurs anywhere within the visited subtree.
+ * 
+ * Returns true if a visited node matches the structure of the dependency. 
+ * If not, continues tree traversal to determine if depdendency exists in a subtree
  * 
  * @author lewis
  *
@@ -13,6 +16,7 @@ import Visitor.VisitTerm;
 public class DependsEvaluator extends VisitTerm<Boolean> {
 
 	ExpressionNode dependency;
+	// Performs checks on subtrees to see if structure matches dependency.
 	EvaluateTree treeMatcher = new EvaluateTree();
 
 	public DependsEvaluator(ExpressionNode dependency) {

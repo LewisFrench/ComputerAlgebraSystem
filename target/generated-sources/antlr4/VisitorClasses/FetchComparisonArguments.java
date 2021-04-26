@@ -2,7 +2,7 @@ package VisitorClasses;
 
 import java.util.ArrayList;
 import Nodes.*;
-import Visitor.VisitAstComparison;
+import VisitClasses.VisitAstComparison;
 public class FetchComparisonArguments extends VisitAstComparison<Void> {
 
 	/**
@@ -22,6 +22,10 @@ public class FetchComparisonArguments extends VisitAstComparison<Void> {
 	public ArrayList<ExpressionNode> getRuleArguments() {
 		return this.ruleArguments;
 	}
+	
+	/*
+	 * 	Operation nodes visit their left-hand side, then right hand side to find rule variables
+	 */
 
 	@Override
 	public Void Visit(PowerNode lhsNode, ExpressionNode node) throws Exception {
@@ -84,6 +88,11 @@ public class FetchComparisonArguments extends VisitAstComparison<Void> {
 		return null;
 	}
 
+	
+	/*
+	 * Add the string representation of the RuleVariableNode to ruleVariabls
+	 * Add the subtree found in the corresponding position in the term AST to RuleArguments
+	 */
 	@Override
 	public Void Visit(RuleVariableNode lhsNode, ExpressionNode node) {
 		this.ruleVariables.add(lhsNode.toString());

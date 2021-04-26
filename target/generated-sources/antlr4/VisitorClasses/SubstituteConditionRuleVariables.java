@@ -3,19 +3,19 @@ package VisitorClasses;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import Nodes.*;
-import Visitor.VisitConditionsRule;
+import VisitClasses.VisitConditions;
 /**
  * Handles the traversal of the conditions of a rule, substituting instances of RuleVariableNode with their value in the LinkedHashMap containing their corresponding values
  * E.g. conditions $n > 3  given LinkedHashMap "$n" : NumberNode(1)  --> 1 > 3
  * @author lewis
  *
  */
-public class SubstituteConditionRuleVariables extends VisitConditionsRule<ExpressionNode>{
-	LinkedHashMap<String, ExpressionNode> ruleVariables;
+public class SubstituteConditionRuleVariables extends VisitConditions<ExpressionNode>{
+	LinkedHashMap<String, ExpressionNode> ruleVariableMap;
 	
 	
-	public SubstituteConditionRuleVariables(LinkedHashMap<String, ExpressionNode> ruleVariables) {
-		this.ruleVariables = ruleVariables;
+	public SubstituteConditionRuleVariables(LinkedHashMap<String, ExpressionNode> ruleVariableMap) {
+		this.ruleVariableMap = ruleVariableMap;
 	}
 	
 	@Override
@@ -118,10 +118,15 @@ public class SubstituteConditionRuleVariables extends VisitConditionsRule<Expres
 		return node;
 	}
 
+	/**
+	 * Checks if rule variable visited can be found in the map storing rule variables and their values
+	 * Throw exception if not found
+	 * If found, replace the RuleVariableNode with the ExpressionNode instance stored with the RuleVariable in the map
+	 */
 	@Override
 	public ExpressionNode Visit(RuleVariableNode node) throws Exception {
-		if (this.ruleVariables.get(node.toString()) != null) {
-			return this.ruleVariables.get(node.toString());
+		if (this.ruleVariableMap.get(node.toString()) != null) {
+			return this.ruleVariableMap.get(node.toString());
 		}
 		throw new Exception("Attempting to substitute a non-existent rule variable. Please check the structure of your rules");
 	}

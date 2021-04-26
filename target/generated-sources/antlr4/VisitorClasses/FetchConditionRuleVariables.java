@@ -2,7 +2,7 @@ package VisitorClasses;
 
 import java.util.ArrayList;
 import Nodes.*;
-import Visitor.VisitConditionsRule;
+import VisitClasses.VisitConditions;
 /**
  * Visitor class to fill a ArrayList with a key of the string value of the
  * rule variable nodes. Traverses a tree and upon visiting a
@@ -11,7 +11,7 @@ import Visitor.VisitConditionsRule;
  * @author lewis
  *
  */
-public class FetchConditionRuleVariables extends VisitConditionsRule<Void> {
+public class FetchConditionRuleVariables extends VisitConditions<Void> {
 	ArrayList<String> ruleVariables = new ArrayList<>();
 
 	public FetchConditionRuleVariables() {
@@ -116,6 +116,7 @@ public class FetchConditionRuleVariables extends VisitConditionsRule<Void> {
 		return null;
 	}
 
+	// Adds string representation of RuleVariable instances to ArrayList ruleVariables
 	@Override
 	public Void Visit(RuleVariableNode node) {
 		this.ruleVariables.add(node.toString());
