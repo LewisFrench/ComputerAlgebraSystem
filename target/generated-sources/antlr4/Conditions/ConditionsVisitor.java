@@ -73,13 +73,6 @@ public interface ConditionsVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitVariable(ConditionsParser.VariableContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code Rational}
-	 * labeled alternative in {@link ConditionsParser#expression}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitRational(ConditionsParser.RationalContext ctx);
-	/**
 	 * Visit a parse tree produced by the {@code Decimal}
 	 * labeled alternative in {@link ConditionsParser#expression}.
 	 * @param ctx the parse tree

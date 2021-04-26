@@ -54,18 +54,6 @@ public interface RuleAlgebraListener extends ParseTreeListener {
 	 */
 	void exitVariable(RuleAlgebraParser.VariableContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code Rational}
-	 * labeled alternative in {@link RuleAlgebraParser#expression}.
-	 * @param ctx the parse tree
-	 */
-	void enterRational(RuleAlgebraParser.RationalContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code Rational}
-	 * labeled alternative in {@link RuleAlgebraParser#expression}.
-	 * @param ctx the parse tree
-	 */
-	void exitRational(RuleAlgebraParser.RationalContext ctx);
-	/**
 	 * Enter a parse tree produced by the {@code Decimal}
 	 * labeled alternative in {@link RuleAlgebraParser#expression}.
 	 * @param ctx the parse tree

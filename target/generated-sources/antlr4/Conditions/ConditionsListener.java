@@ -114,18 +114,6 @@ public interface ConditionsListener extends ParseTreeListener {
 	 */
 	void exitVariable(ConditionsParser.VariableContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code Rational}
-	 * labeled alternative in {@link ConditionsParser#expression}.
-	 * @param ctx the parse tree
-	 */
-	void enterRational(ConditionsParser.RationalContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code Rational}
-	 * labeled alternative in {@link ConditionsParser#expression}.
-	 * @param ctx the parse tree
-	 */
-	void exitRational(ConditionsParser.RationalContext ctx);
-	/**
 	 * Enter a parse tree produced by the {@code Decimal}
 	 * labeled alternative in {@link ConditionsParser#expression}.
 	 * @param ctx the parse tree

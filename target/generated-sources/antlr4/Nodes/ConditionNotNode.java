@@ -1,7 +1,11 @@
 package Nodes;
 
 
-
+/**
+ * Node representing logical negation operations in the conditions of a rule. 
+ * @author lewis
+ *
+ */
 public class ConditionNotNode extends ExpressionNode {
 
 	public ExpressionNode innerNode;

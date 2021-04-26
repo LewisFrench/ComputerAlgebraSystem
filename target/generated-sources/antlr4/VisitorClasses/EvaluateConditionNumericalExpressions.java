@@ -2,7 +2,7 @@ package VisitorClasses;
 
 import java.util.ArrayList;
 import Nodes.*;
-import Visitor.VisitConditionsTerm;
+import VisitClasses.VisitConditionsTerm;
 /**
  * Evaluates numerical operations present in an conditions of a rewrite rule
  * nodes between two instances of NumberNode can often be evaluated.
@@ -93,12 +93,13 @@ public class EvaluateConditionNumericalExpressions extends VisitConditionsTerm<E
 	public ExpressionNode Visit(DivisionNode node) throws Exception {
 		ExpressionNode left = Visit(node.getLeft());
 		ExpressionNode right = Visit(node.getRight());
-		// Divide by zero error
+		// catch divide by zero error
 		if (right instanceof NumberNode) {
 			if (((NumberNode)right).compareTo(new NumberNode(0)) == 0) {
 				throw new ArithmeticException("Attempted to divide by zero. Please check your rules");
 			}
 		}
+		
 		if (left instanceof NumberNode && right instanceof NumberNode) {
 			return ((NumberNode)left).divide((NumberNode)right);
 		}

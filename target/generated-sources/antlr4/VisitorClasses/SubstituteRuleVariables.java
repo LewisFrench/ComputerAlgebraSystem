@@ -3,7 +3,7 @@ package VisitorClasses;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import Nodes.*;
-import Visitor.VisitRuleTerm;
+import VisitClasses.VisitRule;
 
 /**
  * Handles the traversal of the RHS of a rule, substituting instances of
@@ -14,12 +14,12 @@ import Visitor.VisitRuleTerm;
  * @author lewis
  *
  */
-public class SubstituteRuleVariables extends VisitRuleTerm<ExpressionNode> {
+public class SubstituteRuleVariables extends VisitRule<ExpressionNode> {
 
-	LinkedHashMap<String, ExpressionNode> variables;
+	LinkedHashMap<String, ExpressionNode> ruleVariableMap;
 
-	public SubstituteRuleVariables(LinkedHashMap<String, ExpressionNode> variables) {
-		this.variables = variables;
+	public SubstituteRuleVariables(LinkedHashMap<String, ExpressionNode> ruleVariableMap) {
+		this.ruleVariableMap = ruleVariableMap;
 	}
 
 	@Override
@@ -88,13 +88,19 @@ public class SubstituteRuleVariables extends VisitRuleTerm<ExpressionNode> {
 		return node;
 	}
 
+
+	/**
+	 * Checks if rule variable visited can be found in the map storing rule variables and their values
+	 * Throw exception if not found
+	 * If found, replace the RuleVariableNode with the ExpressionNode instance stored with the RuleVariable in the map
+	 */
 	@Override
 	public ExpressionNode Visit(RuleVariableNode node) throws Exception {
-		if (this.variables.get(node.toString()) != null) {
-			return this.variables.get(node.toString());
+		if (this.ruleVariableMap.get(node.toString()) != null) {
+			return this.ruleVariableMap.get(node.toString());
 		}
 		throw new Exception(
-				"Attemped to substitute null rule variable. Check the use of rule variables in your rewrite rules.");
+				"Attemped to substitute a non-existent rule variable. Check the use of rule variables in your rewrite rules.");
 	}
 
 }

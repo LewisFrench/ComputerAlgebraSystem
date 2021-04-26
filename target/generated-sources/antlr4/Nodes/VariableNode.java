@@ -1,6 +1,11 @@
 package Nodes;
 
-
+/** 
+ * Class storing instances of variables in an AST. 
+ * Stores a string representing the value of the variable.
+ * 
+ * @author lewis
+ */
 public class VariableNode extends ExpressionNode {
 	public String value;
 

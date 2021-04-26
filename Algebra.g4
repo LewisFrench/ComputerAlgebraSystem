@@ -7,14 +7,15 @@ term : expression EOF;
  */
 expression
    :  value = VARIABLE  #Variable
-   |  numerator = INTEGER OP_DIV denominator = INTEGER #Rational 
+   //|  numerator = INTEGER OP_DIV denominator = INTEGER #Rational 
    |  value = INTEGER #Integer
    |  value = DECIMALNUMBER #Decimal
    |  LPAREN expression RPAREN #Parenthetical  
-   |  op = (OP_ADD | OP_SUB) expression #Unary
+  
    |  left = expression  op = OP_POW right = expression #Operation
    |  left = expression  op = (OP_MUL | OP_DIV) right = expression #Operation
    |  left = expression  op = (OP_ADD | OP_SUB) right = expression #Operation
+   |  op = (OP_ADD | OP_SUB) expression #Unary
    |  func = VARIABLE LPAREN  arguments =  expression( COMMA expression)* RPAREN #Function
    ;
 

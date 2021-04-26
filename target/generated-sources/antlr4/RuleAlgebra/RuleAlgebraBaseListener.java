@@ -64,18 +64,6 @@ public class RuleAlgebraBaseListener implements RuleAlgebraListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterRational(RuleAlgebraParser.RationalContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitRational(RuleAlgebraParser.RationalContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void enterDecimal(RuleAlgebraParser.DecimalContext ctx) { }
 	/**
 	 * {@inheritDoc}

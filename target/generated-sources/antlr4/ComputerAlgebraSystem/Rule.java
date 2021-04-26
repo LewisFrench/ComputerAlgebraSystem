@@ -11,12 +11,13 @@ public class Rule {
 	ExpressionNode rhsNode;
 	ExpressionNode conditionsNode;
 
+	// Constructor if no rule conditions
 	public Rule(ExpressionNode lhsNode, ExpressionNode rhsNode) throws Exception {
 		this.lhsNode = lhsNode;
 		this.rhsNode = rhsNode;
 		this.conditionsNode = null;
 	}
-
+	// constructor if rule has conditions
 	public Rule(ExpressionNode lhsNode, ExpressionNode rhsNode, ExpressionNode conditions) throws Exception {
 		this.lhsNode = lhsNode;
 		this.rhsNode = rhsNode;

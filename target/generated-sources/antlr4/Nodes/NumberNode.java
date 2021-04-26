@@ -14,36 +14,55 @@ public class NumberNode extends ExpressionNode {
 	long numerator;
 	long denominator;
 
+	/**
+	 * Constructor for a non-integer rational number.
+	 * Normalises negative denominators and reduces values to a simplified form. 
+	 * 
+	 * @param numerator
+	 * @param denominator
+	 * 
+	 * @Throws ArithmeticException if attempting to create a rational number with a denominators of 0.
+	 */
 	public NumberNode(long numerator, long denominator) {
 		if (Math.abs(denominator) == 0) {
-			throw new ArithmeticException("Attempted to create a rational with a denominator of 0");
+			throw new ArithmeticException("Attempted to divide by zero.");
 		}
 
 		if (denominator < 0) {
 			numerator *= -1;
 			denominator *= -1;
 		}
-		long gcdValue = gcd(numerator, denominator);
+		long gcdValue = gcf(numerator, denominator);
 		this.numerator = numerator / gcdValue;
 		this.denominator = denominator / gcdValue;
 	}
-
+	/** 
+	 * Constructor for the generation of an integer stored as arational.
+	 * @param numerator
+	 */
 	public NumberNode(long numerator) {
 		this.numerator = numerator;
 		this.denominator = 1;
 	}
 
+	/**
+	 * Output rational as a fraction, or as an integer if denominator is 1. 
+	 */
 	public String toString() {
 		if (!isInteger()) {
-			// Handle recurring and complicated decimal output. Only print as decimal if
-			// under a certain amount of dp
-
 			return String.valueOf(this.numerator + "/" + this.denominator);
 		} else {
 			return String.valueOf(this.numerator);
 		}
 	}
-
+	/**
+	 * 
+	 * @param n
+	 * @return
+	 * 0 if numbers are equivalent
+	 * 1 if LHS is greater than RHS
+	 * -1 if LHS is less than the RHS
+	 */
 	public int compareTo(NumberNode n) {
 		long lhs = this.numerator * n.getDenominator();
 		long rhs = this.denominator * n.getNumerator();
@@ -60,6 +79,12 @@ public class NumberNode extends ExpressionNode {
 		return new NumberNode(this.denominator, this.numerator);
 	}
 
+	/**
+	 * Series of numerical operations performed between two NumberNode instances.  
+	 * @param node the RHS of the operation.
+	 * @return NumberNode representing the result of the operation. 
+	 * 		   PowerNode in case of exponentiation that cannot be evaluated  
+	 */
 	public NumberNode add(NumberNode node) {
 		return new NumberNode((this.numerator * node.getDenominator()) + (this.denominator * node.getNumerator()),
 				this.denominator * node.getDenominator());
@@ -102,12 +127,17 @@ public class NumberNode extends ExpressionNode {
 	public long getDenominator() {
 		return this.denominator;
 	}
-
-	private static long gcd(long a, long b) {
+	/**
+	 * Calculates the greatest common factor of two numbers 
+	 * @param a 
+	 * @param b
+	 * @return
+	 */
+	private static long gcf(long a, long b) {
 		if (b == 0) {
 			return a;
 		}
-		return Math.abs(gcd(b, a % b));
+		return Math.abs(gcf(b, a % b));
 	}
 
 	private boolean isInteger() {

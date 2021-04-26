@@ -10,10 +10,10 @@ import Conditions.ConditionsLexer;
 import Conditions.ConditionsParser;
 
 /**
- * Visitor class that traverses the ANTLR4 parse tree that represents the
- * conditions of the rule. Converts the parse tree nodes under the 'expression'
- * production rules into an AST structure comprised of ExpressionNode objects.
- * Returns the root node of the converted AST structure.
+ * Traverses the ANTLR4 parse tree that represents the conditions of the rule.
+ * Converts the parse tree nodes under the 'expression' production rules into an
+ * AST structure comprised of ExpressionNode objects. Returns the root node of
+ * the converted AST structure.
  * 
  * @author Lewis
  *
@@ -25,16 +25,34 @@ public class BuildConditionsVisitor extends ConditionsBaseVisitor<ExpressionNode
 	public BuildConditionsVisitor() {
 	}
 
+	/**
+	 * Visit root of parse tree
+	 * 
+	 * @return Abstract syntax tree after conversion.
+	 */
 	@Override
 	public ExpressionNode visitRuleConditions(ConditionsParser.RuleConditionsContext context) {
 		return visit(context.condition());
 	}
 
+	/**
+	 * Condition order of evaluation can be altered through use of parentheses. They
+	 * do not get converted to a type of node.
+	 * 
+	 * @return ExpressionNode converted subtree contained within parentheses
+	 */
 	@Override
 	public ExpressionNode visitConditionParenthetical(ConditionsParser.ConditionParentheticalContext context) {
 		return visit(context.condition());
 	}
 
+	/**
+	 * Determines the operator in a binary logical operation (AND , OR) and returns
+	 * the AST node representing that type of operation.
+	 * 
+	 * @return ConditionAndNode in case of a logical conjunction operation
+	 *         ConditionOrNode in case of a logical disjunction operation
+	 */
 	@Override
 	public ExpressionNode visitConditionOperation(ConditionsParser.ConditionOperationContext context) {
 		ConditionOperationNode node = null;
@@ -49,12 +67,24 @@ public class BuildConditionsVisitor extends ConditionsBaseVisitor<ExpressionNode
 		return node;
 	}
 
+	/**
+	 * Conversion of logical negation operation to AST
+	 * Stores the condition tree being negated as ExpressionNode
+	 * 
+	 * @return ConditionNotNode storing the negated expression
+	 */
 	@Override
 	public ExpressionNode visitConditionNotOperation(ConditionsParser.ConditionNotOperationContext context) {
 
 		return new ConditionNotNode(visit(context.condition()));
 	}
 
+	/**
+	 * Conversion of relational operation to AST node.
+	 * 
+	 * @return ExpressionNode storing the LHS and RHS of operation, and the int and
+	 *         string representation of the operator
+	 */
 	@Override
 	public ExpressionNode visitConditionRelop(ConditionsParser.ConditionRelopContext context) {
 		ExpressionNode left = visit(context.left);
@@ -62,6 +92,12 @@ public class BuildConditionsVisitor extends ConditionsBaseVisitor<ExpressionNode
 		return new RelopNode(left, right, context.relop.getType(), context.relop.getText());
 	}
 
+	/**
+	 * Conversion of condition function to AST node. Stores the name and the
+	 * arguments of the condition function.
+	 * 
+	 * @return ConditionFunctionNode with attributes from parse tree.
+	 */
 	@Override
 	public ExpressionNode visitConditionFunction(ConditionsParser.ConditionFunctionContext context) {
 		ArrayList<ExpressionNode> arguments = new ArrayList<>();
@@ -71,41 +107,68 @@ public class BuildConditionsVisitor extends ConditionsBaseVisitor<ExpressionNode
 		return new ConditionFunctionNode(context.function.getText(), arguments);
 	}
 
+	/**
+	 * Conversion of variable to AST node. Stores a string representation of the
+	 * variable
+	 * 
+	 * @return VariableNode instance
+	 */
 	@Override
 	public ExpressionNode visitVariable(ConditionsParser.VariableContext context) {
 		return new VariableNode(context.value.getText());
 	}
 
+	/**
+	 * Conversion of rule variable to AST node. Stores a string representation of
+	 * the rule variable
+	 * 
+	 * @return RuleVariableNode instance
+	 */
 	@Override
 	public ExpressionNode visitRuleVariable(ConditionsParser.RuleVariableContext context) {
 		return new RuleVariableNode(context.value.getText());
 	}
 
-	@Override
-	public ExpressionNode visitRational(ConditionsParser.RationalContext context) {
-		String[] split = context.getText().split("/");
-		long numerator = Long.valueOf(split[0]);
-		long denominator = Long.valueOf(split[1]);
-		return new NumberNode(numerator, denominator);
-	}
+//	@Override
+//	public ExpressionNode visitRational(ConditionsParser.RationalContext context) {
+//		String[] split = context.getText().split("/");
+//		long numerator = Long.valueOf(split[0]);
+//		long denominator = Long.valueOf(split[1]);
+//		return new NumberNode(numerator, denominator);
+//	}
 
+	/**
+	 * Conversion of integer input to rational number
+	 * Calls NumberNode constructor accepting numerator
+	 * 
+	 * @return NumberNode representing integer value.
+	 */
 	@Override
 	public ExpressionNode visitInteger(ConditionsParser.IntegerContext context) {
 		return new NumberNode(Long.valueOf(context.getText()));
 	}
 
+	/**
+	 * Handles conversion of decimal input to rational number.
+	 * 
+	 * @return instance of NumberNode storing rational representation of decimal
+	 * 
+	 */
 	@Override
 	public ExpressionNode visitDecimal(ConditionsParser.DecimalContext context) {
 		BigDecimal b = new BigDecimal(context.getText());
+		// Format decimal input, remove unnecessary zeroes
 
 		String formattedDecimal = b.stripTrailingZeros().toPlainString();
+		// process as integer if fractional part is zero
 		if (!(formattedDecimal.contains("."))) {
 			return new NumberNode(Long.valueOf(formattedDecimal));
 		}
-
+		// Split into integer and fraction part
 		String[] splitByDecimalPoint = formattedDecimal.split("\\.");
+		// set numerator to integer part
 		long numerator = Long.valueOf(formattedDecimal.replaceAll("\\.", ""));
-
+		// Scale denominator to number of decimal places
 		int numberOfDecimalPlaces = splitByDecimalPoint[1].length();
 		long denominator = 1;
 		for (int i = 0; i < numberOfDecimalPlaces; i++) {
@@ -114,11 +177,22 @@ public class BuildConditionsVisitor extends ConditionsBaseVisitor<ExpressionNode
 		return new NumberNode(numerator, denominator);
 	}
 
+	/**
+	 * Parentheses in parse tree are not represented in AST. Returns the expression
+	 * within the parentheses.
+	 * 
+	 * @return ExpressionNode representing expression contained in parentheses
+	 */
 	@Override
 	public ExpressionNode visitParenthetical(ConditionsParser.ParentheticalContext context) {
 		return visit(context.expression());
 	}
 
+	/**
+	 * Unary negation node conversion.
+	 * 
+	 * @return Unary node storing the expression being negated.
+	 */
 	@Override
 	public ExpressionNode visitUnary(ConditionsParser.UnaryContext context) {
 		ExpressionNode node = visit(context.expression());
@@ -129,9 +203,11 @@ public class BuildConditionsVisitor extends ConditionsBaseVisitor<ExpressionNode
 			break;
 
 		case ConditionsLexer.OP_SUB:
+			// Cancel redundant negation (---x --> -x)
 			if (node instanceof UnaryNode) {
-				return ((UnaryNode)node).getInnerNode();
+				return ((UnaryNode) node).getInnerNode();
 			}
+			// apply negation to numerator of a numbernode if applicable
 			if (node instanceof NumberNode) {
 				return new NumberNode(((NumberNode) node).getNumerator() * -1, ((NumberNode) node).getDenominator());
 			}
@@ -141,6 +217,13 @@ public class BuildConditionsVisitor extends ConditionsBaseVisitor<ExpressionNode
 		return node;
 	}
 
+	/**
+	 * Conversion of operations into AST nodes. Switch statement determines which
+	 * operator is present in operation, and creates an instance of the
+	 * corresponding AST node.
+	 * 
+	 * @return Converted ExpressionNode instance representing operation.
+	 */
 	@Override
 	public ExpressionNode visitOperation(ConditionsParser.OperationContext context) {
 		OperationNode node = null;
@@ -164,11 +247,9 @@ public class BuildConditionsVisitor extends ConditionsBaseVisitor<ExpressionNode
 			break;
 
 		case ConditionsLexer.OP_DIV:
-			// Case of multiple unary denominators causing recognition as division rather than rational
-			if (left instanceof NumberNode && right instanceof NumberNode) {
-				if (((NumberNode)left).getDenominator() == 1 && ((NumberNode)right).getDenominator() == 1){
-					return new NumberNode(((NumberNode)left).getNumerator(), ((NumberNode)right).getNumerator());
-				}
+			// Throw division by zero error
+			if (right instanceof NumberNode && ((NumberNode)right).getNumerator() == 0){
+				throw new ArithmeticException();
 			}
 			node = new DivisionNode(left, right);
 			break;
@@ -180,6 +261,13 @@ public class BuildConditionsVisitor extends ConditionsBaseVisitor<ExpressionNode
 		return node;
 	}
 
+	/**
+	 * Visits each argument of the function in the parse tree, storing them in a
+	 * FunctionNode instance's array of arguments
+	 * 
+	 * @return FunctionNode of converted parse tree function
+	 */
+	@Override
 	public ExpressionNode visitFunction(ConditionsParser.FunctionContext context) {
 		ArrayList<ExpressionNode> arguments = new ArrayList<>();
 		for (int i = 0; i < context.expression().size(); i++) {
