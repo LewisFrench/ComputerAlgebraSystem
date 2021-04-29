@@ -5,9 +5,13 @@ ruleConditions: condition EOF;
 * Definition of the symbols used to build the conditions of a rule.
 */
 condition
+	// Define parentheses first 
 	: LPAREN condition RPAREN #ConditionParenthetical
-	| left = condition op = (OP_AND | OP_OR) right = condition #ConditionOperation
+		// unary boolean operation
 	|  OP_NOT value = condition  #ConditionNotOperation
+	// Binary boolean operations
+	| left = condition op = OP_AND right = condition #ConditionOperation
+	| left = condition op = OP_OR right = condition #ConditionOperation
     |  left = expression relop=(RELOP_EQ | RELOP_NEQ | RELOP_GT | RELOP_GTE | RELOP_LT | RELOP_LTE) right =expression  #ConditionRelop
 	| function = CONDITION_VARIABLE LPAREN arguments= expression ( COMMA expression)* RPAREN #ConditionFunction
 	;
@@ -16,16 +20,18 @@ condition
  * Definition of the expressions that can be compared and evaluated in the conditions of a rule
  */
 expression
+	// Define terminal symbols
    :  value = VARIABLE  #Variable
    | RULEVARIDENTIFIER value = VARIABLE #RuleVariable
-   //|  numerator = INTEGER OP_DIV denominator = INTEGER #Rational 
    |  value = INTEGER #Integer
    |  value = DECIMALNUMBER #Decimal
+   // Priority for parentheses to alter order of operations
    |  LPAREN expression RPAREN #Parenthetical  
+   // Maintain mathematical order of operations
+   |  <assoc=right> left = expression  op = OP_POW right = expression #Operation
+   |  <assoc=left> left = expression  op = (OP_MUL| OP_DIV) right = expression #Operation
+   |  <assoc=left> left = expression  op = (OP_ADD|OP_SUB) right = expression #Operation
    |  op = (OP_ADD | OP_SUB) expression #Unary
-   |  left = expression  op = OP_POW right = expression #Operation
-   |  left = expression  op = (OP_MUL | OP_DIV) right = expression #Operation
-   |  left = expression  op = (OP_ADD | OP_SUB) right = expression #Operation
    |  func = VARIABLE LPAREN  arguments =  expression( COMMA expression)* RPAREN #Function
    ;
    
@@ -52,8 +58,6 @@ INTEGER
  DECIMALNUMBER
    : UNSIGNED_INTEGER (POINT UNSIGNED_INTEGER)
    ;
-
-
 
 
 fragment VALID_CONDITION_CHAR

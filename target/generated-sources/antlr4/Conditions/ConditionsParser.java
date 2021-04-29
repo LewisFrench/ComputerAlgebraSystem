@@ -712,7 +712,7 @@ public class ConditionsParser extends Parser {
 					consume();
 				}
 				setState(53);
-				expression(5);
+				expression(2);
 				}
 				break;
 			case 7:
@@ -765,11 +765,11 @@ public class ConditionsParser extends Parser {
 						((OperationContext)_localctx).left = _prevctx;
 						pushNewRecursionContext(_localctx, _startState, RULE_expression);
 						setState(68);
-						if (!(precpred(_ctx, 4))) throw new FailedPredicateException(this, "precpred(_ctx, 4)");
+						if (!(precpred(_ctx, 5))) throw new FailedPredicateException(this, "precpred(_ctx, 5)");
 						setState(69);
 						((OperationContext)_localctx).op = match(OP_POW);
 						setState(70);
-						((OperationContext)_localctx).right = expression(5);
+						((OperationContext)_localctx).right = expression(6);
 						}
 						break;
 					case 2:
@@ -778,7 +778,7 @@ public class ConditionsParser extends Parser {
 						((OperationContext)_localctx).left = _prevctx;
 						pushNewRecursionContext(_localctx, _startState, RULE_expression);
 						setState(71);
-						if (!(precpred(_ctx, 3))) throw new FailedPredicateException(this, "precpred(_ctx, 3)");
+						if (!(precpred(_ctx, 4))) throw new FailedPredicateException(this, "precpred(_ctx, 4)");
 						setState(72);
 						((OperationContext)_localctx).op = _input.LT(1);
 						_la = _input.LA(1);
@@ -791,7 +791,7 @@ public class ConditionsParser extends Parser {
 							consume();
 						}
 						setState(73);
-						((OperationContext)_localctx).right = expression(4);
+						((OperationContext)_localctx).right = expression(5);
 						}
 						break;
 					case 3:
@@ -800,7 +800,7 @@ public class ConditionsParser extends Parser {
 						((OperationContext)_localctx).left = _prevctx;
 						pushNewRecursionContext(_localctx, _startState, RULE_expression);
 						setState(74);
-						if (!(precpred(_ctx, 2))) throw new FailedPredicateException(this, "precpred(_ctx, 2)");
+						if (!(precpred(_ctx, 3))) throw new FailedPredicateException(this, "precpred(_ctx, 3)");
 						setState(75);
 						((OperationContext)_localctx).op = _input.LT(1);
 						_la = _input.LA(1);
@@ -813,7 +813,7 @@ public class ConditionsParser extends Parser {
 							consume();
 						}
 						setState(76);
-						((OperationContext)_localctx).right = expression(3);
+						((OperationContext)_localctx).right = expression(4);
 						}
 						break;
 					}
@@ -855,11 +855,11 @@ public class ConditionsParser extends Parser {
 	private boolean expression_sempred(ExpressionContext _localctx, int predIndex) {
 		switch (predIndex) {
 		case 1:
-			return precpred(_ctx, 4);
+			return precpred(_ctx, 5);
 		case 2:
-			return precpred(_ctx, 3);
+			return precpred(_ctx, 4);
 		case 3:
-			return precpred(_ctx, 2);
+			return precpred(_ctx, 3);
 		}
 		return true;
 	}
@@ -881,12 +881,12 @@ public class ConditionsParser extends Parser {
 		"\3\2\2\2#)\3\2\2\2$%\f\6\2\2%&\t\3\2\2&(\5\4\3\7\'$\3\2\2\2(+\3\2\2\2"+
 		")\'\3\2\2\2)*\3\2\2\2*\5\3\2\2\2+)\3\2\2\2,-\b\4\1\2-E\7\4\2\2./\7\31"+
 		"\2\2/E\7\4\2\2\60E\7\5\2\2\61E\7\6\2\2\62\63\7\26\2\2\63\64\5\6\4\2\64"+
-		"\65\7\27\2\2\65E\3\2\2\2\66\67\t\4\2\2\67E\5\6\4\789\7\4\2\29:\7\26\2"+
+		"\65\7\27\2\2\65E\3\2\2\2\66\67\t\4\2\2\67E\5\6\4\489\7\4\2\29:\7\26\2"+
 		"\2:?\5\6\4\2;<\7\25\2\2<>\5\6\4\2=;\3\2\2\2>A\3\2\2\2?=\3\2\2\2?@\3\2"+
 		"\2\2@B\3\2\2\2A?\3\2\2\2BC\7\27\2\2CE\3\2\2\2D,\3\2\2\2D.\3\2\2\2D\60"+
-		"\3\2\2\2D\61\3\2\2\2D\62\3\2\2\2D\66\3\2\2\2D8\3\2\2\2EQ\3\2\2\2FG\f\6"+
-		"\2\2GH\7\20\2\2HP\5\6\4\7IJ\f\5\2\2JK\t\5\2\2KP\5\6\4\6LM\f\4\2\2MN\t"+
-		"\4\2\2NP\5\6\4\5OF\3\2\2\2OI\3\2\2\2OL\3\2\2\2PS\3\2\2\2QO\3\2\2\2QR\3"+
+		"\3\2\2\2D\61\3\2\2\2D\62\3\2\2\2D\66\3\2\2\2D8\3\2\2\2EQ\3\2\2\2FG\f\7"+
+		"\2\2GH\7\20\2\2HP\5\6\4\bIJ\f\6\2\2JK\t\5\2\2KP\5\6\4\7LM\f\5\2\2MN\t"+
+		"\4\2\2NP\5\6\4\6OF\3\2\2\2OI\3\2\2\2OL\3\2\2\2PS\3\2\2\2QO\3\2\2\2QR\3"+
 		"\2\2\2R\7\3\2\2\2SQ\3\2\2\2\t\35\")?DOQ";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());

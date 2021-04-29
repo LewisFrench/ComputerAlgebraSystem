@@ -442,7 +442,7 @@ public class AlgebraParser extends Parser {
 						setState(32);
 						((OperationContext)_localctx).op = match(OP_POW);
 						setState(33);
-						((OperationContext)_localctx).right = expression(6);
+						((OperationContext)_localctx).right = expression(5);
 						}
 						break;
 					case 2:
@@ -540,7 +540,7 @@ public class AlgebraParser extends Parser {
 		"\2\2\2\31\34\3\2\2\2\32\30\3\2\2\2\32\33\3\2\2\2\33\35\3\2\2\2\34\32\3"+
 		"\2\2\2\35\36\7\r\2\2\36 \3\2\2\2\37\t\3\2\2\2\37\13\3\2\2\2\37\f\3\2\2"+
 		"\2\37\r\3\2\2\2\37\21\3\2\2\2\37\23\3\2\2\2 ,\3\2\2\2!\"\f\7\2\2\"#\7"+
-		"\6\2\2#+\5\4\3\b$%\f\6\2\2%&\t\3\2\2&+\5\4\3\7\'(\f\5\2\2()\t\2\2\2)+"+
+		"\6\2\2#+\5\4\3\7$%\f\6\2\2%&\t\3\2\2&+\5\4\3\7\'(\f\5\2\2()\t\2\2\2)+"+
 		"\5\4\3\6*!\3\2\2\2*$\3\2\2\2*\'\3\2\2\2+.\3\2\2\2,*\3\2\2\2,-\3\2\2\2"+
 		"-\5\3\2\2\2.,\3\2\2\2\6\32\37*,";
 	public static final ATN _ATN =

@@ -3,6 +3,8 @@ package Testing;
 import static org.junit.Assert.*;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
@@ -31,7 +33,7 @@ public class TestSubstituteRuleVariables {
 	@Test
 	public void testSubstituteNumber() {
 		LinkedHashMap<String, ExpressionNode> variables = new LinkedHashMap<>();
-		variables.put("$test", new NumberNode(1, 4));
+		variables.put("$test", new NumberNode(BigInteger.valueOf(1), BigInteger.valueOf(4)));
 		ExpressionNode rv = new RuleVariableNode("test");
 		SubstituteRuleVariables s = new SubstituteRuleVariables(variables);
 
@@ -48,7 +50,7 @@ public class TestSubstituteRuleVariables {
 	public void testSubstituteAddition() {
 		LinkedHashMap<String, ExpressionNode> variables = new LinkedHashMap<>();
 
-		variables.put("$test", new AdditionNode(new NumberNode(2), new VariableNode("u")));
+		variables.put("$test", new AdditionNode(new NumberNode(BigInteger.valueOf(4)), new VariableNode("u")));
 		ExpressionNode rv = new RuleVariableNode("test");
 		SubstituteRuleVariables s = new SubstituteRuleVariables(variables);
 
@@ -66,7 +68,7 @@ public class TestSubstituteRuleVariables {
 	@Test
 	public void testSubstituteSubstitution() {
 		LinkedHashMap<String, ExpressionNode> variables = new LinkedHashMap<>();
-		variables.put("$test", new SubtractionNode(new NumberNode(2), new VariableNode("u")));
+		variables.put("$test", new SubtractionNode(new NumberNode(BigInteger.valueOf(2)), new VariableNode("u")));
 		ExpressionNode rv = new RuleVariableNode("test");
 		SubstituteRuleVariables s = new SubstituteRuleVariables(variables);
 
@@ -84,7 +86,7 @@ public class TestSubstituteRuleVariables {
 	@Test
 	public void testSubstituteMultiplication() {
 		LinkedHashMap<String, ExpressionNode> variables = new LinkedHashMap<>();
-		variables.put("$test", new MultiplicationNode(new NumberNode(2), new VariableNode("u")));
+		variables.put("$test", new MultiplicationNode(new NumberNode(BigInteger.valueOf(2)), new VariableNode("u")));
 		ExpressionNode rv = new RuleVariableNode("test");
 		SubstituteRuleVariables s = new SubstituteRuleVariables(variables);
 
@@ -102,7 +104,7 @@ public class TestSubstituteRuleVariables {
 	@Test
 	public void testSubstituteDivision() {
 		LinkedHashMap<String, ExpressionNode> variables = new LinkedHashMap<>();
-		variables.put("$test", new DivisionNode(new NumberNode(2), new VariableNode("u")));
+		variables.put("$test", new DivisionNode(new NumberNode(BigInteger.valueOf(2)), new VariableNode("u")));
 		ExpressionNode rv = new RuleVariableNode("test");
 		SubstituteRuleVariables s = new SubstituteRuleVariables(variables);
 
@@ -120,7 +122,7 @@ public class TestSubstituteRuleVariables {
 	@Test
 	public void testSubstituteExponentiation() {
 		LinkedHashMap<String, ExpressionNode> variables = new LinkedHashMap<>();
-		variables.put("$test", new PowerNode(new NumberNode(2), new VariableNode("u")));
+		variables.put("$test", new PowerNode(new NumberNode(BigInteger.valueOf(2)), new VariableNode("u")));
 		ExpressionNode rv = new RuleVariableNode("test");
 		SubstituteRuleVariables s = new SubstituteRuleVariables(variables);
 
@@ -159,7 +161,7 @@ public class TestSubstituteRuleVariables {
 	@Test
 	public void testSubstituteUnary_Number() {
 		LinkedHashMap<String, ExpressionNode> variables = new LinkedHashMap<>();
-		variables.put("$test", new UnaryNode(new NumberNode(2)));
+		variables.put("$test", new UnaryNode(new NumberNode(BigInteger.valueOf(2))));
 		ExpressionNode rv = new RuleVariableNode("test");
 		SubstituteRuleVariables s = new SubstituteRuleVariables(variables);
 
@@ -170,7 +172,7 @@ public class TestSubstituteRuleVariables {
 			assertTrue(result instanceof UnaryNode);
 			assertTrue(((UnaryNode) result).innerNode instanceof NumberNode);
 			ExpressionNode resultNode = (((UnaryNode) result).innerNode);
-			assertTrue(((NumberNode) resultNode).getNumerator() == 2);
+			assertTrue(((NumberNode) resultNode).getNumerator().compareTo(BigInteger.valueOf(2))==0);
 
 		} catch (Exception e) {
 			fail();
@@ -183,7 +185,7 @@ public class TestSubstituteRuleVariables {
 		LinkedHashMap<String, ExpressionNode> variables = new LinkedHashMap<>();
 
 		ArrayList<ExpressionNode> functionArguments = new ArrayList<ExpressionNode>();
-		functionArguments.add(new NumberNode(2, 11));
+		functionArguments.add(new NumberNode(BigInteger.valueOf(2), BigInteger.valueOf(11)));
 		functionArguments.add(new VariableNode("xa"));
 		ExpressionNode functionNode = new FunctionNode("TestFunction", functionArguments);
 
@@ -230,7 +232,7 @@ public class TestSubstituteRuleVariables {
 		LinkedHashMap<String, ExpressionNode> variables = new LinkedHashMap<>();
 		variables.put("$n", new VariableNode("x"));
 
-		ExpressionNode additionNode = new AdditionNode(new NumberNode(2), new RuleVariableNode("n"));
+		ExpressionNode additionNode = new AdditionNode(new NumberNode(BigInteger.valueOf(2)), new RuleVariableNode("n"));
 		SubstituteRuleVariables s = new SubstituteRuleVariables(variables);
 
 		try {
@@ -350,11 +352,11 @@ public class TestSubstituteRuleVariables {
 		LinkedHashMap<String, ExpressionNode> variables = new LinkedHashMap<>();
 		variables.put("$n", new VariableNode("x"));
 		ArrayList<ExpressionNode> arguments = new ArrayList<>();
-		arguments.add(new AdditionNode(new NumberNode(3), new NumberNode(4)));
-		arguments.add(new SubtractionNode(new NumberNode(3), new NumberNode(4)));
-		arguments.add(new MultiplicationNode(new NumberNode(3), new NumberNode(4)));
-		arguments.add(new DivisionNode(new NumberNode(3), new NumberNode(4)));
-		arguments.add(new PowerNode(new NumberNode(3), new RuleVariableNode("n")));
+		arguments.add(new AdditionNode(new NumberNode(BigInteger.valueOf(3)), new NumberNode(BigInteger.valueOf(4))));
+		arguments.add(new SubtractionNode(new NumberNode(BigInteger.valueOf(3)), new NumberNode(BigInteger.valueOf(4))));
+		arguments.add(new MultiplicationNode(new NumberNode(BigInteger.valueOf(3)), new NumberNode(BigInteger.valueOf(4))));
+		arguments.add(new DivisionNode(new NumberNode(BigInteger.valueOf(3)), new NumberNode(BigInteger.valueOf(4))));
+		arguments.add(new PowerNode(new NumberNode(BigInteger.valueOf(3)), new RuleVariableNode("n")));
 
 		ExpressionNode functionNode = new FunctionNode("TestFunction", arguments);
 		SubstituteRuleVariables s = new SubstituteRuleVariables(variables);

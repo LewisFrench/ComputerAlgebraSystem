@@ -6,15 +6,16 @@ term : expression EOF;
  * Definition of the series of algebraic expressions supported by the system
  */
 expression
-   :  value = VARIABLE  #Variable
-   //|  numerator = INTEGER OP_DIV denominator = INTEGER #Rational 
+   // Define terminal symbols 
+   :  value = VARIABLE  #Variable 
    |  value = INTEGER #Integer
    |  value = DECIMALNUMBER #Decimal
+   // Priority for parentheses to alter order of operations
    |  LPAREN expression RPAREN #Parenthetical  
-  
-   |  left = expression  op = OP_POW right = expression #Operation
-   |  left = expression  op = (OP_MUL | OP_DIV) right = expression #Operation
-   |  left = expression  op = (OP_ADD | OP_SUB) right = expression #Operation
+   // Maintain order of operations for mathematical operations
+   |  <assoc=right> left = expression  op = OP_POW right = expression #Operation
+   |  <assoc=left> left = expression  op = (OP_MUL| OP_DIV) right = expression #Operation
+   |  <assoc=left> left = expression  op = (OP_ADD|OP_SUB) right = expression #Operation
    |  op = (OP_ADD | OP_SUB) expression #Unary
    |  func = VARIABLE LPAREN  arguments =  expression( COMMA expression)* RPAREN #Function
    ;

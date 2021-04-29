@@ -418,7 +418,7 @@ public class RuleAlgebraParser extends Parser {
 					consume();
 				}
 				setState(18);
-				expression(5);
+				expression(2);
 				}
 				break;
 			case 7:
@@ -471,11 +471,11 @@ public class RuleAlgebraParser extends Parser {
 						((OperationContext)_localctx).left = _prevctx;
 						pushNewRecursionContext(_localctx, _startState, RULE_expression);
 						setState(33);
-						if (!(precpred(_ctx, 4))) throw new FailedPredicateException(this, "precpred(_ctx, 4)");
+						if (!(precpred(_ctx, 5))) throw new FailedPredicateException(this, "precpred(_ctx, 5)");
 						setState(34);
 						((OperationContext)_localctx).op = match(OP_POW);
 						setState(35);
-						((OperationContext)_localctx).right = expression(5);
+						((OperationContext)_localctx).right = expression(6);
 						}
 						break;
 					case 2:
@@ -484,7 +484,7 @@ public class RuleAlgebraParser extends Parser {
 						((OperationContext)_localctx).left = _prevctx;
 						pushNewRecursionContext(_localctx, _startState, RULE_expression);
 						setState(36);
-						if (!(precpred(_ctx, 3))) throw new FailedPredicateException(this, "precpred(_ctx, 3)");
+						if (!(precpred(_ctx, 4))) throw new FailedPredicateException(this, "precpred(_ctx, 4)");
 						setState(37);
 						((OperationContext)_localctx).op = _input.LT(1);
 						_la = _input.LA(1);
@@ -497,7 +497,7 @@ public class RuleAlgebraParser extends Parser {
 							consume();
 						}
 						setState(38);
-						((OperationContext)_localctx).right = expression(4);
+						((OperationContext)_localctx).right = expression(5);
 						}
 						break;
 					case 3:
@@ -506,7 +506,7 @@ public class RuleAlgebraParser extends Parser {
 						((OperationContext)_localctx).left = _prevctx;
 						pushNewRecursionContext(_localctx, _startState, RULE_expression);
 						setState(39);
-						if (!(precpred(_ctx, 2))) throw new FailedPredicateException(this, "precpred(_ctx, 2)");
+						if (!(precpred(_ctx, 3))) throw new FailedPredicateException(this, "precpred(_ctx, 3)");
 						setState(40);
 						((OperationContext)_localctx).op = _input.LT(1);
 						_la = _input.LA(1);
@@ -519,7 +519,7 @@ public class RuleAlgebraParser extends Parser {
 							consume();
 						}
 						setState(41);
-						((OperationContext)_localctx).right = expression(3);
+						((OperationContext)_localctx).right = expression(4);
 						}
 						break;
 					}
@@ -552,11 +552,11 @@ public class RuleAlgebraParser extends Parser {
 	private boolean expression_sempred(ExpressionContext _localctx, int predIndex) {
 		switch (predIndex) {
 		case 0:
-			return precpred(_ctx, 4);
+			return precpred(_ctx, 5);
 		case 1:
-			return precpred(_ctx, 3);
+			return precpred(_ctx, 4);
 		case 2:
-			return precpred(_ctx, 2);
+			return precpred(_ctx, 3);
 		}
 		return true;
 	}
@@ -569,12 +569,12 @@ public class RuleAlgebraParser extends Parser {
 		"\4\3\2\t\n\3\2\7\b\29\2\6\3\2\2\2\4!\3\2\2\2\6\7\5\4\3\2\7\b\7\2\2\3\b"+
 		"\3\3\2\2\2\t\n\b\3\1\2\n\"\7\5\2\2\13\f\7\17\2\2\f\"\7\5\2\2\r\"\7\3\2"+
 		"\2\16\"\7\4\2\2\17\20\7\f\2\2\20\21\5\4\3\2\21\22\7\r\2\2\22\"\3\2\2\2"+
-		"\23\24\t\2\2\2\24\"\5\4\3\7\25\26\7\5\2\2\26\27\7\f\2\2\27\34\5\4\3\2"+
+		"\23\24\t\2\2\2\24\"\5\4\3\4\25\26\7\5\2\2\26\27\7\f\2\2\27\34\5\4\3\2"+
 		"\30\31\7\13\2\2\31\33\5\4\3\2\32\30\3\2\2\2\33\36\3\2\2\2\34\32\3\2\2"+
 		"\2\34\35\3\2\2\2\35\37\3\2\2\2\36\34\3\2\2\2\37 \7\r\2\2 \"\3\2\2\2!\t"+
 		"\3\2\2\2!\13\3\2\2\2!\r\3\2\2\2!\16\3\2\2\2!\17\3\2\2\2!\23\3\2\2\2!\25"+
-		"\3\2\2\2\".\3\2\2\2#$\f\6\2\2$%\7\6\2\2%-\5\4\3\7&\'\f\5\2\2\'(\t\3\2"+
-		"\2(-\5\4\3\6)*\f\4\2\2*+\t\2\2\2+-\5\4\3\5,#\3\2\2\2,&\3\2\2\2,)\3\2\2"+
+		"\3\2\2\2\".\3\2\2\2#$\f\7\2\2$%\7\6\2\2%-\5\4\3\b&\'\f\6\2\2\'(\t\3\2"+
+		"\2(-\5\4\3\7)*\f\5\2\2*+\t\2\2\2+-\5\4\3\6,#\3\2\2\2,&\3\2\2\2,)\3\2\2"+
 		"\2-\60\3\2\2\2.,\3\2\2\2./\3\2\2\2/\5\3\2\2\2\60.\3\2\2\2\6\34!,.";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());

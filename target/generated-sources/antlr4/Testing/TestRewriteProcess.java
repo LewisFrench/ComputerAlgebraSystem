@@ -2,6 +2,7 @@ package Testing;
 
 import static org.junit.Assert.*;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 
 import org.junit.Test;
@@ -14,14 +15,14 @@ public class TestRewriteProcess {
 
 	@Test
 	public void testEmptyRuleSet() {
-		ExpressionNode term = new NumberNode(2);
+		ExpressionNode term = new NumberNode(BigInteger.valueOf(2));
 		ArrayList<Rule> rules = new ArrayList<>();
 		RewriteProcess rewrite = new RewriteProcess(rules);
 		try {
 			ExpressionNode result = rewrite.Visit(term);
 			assertTrue(result.getClass() == NumberNode.class);
-			assertTrue(((NumberNode) result).getNumerator() == 2);
-			assertTrue(((NumberNode) result).getDenominator() == 1);
+			assertTrue(((NumberNode) result).getNumerator().compareTo(BigInteger.valueOf(2))==0);
+			assertTrue(((NumberNode) result).getDenominator().compareTo(BigInteger.valueOf(1))==0);
 		} catch (Exception e) {
 			fail();
 		}
@@ -29,14 +30,14 @@ public class TestRewriteProcess {
 
 	@Test
 	public void testNullRuleSet() {
-		ExpressionNode term = new NumberNode(2);
+		ExpressionNode term = new NumberNode(BigInteger.valueOf(2));
 		ArrayList<Rule> rules = new ArrayList<>();
 		RewriteProcess rewrite = new RewriteProcess(rules);
 		try {
 			ExpressionNode result = rewrite.Visit(term);
 			assertTrue(result.getClass() == NumberNode.class);
-			assertTrue(((NumberNode) result).getNumerator() == 2);
-			assertTrue(((NumberNode) result).getDenominator() == 1);
+			assertTrue(((NumberNode) result).getNumerator().compareTo(BigInteger.valueOf(2))==0);
+			assertTrue(((NumberNode) result).getDenominator().compareTo(BigInteger.valueOf(1))==0);
 		} catch (Exception e) {
 			fail();
 		}
@@ -44,10 +45,10 @@ public class TestRewriteProcess {
 
 	@Test
 	public void testSimpleTransformation_Number() {
-		ExpressionNode term = new NumberNode(2);
+		ExpressionNode term = new NumberNode(BigInteger.valueOf(2));
 		ArrayList<Rule> rules = new ArrayList<>();
-		ExpressionNode ruleLhs = new NumberNode(2);
-		ExpressionNode ruleRhs = new NumberNode(3);
+		ExpressionNode ruleLhs = new NumberNode(BigInteger.valueOf(2));
+		ExpressionNode ruleRhs = new NumberNode(BigInteger.valueOf(3));
 
 		
 		try {
@@ -55,8 +56,8 @@ public class TestRewriteProcess {
 			RewriteProcess rewrite = new RewriteProcess(rules);
 			ExpressionNode result = rewrite.Visit(term);
 			assertTrue(result.getClass() == NumberNode.class);
-			assertTrue(((NumberNode) result).getNumerator() == 3);
-			assertTrue(((NumberNode) result).getDenominator() == 1);
+			assertTrue(((NumberNode) result).getNumerator().compareTo(BigInteger.valueOf(3))==0);
+			assertTrue(((NumberNode) result).getDenominator().compareTo(BigInteger.valueOf(1))==0);
 		} catch (Exception e) {
 			fail();
 		}
@@ -83,9 +84,9 @@ public class TestRewriteProcess {
 
 	@Test
 	public void testSimpleTransformation_Addition() {
-		ExpressionNode term = new AdditionNode(new NumberNode(2), new VariableNode("x"));
+		ExpressionNode term = new AdditionNode(new NumberNode(BigInteger.valueOf(2)), new VariableNode("x"));
 		ArrayList<Rule> rules = new ArrayList<>();
-		ExpressionNode ruleLhs = new AdditionNode(new NumberNode(2), new VariableNode("x"));
+		ExpressionNode ruleLhs = new AdditionNode(new NumberNode(BigInteger.valueOf(2)), new VariableNode("x"));
 		ExpressionNode ruleRhs = new AdditionNode(new VariableNode("z"), new VariableNode("c"));
 
 		
@@ -103,9 +104,9 @@ public class TestRewriteProcess {
 
 	@Test
 	public void testSimpleTransformation_Subtraction() {
-		ExpressionNode term = new SubtractionNode(new NumberNode(2), new VariableNode("x"));
+		ExpressionNode term = new SubtractionNode(new NumberNode(BigInteger.valueOf(2)), new VariableNode("x"));
 		ArrayList<Rule> rules = new ArrayList<>();
-		ExpressionNode ruleLhs = new SubtractionNode(new NumberNode(2), new VariableNode("x"));
+		ExpressionNode ruleLhs = new SubtractionNode(new NumberNode(BigInteger.valueOf(2)), new VariableNode("x"));
 		ExpressionNode ruleRhs = new SubtractionNode(new VariableNode("z"), new VariableNode("c"));
 
 		
@@ -123,9 +124,9 @@ public class TestRewriteProcess {
 
 	@Test
 	public void testSimpleTransformation_Multiplication() {
-		ExpressionNode term = new MultiplicationNode(new NumberNode(2), new VariableNode("x"));
+		ExpressionNode term = new MultiplicationNode(new NumberNode(BigInteger.valueOf(2)), new VariableNode("x"));
 		ArrayList<Rule> rules = new ArrayList<>();
-		ExpressionNode ruleLhs = new MultiplicationNode(new NumberNode(2), new VariableNode("x"));
+		ExpressionNode ruleLhs = new MultiplicationNode(new NumberNode(BigInteger.valueOf(2)), new VariableNode("x"));
 		ExpressionNode ruleRhs = new MultiplicationNode(new VariableNode("z"), new VariableNode("c"));
 
 		
@@ -143,9 +144,9 @@ public class TestRewriteProcess {
 
 	@Test
 	public void testSimpleTransformation_Division() {
-		ExpressionNode term = new DivisionNode(new NumberNode(2), new VariableNode("x"));
+		ExpressionNode term = new DivisionNode(new NumberNode(BigInteger.valueOf(2)), new VariableNode("x"));
 		ArrayList<Rule> rules = new ArrayList<>();
-		ExpressionNode ruleLhs = new DivisionNode(new NumberNode(2), new VariableNode("x"));
+		ExpressionNode ruleLhs = new DivisionNode(new NumberNode(BigInteger.valueOf(2)), new VariableNode("x"));
 		ExpressionNode ruleRhs = new DivisionNode(new VariableNode("z"), new VariableNode("c"));
 
 		
@@ -163,9 +164,9 @@ public class TestRewriteProcess {
 
 	@Test
 	public void testSimpleTransformation_Exponentiation() {
-		ExpressionNode term = new PowerNode(new NumberNode(2), new VariableNode("x"));
+		ExpressionNode term = new PowerNode(new NumberNode(BigInteger.valueOf(2)), new VariableNode("x"));
 		ArrayList<Rule> rules = new ArrayList<>();
-		ExpressionNode ruleLhs = new PowerNode(new NumberNode(2), new VariableNode("x"));
+		ExpressionNode ruleLhs = new PowerNode(new NumberNode(BigInteger.valueOf(2)), new VariableNode("x"));
 		ExpressionNode ruleRhs = new PowerNode(new VariableNode("z"), new VariableNode("c"));
 
 		
@@ -208,10 +209,10 @@ public class TestRewriteProcess {
 
 	@Test
 	public void testSimpleTransformation_Unary_Numerical() {
-		ExpressionNode term = new UnaryNode(new NumberNode(221,5));
+		ExpressionNode term = new UnaryNode(new NumberNode(BigInteger.valueOf(221),BigInteger.valueOf(5)));
 		ArrayList<Rule> rules = new ArrayList<>();
-		ExpressionNode ruleLhs = new UnaryNode(new NumberNode(221,5));
-		ExpressionNode ruleRhs = new UnaryNode(new NumberNode(224,3));
+		ExpressionNode ruleLhs = new UnaryNode(new NumberNode(BigInteger.valueOf(221),BigInteger.valueOf(5)));
+		ExpressionNode ruleRhs = new UnaryNode(new NumberNode(BigInteger.valueOf(224),BigInteger.valueOf(3)));
 
 		
 		try {
@@ -220,8 +221,8 @@ public class TestRewriteProcess {
 			ExpressionNode result = rewrite.Visit(term);
 
 			assertTrue(result.getClass() == NumberNode.class);
-			assertTrue(((NumberNode) result).getNumerator() == -224);
-			assertTrue(((NumberNode) result).getDenominator() == 3);
+			assertTrue(((NumberNode) result).getNumerator() .compareTo(BigInteger.valueOf(-224))==0);
+			assertTrue(((NumberNode) result).getDenominator().compareTo(BigInteger.valueOf(3))==0);
 
 		} catch (Exception e) {
 			fail();
@@ -255,7 +256,7 @@ public class TestRewriteProcess {
 	@Test
 	public void testRuleVariableTransformation_Variable() {
 		
-		ExpressionNode term = new AdditionNode(new NumberNode(2), new VariableNode("z"));
+		ExpressionNode term = new AdditionNode(new NumberNode(BigInteger.valueOf(2)), new VariableNode("z"));
 		ArrayList<Rule> rules = new ArrayList<>();
 		
 		
@@ -276,10 +277,10 @@ public class TestRewriteProcess {
 	@Test
 	public void testRuleVariableTransformation_Addition() {
 		
-		ExpressionNode term = new AdditionNode(new NumberNode(2), new  VariableNode("xy"));
+		ExpressionNode term = new AdditionNode(new NumberNode(BigInteger.valueOf(2)), new  VariableNode("xy"));
 		ArrayList<Rule> rules = new ArrayList<>();
 		
-		ExpressionNode lhs = new AdditionNode(new NumberNode(2), new RuleVariableNode("n"));
+		ExpressionNode lhs = new AdditionNode(new NumberNode(BigInteger.valueOf(2)), new RuleVariableNode("n"));
 		
 		try {
 			rules.add(new Rule(lhs, new RuleVariableNode("n")));
@@ -296,10 +297,10 @@ public class TestRewriteProcess {
 	@Test
 	public void testRuleVariableTransformation_Subtraction() {
 		
-		ExpressionNode term = new SubtractionNode(new NumberNode(2), new  VariableNode("xy"));
+		ExpressionNode term = new SubtractionNode(new NumberNode(BigInteger.valueOf(2)), new  VariableNode("xy"));
 		ArrayList<Rule> rules = new ArrayList<>();
 		
-		ExpressionNode lhs = new SubtractionNode(new NumberNode(2), new RuleVariableNode("n"));
+		ExpressionNode lhs = new SubtractionNode(new NumberNode(BigInteger.valueOf(2)), new RuleVariableNode("n"));
 		
 		try {
 			rules.add(new Rule(lhs, new RuleVariableNode("n")));
@@ -317,10 +318,10 @@ public class TestRewriteProcess {
 	@Test
 	public void testRuleVariableTransformation_Multiplication() {
 		
-		ExpressionNode term = new MultiplicationNode(new NumberNode(2), new  VariableNode("xy"));
+		ExpressionNode term = new MultiplicationNode(new NumberNode(BigInteger.valueOf(2)), new  VariableNode("xy"));
 		ArrayList<Rule> rules = new ArrayList<>();
 		
-		ExpressionNode lhs = new MultiplicationNode(new NumberNode(2), new RuleVariableNode("n"));
+		ExpressionNode lhs = new MultiplicationNode(new NumberNode(BigInteger.valueOf(2)), new RuleVariableNode("n"));
 		
 		try {
 			rules.add(new Rule(lhs, new RuleVariableNode("n")));
@@ -336,10 +337,10 @@ public class TestRewriteProcess {
 	@Test
 	public void testRuleVariableTransformation_Division() {
 		
-		ExpressionNode term = new DivisionNode(new NumberNode(2), new  VariableNode("xy"));
+		ExpressionNode term = new DivisionNode(new NumberNode(BigInteger.valueOf(2)), new  VariableNode("xy"));
 		ArrayList<Rule> rules = new ArrayList<>();
 		
-		ExpressionNode lhs = new DivisionNode(new NumberNode(2), new RuleVariableNode("n"));
+		ExpressionNode lhs = new DivisionNode(new NumberNode(BigInteger.valueOf(2)), new RuleVariableNode("n"));
 		
 		try {
 			rules.add(new Rule(lhs, new RuleVariableNode("n")));
@@ -356,10 +357,10 @@ public class TestRewriteProcess {
 	@Test
 	public void testRuleVariableTransformation_Exponentiation() {
 		
-		ExpressionNode term = new PowerNode(new NumberNode(2), new  VariableNode("xy"));
+		ExpressionNode term = new PowerNode(new NumberNode(BigInteger.valueOf(2)), new  VariableNode("xy"));
 		ArrayList<Rule> rules = new ArrayList<>();
 		
-		ExpressionNode lhs = new PowerNode(new NumberNode(2), new RuleVariableNode("n"));
+		ExpressionNode lhs = new PowerNode(new NumberNode(BigInteger.valueOf(2)), new RuleVariableNode("n"));
 		try {
 			rules.add(new Rule(lhs, new RuleVariableNode("n")));
 			RewriteProcess rewrite = new RewriteProcess(rules);
@@ -396,12 +397,12 @@ public class TestRewriteProcess {
 	public void testRuleVariableTransformation_Function() {
 		ArrayList<ExpressionNode> arguments = new ArrayList<>();
 		arguments.add(new VariableNode("x"));
-		arguments.add(new NumberNode(2));
+		arguments.add(new NumberNode(BigInteger.valueOf(2)));
 		arguments.add(new RuleVariableNode("n"));
 		
 		ArrayList<ExpressionNode> termArguments = new ArrayList<>();
 		termArguments.add(new VariableNode("x"));
-		termArguments.add(new NumberNode(2));
+		termArguments.add(new NumberNode(BigInteger.valueOf(2)));
 		termArguments.add(new VariableNode("xy"));
 		
 		ExpressionNode term = new FunctionNode("testFunction", termArguments);
@@ -431,7 +432,7 @@ public class TestRewriteProcess {
 		
 		ArrayList<ExpressionNode> termArguments = new ArrayList<>();
 		termArguments.add(new VariableNode("x"));
-		termArguments.add(new NumberNode(2));
+		termArguments.add(new NumberNode(BigInteger.valueOf(2)));
 		termArguments.add(new VariableNode("xy"));
 		
 		ExpressionNode term = new FunctionNode("testFunction", termArguments);
@@ -483,10 +484,10 @@ public class TestRewriteProcess {
 	@Test
 	public void testRuleVariableTransformation_ConditionsHold() {
 		
-		ExpressionNode term = new UnaryNode(new NumberNode(2));
+		ExpressionNode term = new UnaryNode(new NumberNode(BigInteger.valueOf(2)));
 		ArrayList<Rule> rules = new ArrayList<>();
 		
-		ExpressionNode conditionsNode = new RelopNode(new NumberNode(2), new NumberNode(3), ConditionsLexer.RELOP_LTE, "<");
+		ExpressionNode conditionsNode = new RelopNode(new NumberNode(BigInteger.valueOf(2)), new NumberNode(BigInteger.valueOf(3)), ConditionsLexer.RELOP_LTE, "<");
 		try {
 			rules.add(new Rule(new UnaryNode(new RuleVariableNode("p")), new VariableNode("xy"), conditionsNode));
 			RewriteProcess rewrite = new RewriteProcess(rules);
@@ -502,10 +503,10 @@ public class TestRewriteProcess {
 	@Test
 	public void testRuleVariableTransformation_ConditionsHold_False() {
 		
-		ExpressionNode term = new NumberNode(2);
+		ExpressionNode term = new NumberNode(BigInteger.valueOf(2));
 		ArrayList<Rule> rules = new ArrayList<>();
 		
-		ExpressionNode conditionsNode = new RelopNode(new NumberNode(4), new NumberNode(3), ConditionsLexer.RELOP_LTE, "<");
+		ExpressionNode conditionsNode = new RelopNode(new NumberNode(BigInteger.valueOf(4)), new NumberNode(BigInteger.valueOf(3)), ConditionsLexer.RELOP_LTE, "<");
 		try {
 			rules.add(new Rule(new RuleVariableNode("n"), new VariableNode("xy"), conditionsNode));
 			RewriteProcess rewrite = new RewriteProcess(rules);

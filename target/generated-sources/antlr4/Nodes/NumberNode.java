@@ -1,6 +1,6 @@
 package Nodes;
 
-import ComputerAlgebraSystem.LongMath;
+import java.math.BigInteger;
 
 /**
  * Stores numerical values as rational numbers. Allows for generation as either
@@ -10,43 +10,47 @@ import ComputerAlgebraSystem.LongMath;
  *
  */
 public class NumberNode extends ExpressionNode {
-
-	long numerator;
-	long denominator;
+	BigInteger numerator;
+	BigInteger denominator;
 
 	/**
-	 * Constructor for a non-integer rational number.
-	 * Normalises negative denominators and reduces values to a simplified form. 
+	 * Constructor for a non-integer rational number. Normalises negative
+	 * denominators and reduces values to a simplified form.
 	 * 
 	 * @param numerator
 	 * @param denominator
 	 * 
-	 * @Throws ArithmeticException if attempting to create a rational number with a denominators of 0.
+	 * @Throws ArithmeticException if attempting to create a rational number with a
+	 *         denominators of 0.
 	 */
-	public NumberNode(long numerator, long denominator) {
-		if (Math.abs(denominator) == 0) {
+	public NumberNode(BigInteger numerator, BigInteger denominator) {
+
+		if (denominator.compareTo(BigInteger.ZERO) == 0) {
 			throw new ArithmeticException("Attempted to divide by zero.");
 		}
 
-		if (denominator < 0) {
-			numerator *= -1;
-			denominator *= -1;
+		if (denominator.compareTo(BigInteger.ZERO) == -1) {
+			numerator = numerator.multiply(BigInteger.valueOf(-1));
+			denominator =denominator.multiply(BigInteger.valueOf(-1));
 		}
-		long gcdValue = gcf(numerator, denominator);
-		this.numerator = numerator / gcdValue;
-		this.denominator = denominator / gcdValue;
-	}
-	/** 
-	 * Constructor for the generation of an integer stored as arational.
-	 * @param numerator
-	 */
-	public NumberNode(long numerator) {
-		this.numerator = numerator;
-		this.denominator = 1;
+
+		BigInteger gcdValue = gcf(numerator, denominator);
+		this.numerator = numerator.divide(gcdValue);
+		this.denominator = denominator.divide(gcdValue);
 	}
 
 	/**
-	 * Output rational as a fraction, or as an integer if denominator is 1. 
+	 * Constructor for the generation of an integer stored as arational.
+	 * 
+	 * @param numerator
+	 */
+	public NumberNode(BigInteger numerator) {
+		this.numerator = numerator;
+		this.denominator = BigInteger.ONE;
+	}
+
+	/**
+	 * Output rational as a fraction, or as an integer if denominator is 1.
 	 */
 	public String toString() {
 		if (!isInteger()) {
@@ -55,20 +59,20 @@ public class NumberNode extends ExpressionNode {
 			return String.valueOf(this.numerator);
 		}
 	}
+
 	/**
 	 * 
 	 * @param n
-	 * @return
-	 * 0 if numbers are equivalent
-	 * 1 if LHS is greater than RHS
-	 * -1 if LHS is less than the RHS
+	 * @return 0 if numbers are equivalent 1 if LHS is greater than RHS -1 if LHS is
+	 *         less than the RHS
 	 */
 	public int compareTo(NumberNode n) {
-		long lhs = this.numerator * n.getDenominator();
-		long rhs = this.denominator * n.getNumerator();
-		if (lhs < rhs) {
+
+		BigInteger lhs = this.numerator.multiply(n.getDenominator());
+		BigInteger rhs = this.denominator.multiply( n.getNumerator());
+		if (lhs.compareTo(rhs) == -1) {
 			return -1;
-		} else if (lhs > rhs) {
+		} else if (lhs.compareTo(rhs) == 1) {
 			return 1;
 		} else {
 			return 0;
@@ -80,23 +84,36 @@ public class NumberNode extends ExpressionNode {
 	}
 
 	/**
-	 * Series of numerical operations performed between two NumberNode instances.  
+	 * Series of numerical operations performed between two NumberNode instances.
+	 * 
 	 * @param node the RHS of the operation.
-	 * @return NumberNode representing the result of the operation. 
-	 * 		   PowerNode in case of exponentiation that cannot be evaluated  
+	 * @return NumberNode representing the result of the operation. PowerNode in
+	 *         case of exponentiation that cannot be evaluated
 	 */
 	public NumberNode add(NumberNode node) {
-		return new NumberNode((this.numerator * node.getDenominator()) + (this.denominator * node.getNumerator()),
-				this.denominator * node.getDenominator());
+		return new NumberNode(
+				(this.numerator.multiply(node.getDenominator()).add(this.denominator.multiply(node.numerator))),
+				this.denominator.multiply(node.getDenominator())
+		);
+
 	}
 
 	public NumberNode subtract(NumberNode node) {
-		return new NumberNode(this.numerator * node.getDenominator() - this.denominator * node.getNumerator(),
-				this.denominator * node.getDenominator());
+		
+		return new NumberNode(
+				(this.numerator.multiply(node.getDenominator()).subtract(this.denominator.multiply(node.numerator))),
+				this.denominator.multiply(node.getDenominator())
+		);
+		
+
 	}
 
 	public NumberNode multiply(NumberNode node) {
-		return new NumberNode(this.numerator * node.getNumerator(), this.denominator * node.getDenominator());
+
+		return new NumberNode(
+				this.numerator.multiply(node.getNumerator()), 
+				this.denominator.multiply(node.getDenominator())
+				);
 	}
 
 	public NumberNode divide(NumberNode node) {
@@ -106,42 +123,43 @@ public class NumberNode extends ExpressionNode {
 	public ExpressionNode exponentiate(NumberNode node) {
 		if (node.isInteger()) {
 
-			long exponent = node.getNumerator();
-			if (node.getNumerator() < 0) {
-				// Here
+			BigInteger exponent = node.getNumerator();
+			// Negative exponent
+			if (node.getNumerator().compareTo(BigInteger.ZERO) == -1) {
+				return new NumberNode(
+						this.getDenominator().pow(exponent.abs().intValueExact()), 
+						this.getNumerator().pow(exponent.abs().intValueExact())
+						);
 
-				return new NumberNode(LongMath.raiseToPowerLong(this.getDenominator(), Math.abs(exponent)),
-						LongMath.raiseToPowerLong(this.getNumerator(), Math.abs(exponent)));
 			} else {
-				return new NumberNode(LongMath.raiseToPowerLong(this.getNumerator(), exponent),
-						LongMath.raiseToPowerLong(this.getDenominator(), exponent));
+				return new NumberNode(this.getNumerator().pow( exponent.abs().intValue()),
+						(this.getDenominator().pow(exponent.intValue())));
 			}
 		}
 		return new PowerNode(this, node);
 	}
 
-	public long getNumerator() {
+	public BigInteger getNumerator() {
 		return this.numerator;
 	}
 
-	public long getDenominator() {
+	public BigInteger getDenominator() {
 		return this.denominator;
 	}
+
 	/**
-	 * Calculates the greatest common factor of two numbers 
-	 * @param a 
+	 * Calculates the greatest common factor of two numbers
+	 * 
+	 * @param a
 	 * @param b
 	 * @return
 	 */
-	private static long gcf(long a, long b) {
-		if (b == 0) {
-			return a;
-		}
-		return Math.abs(gcf(b, a % b));
+	private static BigInteger gcf(BigInteger a, BigInteger b) {
+		return a.gcd(b);
 	}
 
 	private boolean isInteger() {
-		return this.denominator == 1;
+		return this.denominator.compareTo(BigInteger.ONE) == 0;
 	}
 
 }

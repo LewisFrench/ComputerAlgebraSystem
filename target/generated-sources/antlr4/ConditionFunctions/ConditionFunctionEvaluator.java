@@ -63,9 +63,9 @@ public class ConditionFunctionEvaluator {
 		case "_is_integer":
 			conditionFunction = new is_integer();
 			break;
-		case "_is_even":
-			conditionFunction = new is_even();
-			break;
+//		case "_is_even":
+//			conditionFunction = new is_even();
+//			break;
 		case "_depends":
 			conditionFunction = new depends();
 			break;

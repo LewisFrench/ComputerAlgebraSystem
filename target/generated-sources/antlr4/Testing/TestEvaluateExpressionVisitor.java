@@ -2,6 +2,7 @@ package Testing;
 
 import static org.junit.Assert.*;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 
 import org.junit.Test;
@@ -12,7 +13,7 @@ public class TestEvaluateExpressionVisitor {
 
 	@Test
 	public void testSimple_Number() {
-		ExpressionNode node = new NumberNode(1);
+		ExpressionNode node = new NumberNode(BigInteger.valueOf(1));
 		EvaluateTermOutput e= new EvaluateTermOutput();
 		try {
 			assertEquals(e.Visit(node), "1");
@@ -31,7 +32,7 @@ public class TestEvaluateExpressionVisitor {
 	
 	@Test
 	public void testSimple_Addition() {
-		ExpressionNode node = new AdditionNode(new VariableNode("ac"), new NumberNode(3));
+		ExpressionNode node = new AdditionNode(new VariableNode("ac"), new NumberNode(BigInteger.valueOf(3)));
 		EvaluateTermOutput e= new EvaluateTermOutput();
 		try {
 			assertEquals(e.Visit(node), "ac+3");
@@ -40,7 +41,7 @@ public class TestEvaluateExpressionVisitor {
 	
 	@Test
 	public void testSimple_Subtraction() {
-		ExpressionNode node = new SubtractionNode(new VariableNode("ac"), new NumberNode(2,3));
+		ExpressionNode node = new SubtractionNode(new VariableNode("ac"), new NumberNode(BigInteger.valueOf(2),BigInteger.valueOf(3)));
 		EvaluateTermOutput e= new EvaluateTermOutput();
 		try {
 			System.out.println(e.Visit(node));
@@ -51,7 +52,7 @@ public class TestEvaluateExpressionVisitor {
 	
 	@Test
 	public void testSimple_Division() {
-		ExpressionNode node = new DivisionNode(new VariableNode("ac"), new NumberNode(4,1));
+		ExpressionNode node = new DivisionNode(new VariableNode("ac"), new NumberNode(BigInteger.valueOf(4),BigInteger.valueOf(1)));
 		EvaluateTermOutput e= new EvaluateTermOutput();
 		try {
 			assertEquals(e.Visit(node), "ac/4");
@@ -59,7 +60,7 @@ public class TestEvaluateExpressionVisitor {
 	}
 	@Test
 	public void testSimple_Multiplication() {
-		ExpressionNode node = new MultiplicationNode(new VariableNode("ac"), new NumberNode(-4,-2));
+		ExpressionNode node = new MultiplicationNode(new VariableNode("ac"), new NumberNode(BigInteger.valueOf(-4),BigInteger.valueOf(-2)));
 		EvaluateTermOutput e= new EvaluateTermOutput();
 		try {
 			assertEquals(e.Visit(node), "ac*2");
@@ -68,7 +69,7 @@ public class TestEvaluateExpressionVisitor {
 	
 	@Test
 	public void testSimple_Exponentiation() {
-		ExpressionNode node = new PowerNode(new VariableNode("ac"), new NumberNode(-0,-1));
+		ExpressionNode node = new PowerNode(new VariableNode("ac"), new NumberNode(BigInteger.valueOf(-0),BigInteger.valueOf(-1)));
 		EvaluateTermOutput e= new EvaluateTermOutput();
 		try {
 			assertEquals(e.Visit(node), "ac^0");

@@ -1,4 +1,6 @@
-fib($n, $m) = fib($n-1, $n-2) + fib($m-1, $m-2) : $n>2 & $m > 1
 fib(1, 0) = 1
 fib(2, 1) = 2
-fib($n) = fib($n-1, $n-2) : _is_integer($n) & $n > 1
+fib($n, $m) = fib($n-1, $n-2) + fib($m-1, $m-2)
+fib($n) = fib($n-1, $n-2) : $n>1 & _is_integer($n)
+fib(1) = 1
+fib(0) = 0

@@ -1,5 +1,6 @@
 package VisitorClasses;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import Nodes.*;
 import VisitClasses.VisitTerm;
@@ -32,6 +33,7 @@ public class EvaluateNumericalOperations extends VisitTerm<ExpressionNode> {
 		if (left instanceof NumberNode && right instanceof NumberNode) {
 			return ((NumberNode) left).add((NumberNode) right);
 		}
+		
 		return new AdditionNode(left, right);
 	}
 
@@ -64,7 +66,7 @@ public class EvaluateNumericalOperations extends VisitTerm<ExpressionNode> {
 
 		// Divide by zero error
 		if (right instanceof NumberNode) {
-			if (((NumberNode) right).compareTo(new NumberNode(0)) == 0) {
+			if (((NumberNode) right).compareTo(new NumberNode(BigInteger.ZERO)) == 0) {
 				throw new ArithmeticException("Attempted to divide by zero.");
 			}
 		}
@@ -82,7 +84,7 @@ public class EvaluateNumericalOperations extends VisitTerm<ExpressionNode> {
 		ExpressionNode innerNode = Visit(node.getInnerNode());
 		// Negate numerical value 
 		if (innerNode instanceof NumberNode) {
-			return ((NumberNode) innerNode).multiply(new NumberNode(-1));
+			return ((NumberNode) innerNode).multiply(new NumberNode(BigInteger.valueOf(-1)));
 		}
 		return new UnaryNode(innerNode);
 	}

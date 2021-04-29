@@ -5,10 +5,13 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.math.BigInteger;
+
 import org.antlr.v4.runtime.misc.ParseCancellationException;
 import org.junit.Test;
 
 import ComputerAlgebraSystem.Program;
+import ComputerAlgebraSystem.RewriteRuleFormatException;
 import ComputerAlgebraSystem.Rule;
 import Nodes.*;
 public class TestRuleAlgebraParser {
@@ -21,26 +24,26 @@ public class TestRuleAlgebraParser {
 			Rule n = p.parseRule("3=3");
 			assertTrue(n.getLhsNode() instanceof NumberNode);
 			assertTrue(n.getRhsNode() instanceof NumberNode);
-			assertEquals(3, ((NumberNode) n.getLhsNode()).getNumerator());
-			assertEquals(1, ((NumberNode) n.getLhsNode()).getDenominator());
-			assertEquals(3, ((NumberNode) n.getRhsNode()).getNumerator());
-			assertEquals(1, ((NumberNode) n.getRhsNode()).getDenominator());
+			assertEquals(BigInteger.valueOf(3), ((NumberNode) n.getLhsNode()).getNumerator());
+			assertEquals(BigInteger.valueOf(1), ((NumberNode) n.getLhsNode()).getDenominator());
+			assertEquals(BigInteger.valueOf(3), ((NumberNode) n.getRhsNode()).getNumerator());
+			assertEquals(BigInteger.valueOf(1), ((NumberNode) n.getRhsNode()).getDenominator());
 
 			n = p.parseRule("-3=-3");
 			assertTrue(n.getLhsNode() instanceof NumberNode);
 			assertTrue(n.getRhsNode() instanceof NumberNode);
-			assertEquals(-3, ((NumberNode) n.getLhsNode()).getNumerator());
-			assertEquals(1, ((NumberNode) n.getLhsNode()).getDenominator());
-			assertEquals(-3, ((NumberNode) n.getRhsNode()).getNumerator());
-			assertEquals(1, ((NumberNode) n.getRhsNode()).getDenominator());
+			assertEquals(BigInteger.valueOf(-3), ((NumberNode) n.getLhsNode()).getNumerator());
+			assertEquals(BigInteger.valueOf(1), ((NumberNode) n.getLhsNode()).getDenominator());
+			assertEquals(BigInteger.valueOf(-3), ((NumberNode) n.getRhsNode()).getNumerator());
+			assertEquals(BigInteger.valueOf(1), ((NumberNode) n.getRhsNode()).getDenominator());
 
 			n = p.parseRule("-0=0");
 			assertTrue(n.getLhsNode() instanceof NumberNode);
 			assertTrue(n.getRhsNode() instanceof NumberNode);
-			assertEquals(0, ((NumberNode) n.getLhsNode()).getNumerator());
-			assertEquals(1, ((NumberNode) n.getLhsNode()).getDenominator());
-			assertEquals(0, ((NumberNode) n.getRhsNode()).getNumerator());
-			assertEquals(1, ((NumberNode) n.getRhsNode()).getDenominator());
+			assertEquals(BigInteger.valueOf(0), ((NumberNode) n.getLhsNode()).getNumerator());
+			assertEquals(BigInteger.valueOf(1), ((NumberNode) n.getLhsNode()).getDenominator());
+			assertEquals(BigInteger.valueOf(0), ((NumberNode) n.getRhsNode()).getNumerator());
+			assertEquals(BigInteger.valueOf(1), ((NumberNode) n.getRhsNode()).getDenominator());
 
 		} catch (ParseCancellationException e) {
 			fail();
@@ -58,42 +61,42 @@ public class TestRuleAlgebraParser {
 			Rule n = p.parseRule("1/3=1/3");
 			assertTrue(n.getLhsNode() instanceof NumberNode);
 			assertTrue(n.getRhsNode() instanceof NumberNode);
-			assertEquals(1, ((NumberNode) n.getLhsNode()).getNumerator());
-			assertEquals(3, ((NumberNode) n.getLhsNode()).getDenominator());
-			assertEquals(1, ((NumberNode) n.getRhsNode()).getNumerator());
-			assertEquals(3, ((NumberNode) n.getRhsNode()).getDenominator());
+			assertEquals(BigInteger.valueOf(1), ((NumberNode) n.getLhsNode()).getNumerator());
+			assertEquals(BigInteger.valueOf(3), ((NumberNode) n.getLhsNode()).getDenominator());
+			assertEquals(BigInteger.valueOf(1), ((NumberNode) n.getRhsNode()).getNumerator());
+			assertEquals(BigInteger.valueOf(3), ((NumberNode) n.getRhsNode()).getDenominator());
 
 			n = p.parseRule("0/3=0/3");
 			assertTrue(n.getLhsNode() instanceof NumberNode);
 			assertTrue(n.getRhsNode() instanceof NumberNode);
-			assertEquals(0, ((NumberNode) n.getLhsNode()).getNumerator());
-			assertEquals(1, ((NumberNode) n.getLhsNode()).getDenominator());
-			assertEquals(0, ((NumberNode) n.getRhsNode()).getNumerator());
-			assertEquals(1, ((NumberNode) n.getRhsNode()).getDenominator());
+			assertEquals(BigInteger.valueOf(0), ((NumberNode) n.getLhsNode()).getNumerator());
+			assertEquals(BigInteger.valueOf(1), ((NumberNode) n.getLhsNode()).getDenominator());
+			assertEquals(BigInteger.valueOf(0), ((NumberNode) n.getRhsNode()).getNumerator());
+			assertEquals(BigInteger.valueOf(1), ((NumberNode) n.getRhsNode()).getDenominator());
 			
 			n = p.parseRule("1/-3=1/-3");
 			assertTrue(n.getLhsNode() instanceof NumberNode);
 			assertTrue(n.getRhsNode() instanceof NumberNode);
-			assertEquals(-1, ((NumberNode) n.getLhsNode()).getNumerator() );
-			assertEquals(3, ((NumberNode) n.getLhsNode()).getDenominator() );
-			assertEquals(-1, ((NumberNode) n.getRhsNode()).getNumerator() );
-			assertEquals(3, ((NumberNode) n.getRhsNode()).getDenominator() );
+			assertEquals(BigInteger.valueOf(-1), ((NumberNode) n.getLhsNode()).getNumerator() );
+			assertEquals(BigInteger.valueOf(3), ((NumberNode) n.getLhsNode()).getDenominator() );
+			assertEquals(BigInteger.valueOf(-1), ((NumberNode) n.getRhsNode()).getNumerator() );
+			assertEquals(BigInteger.valueOf(3), ((NumberNode) n.getRhsNode()).getDenominator() );
 
 			n = p.parseRule("-1/-3=-1/-3");
 			assertTrue(n.getLhsNode() instanceof NumberNode);
 			assertTrue(n.getRhsNode() instanceof NumberNode);
-			assertEquals(1, ((NumberNode) n.getLhsNode()).getNumerator() );
-			assertEquals(3, ((NumberNode) n.getLhsNode()).getDenominator() );
-			assertEquals(1, ((NumberNode) n.getRhsNode()).getNumerator() );
-			assertEquals(3, ((NumberNode) n.getRhsNode()).getDenominator() );
+			assertEquals(BigInteger.valueOf(1), ((NumberNode) n.getLhsNode()).getNumerator() );
+			assertEquals(BigInteger.valueOf(3), ((NumberNode) n.getLhsNode()).getDenominator() );
+			assertEquals(BigInteger.valueOf(1), ((NumberNode) n.getRhsNode()).getNumerator() );
+			assertEquals(BigInteger.valueOf(3), ((NumberNode) n.getRhsNode()).getDenominator() );
 
 			n = p.parseRule("0001/0003=0001/0003");
 			assertTrue(n.getLhsNode() instanceof NumberNode);
 			assertTrue(n.getRhsNode() instanceof NumberNode);
-			assertEquals(1, ((NumberNode) n.getLhsNode()).getNumerator() );
-			assertEquals(3, ((NumberNode) n.getLhsNode()).getDenominator() );
-			assertEquals(1, ((NumberNode) n.getRhsNode()).getNumerator() );
-			assertEquals(3, ((NumberNode) n.getRhsNode()).getDenominator() );
+			assertEquals(BigInteger.valueOf(1), ((NumberNode) n.getLhsNode()).getNumerator() );
+			assertEquals(BigInteger.valueOf(3), ((NumberNode) n.getLhsNode()).getDenominator() );
+			assertEquals(BigInteger.valueOf(1), ((NumberNode) n.getRhsNode()).getNumerator() );
+			assertEquals(BigInteger.valueOf(3), ((NumberNode) n.getRhsNode()).getDenominator() );
 
 			
 		} catch (ParseCancellationException e) {
@@ -113,34 +116,34 @@ public class TestRuleAlgebraParser {
 			Rule n = p.parseRule("3.000=3.0000000");
 			assertTrue(n.getLhsNode() instanceof NumberNode);
 			assertTrue(n.getRhsNode() instanceof NumberNode);
-			assertEquals(3, ((NumberNode) n.getLhsNode()).getNumerator());
-			assertEquals(1, ((NumberNode) n.getLhsNode()).getDenominator());
-			assertEquals(3, ((NumberNode) n.getRhsNode()).getNumerator());
-			assertEquals(1, ((NumberNode) n.getRhsNode()).getDenominator());
+			assertEquals(BigInteger.valueOf(3), ((NumberNode) n.getLhsNode()).getNumerator());
+			assertEquals(BigInteger.valueOf(1), ((NumberNode) n.getLhsNode()).getDenominator());
+			assertEquals(BigInteger.valueOf(3), ((NumberNode) n.getRhsNode()).getNumerator());
+			assertEquals(BigInteger.valueOf(1), ((NumberNode) n.getRhsNode()).getDenominator());
 			
 			n = p.parseRule("00000003.000=0003.0000000");
 			assertTrue(n.getLhsNode() instanceof NumberNode);
 			assertTrue(n.getRhsNode() instanceof NumberNode);
-			assertEquals(3, ((NumberNode) n.getLhsNode()).getNumerator());
-			assertEquals(1, ((NumberNode) n.getLhsNode()).getDenominator());
-			assertEquals(3, ((NumberNode) n.getRhsNode()).getNumerator());
-			assertEquals(1, ((NumberNode) n.getRhsNode()).getDenominator());
+			assertEquals(BigInteger.valueOf(3), ((NumberNode) n.getLhsNode()).getNumerator());
+			assertEquals(BigInteger.valueOf(1), ((NumberNode) n.getLhsNode()).getDenominator());
+			assertEquals(BigInteger.valueOf(3), ((NumberNode) n.getRhsNode()).getNumerator());
+			assertEquals(BigInteger.valueOf(1), ((NumberNode) n.getRhsNode()).getDenominator());
 			
 			n = p.parseRule("-00000003.000=-0003.0000000");
 			assertTrue(n.getLhsNode() instanceof NumberNode);
 			assertTrue(n.getRhsNode() instanceof NumberNode);
-			assertEquals(-3, ((NumberNode) n.getLhsNode()).getNumerator());
-			assertEquals(1, ((NumberNode) n.getLhsNode()).getDenominator());
-			assertEquals(-3, ((NumberNode) n.getRhsNode()).getNumerator());
-			assertEquals(1, ((NumberNode) n.getRhsNode()).getDenominator());
+			assertEquals(BigInteger.valueOf(-3), ((NumberNode) n.getLhsNode()).getNumerator());
+			assertEquals(BigInteger.valueOf(1), ((NumberNode) n.getLhsNode()).getDenominator());
+			assertEquals(BigInteger.valueOf(-3), ((NumberNode) n.getRhsNode()).getNumerator());
+			assertEquals(BigInteger.valueOf(1), ((NumberNode) n.getRhsNode()).getDenominator());
 			
 			n = p.parseRule("-0000000.000=-000.0000000");
 			assertTrue(n.getLhsNode() instanceof NumberNode);
 			assertTrue(n.getRhsNode() instanceof NumberNode);
-			assertEquals(0, ((NumberNode) n.getLhsNode()).getNumerator());
-			assertEquals(1, ((NumberNode) n.getLhsNode()).getDenominator());
-			assertEquals(0, ((NumberNode) n.getRhsNode()).getNumerator());
-			assertEquals(1, ((NumberNode) n.getRhsNode()).getDenominator());
+			assertEquals(BigInteger.valueOf(0), ((NumberNode) n.getLhsNode()).getNumerator());
+			assertEquals(BigInteger.valueOf(1), ((NumberNode) n.getLhsNode()).getDenominator());
+			assertEquals(BigInteger.valueOf(0), ((NumberNode) n.getRhsNode()).getNumerator());
+			assertEquals(BigInteger.valueOf(1), ((NumberNode) n.getRhsNode()).getDenominator());
 
 		} catch (ParseCancellationException e) {
 			fail();
@@ -159,26 +162,26 @@ public class TestRuleAlgebraParser {
 			Rule n = p.parseRule("3.7 = 3.7");
 			assertTrue(n.getLhsNode() instanceof NumberNode);
 			assertTrue(n.getRhsNode() instanceof NumberNode);
-			assertEquals(37, ((NumberNode) n.getLhsNode()).getNumerator());
-			assertEquals(10, ((NumberNode) n.getLhsNode()).getDenominator());
-			assertEquals(37, ((NumberNode) n.getRhsNode()).getNumerator());
-			assertEquals(10, ((NumberNode) n.getRhsNode()).getDenominator());
+			assertEquals(BigInteger.valueOf(37), ((NumberNode) n.getLhsNode()).getNumerator());
+			assertEquals(BigInteger.valueOf(10), ((NumberNode) n.getLhsNode()).getDenominator());
+			assertEquals(BigInteger.valueOf(37), ((NumberNode) n.getRhsNode()).getNumerator());
+			assertEquals(BigInteger.valueOf(10), ((NumberNode) n.getRhsNode()).getDenominator());
 			
 			n = p.parseRule("-3.2001 = -3.2001");
 			assertTrue(n.getLhsNode() instanceof NumberNode);
 			assertTrue(n.getRhsNode() instanceof NumberNode);
-			assertEquals(-32001, ((NumberNode) n.getLhsNode()).getNumerator());
-			assertEquals(10000, ((NumberNode) n.getLhsNode()).getDenominator());
-			assertEquals(-32001, ((NumberNode) n.getRhsNode()).getNumerator());
-			assertEquals(10000, ((NumberNode) n.getRhsNode()).getDenominator());
+			assertEquals(BigInteger.valueOf(-32001), ((NumberNode) n.getLhsNode()).getNumerator());
+			assertEquals(BigInteger.valueOf(10000), ((NumberNode) n.getLhsNode()).getDenominator());
+			assertEquals(BigInteger.valueOf(-32001), ((NumberNode) n.getRhsNode()).getNumerator());
+			assertEquals(BigInteger.valueOf(10000), ((NumberNode) n.getRhsNode()).getDenominator());
 
 			n = p.parseRule("-0.0001 = 0.0001");
 			assertTrue(n.getLhsNode() instanceof NumberNode);
 			assertTrue(n.getRhsNode() instanceof NumberNode);
-			assertEquals(-1, ((NumberNode) n.getLhsNode()).getNumerator());
-			assertEquals(10000, ((NumberNode) n.getLhsNode()).getDenominator());
-			assertEquals(1, ((NumberNode) n.getRhsNode()).getNumerator());
-			assertEquals(10000, ((NumberNode) n.getRhsNode()).getDenominator());
+			assertEquals(BigInteger.valueOf(-1), ((NumberNode) n.getLhsNode()).getNumerator());
+			assertEquals(BigInteger.valueOf(10000), ((NumberNode) n.getLhsNode()).getDenominator());
+			assertEquals(BigInteger.valueOf(1), ((NumberNode) n.getRhsNode()).getNumerator());
+			assertEquals(BigInteger.valueOf(10000), ((NumberNode) n.getRhsNode()).getDenominator());
 
 
 		} catch (ParseCancellationException e) {
@@ -226,7 +229,7 @@ public class TestRuleAlgebraParser {
 			Rule result = p.parseRule("x=-1");
 			assertTrue(result.getLhsNode() instanceof VariableNode);
 			assertTrue(result.getRhsNode() instanceof NumberNode);
-			assertTrue(((NumberNode) result.getRhsNode()).getNumerator() == -1);
+			assertTrue(((NumberNode) result.getRhsNode()).getNumerator().compareTo(BigInteger.valueOf(-1))==0);
 			assertTrue(result.getConditionsNode() == null);
 
 		} catch (Exception e) {
@@ -775,7 +778,7 @@ public class TestRuleAlgebraParser {
 		try {
 			Rule result = p.parseRule("x=1:(1/3)/4>0");
 			assertTrue(result.getConditionsNode() instanceof RelopNode);
-			assertTrue(((RelopNode) result.getConditionsNode()).getLeft() instanceof DivisionNode);
+			assertTrue(((RelopNode) result.getConditionsNode()).getLeft() instanceof NumberNode);
 
 		} catch (Exception e) {
 			fail();
@@ -879,7 +882,7 @@ public class TestRuleAlgebraParser {
 	public void testInvalidRuleNoConditions_NoRHS() {
 
 		Program p = new Program();
-		assertThrows(ParseCancellationException.class, () -> p.parseRule("f(x)="));
+		assertThrows(RewriteRuleFormatException.class, () -> p.parseRule("f(x)="));
 
 	}
 

@@ -119,9 +119,13 @@ public class Program {
 			Rule currentRule;
 			ArrayList<Rule> currentRuleArray = new ArrayList<>();
 			while (ruleIndex < rules.size() && ruleApplicationCount < ruleApplicationLimit) {
+				if (ruleIndex == 0) {
+					
+				}
 				currentRule = rules.get(ruleIndex);
 				currentRuleArray.clear();
 				currentRuleArray.add(currentRule);
+
 				r = new RewriteProcess(currentRuleArray);
 				term = r.Visit(term);
 				ruleApplied = r.getRuleApplied();
@@ -131,7 +135,7 @@ public class Program {
 				} else {
 					ruleIndex++;
 				}
-				System.out.println(ruleIndex + "   " + ruleApplicationCount);
+				
 			}
 
 			ExpressionNode evaluatedTerm = new EvaluateNumericalOperations().Visit(term);
@@ -314,6 +318,7 @@ public class Program {
 		} catch (ArithmeticException iae) {
 			throw new ArithmeticException("Algebraic term contains a division by zero.");
 		} catch (Exception e) {
+			System.out.println(e.getClass());
 			throw new Exception("Error when parsing algebraic term");
 		}
 
@@ -350,10 +355,7 @@ public class Program {
 			parser.removeErrorListeners();
 			parser.addErrorListener(ParsingErrorListener.INSTANCE);
 
-//		} catch (ParseCancellationException pce) {
-//			throw new ParseCancellationException(pce.getMessage());
-//		}
-		
+
 		return parser;
 	}
 
