@@ -3,6 +3,7 @@ package Testing;
 import static org.junit.Assert.*;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
@@ -18,7 +19,7 @@ public class TestSubstituteConditionRuleVariables {
 		LinkedHashMap<String, ExpressionNode> variables = new LinkedHashMap<>();
 		variables.put("$n", new VariableNode("x"));
 		
-		RelopNode relop = new RelopNode(new NumberNode(3,2), new RuleVariableNode("n"), ConditionsLexer.RELOP_EQ, "==");
+		RelopNode relop = new RelopNode(new NumberNode(BigInteger.valueOf(3),BigInteger.valueOf(2)), new RuleVariableNode("n"), ConditionsLexer.RELOP_EQ, "==");
 		
 		SubstituteConditionRuleVariables s = new SubstituteConditionRuleVariables(variables);
 		
@@ -36,7 +37,7 @@ public class TestSubstituteConditionRuleVariables {
 		LinkedHashMap<String, ExpressionNode> variables = new LinkedHashMap<>();
 		variables.put("$n", new VariableNode("x"));
 		ExpressionNode subtraction = new SubtractionNode(new VariableNode("Var"), new RuleVariableNode("n"));
-		ExpressionNode relop = new RelopNode(subtraction, new NumberNode(2), ConditionsLexer.RELOP_GTE, ">=");
+		ExpressionNode relop = new RelopNode(subtraction, new NumberNode(BigInteger.valueOf(2)), ConditionsLexer.RELOP_GTE, ">=");
 		ExpressionNode not = new ConditionNotNode(relop);
 		SubstituteConditionRuleVariables s = new SubstituteConditionRuleVariables(variables);
 		
@@ -54,7 +55,7 @@ public class TestSubstituteConditionRuleVariables {
 	@Test
 	public void TestSubstituteConditionRuleVariables_ConditionFunction() {
 		LinkedHashMap<String, ExpressionNode> variables = new LinkedHashMap<>();
-		variables.put("$n", new AdditionNode(new VariableNode("a"), new NumberNode(2)));
+		variables.put("$n", new AdditionNode(new VariableNode("a"), new NumberNode(BigInteger.valueOf(2))));
 		
 		ArrayList<ExpressionNode> arguments = new ArrayList<>();
 		arguments.add(new RuleVariableNode("n"));
@@ -75,7 +76,7 @@ public class TestSubstituteConditionRuleVariables {
 		LinkedHashMap<String, ExpressionNode> variables = new LinkedHashMap<>();
 		variables.put("$n", new VariableNode("x"));
 		
-		RelopNode relop = new RelopNode(new NumberNode(3,2),new UnaryNode( new RuleVariableNode("n")), ConditionsLexer.RELOP_EQ, "==");
+		RelopNode relop = new RelopNode(new NumberNode(BigInteger.valueOf(3),BigInteger.valueOf(2)),new UnaryNode( new RuleVariableNode("n")), ConditionsLexer.RELOP_EQ, "==");
 		
 		SubstituteConditionRuleVariables s = new SubstituteConditionRuleVariables(variables);
 		
@@ -95,8 +96,8 @@ public class TestSubstituteConditionRuleVariables {
 		variables.put("$n", new VariableNode("x"));
 		
 		
-		RelopNode relop = new RelopNode(new NumberNode(3,2),new DivisionNode(new NumberNode(2), new NumberNode(4)), ConditionsLexer.RELOP_EQ, "==");
-		RelopNode relop2 = new RelopNode(new NumberNode(3,2),new MultiplicationNode( new VariableNode("x"), new RuleVariableNode("n")), ConditionsLexer.RELOP_EQ, "==");
+		RelopNode relop = new RelopNode(new NumberNode(BigInteger.valueOf(3),BigInteger.valueOf(2)),new DivisionNode(new NumberNode(BigInteger.valueOf(2)), new NumberNode(BigInteger.valueOf(4))), ConditionsLexer.RELOP_EQ, "==");
+		RelopNode relop2 = new RelopNode(new NumberNode(BigInteger.valueOf(3),BigInteger.valueOf(2)),new MultiplicationNode( new VariableNode("x"), new RuleVariableNode("n")), ConditionsLexer.RELOP_EQ, "==");
 		ExpressionNode and = new ConditionAndNode(relop,relop2 );
 		SubstituteConditionRuleVariables s = new SubstituteConditionRuleVariables(variables);
 		
@@ -119,8 +120,8 @@ public class TestSubstituteConditionRuleVariables {
 		variables.put("$n", new VariableNode("x"));
 		
 		
-		RelopNode relop = new RelopNode(new NumberNode(3,2),new AdditionNode(new NumberNode(2), new NumberNode(4)), ConditionsLexer.RELOP_EQ, "==");
-		RelopNode relop2 = new RelopNode(new NumberNode(3,2),new PowerNode( new VariableNode("x"), new RuleVariableNode("n")), ConditionsLexer.RELOP_EQ, "==");
+		RelopNode relop = new RelopNode(new NumberNode(BigInteger.valueOf(3),BigInteger.valueOf(2)),new AdditionNode(new NumberNode(BigInteger.valueOf(2)), new NumberNode(BigInteger.valueOf(4))), ConditionsLexer.RELOP_EQ, "==");
+		RelopNode relop2 = new RelopNode(new NumberNode(BigInteger.valueOf(3),BigInteger.valueOf(2)),new PowerNode( new VariableNode("x"), new RuleVariableNode("n")), ConditionsLexer.RELOP_EQ, "==");
 		ExpressionNode and = new ConditionOrNode(relop,relop2 );
 		SubstituteConditionRuleVariables s = new SubstituteConditionRuleVariables(variables);
 		
@@ -142,10 +143,10 @@ public class TestSubstituteConditionRuleVariables {
 		variables.put("$n", new VariableNode("x"));
 		
 		ArrayList<ExpressionNode> arguments = new ArrayList<ExpressionNode>();
-		arguments.add(new NumberNode(2));
+		arguments.add(new NumberNode(BigInteger.valueOf(2)));
 		arguments.add(new RuleVariableNode("a"));
 		
-		RelopNode relop = new RelopNode(new NumberNode(3,2),new AdditionNode(new FunctionNode("testFunc", new ArrayList<ExpressionNode>()), new FunctionNode("Test", arguments)), ConditionsLexer.RELOP_EQ, "==");
+		RelopNode relop = new RelopNode(new NumberNode(BigInteger.valueOf(3),BigInteger.valueOf(2)),new AdditionNode(new FunctionNode("testFunc", new ArrayList<ExpressionNode>()), new FunctionNode("Test", arguments)), ConditionsLexer.RELOP_EQ, "==");
 		
 		SubstituteConditionRuleVariables s = new SubstituteConditionRuleVariables(variables);
 		assertThrows(Exception.class, ()-> s.Visit(relop));

@@ -6,16 +6,18 @@ ruleTerm : expression EOF;
  * Definition of the series of expressions supported in the LHS or RHS of a rewrite rule.
  */
 expression
+   // Define terminal symbols 
    :  value = VARIABLE  #Variable
    | RULEVARIDENTIFIER value = VARIABLE #RuleVariable
-   //|  numerator = INTEGER OP_DIV denominator = INTEGER #Rational 
    |  value = INTEGER #Integer
    |  value = DECIMALNUMBER #Decimal
+   // Priority for parentheses to alter order of operations
    |  LPAREN expression RPAREN #Parenthetical  
+   // Maintain order of operations for mathematical operations
+   |  <assoc=right> left = expression  op = OP_POW right = expression #Operation
+   |  <assoc=left> left = expression  op = (OP_MUL| OP_DIV) right = expression #Operation
+   |  <assoc=left> left = expression  op = (OP_ADD|OP_SUB) right = expression #Operation
    |  op = (OP_ADD | OP_SUB) expression #Unary
-   |  left = expression  op = OP_POW right = expression #Operation
-   |  left = expression  op = (OP_MUL | OP_DIV) right = expression #Operation
-   |  left = expression  op = (OP_ADD | OP_SUB) right = expression #Operation
    |  func = VARIABLE LPAREN  arguments =  expression( COMMA expression)* RPAREN #Function
    ;
 /* Integer definition */

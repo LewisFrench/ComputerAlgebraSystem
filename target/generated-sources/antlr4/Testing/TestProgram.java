@@ -3,6 +3,7 @@ package Testing;
 import static org.junit.Assert.*;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 
 import org.antlr.v4.runtime.misc.ParseCancellationException;
@@ -152,35 +153,21 @@ public class TestProgram {
 		Program p = new Program();
 		ArrayList<Rule> rules = new ArrayList<>();
 		try { 
-			Rule r= new Rule(new VariableNode("x"), new NumberNode(1));
+			Rule r= new Rule(new VariableNode("x"), new NumberNode(BigInteger.ONE));
 			rules.add(r);
-			String result = p.Rewrite(rules,new VariableNode("x"));
+			String result = p.Rewrite(rules,new VariableNode("x"), 100);
 			assertTrue(result.equals("1"));
 		} catch (Exception e ) {fail();}
 
 	}
 	@Test
-	public void testRewrite_InfiniteRecursion_Exception() {
+	public void testRewrite_InfiniteRecursion_StackOverFlow() {
 		Program p = new Program();
 		ArrayList<Rule> rules = new ArrayList<>();
 		try { 
-			Rule r= new Rule(new RuleVariableNode("x"), new NumberNode(1));
+			Rule r= new Rule(new RuleVariableNode("x"), new AdditionNode (new AdditionNode(new RuleVariableNode("x"),new RuleVariableNode("x")), new AdditionNode(new RuleVariableNode("x"),new RuleVariableNode("x"))));
 			rules.add(r);
-			assertThrows(StackOverflowError.class, ()-> p.Rewrite(rules,new VariableNode("x")));
-		} catch (Exception e ) {fail();}
-
-	}
-	
-	
-	@Test
-	public void testRewrite_StackOverflow_Exception() {
-		Program p = new Program();
-		ArrayList<Rule> rules = new ArrayList<>();
-		try { 
-			Rule r= new Rule(new RuleVariableNode("x"), new RuleVariableNode("x"));
-			rules.add(r);
-			assertThrows(StackOverflowError.class, () -> p.Rewrite(rules, new VariableNode("a")));
-			
+			assertThrows(StackOverflowError.class, ()-> p.Rewrite(rules,new VariableNode("x"), 1000000));
 		} catch (Exception e ) {fail();}
 
 	}
@@ -192,7 +179,7 @@ public class TestProgram {
 		try { 
 			Rule r= new Rule(new RuleVariableNode("x"), new RuleVariableNode("x"));
 			rules.add(r);
-			assertThrows(Exception.class, () -> p.Rewrite(rules, new RuleVariableNode("a")));
+			assertThrows(Exception.class, () -> p.Rewrite(rules, new RuleVariableNode("a"), 100));
 			
 		} catch (Exception e ) {fail();}
 

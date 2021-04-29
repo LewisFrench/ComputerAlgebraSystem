@@ -35,6 +35,10 @@ public class RewriteProcess extends VisitTerm<ExpressionNode> {
 
 	@Override
 	public ExpressionNode Visit(PowerNode node) throws Exception {
+		// Stop traversing if rule has been applied 
+		if (this.ruleApplied) {
+			return node;
+		}
 		ExpressionNode visitedLeft = (Visit(node.getLeft()));
 		ExpressionNode visitedRight = (Visit(node.getRight()));
 		return rewrite(new PowerNode(visitedLeft, visitedRight));
@@ -42,6 +46,10 @@ public class RewriteProcess extends VisitTerm<ExpressionNode> {
 
 	@Override
 	public ExpressionNode Visit(AdditionNode node) throws Exception {
+		// Stop traversing if rule has been applied 
+		if (this.ruleApplied) {
+			return node;
+		}
 		ExpressionNode visitedLeft = (Visit(node.getLeft()));
 		ExpressionNode visitedRight = (Visit(node.getRight()));
 
@@ -50,6 +58,10 @@ public class RewriteProcess extends VisitTerm<ExpressionNode> {
 
 	@Override
 	public ExpressionNode Visit(SubtractionNode node) throws Exception {
+		// Stop traversing if rule has been applied 
+		if (this.ruleApplied) {
+			return node;
+		}
 		ExpressionNode visitedLeft = (Visit(node.getLeft()));
 		ExpressionNode visitedRight = (Visit(node.getRight()));
 
@@ -58,6 +70,10 @@ public class RewriteProcess extends VisitTerm<ExpressionNode> {
 
 	@Override
 	public ExpressionNode Visit(MultiplicationNode node) throws Exception {
+		// Stop traversing if rule has been applied 
+		if (this.ruleApplied) {
+			return node;
+		}
 		ExpressionNode visitedLeft = (Visit(node.getLeft()));
 		ExpressionNode visitedRight = (Visit(node.getRight()));
 
@@ -66,6 +82,10 @@ public class RewriteProcess extends VisitTerm<ExpressionNode> {
 
 	@Override
 	public ExpressionNode Visit(DivisionNode node) throws Exception {
+		// Stop traversing if rule has been applied 
+		if (this.ruleApplied) {
+			return node;
+		}
 		ExpressionNode visitedLeft = (Visit(node.getLeft()));
 		ExpressionNode visitedRight = (Visit(node.getRight()));
 
@@ -79,6 +99,10 @@ public class RewriteProcess extends VisitTerm<ExpressionNode> {
 
 	@Override
 	public ExpressionNode Visit(UnaryNode node) throws Exception {
+		// Stop traversing if rule has been applied 
+		if (this.ruleApplied) {
+			return node;
+		}
 		ExpressionNode innerNode = Visit(node.getInnerNode());
 		return rewrite(new UnaryNode(innerNode));
 
@@ -86,6 +110,10 @@ public class RewriteProcess extends VisitTerm<ExpressionNode> {
 
 	@Override
 	public ExpressionNode Visit(FunctionNode node) throws Exception {
+		// Stop traversing if rule has been applied 
+		if (this.ruleApplied) {
+			return node;
+		}
 		ArrayList<ExpressionNode> arguments = new ArrayList<>();
 		for (int i = 0; i < node.getArguments().size(); i++) {
 			arguments.add(Visit(node.getArguments().get(i)));
@@ -148,9 +176,6 @@ public class RewriteProcess extends VisitTerm<ExpressionNode> {
 								// Substitute rule variable values into the conditions tree
 								ExpressionNode substitutedConditions = new SubstituteConditionRuleVariables(
 										newRuleVariables).Visit(r.getConditionsNode());
-								// perform any available numerical evaluations in the conditions tree
-								// ExpressionNode evaluated = new EvaluateConditionNumericalExpressions()
-								// .Visit(substitutedConditions);
 								// Verify if the conditions are true or false
 								conditionsHold = new EvaluateConditions().Visit(substitutedConditions);
 
@@ -162,11 +187,13 @@ public class RewriteProcess extends VisitTerm<ExpressionNode> {
 										.Visit(r.getRhsNode());
 								ExpressionNode solved = new EvaluateNumericalOperations().Visit(substituted);
 								this.setRuleApplied(true);
+								//System.out.println("\nApplied rule : " + r.toString() + "\nto Term : " + redex.toString());
 								return solved;
 							}
 
 						}
 					}
+				// Catch exceptions and throw as RewriteError
 				} catch (Exception e) {
 					if (!(e.getClass().equals(RewriteError.class))) {
 						throw new RewriteError(e.getMessage(), r, redex);

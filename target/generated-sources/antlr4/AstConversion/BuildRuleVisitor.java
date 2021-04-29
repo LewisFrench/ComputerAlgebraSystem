@@ -1,6 +1,6 @@
 package AstConversion;
 
-import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import Nodes.*;
 import RuleAlgebra.RuleAlgebraBaseVisitor;
@@ -55,13 +55,6 @@ public class BuildRuleVisitor extends RuleAlgebraBaseVisitor<ExpressionNode> {
 		return new RuleVariableNode(context.value.getText());
 	}
 
-//	@Override
-//	public ExpressionNode visitRational(RuleAlgebraParser.RationalContext context) {
-//		String[] split = context.getText().split("/");
-//		long numerator = Long.valueOf(split[0]);
-//		long denominator = Long.valueOf(split[1]);
-//		return new NumberNode(numerator, denominator);
-//	}
 
 	/**
 	 * Conversion of integer input to rational number
@@ -71,7 +64,7 @@ public class BuildRuleVisitor extends RuleAlgebraBaseVisitor<ExpressionNode> {
 	 */
 	@Override
 	public ExpressionNode visitInteger(RuleAlgebraParser.IntegerContext context) {
-		return new NumberNode(Long.valueOf(context.getText()));
+		return new NumberNode(new BigInteger(context.getText()));
 	}
 
 	/**
@@ -82,23 +75,34 @@ public class BuildRuleVisitor extends RuleAlgebraBaseVisitor<ExpressionNode> {
 	 */
 	@Override
 	public ExpressionNode visitDecimal(RuleAlgebraParser.DecimalContext context) {
-		BigDecimal b = new BigDecimal(context.getText());
-		// Format decimal input, remove unnecessary zeroes
 
-		String formattedDecimal = b.stripTrailingZeros().toPlainString();
+		// Format decimal input, remove unnecessary zeroes
+		String decimalString = context.getText();
+		boolean removedTrailingZeros = false;
+		
+		// String trailing zeroes from decimal string
+		while (!(removedTrailingZeros)&& decimalString.length()>1 ) {
+			if (decimalString.endsWith("0") || decimalString.endsWith("."))
+			{
+				decimalString = decimalString.substring(0, decimalString.length()-1);
+			} else {
+				removedTrailingZeros = true;
+			}
+		}
+		String formattedDecimal = decimalString;
 		// process as integer if fractional part is zero
 		if (!(formattedDecimal.contains("."))) {
-			return new NumberNode(Long.valueOf(formattedDecimal));
+			return new NumberNode(new BigInteger(formattedDecimal));
 		}
 		// Split into integer and fraction part
 		String[] splitByDecimalPoint = formattedDecimal.split("\\.");
 		// set numerator to integer part
-		long numerator = Long.valueOf(formattedDecimal.replaceAll("\\.", ""));
+		BigInteger numerator = new BigInteger(formattedDecimal.replaceAll("\\.", ""));
 		// Scale denominator to number of decimal places
 		int numberOfDecimalPlaces = splitByDecimalPoint[1].length();
-		long denominator = 1;
+		BigInteger denominator = BigInteger.ONE;
 		for (int i = 0; i < numberOfDecimalPlaces; i++) {
-			denominator *= 10;
+			denominator =denominator.multiply(BigInteger.valueOf(10));
 		}
 		return new NumberNode(numerator, denominator);
 	}
@@ -133,7 +137,7 @@ public class BuildRuleVisitor extends RuleAlgebraBaseVisitor<ExpressionNode> {
 				return ((UnaryNode)node).getInnerNode();
 			}
 			if (node instanceof NumberNode) {
-				return new NumberNode(((NumberNode) node).getNumerator() * -1, ((NumberNode) node).getDenominator());
+				return new NumberNode(((NumberNode) node).getNumerator().multiply(BigInteger.valueOf(-1)) , ((NumberNode) node).getDenominator());
 			}
 			node = new UnaryNode(visit(context.expression()));
 			break;
@@ -172,8 +176,12 @@ public class BuildRuleVisitor extends RuleAlgebraBaseVisitor<ExpressionNode> {
 
 		case RuleAlgebraLexer.OP_DIV:
 			// Throw division by zero error
-			if (right instanceof NumberNode && ((NumberNode)right).getNumerator() == 0){
+			if (right instanceof NumberNode && ((NumberNode)right).getNumerator().compareTo(BigInteger.ZERO) == 0){
 				throw new ArithmeticException();
+			}
+			// Store number / number division as rational number
+			if (left instanceof NumberNode && right instanceof NumberNode) {
+				return ((NumberNode)left).divide((NumberNode)right);
 			}
 			node = new DivisionNode(left, right);
 			break;

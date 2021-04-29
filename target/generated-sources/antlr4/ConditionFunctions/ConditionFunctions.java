@@ -1,5 +1,6 @@
 package ConditionFunctions;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import Nodes.*;
 import VisitorClasses.DependsEvaluator;
@@ -38,7 +39,7 @@ class is_integer extends ConditionFunction {
 		if (arguments.size() == 1) {
 			if (arguments.get(0) instanceof NumberNode) {
 
-				return (((NumberNode) arguments.get(0)).getDenominator() == 1);
+				return (((NumberNode) arguments.get(0)).getDenominator().compareTo(BigInteger.ONE) ==0);
 			} else {
 				return false;
 			}
@@ -48,21 +49,23 @@ class is_integer extends ConditionFunction {
 	}
 
 }
-
-class is_even extends ConditionFunction {
-	@Override
-	boolean function(ArrayList<ExpressionNode> arguments) throws Exception {
-		if (arguments.size() == 1) {
-			if (arguments.get(0) instanceof NumberNode) {
-				return (new is_integer().function(arguments) && ((NumberNode) arguments.get(0)).getNumerator() % 2 == 0);
-			} else {
-				return false;
-			}
-		}
-		throw new IllegalArgumentException(
-				"Attempting to call _is_even with the incorrect number of arguments. Please consult the user guide for the syntax of these functions");
-	}
-}
+//
+//class is_even extends ConditionFunction {
+//	@Override
+//	boolean function(ArrayList<ExpressionNode> arguments) throws Exception {
+//		if (arguments.size() == 1) {
+//			if (arguments.get(0) instanceof NumberNode) {
+//				return (new is_integer().function(arguments) && ((NumberNode) arguments.get(0)).getNumerator() % 2 == 0);
+//				
+//				
+//			} else {
+//				return false;
+//			}
+//		}
+//		throw new IllegalArgumentException(
+//				"Attempting to call _is_even with the incorrect number of arguments. Please consult the user guide for the syntax of these functions");
+//	}
+//}
 
 class is_addition extends ConditionFunction {
 	@Override

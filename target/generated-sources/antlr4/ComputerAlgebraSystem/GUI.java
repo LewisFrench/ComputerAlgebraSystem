@@ -209,16 +209,16 @@ public class GUI implements ActionListener {
 				ArrayList<String> ruleStringList = readRules(fileChooser.getSelectedFile());
 				// Parse rule strings and store in ArrayList
 				ArrayList<Rule> rules = this.getRules(ruleStringList, p);
-				// Parse Term and begin Rewriting process if no errors occured during parsing
+				// Parse Term and begin Rewriting process if no errors occurred during parsing
 				if (rules != null) {
 					ExpressionNode term = p.parseTerm(enterTerm.getText());
-					String output = p.Rewrite(rules, term, ruleApplicationLimit);
+					String output = p.RewriteDeterministic(rules, term, ruleApplicationLimit);
 					//String output = p.RewriteDeterministic(rules, term, ruleApplicationLimit);
 					result.setText(output);
 					rewriteData.setText("Rules Applied: " + p.getRulesApplied() + "\nTime taken: "
 							+ p.getExecutionTime() + " nanoseconds");
 				}
-			// Display logical errors to the user
+			// Display input errors to the user
 
 			// Rule application limit is not a positive integer
 			} catch (NumberFormatException nfe) {

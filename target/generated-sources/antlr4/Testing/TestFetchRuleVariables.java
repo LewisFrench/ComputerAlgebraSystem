@@ -2,6 +2,7 @@ package Testing;
 
 import static org.junit.Assert.*;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 
 import org.junit.Test;
@@ -133,7 +134,7 @@ public class TestFetchRuleVariables {
 		ExpressionNode rv = new RuleVariableNode("n");
 		
 		ArrayList<ExpressionNode> arguments = new ArrayList<>();
-		arguments.add(new NumberNode(2));
+		arguments.add(new NumberNode(BigInteger.valueOf(2)));
 		arguments.add(rv);
 		ExpressionNode unary = new UnaryNode(rv);
 		FetchRuleVariables f = new FetchRuleVariables();
