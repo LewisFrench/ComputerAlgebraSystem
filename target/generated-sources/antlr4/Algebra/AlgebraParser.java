@@ -386,7 +386,7 @@ public class AlgebraParser extends Parser {
 					consume();
 				}
 				setState(16);
-				expression(2);
+				expression(4);
 				}
 				break;
 			case 6:
@@ -443,7 +443,7 @@ public class AlgebraParser extends Parser {
 						setState(32);
 						((OperationContext)_localctx).op = match(OP_POW);
 						setState(33);
-						((OperationContext)_localctx).right = expression(6);
+						((OperationContext)_localctx).right = expression(5);
 						}
 						break;
 					case 2:
@@ -452,7 +452,7 @@ public class AlgebraParser extends Parser {
 						((OperationContext)_localctx).left = _prevctx;
 						pushNewRecursionContext(_localctx, _startState, RULE_expression);
 						setState(34);
-						if (!(precpred(_ctx, 4))) throw new FailedPredicateException(this, "precpred(_ctx, 4)");
+						if (!(precpred(_ctx, 3))) throw new FailedPredicateException(this, "precpred(_ctx, 3)");
 						setState(35);
 						((OperationContext)_localctx).op = _input.LT(1);
 						_la = _input.LA(1);
@@ -465,7 +465,7 @@ public class AlgebraParser extends Parser {
 							consume();
 						}
 						setState(36);
-						((OperationContext)_localctx).right = expression(5);
+						((OperationContext)_localctx).right = expression(4);
 						}
 						break;
 					case 3:
@@ -474,7 +474,7 @@ public class AlgebraParser extends Parser {
 						((OperationContext)_localctx).left = _prevctx;
 						pushNewRecursionContext(_localctx, _startState, RULE_expression);
 						setState(37);
-						if (!(precpred(_ctx, 3))) throw new FailedPredicateException(this, "precpred(_ctx, 3)");
+						if (!(precpred(_ctx, 2))) throw new FailedPredicateException(this, "precpred(_ctx, 2)");
 						setState(38);
 						((OperationContext)_localctx).op = _input.LT(1);
 						_la = _input.LA(1);
@@ -487,7 +487,7 @@ public class AlgebraParser extends Parser {
 							consume();
 						}
 						setState(39);
-						((OperationContext)_localctx).right = expression(4);
+						((OperationContext)_localctx).right = expression(3);
 						}
 						break;
 					}
@@ -522,9 +522,9 @@ public class AlgebraParser extends Parser {
 		case 0:
 			return precpred(_ctx, 5);
 		case 1:
-			return precpred(_ctx, 4);
-		case 2:
 			return precpred(_ctx, 3);
+		case 2:
+			return precpred(_ctx, 2);
 		}
 		return true;
 	}
@@ -536,13 +536,13 @@ public class AlgebraParser extends Parser {
 		"\3\3\3\3\3\3\3\3\3\7\3+\n\3\f\3\16\3.\13\3\3\3\2\3\4\4\2\4\2\4\3\2\t\n"+
 		"\3\2\7\b\2\66\2\6\3\2\2\2\4\37\3\2\2\2\6\7\5\4\3\2\7\b\7\2\2\3\b\3\3\2"+
 		"\2\2\t\n\b\3\1\2\n \7\5\2\2\13 \7\3\2\2\f \7\4\2\2\r\16\7\f\2\2\16\17"+
-		"\5\4\3\2\17\20\7\r\2\2\20 \3\2\2\2\21\22\t\2\2\2\22 \5\4\3\4\23\24\7\5"+
+		"\5\4\3\2\17\20\7\r\2\2\20 \3\2\2\2\21\22\t\2\2\2\22 \5\4\3\6\23\24\7\5"+
 		"\2\2\24\25\7\f\2\2\25\32\5\4\3\2\26\27\7\13\2\2\27\31\5\4\3\2\30\26\3"+
 		"\2\2\2\31\34\3\2\2\2\32\30\3\2\2\2\32\33\3\2\2\2\33\35\3\2\2\2\34\32\3"+
 		"\2\2\2\35\36\7\r\2\2\36 \3\2\2\2\37\t\3\2\2\2\37\13\3\2\2\2\37\f\3\2\2"+
 		"\2\37\r\3\2\2\2\37\21\3\2\2\2\37\23\3\2\2\2 ,\3\2\2\2!\"\f\7\2\2\"#\7"+
-		"\6\2\2#+\5\4\3\b$%\f\6\2\2%&\t\3\2\2&+\5\4\3\7\'(\f\5\2\2()\t\2\2\2)+"+
-		"\5\4\3\6*!\3\2\2\2*$\3\2\2\2*\'\3\2\2\2+.\3\2\2\2,*\3\2\2\2,-\3\2\2\2"+
+		"\6\2\2#+\5\4\3\7$%\f\5\2\2%&\t\3\2\2&+\5\4\3\6\'(\f\4\2\2()\t\2\2\2)+"+
+		"\5\4\3\5*!\3\2\2\2*$\3\2\2\2*\'\3\2\2\2+.\3\2\2\2,*\3\2\2\2,-\3\2\2\2"+
 		"-\5\3\2\2\2.,\3\2\2\2\6\32\37*,";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());

@@ -31,7 +31,7 @@ public class NumberNode extends ExpressionNode {
 
 		if (denominator.compareTo(BigInteger.ZERO) == -1) {
 			numerator = numerator.multiply(BigInteger.valueOf(-1));
-			denominator =denominator.multiply(BigInteger.valueOf(-1));
+			denominator = denominator.multiply(BigInteger.valueOf(-1));
 		}
 
 		BigInteger gcdValue = gcf(numerator, denominator);
@@ -69,7 +69,7 @@ public class NumberNode extends ExpressionNode {
 	public int compareTo(NumberNode n) {
 
 		BigInteger lhs = this.numerator.multiply(n.getDenominator());
-		BigInteger rhs = this.denominator.multiply( n.getNumerator());
+		BigInteger rhs = this.denominator.multiply(n.getNumerator());
 		if (lhs.compareTo(rhs) == -1) {
 			return -1;
 		} else if (lhs.compareTo(rhs) == 1) {
@@ -93,27 +93,22 @@ public class NumberNode extends ExpressionNode {
 	public NumberNode add(NumberNode node) {
 		return new NumberNode(
 				(this.numerator.multiply(node.getDenominator()).add(this.denominator.multiply(node.numerator))),
-				this.denominator.multiply(node.getDenominator())
-		);
+				this.denominator.multiply(node.getDenominator()));
 
 	}
 
 	public NumberNode subtract(NumberNode node) {
-		
+
 		return new NumberNode(
 				(this.numerator.multiply(node.getDenominator()).subtract(this.denominator.multiply(node.numerator))),
-				this.denominator.multiply(node.getDenominator())
-		);
-		
+				this.denominator.multiply(node.getDenominator()));
 
 	}
 
 	public NumberNode multiply(NumberNode node) {
 
-		return new NumberNode(
-				this.numerator.multiply(node.getNumerator()), 
-				this.denominator.multiply(node.getDenominator())
-				);
+		return new NumberNode(this.numerator.multiply(node.getNumerator()),
+				this.denominator.multiply(node.getDenominator()));
 	}
 
 	public NumberNode divide(NumberNode node) {
@@ -122,20 +117,23 @@ public class NumberNode extends ExpressionNode {
 
 	public ExpressionNode exponentiate(NumberNode node) {
 		if (node.isInteger()) {
-
-			BigInteger exponent = node.getNumerator();
-			// Negative exponent
-			if (node.getNumerator().compareTo(BigInteger.ZERO) == -1) {
-				return new NumberNode(
-						this.getDenominator().pow(exponent.abs().intValueExact()), 
-						this.getNumerator().pow(exponent.abs().intValueExact())
-						);
-
-			} else {
-				return new NumberNode(this.getNumerator().pow( exponent.abs().intValue()),
-						(this.getDenominator().pow(exponent.intValue())));
+			try {
+				BigInteger exponent = node.getNumerator();
+				// Negative exponent
+				if (node.getNumerator().compareTo(BigInteger.ZERO) == -1) {
+					return new NumberNode(
+							this.getDenominator().pow(exponent.abs().intValueExact()), 
+							this.getNumerator().pow(exponent.abs().intValueExact())
+							);
+	
+				} else {
+					return new NumberNode(this.getNumerator().pow( exponent.abs().intValue()),
+							(this.getDenominator().pow(exponent.intValue())));
+				}
+			} catch (ArithmeticException ae) {
+				throw new ArithmeticException("Exponent is invalid. It may be too large.");
 			}
-		}
+			}
 		return new PowerNode(this, node);
 	}
 

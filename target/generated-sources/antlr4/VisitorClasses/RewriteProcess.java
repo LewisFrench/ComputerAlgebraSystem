@@ -50,6 +50,7 @@ public class RewriteProcess extends VisitTerm<ExpressionNode> {
 		if (this.ruleApplied) {
 			return node;
 		}
+	
 		ExpressionNode visitedLeft = (Visit(node.getLeft()));
 		ExpressionNode visitedRight = (Visit(node.getRight()));
 

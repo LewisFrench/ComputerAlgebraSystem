@@ -39,33 +39,9 @@ public class ConditionFunctionEvaluator {
 		case "_is_literal":
 			conditionFunction = new is_literal();
 			break;
-		case "_is_addition":
-			conditionFunction = new is_addition();
-			break;
-		case "_is_subtraction":
-			conditionFunction = new is_subtraction();
-			break;
-		case "_is_multiplication":
-			conditionFunction = new is_multiplication();
-			break;
-		case "_is_division":
-			conditionFunction = new is_division();
-			break;
-		case "_is_exponentiation":
-			conditionFunction = new is_exponentiation();
-			break;
-		case "_is_unary":
-			conditionFunction = new is_unary();
-			break;
-		case "_is_function":
-			conditionFunction = new is_function();
-			break;
 		case "_is_integer":
 			conditionFunction = new is_integer();
 			break;
-//		case "_is_even":
-//			conditionFunction = new is_even();
-//			break;
 		case "_depends":
 			conditionFunction = new depends();
 			break;

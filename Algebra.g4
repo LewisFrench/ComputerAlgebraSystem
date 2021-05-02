@@ -14,9 +14,9 @@ expression
    |  LPAREN expression RPAREN #Parenthetical  
    // Maintain order of operations for mathematical operations
    |  <assoc=right> left = expression  op = OP_POW right = expression #Operation
+   |  op = (OP_ADD | OP_SUB) expression #Unary
    |  <assoc=left> left = expression  op = (OP_MUL| OP_DIV) right = expression #Operation
    |  <assoc=left> left = expression  op = (OP_ADD|OP_SUB) right = expression #Operation
-   |  op = (OP_ADD | OP_SUB) expression #Unary
    |  func = VARIABLE LPAREN  arguments =  expression( COMMA expression)* RPAREN #Function
    ;
 

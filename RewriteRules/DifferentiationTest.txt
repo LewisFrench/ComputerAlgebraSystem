@@ -4,13 +4,22 @@ $A*1 = $A
 1*$A = $A
 0+$A = $A
 $A+0 = $A
+// Associativity of multiplication checks
 $A*($B*$A) = ($A*$A)*$B
 $A*($A*$B) = ($A*$A)*$B
 ($A*$B)*$A = ($A*$A)*$B
 ($B*$A)*$A = ($A*$A)*$B
+// Simplify powers of 1
 $A^1 = $A
+// IMPORTANT : This cleans up the issue of deep, non-associative trees in diffn(tan(x), x, 4)
 ($n*(($m*$B) * $A)) = ($n*$m)*$B*$A
 ($n*(($m*$B) * $A))*$A = ($n*$m)*$B * ($A*$A)
+(2*((2*sec(x)^2) * tan(x)))*tan(x) = 2*2*sec(x)^2 * tan(x)^2
+// Probably Unnecessary
+($n * $A) * $m = ($n * $m) * $A : _is_number($n) & _is_number($m)
+($A * $n) * $m = ($n * $m) * $A : _is_number($n) & _is_number($m)
+$n * ($A * $m) = ($n * $m) * $A : _is_number($n) & _is_number($m)
+$n * ($m * $A) = ($n * $m) * $A : _is_number($n) & _is_number($m)
 $n*$A*$m*$A = ($n*$m)*$A : _is_number($n) & _is_number($m)
 $A^$n * $A^$m = $A ^($n+$m)
 $A*$A = $A^2

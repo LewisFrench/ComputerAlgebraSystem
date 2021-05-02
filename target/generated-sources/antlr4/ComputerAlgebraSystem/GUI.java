@@ -108,6 +108,10 @@ public class GUI implements ActionListener {
 		c.ipady = 30;
 		c.gridwidth = 3;
 		panel.add(enterTerm, c);
+		JScrollPane scrollEntry = new JScrollPane(enterTerm);
+		c.gridwidth = 3;
+		// panel.add(result, c);
+		panel.add(scrollEntry, c);
 
 		// Add button to begin rewriting process
 		beginRewriteButton = new JButton("Apply Rewrite Rules");
@@ -195,6 +199,7 @@ public class GUI implements ActionListener {
 		// Begin rewriting process
 		if (e.getSource() == beginRewriteButton) {
 			errorMessage.setText("");
+			rewriteData.setText("");
 			result.setText("");
 			Program p = new Program();
 			try {
@@ -215,8 +220,16 @@ public class GUI implements ActionListener {
 					String output = p.RewriteDeterministic(rules, term, ruleApplicationLimit);
 					//String output = p.RewriteDeterministic(rules, term, ruleApplicationLimit);
 					result.setText(output);
-					rewriteData.setText("Rules Applied: " + p.getRulesApplied() + "\nTime taken: "
-							+ p.getExecutionTime() + " nanoseconds");
+					String timeTaken = "Time taken: ";
+					if (p.getExecutionTime() < 1) {
+						timeTaken += "<1 second";
+					} else if (p.getExecutionTime() == 1){
+						timeTaken += "1 second";
+					} else {
+						timeTaken += p.getExecutionTime() + " seconds";
+					}
+					rewriteData.setText("Rules Applied: " + p.getRulesApplied() + "\n"
+							+ timeTaken);
 				}
 			// Display input errors to the user
 
@@ -248,8 +261,8 @@ public class GUI implements ActionListener {
 				errorMessage.setText(re.getMessage());
 			// Unexpected error occurs during rewriting, less specific feedback can be given. 
 			} catch (Exception ex) {
-				System.out.println(ex.getClass());
-				ex.printStackTrace();
+//				System.out.println(ex.getClass());
+//				ex.printStackTrace();
 				errorMessage.setText(ex.getMessage());
 			}
 		}
