@@ -1,0 +1,4 @@
+($n * $A) * $m = ($n * $m) * $A : _is_number($n) & _is_number($m)
+($A * $n) * $m = ($n * $m) * $A : _is_number($n) & _is_number($m)
+$n * ($A * $m) = ($n * $m) * $A : _is_number($n) & _is_number($m)
+$n * ($m * $A) = ($n * $m) * $A : _is_number($n) & _is_number($m)

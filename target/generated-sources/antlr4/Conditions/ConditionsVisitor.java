@@ -17,6 +17,13 @@ public interface ConditionsVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitRuleConditions(ConditionsParser.RuleConditionsContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code ConditionNotOperation}
+	 * labeled alternative in {@link ConditionsParser#condition}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitConditionNotOperation(ConditionsParser.ConditionNotOperationContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code ConditionRelop}
 	 * labeled alternative in {@link ConditionsParser#condition}.
 	 * @param ctx the parse tree
@@ -38,13 +45,6 @@ public interface ConditionsVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitConditionParenthetical(ConditionsParser.ConditionParentheticalContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code Not}
-	 * labeled alternative in {@link ConditionsParser#condition}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitNot(ConditionsParser.NotContext ctx);
-	/**
 	 * Visit a parse tree produced by the {@code ConditionOperation}
 	 * labeled alternative in {@link ConditionsParser#condition}.
 	 * @param ctx the parse tree
@@ -52,25 +52,19 @@ public interface ConditionsVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitConditionOperation(ConditionsParser.ConditionOperationContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code expr}
-	 * labeled alternative in {@link ConditionsParser#condExpr}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitExpr(ConditionsParser.ExprContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link ConditionsParser#compileUnit}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitCompileUnit(ConditionsParser.CompileUnitContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code FunctionExpression}
+	 * Visit a parse tree produced by the {@code Integer}
 	 * labeled alternative in {@link ConditionsParser#expression}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitFunctionExpression(ConditionsParser.FunctionExpressionContext ctx);
+	T visitInteger(ConditionsParser.IntegerContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code Function}
+	 * labeled alternative in {@link ConditionsParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitFunction(ConditionsParser.FunctionContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code Variable}
 	 * labeled alternative in {@link ConditionsParser#expression}.
@@ -79,19 +73,12 @@ public interface ConditionsVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitVariable(ConditionsParser.VariableContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code Number}
+	 * Visit a parse tree produced by the {@code Decimal}
 	 * labeled alternative in {@link ConditionsParser#expression}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitNumber(ConditionsParser.NumberContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code UnaryExpression}
-	 * labeled alternative in {@link ConditionsParser#expression}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitUnaryExpression(ConditionsParser.UnaryExpressionContext ctx);
+	T visitDecimal(ConditionsParser.DecimalContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code Parenthetical}
 	 * labeled alternative in {@link ConditionsParser#expression}.
@@ -107,12 +94,12 @@ public interface ConditionsVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitOperation(ConditionsParser.OperationContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code Power}
+	 * Visit a parse tree produced by the {@code Unary}
 	 * labeled alternative in {@link ConditionsParser#expression}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitPower(ConditionsParser.PowerContext ctx);
+	T visitUnary(ConditionsParser.UnaryContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code RuleVariable}
 	 * labeled alternative in {@link ConditionsParser#expression}.

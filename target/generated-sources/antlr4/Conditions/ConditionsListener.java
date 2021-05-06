@@ -18,6 +18,18 @@ public interface ConditionsListener extends ParseTreeListener {
 	 */
 	void exitRuleConditions(ConditionsParser.RuleConditionsContext ctx);
 	/**
+	 * Enter a parse tree produced by the {@code ConditionNotOperation}
+	 * labeled alternative in {@link ConditionsParser#condition}.
+	 * @param ctx the parse tree
+	 */
+	void enterConditionNotOperation(ConditionsParser.ConditionNotOperationContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code ConditionNotOperation}
+	 * labeled alternative in {@link ConditionsParser#condition}.
+	 * @param ctx the parse tree
+	 */
+	void exitConditionNotOperation(ConditionsParser.ConditionNotOperationContext ctx);
+	/**
 	 * Enter a parse tree produced by the {@code ConditionRelop}
 	 * labeled alternative in {@link ConditionsParser#condition}.
 	 * @param ctx the parse tree
@@ -54,18 +66,6 @@ public interface ConditionsListener extends ParseTreeListener {
 	 */
 	void exitConditionParenthetical(ConditionsParser.ConditionParentheticalContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code Not}
-	 * labeled alternative in {@link ConditionsParser#condition}.
-	 * @param ctx the parse tree
-	 */
-	void enterNot(ConditionsParser.NotContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code Not}
-	 * labeled alternative in {@link ConditionsParser#condition}.
-	 * @param ctx the parse tree
-	 */
-	void exitNot(ConditionsParser.NotContext ctx);
-	/**
 	 * Enter a parse tree produced by the {@code ConditionOperation}
 	 * labeled alternative in {@link ConditionsParser#condition}.
 	 * @param ctx the parse tree
@@ -78,39 +78,29 @@ public interface ConditionsListener extends ParseTreeListener {
 	 */
 	void exitConditionOperation(ConditionsParser.ConditionOperationContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code expr}
-	 * labeled alternative in {@link ConditionsParser#condExpr}.
-	 * @param ctx the parse tree
-	 */
-	void enterExpr(ConditionsParser.ExprContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code expr}
-	 * labeled alternative in {@link ConditionsParser#condExpr}.
-	 * @param ctx the parse tree
-	 */
-	void exitExpr(ConditionsParser.ExprContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link ConditionsParser#compileUnit}.
-	 * @param ctx the parse tree
-	 */
-	void enterCompileUnit(ConditionsParser.CompileUnitContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link ConditionsParser#compileUnit}.
-	 * @param ctx the parse tree
-	 */
-	void exitCompileUnit(ConditionsParser.CompileUnitContext ctx);
-	/**
-	 * Enter a parse tree produced by the {@code FunctionExpression}
+	 * Enter a parse tree produced by the {@code Integer}
 	 * labeled alternative in {@link ConditionsParser#expression}.
 	 * @param ctx the parse tree
 	 */
-	void enterFunctionExpression(ConditionsParser.FunctionExpressionContext ctx);
+	void enterInteger(ConditionsParser.IntegerContext ctx);
 	/**
-	 * Exit a parse tree produced by the {@code FunctionExpression}
+	 * Exit a parse tree produced by the {@code Integer}
 	 * labeled alternative in {@link ConditionsParser#expression}.
 	 * @param ctx the parse tree
 	 */
-	void exitFunctionExpression(ConditionsParser.FunctionExpressionContext ctx);
+	void exitInteger(ConditionsParser.IntegerContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code Function}
+	 * labeled alternative in {@link ConditionsParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterFunction(ConditionsParser.FunctionContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code Function}
+	 * labeled alternative in {@link ConditionsParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitFunction(ConditionsParser.FunctionContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code Variable}
 	 * labeled alternative in {@link ConditionsParser#expression}.
@@ -124,29 +114,17 @@ public interface ConditionsListener extends ParseTreeListener {
 	 */
 	void exitVariable(ConditionsParser.VariableContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code Number}
+	 * Enter a parse tree produced by the {@code Decimal}
 	 * labeled alternative in {@link ConditionsParser#expression}.
 	 * @param ctx the parse tree
 	 */
-	void enterNumber(ConditionsParser.NumberContext ctx);
+	void enterDecimal(ConditionsParser.DecimalContext ctx);
 	/**
-	 * Exit a parse tree produced by the {@code Number}
+	 * Exit a parse tree produced by the {@code Decimal}
 	 * labeled alternative in {@link ConditionsParser#expression}.
 	 * @param ctx the parse tree
 	 */
-	void exitNumber(ConditionsParser.NumberContext ctx);
-	/**
-	 * Enter a parse tree produced by the {@code UnaryExpression}
-	 * labeled alternative in {@link ConditionsParser#expression}.
-	 * @param ctx the parse tree
-	 */
-	void enterUnaryExpression(ConditionsParser.UnaryExpressionContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code UnaryExpression}
-	 * labeled alternative in {@link ConditionsParser#expression}.
-	 * @param ctx the parse tree
-	 */
-	void exitUnaryExpression(ConditionsParser.UnaryExpressionContext ctx);
+	void exitDecimal(ConditionsParser.DecimalContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code Parenthetical}
 	 * labeled alternative in {@link ConditionsParser#expression}.
@@ -172,17 +150,17 @@ public interface ConditionsListener extends ParseTreeListener {
 	 */
 	void exitOperation(ConditionsParser.OperationContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code Power}
+	 * Enter a parse tree produced by the {@code Unary}
 	 * labeled alternative in {@link ConditionsParser#expression}.
 	 * @param ctx the parse tree
 	 */
-	void enterPower(ConditionsParser.PowerContext ctx);
+	void enterUnary(ConditionsParser.UnaryContext ctx);
 	/**
-	 * Exit a parse tree produced by the {@code Power}
+	 * Exit a parse tree produced by the {@code Unary}
 	 * labeled alternative in {@link ConditionsParser#expression}.
 	 * @param ctx the parse tree
 	 */
-	void exitPower(ConditionsParser.PowerContext ctx);
+	void exitUnary(ConditionsParser.UnaryContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code RuleVariable}
 	 * labeled alternative in {@link ConditionsParser#expression}.

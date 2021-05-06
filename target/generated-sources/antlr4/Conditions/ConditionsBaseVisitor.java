@@ -24,6 +24,13 @@ public class ConditionsBaseVisitor<T> extends AbstractParseTreeVisitor<T> implem
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
+	@Override public T visitConditionNotOperation(ConditionsParser.ConditionNotOperationContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
 	@Override public T visitConditionRelop(ConditionsParser.ConditionRelopContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
@@ -45,13 +52,6 @@ public class ConditionsBaseVisitor<T> extends AbstractParseTreeVisitor<T> implem
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitNot(ConditionsParser.NotContext ctx) { return visitChildren(ctx); }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation returns the result of calling
-	 * {@link #visitChildren} on {@code ctx}.</p>
-	 */
 	@Override public T visitConditionOperation(ConditionsParser.ConditionOperationContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
@@ -59,21 +59,14 @@ public class ConditionsBaseVisitor<T> extends AbstractParseTreeVisitor<T> implem
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitExpr(ConditionsParser.ExprContext ctx) { return visitChildren(ctx); }
+	@Override public T visitInteger(ConditionsParser.IntegerContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitCompileUnit(ConditionsParser.CompileUnitContext ctx) { return visitChildren(ctx); }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation returns the result of calling
-	 * {@link #visitChildren} on {@code ctx}.</p>
-	 */
-	@Override public T visitFunctionExpression(ConditionsParser.FunctionExpressionContext ctx) { return visitChildren(ctx); }
+	@Override public T visitFunction(ConditionsParser.FunctionContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -87,14 +80,7 @@ public class ConditionsBaseVisitor<T> extends AbstractParseTreeVisitor<T> implem
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitNumber(ConditionsParser.NumberContext ctx) { return visitChildren(ctx); }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation returns the result of calling
-	 * {@link #visitChildren} on {@code ctx}.</p>
-	 */
-	@Override public T visitUnaryExpression(ConditionsParser.UnaryExpressionContext ctx) { return visitChildren(ctx); }
+	@Override public T visitDecimal(ConditionsParser.DecimalContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -115,7 +101,7 @@ public class ConditionsBaseVisitor<T> extends AbstractParseTreeVisitor<T> implem
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitPower(ConditionsParser.PowerContext ctx) { return visitChildren(ctx); }
+	@Override public T visitUnary(ConditionsParser.UnaryContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *

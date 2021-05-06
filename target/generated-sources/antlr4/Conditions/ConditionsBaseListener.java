@@ -28,6 +28,18 @@ public class ConditionsBaseListener implements ConditionsListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterConditionNotOperation(ConditionsParser.ConditionNotOperationContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitConditionNotOperation(ConditionsParser.ConditionNotOperationContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterConditionRelop(ConditionsParser.ConditionRelopContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -64,18 +76,6 @@ public class ConditionsBaseListener implements ConditionsListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterNot(ConditionsParser.NotContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitNot(ConditionsParser.NotContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void enterConditionOperation(ConditionsParser.ConditionOperationContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -88,37 +88,25 @@ public class ConditionsBaseListener implements ConditionsListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterExpr(ConditionsParser.ExprContext ctx) { }
+	@Override public void enterInteger(ConditionsParser.IntegerContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitExpr(ConditionsParser.ExprContext ctx) { }
+	@Override public void exitInteger(ConditionsParser.IntegerContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterCompileUnit(ConditionsParser.CompileUnitContext ctx) { }
+	@Override public void enterFunction(ConditionsParser.FunctionContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitCompileUnit(ConditionsParser.CompileUnitContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterFunctionExpression(ConditionsParser.FunctionExpressionContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitFunctionExpression(ConditionsParser.FunctionExpressionContext ctx) { }
+	@Override public void exitFunction(ConditionsParser.FunctionContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -136,25 +124,13 @@ public class ConditionsBaseListener implements ConditionsListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterNumber(ConditionsParser.NumberContext ctx) { }
+	@Override public void enterDecimal(ConditionsParser.DecimalContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitNumber(ConditionsParser.NumberContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterUnaryExpression(ConditionsParser.UnaryExpressionContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitUnaryExpression(ConditionsParser.UnaryExpressionContext ctx) { }
+	@Override public void exitDecimal(ConditionsParser.DecimalContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -184,13 +160,13 @@ public class ConditionsBaseListener implements ConditionsListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterPower(ConditionsParser.PowerContext ctx) { }
+	@Override public void enterUnary(ConditionsParser.UnaryContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitPower(ConditionsParser.PowerContext ctx) { }
+	@Override public void exitUnary(ConditionsParser.UnaryContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
