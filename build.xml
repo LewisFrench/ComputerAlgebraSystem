@@ -1,0 +1,1667 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- WARNING: Eclipse auto-generated file.
+              Any modifications will be overwritten.
+              To include a user specific buildfile here, simply create one in the same
+              directory with the processing instruction <?eclipse.ant.import?>
+              as the first entry and export the buildfile again. --><project basedir="." default="build" name="NewAntlr">
+    <property environment="env"/>
+    <property name="ECLIPSE_HOME" value="../../eclipse/java-2018-09/eclipse/"/>
+    <property name="junit.output.dir" value="junit"/>
+    <property name="debuglevel" value="source,lines,vars"/>
+    <property name="target" value="1.8"/>
+    <property name="source" value="1.8"/>
+    <path id="JUnit 5.libraryclasspath">
+        <pathelement location="../../.p2/pool/plugins/org.junit.jupiter.api_5.1.0.v20180327-1502.jar"/>
+        <pathelement location="../../.p2/pool/plugins/org.junit.jupiter.engine_5.1.0.v20180327-1502.jar"/>
+        <pathelement location="../../.p2/pool/plugins/org.junit.jupiter.migrationsupport_5.1.0.v20180327-1502.jar"/>
+        <pathelement location="../../.p2/pool/plugins/org.junit.jupiter.params_5.1.0.v20180327-1502.jar"/>
+        <pathelement location="../../.p2/pool/plugins/org.junit.platform.commons_1.1.0.v20180327-1502.jar"/>
+        <pathelement location="../../.p2/pool/plugins/org.junit.platform.engine_1.1.0.v20180327-1502.jar"/>
+        <pathelement location="../../.p2/pool/plugins/org.junit.platform.launcher_1.1.0.v20180327-1502.jar"/>
+        <pathelement location="../../.p2/pool/plugins/org.junit.platform.runner_1.1.0.v20180327-1502.jar"/>
+        <pathelement location="../../.p2/pool/plugins/org.junit.platform.suite.api_1.1.0.v20180327-1502.jar"/>
+        <pathelement location="../../.p2/pool/plugins/org.junit.vintage.engine_5.1.0.v20180327-1502.jar"/>
+        <pathelement location="../../.p2/pool/plugins/org.opentest4j_1.0.0.v20180327-1502.jar"/>
+        <pathelement location="../../.p2/pool/plugins/org.apiguardian_1.0.0.v20180327-1502.jar"/>
+        <pathelement location="../../.p2/pool/plugins/org.junit_4.12.0.v201504281640/junit.jar"/>
+        <pathelement location="../../.p2/pool/plugins/org.hamcrest.core_1.3.0.v20180420-1519.jar"/>
+    </path>
+    <path id="NewAntlr.classpath">
+        <pathelement location="build/classes"/>
+        <pathelement location="../../Documents/A Third Year/Dissertation/antlr-4.9.1-complete.jar"/>
+        <path refid="JUnit 5.libraryclasspath"/>
+    </path>
+    <path id="run.AllTests.bootclasspath">
+        <fileset dir="${java.home}/lib" includes="*.jar"/>
+        <fileset dir="${java.home}/lib/ext" includes="*.jar"/>
+    </path>
+    <path id="run.AntlrTestRun.bootclasspath">
+        <fileset dir="${java.home}/lib" includes="*.jar"/>
+        <fileset dir="${java.home}/lib/ext" includes="*.jar"/>
+    </path>
+    <path id="run.GUI.bootclasspath">
+        <fileset dir="${java.home}/lib" includes="*.jar"/>
+        <fileset dir="${java.home}/lib/ext" includes="*.jar"/>
+    </path>
+    <path id="run.TestConditionFunctions.bootclasspath">
+        <fileset dir="${java.home}/lib" includes="*.jar"/>
+        <fileset dir="${java.home}/lib/ext" includes="*.jar"/>
+    </path>
+    <path id="run.TestDependsEvaluator.bootclasspath">
+        <fileset dir="${java.home}/lib" includes="*.jar"/>
+        <fileset dir="${java.home}/lib/ext" includes="*.jar"/>
+    </path>
+    <path id="run.TestDependsEvaluator.testDependsEvaluator_Number_Variable.bootclasspath">
+        <fileset dir="${java.home}/lib" includes="*.jar"/>
+        <fileset dir="${java.home}/lib/ext" includes="*.jar"/>
+    </path>
+    <path id="run.TestDependsEvaluator.testDependsEvaluator_VisitRuleVariableNode_Exception.bootclasspath">
+        <fileset dir="${java.home}/lib" includes="*.jar"/>
+        <fileset dir="${java.home}/lib/ext" includes="*.jar"/>
+    </path>
+    <path id="run.TestDependsEvaluatorNew.bootclasspath">
+        <fileset dir="${java.home}/lib" includes="*.jar"/>
+        <fileset dir="${java.home}/lib/ext" includes="*.jar"/>
+    </path>
+    <path id="run.TestEvaluateConditionsVisitor.bootclasspath">
+        <fileset dir="${java.home}/lib" includes="*.jar"/>
+        <fileset dir="${java.home}/lib/ext" includes="*.jar"/>
+    </path>
+    <path id="run.TestEvaluateExpressionVisitor.bootclasspath">
+        <fileset dir="${java.home}/lib" includes="*.jar"/>
+        <fileset dir="${java.home}/lib/ext" includes="*.jar"/>
+    </path>
+    <path id="run.TestEvaluateTree.bootclasspath">
+        <fileset dir="${java.home}/lib" includes="*.jar"/>
+        <fileset dir="${java.home}/lib/ext" includes="*.jar"/>
+    </path>
+    <path id="run.TestEvaluateTree.testEvaluateTree_Addition.bootclasspath">
+        <fileset dir="${java.home}/lib" includes="*.jar"/>
+        <fileset dir="${java.home}/lib/ext" includes="*.jar"/>
+    </path>
+    <path id="run.TestEvaluateTree.testEvaluateTree_Division.bootclasspath">
+        <fileset dir="${java.home}/lib" includes="*.jar"/>
+        <fileset dir="${java.home}/lib/ext" includes="*.jar"/>
+    </path>
+    <path id="run.TestEvaluateTree.testEvaluateTree_Subtraction.bootclasspath">
+        <fileset dir="${java.home}/lib" includes="*.jar"/>
+        <fileset dir="${java.home}/lib/ext" includes="*.jar"/>
+    </path>
+    <path id="run.TestFetchConditionRuleVariables.bootclasspath">
+        <fileset dir="${java.home}/lib" includes="*.jar"/>
+        <fileset dir="${java.home}/lib/ext" includes="*.jar"/>
+    </path>
+    <path id="run.TestFetchRuleVariables.bootclasspath">
+        <fileset dir="${java.home}/lib" includes="*.jar"/>
+        <fileset dir="${java.home}/lib/ext" includes="*.jar"/>
+    </path>
+    <path id="run.TestMathematicalOperations.bootclasspath">
+        <fileset dir="${java.home}/lib" includes="*.jar"/>
+        <fileset dir="${java.home}/lib/ext" includes="*.jar"/>
+    </path>
+    <path id="run.TestMathematicalOperations.testRaiseToPowerLong_NegativeExponent_Exception.bootclasspath">
+        <fileset dir="${java.home}/lib" includes="*.jar"/>
+        <fileset dir="${java.home}/lib/ext" includes="*.jar"/>
+    </path>
+    <path id="run.TestNumericalComparisons.bootclasspath">
+        <fileset dir="${java.home}/lib" includes="*.jar"/>
+        <fileset dir="${java.home}/lib/ext" includes="*.jar"/>
+    </path>
+    <path id="run.TestNumericalOperations.bootclasspath">
+        <fileset dir="${java.home}/lib" includes="*.jar"/>
+        <fileset dir="${java.home}/lib/ext" includes="*.jar"/>
+    </path>
+    <path id="run.TestNumericalOperations.testIntegerAddition.bootclasspath">
+        <fileset dir="${java.home}/lib" includes="*.jar"/>
+        <fileset dir="${java.home}/lib/ext" includes="*.jar"/>
+    </path>
+    <path id="run.TestNumericalOperations.testIntegerAddition_simplifies.bootclasspath">
+        <fileset dir="${java.home}/lib" includes="*.jar"/>
+        <fileset dir="${java.home}/lib/ext" includes="*.jar"/>
+    </path>
+    <path id="run.TestNumericalOperations.testIntegerExponentiation.bootclasspath">
+        <fileset dir="${java.home}/lib" includes="*.jar"/>
+        <fileset dir="${java.home}/lib/ext" includes="*.jar"/>
+    </path>
+    <path id="run.TestNumericalOperations.testRationalAddition_Negative.bootclasspath">
+        <fileset dir="${java.home}/lib" includes="*.jar"/>
+        <fileset dir="${java.home}/lib/ext" includes="*.jar"/>
+    </path>
+    <path id="run.TestNumericalOperations.testRationalDivision_Negative.bootclasspath">
+        <fileset dir="${java.home}/lib" includes="*.jar"/>
+        <fileset dir="${java.home}/lib/ext" includes="*.jar"/>
+    </path>
+    <path id="run.TestNumericalOperations.testRationalExponentiation.bootclasspath">
+        <fileset dir="${java.home}/lib" includes="*.jar"/>
+        <fileset dir="${java.home}/lib/ext" includes="*.jar"/>
+    </path>
+    <path id="run.TestNumericalOperations.testRationalExponentiation_NegativeExponent_Exception.bootclasspath">
+        <fileset dir="${java.home}/lib" includes="*.jar"/>
+        <fileset dir="${java.home}/lib/ext" includes="*.jar"/>
+    </path>
+    <path id="run.TestNumericalOperations.testRationalExponentiation_ZeroExponent.bootclasspath">
+        <fileset dir="${java.home}/lib" includes="*.jar"/>
+        <fileset dir="${java.home}/lib/ext" includes="*.jar"/>
+    </path>
+    <path id="run.TestNumericalOperations.testRationalMultiplication.bootclasspath">
+        <fileset dir="${java.home}/lib" includes="*.jar"/>
+        <fileset dir="${java.home}/lib/ext" includes="*.jar"/>
+    </path>
+    <path id="run.TestNumericalOperations.test_Addition_Integer_Rational.bootclasspath">
+        <fileset dir="${java.home}/lib" includes="*.jar"/>
+        <fileset dir="${java.home}/lib/ext" includes="*.jar"/>
+    </path>
+    <path id="run.TestNumericalOperations.test_Addition_Rational_Decimal.bootclasspath">
+        <fileset dir="${java.home}/lib" includes="*.jar"/>
+        <fileset dir="${java.home}/lib/ext" includes="*.jar"/>
+    </path>
+    <path id="run.TestNumericalOperations.test_Addition_Rational_Rational.bootclasspath">
+        <fileset dir="${java.home}/lib" includes="*.jar"/>
+        <fileset dir="${java.home}/lib/ext" includes="*.jar"/>
+    </path>
+    <path id="run.TestNumericalOperations.test_Division_Integer_Integer_negative_Rational.bootclasspath">
+        <fileset dir="${java.home}/lib" includes="*.jar"/>
+        <fileset dir="${java.home}/lib/ext" includes="*.jar"/>
+    </path>
+    <path id="run.TestNumericalOperations.test_Division_Integer_Integer_Rational.bootclasspath">
+        <fileset dir="${java.home}/lib" includes="*.jar"/>
+        <fileset dir="${java.home}/lib/ext" includes="*.jar"/>
+    </path>
+    <path id="run.TestNumericalOperations.test_Multiplication_Decimal_Decimal_negative.bootclasspath">
+        <fileset dir="${java.home}/lib" includes="*.jar"/>
+        <fileset dir="${java.home}/lib/ext" includes="*.jar"/>
+    </path>
+    <path id="run.TestNumericalOperations.test_Subtraction_Rational_Integer.bootclasspath">
+        <fileset dir="${java.home}/lib" includes="*.jar"/>
+        <fileset dir="${java.home}/lib/ext" includes="*.jar"/>
+    </path>
+    <path id="run.TestNumericalOperations.test_Subtraction_Rational_Integer_negative.bootclasspath">
+        <fileset dir="${java.home}/lib" includes="*.jar"/>
+        <fileset dir="${java.home}/lib/ext" includes="*.jar"/>
+    </path>
+    <path id="run.TestNumericalOperations.test_Subtraction_Rational_Integer_Simplifies.bootclasspath">
+        <fileset dir="${java.home}/lib" includes="*.jar"/>
+        <fileset dir="${java.home}/lib/ext" includes="*.jar"/>
+    </path>
+    <path id="run.TestNumericalOperations.test_Subtraction_Rational_Integer_SimplifiesToInteger.bootclasspath">
+        <fileset dir="${java.home}/lib" includes="*.jar"/>
+        <fileset dir="${java.home}/lib/ext" includes="*.jar"/>
+    </path>
+    <path id="run.TestNumericalOperations.test_Subtraction_Rational_Rational.bootclasspath">
+        <fileset dir="${java.home}/lib" includes="*.jar"/>
+        <fileset dir="${java.home}/lib/ext" includes="*.jar"/>
+    </path>
+    <path id="run.TestNumericalOperations.test_Subtraction_Rational_Rational_Negative.bootclasspath">
+        <fileset dir="${java.home}/lib" includes="*.jar"/>
+        <fileset dir="${java.home}/lib/ext" includes="*.jar"/>
+    </path>
+    <path id="run.TestNumericalOperations.test_Subtraction_Rational_Rational_Simplifies.bootclasspath">
+        <fileset dir="${java.home}/lib" includes="*.jar"/>
+        <fileset dir="${java.home}/lib/ext" includes="*.jar"/>
+    </path>
+    <path id="run.TestPrevVersion.bootclasspath">
+        <fileset dir="${java.home}/lib" includes="*.jar"/>
+        <fileset dir="${java.home}/lib/ext" includes="*.jar"/>
+    </path>
+    <path id="run.TestProgram.bootclasspath">
+        <fileset dir="${java.home}/lib" includes="*.jar"/>
+        <fileset dir="${java.home}/lib/ext" includes="*.jar"/>
+    </path>
+    <path id="run.TestProgram.testRewrite_InfiniteRecursion_Exception.bootclasspath">
+        <fileset dir="${java.home}/lib" includes="*.jar"/>
+        <fileset dir="${java.home}/lib/ext" includes="*.jar"/>
+    </path>
+    <path id="run.TestProgram.testRewrite_RewriteError.bootclasspath">
+        <fileset dir="${java.home}/lib" includes="*.jar"/>
+        <fileset dir="${java.home}/lib/ext" includes="*.jar"/>
+    </path>
+    <path id="run.TestRationalNumbers.bootclasspath">
+        <fileset dir="${java.home}/lib" includes="*.jar"/>
+        <fileset dir="${java.home}/lib/ext" includes="*.jar"/>
+    </path>
+    <path id="run.TestRationalNumbers.testConstructor_Numerator_DenominatorZero.bootclasspath">
+        <fileset dir="${java.home}/lib" includes="*.jar"/>
+        <fileset dir="${java.home}/lib/ext" includes="*.jar"/>
+    </path>
+    <path id="run.TestRewriteProcess.bootclasspath">
+        <fileset dir="${java.home}/lib" includes="*.jar"/>
+        <fileset dir="${java.home}/lib/ext" includes="*.jar"/>
+    </path>
+    <path id="run.TestRewriteProcess.testNullRuleSet.bootclasspath">
+        <fileset dir="${java.home}/lib" includes="*.jar"/>
+        <fileset dir="${java.home}/lib/ext" includes="*.jar"/>
+    </path>
+    <path id="run.TestRewriteProcess.testRuleVariableTransformation_ArgumentsMatchTrue_RuleApplied.bootclasspath">
+        <fileset dir="${java.home}/lib" includes="*.jar"/>
+        <fileset dir="${java.home}/lib/ext" includes="*.jar"/>
+    </path>
+    <path id="run.TestRewriteProcess.testRuleVariableTransformation_ConditionsHold.bootclasspath">
+        <fileset dir="${java.home}/lib" includes="*.jar"/>
+        <fileset dir="${java.home}/lib/ext" includes="*.jar"/>
+    </path>
+    <path id="run.TestRewriteProcess.testRuleVariableTransformation_Variable.bootclasspath">
+        <fileset dir="${java.home}/lib" includes="*.jar"/>
+        <fileset dir="${java.home}/lib/ext" includes="*.jar"/>
+    </path>
+    <path id="run.TestRewriteProcess.testSimpleTransformation_Unary_Numerical.bootclasspath">
+        <fileset dir="${java.home}/lib" includes="*.jar"/>
+        <fileset dir="${java.home}/lib/ext" includes="*.jar"/>
+    </path>
+    <path id="run.TestRule.bootclasspath">
+        <fileset dir="${java.home}/lib" includes="*.jar"/>
+        <fileset dir="${java.home}/lib/ext" includes="*.jar"/>
+    </path>
+    <path id="run.TestRuleAlgebraParser.bootclasspath">
+        <fileset dir="${java.home}/lib" includes="*.jar"/>
+        <fileset dir="${java.home}/lib/ext" includes="*.jar"/>
+    </path>
+    <path id="run.TestRuleAlgebraParser.testInvalidRuleNoConditions_NoConditions.bootclasspath">
+        <fileset dir="${java.home}/lib" includes="*.jar"/>
+        <fileset dir="${java.home}/lib/ext" includes="*.jar"/>
+    </path>
+    <path id="run.TestRuleAlgebraParser.testParseSimpleNumber_Decimal.bootclasspath">
+        <fileset dir="${java.home}/lib" includes="*.jar"/>
+        <fileset dir="${java.home}/lib/ext" includes="*.jar"/>
+    </path>
+    <path id="run.TestRuleAlgebraParser.testParseSimpleNumber_DecimalInteger.bootclasspath">
+        <fileset dir="${java.home}/lib" includes="*.jar"/>
+        <fileset dir="${java.home}/lib/ext" includes="*.jar"/>
+    </path>
+    <path id="run.TestRuleAlgebraParser.testParseSimpleNumber_Integer.bootclasspath">
+        <fileset dir="${java.home}/lib" includes="*.jar"/>
+        <fileset dir="${java.home}/lib/ext" includes="*.jar"/>
+    </path>
+    <path id="run.TestRuleAlgebraParser.testParseSimpleNumber_Rational.bootclasspath">
+        <fileset dir="${java.home}/lib" includes="*.jar"/>
+        <fileset dir="${java.home}/lib/ext" includes="*.jar"/>
+    </path>
+    <path id="run.TestRuleAlgebraParser.testParseSimpleNumber_Rational_DenominatorZero.bootclasspath">
+        <fileset dir="${java.home}/lib" includes="*.jar"/>
+        <fileset dir="${java.home}/lib/ext" includes="*.jar"/>
+    </path>
+    <path id="run.TestRuleAlgebraParser.testValidRuleNoConditions_RuleVariablesNotCorrespond_Exception.bootclasspath">
+        <fileset dir="${java.home}/lib" includes="*.jar"/>
+        <fileset dir="${java.home}/lib/ext" includes="*.jar"/>
+    </path>
+    <path id="run.TestRuleAlgebraParser.testValidRuleNoConditions_Variable_Decimal.bootclasspath">
+        <fileset dir="${java.home}/lib" includes="*.jar"/>
+        <fileset dir="${java.home}/lib/ext" includes="*.jar"/>
+    </path>
+    <path id="run.TestRuleAlgebraParser.testValidRuleNoConditions_Variable_NegativeInteger.bootclasspath">
+        <fileset dir="${java.home}/lib" includes="*.jar"/>
+        <fileset dir="${java.home}/lib/ext" includes="*.jar"/>
+    </path>
+    <path id="run.TestRuleAlgebraParser.testValidRuleNoConditions_Variable_NegativeRational.bootclasspath">
+        <fileset dir="${java.home}/lib" includes="*.jar"/>
+        <fileset dir="${java.home}/lib/ext" includes="*.jar"/>
+    </path>
+    <path id="run.TestRuleAlgebraParser.testValidRuleNoConditions_Variable_Rational.bootclasspath">
+        <fileset dir="${java.home}/lib" includes="*.jar"/>
+        <fileset dir="${java.home}/lib/ext" includes="*.jar"/>
+    </path>
+    <path id="run.TestRuleAlgebraParser.testValidRuleValidConditions_ConditionFunction_Depends.bootclasspath">
+        <fileset dir="${java.home}/lib" includes="*.jar"/>
+        <fileset dir="${java.home}/lib/ext" includes="*.jar"/>
+    </path>
+    <path id="run.TestRuleAlgebraParser.testValidRuleValidConditions_ConditionFunction_is_literal.bootclasspath">
+        <fileset dir="${java.home}/lib" includes="*.jar"/>
+        <fileset dir="${java.home}/lib/ext" includes="*.jar"/>
+    </path>
+    <path id="run.TestRuleAlgebraParser.testValidRuleValidConditions_ConditionFunction_is_number.bootclasspath">
+        <fileset dir="${java.home}/lib" includes="*.jar"/>
+        <fileset dir="${java.home}/lib/ext" includes="*.jar"/>
+    </path>
+    <path id="run.TestRuleAlgebraParser.testValidRuleValidConditions_ConditionFunction_no_underscore_depends_Exception.bootclasspath">
+        <fileset dir="${java.home}/lib" includes="*.jar"/>
+        <fileset dir="${java.home}/lib/ext" includes="*.jar"/>
+    </path>
+    <path id="run.TestRuleAlgebraParser.testValidRuleValidConditions_logical_OR.bootclasspath">
+        <fileset dir="${java.home}/lib" includes="*.jar"/>
+        <fileset dir="${java.home}/lib/ext" includes="*.jar"/>
+    </path>
+    <path id="run.TestRuleAlgebraParser.testValidRuleValidConditions_Relop_Unary.bootclasspath">
+        <fileset dir="${java.home}/lib" includes="*.jar"/>
+        <fileset dir="${java.home}/lib/ext" includes="*.jar"/>
+    </path>
+    <path id="run.TestRuleAlgebraParser.testValidRuleValidConditions_Relop_UnaryNumber.bootclasspath">
+        <fileset dir="${java.home}/lib" includes="*.jar"/>
+        <fileset dir="${java.home}/lib/ext" includes="*.jar"/>
+    </path>
+    <path id="run.TestRuleAlgebraParserNew.bootclasspath">
+        <fileset dir="${java.home}/lib" includes="*.jar"/>
+        <fileset dir="${java.home}/lib/ext" includes="*.jar"/>
+    </path>
+    <path id="run.TestSimplifyConditionNumericalExpressions.bootclasspath">
+        <fileset dir="${java.home}/lib" includes="*.jar"/>
+        <fileset dir="${java.home}/lib/ext" includes="*.jar"/>
+    </path>
+    <path id="run.TestSimplifyConditionNumericalExpressions.testUnaryOperation.bootclasspath">
+        <fileset dir="${java.home}/lib" includes="*.jar"/>
+        <fileset dir="${java.home}/lib/ext" includes="*.jar"/>
+    </path>
+    <path id="run.TestSimplifyConditionNumericalExpressionsNew.bootclasspath">
+        <fileset dir="${java.home}/lib" includes="*.jar"/>
+        <fileset dir="${java.home}/lib/ext" includes="*.jar"/>
+    </path>
+    <path id="run.TestSimplifyNumericalOperations.bootclasspath">
+        <fileset dir="${java.home}/lib" includes="*.jar"/>
+        <fileset dir="${java.home}/lib/ext" includes="*.jar"/>
+    </path>
+    <path id="run.TestSimplifyNumericalOperations.testSimpleDivision.bootclasspath">
+        <fileset dir="${java.home}/lib" includes="*.jar"/>
+        <fileset dir="${java.home}/lib/ext" includes="*.jar"/>
+    </path>
+    <path id="run.TestSimplifyNumericalOperations.testSimpleDivision_Integer_Integer_can_simplify_not_whole.bootclasspath">
+        <fileset dir="${java.home}/lib" includes="*.jar"/>
+        <fileset dir="${java.home}/lib/ext" includes="*.jar"/>
+    </path>
+    <path id="run.TestSimplifyNumericalOperations.testSimpleExponentiation_NegativeIntegerPower.bootclasspath">
+        <fileset dir="${java.home}/lib" includes="*.jar"/>
+        <fileset dir="${java.home}/lib/ext" includes="*.jar"/>
+    </path>
+    <path id="run.TestSimplifyNumericalOperations.testUnaryNumberAddition.bootclasspath">
+        <fileset dir="${java.home}/lib" includes="*.jar"/>
+        <fileset dir="${java.home}/lib/ext" includes="*.jar"/>
+    </path>
+    <path id="run.TestSimplifyNumericalOperations.testUnaryUnaryAddition_cannot_simplify.bootclasspath">
+        <fileset dir="${java.home}/lib" includes="*.jar"/>
+        <fileset dir="${java.home}/lib/ext" includes="*.jar"/>
+    </path>
+    <path id="run.TestSimplifyNumericalOperations.testUnaryUnaryAddition_Decimal.bootclasspath">
+        <fileset dir="${java.home}/lib" includes="*.jar"/>
+        <fileset dir="${java.home}/lib/ext" includes="*.jar"/>
+    </path>
+    <path id="run.TestSimplifyNumericalOperations.testUnaryUnarySubtraction.bootclasspath">
+        <fileset dir="${java.home}/lib" includes="*.jar"/>
+        <fileset dir="${java.home}/lib/ext" includes="*.jar"/>
+    </path>
+    <path id="run.TestSimplifyNumericalOperationsNew.bootclasspath">
+        <fileset dir="${java.home}/lib" includes="*.jar"/>
+        <fileset dir="${java.home}/lib/ext" includes="*.jar"/>
+    </path>
+    <path id="run.TestSubstituteConditionRuleVariables.bootclasspath">
+        <fileset dir="${java.home}/lib" includes="*.jar"/>
+        <fileset dir="${java.home}/lib/ext" includes="*.jar"/>
+    </path>
+    <path id="run.TestSubstituteRuleVariables.bootclasspath">
+        <fileset dir="${java.home}/lib" includes="*.jar"/>
+        <fileset dir="${java.home}/lib/ext" includes="*.jar"/>
+    </path>
+    <path id="run.TestSuite.bootclasspath">
+        <fileset dir="${java.home}/lib" includes="*.jar"/>
+        <fileset dir="${java.home}/lib/ext" includes="*.jar"/>
+    </path>
+    <path id="run.TestSuiteRunner.bootclasspath">
+        <fileset dir="${java.home}/lib" includes="*.jar"/>
+        <fileset dir="${java.home}/lib/ext" includes="*.jar"/>
+    </path>
+    <path id="run.TestTermAlgebraParser.bootclasspath">
+        <fileset dir="${java.home}/lib" includes="*.jar"/>
+        <fileset dir="${java.home}/lib/ext" includes="*.jar"/>
+    </path>
+    <path id="run.TestTermAlgebraParser.testParseSimpleAddition.bootclasspath">
+        <fileset dir="${java.home}/lib" includes="*.jar"/>
+        <fileset dir="${java.home}/lib/ext" includes="*.jar"/>
+    </path>
+    <path id="run.TestTermAlgebraParser.testParseSimpleNumber_Decimal.bootclasspath">
+        <fileset dir="${java.home}/lib" includes="*.jar"/>
+        <fileset dir="${java.home}/lib/ext" includes="*.jar"/>
+    </path>
+    <path id="run.TestTermAlgebraParser.testParseSimpleNumber_DecimalInteger.bootclasspath">
+        <fileset dir="${java.home}/lib" includes="*.jar"/>
+        <fileset dir="${java.home}/lib/ext" includes="*.jar"/>
+    </path>
+    <path id="run.TestTermAlgebraParser.testParseSimpleNumber_Integer.bootclasspath">
+        <fileset dir="${java.home}/lib" includes="*.jar"/>
+        <fileset dir="${java.home}/lib/ext" includes="*.jar"/>
+    </path>
+    <path id="run.TestTermAlgebraParser.testParseSimpleNumber_Rational.bootclasspath">
+        <fileset dir="${java.home}/lib" includes="*.jar"/>
+        <fileset dir="${java.home}/lib/ext" includes="*.jar"/>
+    </path>
+    <path id="run.TestTermAlgebraParser.testParseSimpleSubtraction.bootclasspath">
+        <fileset dir="${java.home}/lib" includes="*.jar"/>
+        <fileset dir="${java.home}/lib/ext" includes="*.jar"/>
+    </path>
+    <path id="run.TestTermAlgebraParserNew.bootclasspath">
+        <fileset dir="${java.home}/lib" includes="*.jar"/>
+        <fileset dir="${java.home}/lib/ext" includes="*.jar"/>
+    </path>
+    <path id="run.UnitTesting.bootclasspath">
+        <fileset dir="${java.home}/lib" includes="*.jar"/>
+        <fileset dir="${java.home}/lib/ext" includes="*.jar"/>
+    </path>
+    <target name="init">
+        <mkdir dir="build/classes"/>
+        <copy includeemptydirs="false" todir="build/classes">
+            <fileset dir="target/generated-sources/antlr4">
+                <exclude name="**/*.launch"/>
+                <exclude name="**/*.xtend"/>
+                <exclude name="**/*.java"/>
+            </fileset>
+        </copy>
+    </target>
+    <target name="clean">
+        <delete dir="build/classes"/>
+    </target>
+    <target depends="clean" name="cleanall"/>
+    <target depends="build-subprojects,build-project" name="build"/>
+    <target name="build-subprojects"/>
+    <target depends="init" name="build-project">
+        <echo message="${ant.project.name}: ${ant.file}"/>
+        <javac debug="true" debuglevel="${debuglevel}" destdir="build/classes" includeantruntime="false" source="${source}" target="${target}">
+            <src path="target/generated-sources/antlr4"/>
+            <classpath refid="NewAntlr.classpath"/>
+        </javac>
+    </target>
+    <target description="Build all projects which reference this project. Useful to propagate changes." name="build-refprojects"/>
+    <target description="copy Eclipse compiler jars to ant lib directory" name="init-eclipse-compiler">
+        <copy todir="${ant.library.dir}">
+            <fileset dir="${ECLIPSE_HOME}/plugins" includes="org.eclipse.jdt.core_*.jar"/>
+        </copy>
+        <unzip dest="${ant.library.dir}">
+            <patternset includes="jdtCompilerAdapter.jar"/>
+            <fileset dir="${ECLIPSE_HOME}/plugins" includes="org.eclipse.jdt.core_*.jar"/>
+        </unzip>
+    </target>
+    <target description="compile project with Eclipse compiler" name="build-eclipse-compiler">
+        <property name="build.compiler" value="org.eclipse.jdt.core.JDTCompilerAdapter"/>
+        <antcall target="build"/>
+    </target>
+    <target name="AllTests">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="ComputerAlgebraSystem.AllTests" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="NewAntlr.classpath"/>
+            <bootclasspath>
+                <path refid="run.AllTests.bootclasspath"/>
+            </bootclasspath>
+        </junit>
+    </target>
+    <target name="AntlrTestRun">
+        <java classname="ComputerAlgebraSystem.Program" failonerror="true" fork="yes">
+            <classpath refid="NewAntlr.classpath"/>
+            <bootclasspath>
+                <path refid="run.AntlrTestRun.bootclasspath"/>
+            </bootclasspath>
+        </java>
+    </target>
+    <target name="GUI">
+        <java classname="ComputerAlgebraSystem.Program" failonerror="true" fork="yes">
+            <classpath refid="NewAntlr.classpath"/>
+            <bootclasspath>
+                <path refid="run.GUI.bootclasspath"/>
+            </bootclasspath>
+        </java>
+    </target>
+    <target name="TestConditionFunctions">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="Testing.TestConditionFunctions" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="NewAntlr.classpath"/>
+            <bootclasspath>
+                <path refid="run.TestConditionFunctions.bootclasspath"/>
+            </bootclasspath>
+        </junit>
+    </target>
+    <target name="TestDependsEvaluator">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="Testing.TestDependsEvaluator" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="NewAntlr.classpath"/>
+            <bootclasspath>
+                <path refid="run.TestDependsEvaluator.bootclasspath"/>
+            </bootclasspath>
+        </junit>
+    </target>
+    <target name="TestDependsEvaluator.testDependsEvaluator_Number_Variable">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="Testing.TestDependsEvaluator" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="NewAntlr.classpath"/>
+            <bootclasspath>
+                <path refid="run.TestDependsEvaluator.testDependsEvaluator_Number_Variable.bootclasspath"/>
+            </bootclasspath>
+        </junit>
+    </target>
+    <target name="TestDependsEvaluator.testDependsEvaluator_VisitRuleVariableNode_Exception">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="Testing.TestDependsEvaluator" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="NewAntlr.classpath"/>
+            <bootclasspath>
+                <path refid="run.TestDependsEvaluator.testDependsEvaluator_VisitRuleVariableNode_Exception.bootclasspath"/>
+            </bootclasspath>
+        </junit>
+    </target>
+    <target name="TestDependsEvaluatorNew">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="Testing.TestDependsEvaluator" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="NewAntlr.classpath"/>
+            <bootclasspath>
+                <path refid="run.TestDependsEvaluatorNew.bootclasspath"/>
+            </bootclasspath>
+        </junit>
+    </target>
+    <target name="TestEvaluateConditionsVisitor">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="Testing.TestEvaluateConditionsVisitor" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="NewAntlr.classpath"/>
+            <bootclasspath>
+                <path refid="run.TestEvaluateConditionsVisitor.bootclasspath"/>
+            </bootclasspath>
+        </junit>
+    </target>
+    <target name="TestEvaluateExpressionVisitor">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="Testing.TestEvaluateExpressionVisitor" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="NewAntlr.classpath"/>
+            <bootclasspath>
+                <path refid="run.TestEvaluateExpressionVisitor.bootclasspath"/>
+            </bootclasspath>
+        </junit>
+    </target>
+    <target name="TestEvaluateTree">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="Testing.TestEvaluateTree" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="NewAntlr.classpath"/>
+            <bootclasspath>
+                <path refid="run.TestEvaluateTree.bootclasspath"/>
+            </bootclasspath>
+        </junit>
+    </target>
+    <target name="TestEvaluateTree.testEvaluateTree_Addition">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="Testing.TestEvaluateTree" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="NewAntlr.classpath"/>
+            <bootclasspath>
+                <path refid="run.TestEvaluateTree.testEvaluateTree_Addition.bootclasspath"/>
+            </bootclasspath>
+        </junit>
+    </target>
+    <target name="TestEvaluateTree.testEvaluateTree_Division">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="Testing.TestEvaluateTree" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="NewAntlr.classpath"/>
+            <bootclasspath>
+                <path refid="run.TestEvaluateTree.testEvaluateTree_Division.bootclasspath"/>
+            </bootclasspath>
+        </junit>
+    </target>
+    <target name="TestEvaluateTree.testEvaluateTree_Subtraction">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="Testing.TestEvaluateTree" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="NewAntlr.classpath"/>
+            <bootclasspath>
+                <path refid="run.TestEvaluateTree.testEvaluateTree_Subtraction.bootclasspath"/>
+            </bootclasspath>
+        </junit>
+    </target>
+    <target name="TestFetchConditionRuleVariables">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="Testing.TestFetchConditionRuleVariables" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="NewAntlr.classpath"/>
+            <bootclasspath>
+                <path refid="run.TestFetchConditionRuleVariables.bootclasspath"/>
+            </bootclasspath>
+        </junit>
+    </target>
+    <target name="TestFetchRuleVariables">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="Testing.TestFetchRuleVariables" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="NewAntlr.classpath"/>
+            <bootclasspath>
+                <path refid="run.TestFetchRuleVariables.bootclasspath"/>
+            </bootclasspath>
+        </junit>
+    </target>
+    <target name="TestMathematicalOperations">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="ComputerAlgebraSystem.TestMathematicalOperations" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="NewAntlr.classpath"/>
+            <bootclasspath>
+                <path refid="run.TestMathematicalOperations.bootclasspath"/>
+            </bootclasspath>
+        </junit>
+    </target>
+    <target name="TestMathematicalOperations.testRaiseToPowerLong_NegativeExponent_Exception">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="ComputerAlgebraSystem.TestMathematicalOperations" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="NewAntlr.classpath"/>
+            <bootclasspath>
+                <path refid="run.TestMathematicalOperations.testRaiseToPowerLong_NegativeExponent_Exception.bootclasspath"/>
+            </bootclasspath>
+        </junit>
+    </target>
+    <target name="TestNumericalComparisons">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="ComputerAlgebraSystem.TestNumericalComparisons" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="NewAntlr.classpath"/>
+            <bootclasspath>
+                <path refid="run.TestNumericalComparisons.bootclasspath"/>
+            </bootclasspath>
+        </junit>
+    </target>
+    <target name="TestNumericalOperations">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="Testing.TestNumericalOperations" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="NewAntlr.classpath"/>
+            <bootclasspath>
+                <path refid="run.TestNumericalOperations.bootclasspath"/>
+            </bootclasspath>
+        </junit>
+    </target>
+    <target name="TestNumericalOperations.testIntegerAddition">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="Testing.TestNumericalOperations" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="NewAntlr.classpath"/>
+            <bootclasspath>
+                <path refid="run.TestNumericalOperations.testIntegerAddition.bootclasspath"/>
+            </bootclasspath>
+        </junit>
+    </target>
+    <target name="TestNumericalOperations.testIntegerAddition_simplifies">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="Testing.TestNumericalOperations" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="NewAntlr.classpath"/>
+            <bootclasspath>
+                <path refid="run.TestNumericalOperations.testIntegerAddition_simplifies.bootclasspath"/>
+            </bootclasspath>
+        </junit>
+    </target>
+    <target name="TestNumericalOperations.testIntegerExponentiation">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="Testing.TestNumericalOperations" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="NewAntlr.classpath"/>
+            <bootclasspath>
+                <path refid="run.TestNumericalOperations.testIntegerExponentiation.bootclasspath"/>
+            </bootclasspath>
+        </junit>
+    </target>
+    <target name="TestNumericalOperations.testRationalAddition_Negative">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="Testing.TestNumericalOperations" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="NewAntlr.classpath"/>
+            <bootclasspath>
+                <path refid="run.TestNumericalOperations.testRationalAddition_Negative.bootclasspath"/>
+            </bootclasspath>
+        </junit>
+    </target>
+    <target name="TestNumericalOperations.testRationalDivision_Negative">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="Testing.TestNumericalOperations" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="NewAntlr.classpath"/>
+            <bootclasspath>
+                <path refid="run.TestNumericalOperations.testRationalDivision_Negative.bootclasspath"/>
+            </bootclasspath>
+        </junit>
+    </target>
+    <target name="TestNumericalOperations.testRationalExponentiation">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="Testing.TestNumericalOperations" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="NewAntlr.classpath"/>
+            <bootclasspath>
+                <path refid="run.TestNumericalOperations.testRationalExponentiation.bootclasspath"/>
+            </bootclasspath>
+        </junit>
+    </target>
+    <target name="TestNumericalOperations.testRationalExponentiation_NegativeExponent_Exception">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="Testing.TestNumericalOperations" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="NewAntlr.classpath"/>
+            <bootclasspath>
+                <path refid="run.TestNumericalOperations.testRationalExponentiation_NegativeExponent_Exception.bootclasspath"/>
+            </bootclasspath>
+        </junit>
+    </target>
+    <target name="TestNumericalOperations.testRationalExponentiation_ZeroExponent">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="Testing.TestNumericalOperations" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="NewAntlr.classpath"/>
+            <bootclasspath>
+                <path refid="run.TestNumericalOperations.testRationalExponentiation_ZeroExponent.bootclasspath"/>
+            </bootclasspath>
+        </junit>
+    </target>
+    <target name="TestNumericalOperations.testRationalMultiplication">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="Testing.TestNumericalOperations" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="NewAntlr.classpath"/>
+            <bootclasspath>
+                <path refid="run.TestNumericalOperations.testRationalMultiplication.bootclasspath"/>
+            </bootclasspath>
+        </junit>
+    </target>
+    <target name="TestNumericalOperations.test_Addition_Integer_Rational">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="Testing.TestNumericalOperations" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="NewAntlr.classpath"/>
+            <bootclasspath>
+                <path refid="run.TestNumericalOperations.test_Addition_Integer_Rational.bootclasspath"/>
+            </bootclasspath>
+        </junit>
+    </target>
+    <target name="TestNumericalOperations.test_Addition_Rational_Decimal">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="Testing.TestNumericalOperations" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="NewAntlr.classpath"/>
+            <bootclasspath>
+                <path refid="run.TestNumericalOperations.test_Addition_Rational_Decimal.bootclasspath"/>
+            </bootclasspath>
+        </junit>
+    </target>
+    <target name="TestNumericalOperations.test_Addition_Rational_Rational">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="Testing.TestNumericalOperations" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="NewAntlr.classpath"/>
+            <bootclasspath>
+                <path refid="run.TestNumericalOperations.test_Addition_Rational_Rational.bootclasspath"/>
+            </bootclasspath>
+        </junit>
+    </target>
+    <target name="TestNumericalOperations.test_Division_Integer_Integer_negative_Rational">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="Testing.TestNumericalOperations" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="NewAntlr.classpath"/>
+            <bootclasspath>
+                <path refid="run.TestNumericalOperations.test_Division_Integer_Integer_negative_Rational.bootclasspath"/>
+            </bootclasspath>
+        </junit>
+    </target>
+    <target name="TestNumericalOperations.test_Division_Integer_Integer_Rational">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="Testing.TestNumericalOperations" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="NewAntlr.classpath"/>
+            <bootclasspath>
+                <path refid="run.TestNumericalOperations.test_Division_Integer_Integer_Rational.bootclasspath"/>
+            </bootclasspath>
+        </junit>
+    </target>
+    <target name="TestNumericalOperations.test_Multiplication_Decimal_Decimal_negative">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="Testing.TestNumericalOperations" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="NewAntlr.classpath"/>
+            <bootclasspath>
+                <path refid="run.TestNumericalOperations.test_Multiplication_Decimal_Decimal_negative.bootclasspath"/>
+            </bootclasspath>
+        </junit>
+    </target>
+    <target name="TestNumericalOperations.test_Subtraction_Rational_Integer">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="Testing.TestNumericalOperations" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="NewAntlr.classpath"/>
+            <bootclasspath>
+                <path refid="run.TestNumericalOperations.test_Subtraction_Rational_Integer.bootclasspath"/>
+            </bootclasspath>
+        </junit>
+    </target>
+    <target name="TestNumericalOperations.test_Subtraction_Rational_Integer_negative">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="Testing.TestNumericalOperations" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="NewAntlr.classpath"/>
+            <bootclasspath>
+                <path refid="run.TestNumericalOperations.test_Subtraction_Rational_Integer_negative.bootclasspath"/>
+            </bootclasspath>
+        </junit>
+    </target>
+    <target name="TestNumericalOperations.test_Subtraction_Rational_Integer_Simplifies">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="Testing.TestNumericalOperations" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="NewAntlr.classpath"/>
+            <bootclasspath>
+                <path refid="run.TestNumericalOperations.test_Subtraction_Rational_Integer_Simplifies.bootclasspath"/>
+            </bootclasspath>
+        </junit>
+    </target>
+    <target name="TestNumericalOperations.test_Subtraction_Rational_Integer_SimplifiesToInteger">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="Testing.TestNumericalOperations" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="NewAntlr.classpath"/>
+            <bootclasspath>
+                <path refid="run.TestNumericalOperations.test_Subtraction_Rational_Integer_SimplifiesToInteger.bootclasspath"/>
+            </bootclasspath>
+        </junit>
+    </target>
+    <target name="TestNumericalOperations.test_Subtraction_Rational_Rational">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="Testing.TestNumericalOperations" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="NewAntlr.classpath"/>
+            <bootclasspath>
+                <path refid="run.TestNumericalOperations.test_Subtraction_Rational_Rational.bootclasspath"/>
+            </bootclasspath>
+        </junit>
+    </target>
+    <target name="TestNumericalOperations.test_Subtraction_Rational_Rational_Negative">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="Testing.TestNumericalOperations" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="NewAntlr.classpath"/>
+            <bootclasspath>
+                <path refid="run.TestNumericalOperations.test_Subtraction_Rational_Rational_Negative.bootclasspath"/>
+            </bootclasspath>
+        </junit>
+    </target>
+    <target name="TestNumericalOperations.test_Subtraction_Rational_Rational_Simplifies">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="Testing.TestNumericalOperations" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="NewAntlr.classpath"/>
+            <bootclasspath>
+                <path refid="run.TestNumericalOperations.test_Subtraction_Rational_Rational_Simplifies.bootclasspath"/>
+            </bootclasspath>
+        </junit>
+    </target>
+    <target name="TestPrevVersion">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="Testing.TestSubstituteRuleVariables" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="NewAntlr.classpath"/>
+            <bootclasspath>
+                <path refid="run.TestPrevVersion.bootclasspath"/>
+            </bootclasspath>
+        </junit>
+    </target>
+    <target name="TestProgram">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="Testing.TestProgram" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="NewAntlr.classpath"/>
+            <bootclasspath>
+                <path refid="run.TestProgram.bootclasspath"/>
+            </bootclasspath>
+        </junit>
+    </target>
+    <target name="TestProgram.testRewrite_InfiniteRecursion_Exception">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="Testing.TestProgram" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="NewAntlr.classpath"/>
+            <bootclasspath>
+                <path refid="run.TestProgram.testRewrite_InfiniteRecursion_Exception.bootclasspath"/>
+            </bootclasspath>
+        </junit>
+    </target>
+    <target name="TestProgram.testRewrite_RewriteError">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="Testing.TestProgram" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="NewAntlr.classpath"/>
+            <bootclasspath>
+                <path refid="run.TestProgram.testRewrite_RewriteError.bootclasspath"/>
+            </bootclasspath>
+        </junit>
+    </target>
+    <target name="TestRationalNumbers">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="Testing.TestRationalNumbers" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="NewAntlr.classpath"/>
+            <bootclasspath>
+                <path refid="run.TestRationalNumbers.bootclasspath"/>
+            </bootclasspath>
+        </junit>
+    </target>
+    <target name="TestRationalNumbers.testConstructor_Numerator_DenominatorZero">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="Testing.TestRationalNumbers" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="NewAntlr.classpath"/>
+            <bootclasspath>
+                <path refid="run.TestRationalNumbers.testConstructor_Numerator_DenominatorZero.bootclasspath"/>
+            </bootclasspath>
+        </junit>
+    </target>
+    <target name="TestRewriteProcess">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="Testing.TestRewriteProcess" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="NewAntlr.classpath"/>
+            <bootclasspath>
+                <path refid="run.TestRewriteProcess.bootclasspath"/>
+            </bootclasspath>
+        </junit>
+    </target>
+    <target name="TestRewriteProcess.testNullRuleSet">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="Testing.TestRewriteProcess" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="NewAntlr.classpath"/>
+            <bootclasspath>
+                <path refid="run.TestRewriteProcess.testNullRuleSet.bootclasspath"/>
+            </bootclasspath>
+        </junit>
+    </target>
+    <target name="TestRewriteProcess.testRuleVariableTransformation_ArgumentsMatchTrue_RuleApplied">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="Testing.TestRewriteProcess" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="NewAntlr.classpath"/>
+            <bootclasspath>
+                <path refid="run.TestRewriteProcess.testRuleVariableTransformation_ArgumentsMatchTrue_RuleApplied.bootclasspath"/>
+            </bootclasspath>
+        </junit>
+    </target>
+    <target name="TestRewriteProcess.testRuleVariableTransformation_ConditionsHold">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="Testing.TestRewriteProcess" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="NewAntlr.classpath"/>
+            <bootclasspath>
+                <path refid="run.TestRewriteProcess.testRuleVariableTransformation_ConditionsHold.bootclasspath"/>
+            </bootclasspath>
+        </junit>
+    </target>
+    <target name="TestRewriteProcess.testRuleVariableTransformation_Variable">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="Testing.TestRewriteProcess" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="NewAntlr.classpath"/>
+            <bootclasspath>
+                <path refid="run.TestRewriteProcess.testRuleVariableTransformation_Variable.bootclasspath"/>
+            </bootclasspath>
+        </junit>
+    </target>
+    <target name="TestRewriteProcess.testSimpleTransformation_Unary_Numerical">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="Testing.TestRewriteProcess" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="NewAntlr.classpath"/>
+            <bootclasspath>
+                <path refid="run.TestRewriteProcess.testSimpleTransformation_Unary_Numerical.bootclasspath"/>
+            </bootclasspath>
+        </junit>
+    </target>
+    <target name="TestRule">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="Testing.TestRule" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="NewAntlr.classpath"/>
+            <bootclasspath>
+                <path refid="run.TestRule.bootclasspath"/>
+            </bootclasspath>
+        </junit>
+    </target>
+    <target name="TestRuleAlgebraParser">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="Testing.TestRuleAlgebraParser" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="NewAntlr.classpath"/>
+            <bootclasspath>
+                <path refid="run.TestRuleAlgebraParser.bootclasspath"/>
+            </bootclasspath>
+        </junit>
+    </target>
+    <target name="TestRuleAlgebraParser.testInvalidRuleNoConditions_NoConditions">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="Testing.TestRuleAlgebraParser" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="NewAntlr.classpath"/>
+            <bootclasspath>
+                <path refid="run.TestRuleAlgebraParser.testInvalidRuleNoConditions_NoConditions.bootclasspath"/>
+            </bootclasspath>
+        </junit>
+    </target>
+    <target name="TestRuleAlgebraParser.testParseSimpleNumber_Decimal">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="Testing.TestRuleAlgebraParser" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="NewAntlr.classpath"/>
+            <bootclasspath>
+                <path refid="run.TestRuleAlgebraParser.testParseSimpleNumber_Decimal.bootclasspath"/>
+            </bootclasspath>
+        </junit>
+    </target>
+    <target name="TestRuleAlgebraParser.testParseSimpleNumber_DecimalInteger">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="Testing.TestRuleAlgebraParser" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="NewAntlr.classpath"/>
+            <bootclasspath>
+                <path refid="run.TestRuleAlgebraParser.testParseSimpleNumber_DecimalInteger.bootclasspath"/>
+            </bootclasspath>
+        </junit>
+    </target>
+    <target name="TestRuleAlgebraParser.testParseSimpleNumber_Integer">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="Testing.TestRuleAlgebraParser" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="NewAntlr.classpath"/>
+            <bootclasspath>
+                <path refid="run.TestRuleAlgebraParser.testParseSimpleNumber_Integer.bootclasspath"/>
+            </bootclasspath>
+        </junit>
+    </target>
+    <target name="TestRuleAlgebraParser.testParseSimpleNumber_Rational">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="Testing.TestRuleAlgebraParser" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="NewAntlr.classpath"/>
+            <bootclasspath>
+                <path refid="run.TestRuleAlgebraParser.testParseSimpleNumber_Rational.bootclasspath"/>
+            </bootclasspath>
+        </junit>
+    </target>
+    <target name="TestRuleAlgebraParser.testParseSimpleNumber_Rational_DenominatorZero">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="Testing.TestRuleAlgebraParser" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="NewAntlr.classpath"/>
+            <bootclasspath>
+                <path refid="run.TestRuleAlgebraParser.testParseSimpleNumber_Rational_DenominatorZero.bootclasspath"/>
+            </bootclasspath>
+        </junit>
+    </target>
+    <target name="TestRuleAlgebraParser.testValidRuleNoConditions_RuleVariablesNotCorrespond_Exception">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="Testing.TestRuleAlgebraParser" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="NewAntlr.classpath"/>
+            <bootclasspath>
+                <path refid="run.TestRuleAlgebraParser.testValidRuleNoConditions_RuleVariablesNotCorrespond_Exception.bootclasspath"/>
+            </bootclasspath>
+        </junit>
+    </target>
+    <target name="TestRuleAlgebraParser.testValidRuleNoConditions_Variable_Decimal">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="Testing.TestRuleAlgebraParser" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="NewAntlr.classpath"/>
+            <bootclasspath>
+                <path refid="run.TestRuleAlgebraParser.testValidRuleNoConditions_Variable_Decimal.bootclasspath"/>
+            </bootclasspath>
+        </junit>
+    </target>
+    <target name="TestRuleAlgebraParser.testValidRuleNoConditions_Variable_NegativeInteger">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="Testing.TestRuleAlgebraParser" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="NewAntlr.classpath"/>
+            <bootclasspath>
+                <path refid="run.TestRuleAlgebraParser.testValidRuleNoConditions_Variable_NegativeInteger.bootclasspath"/>
+            </bootclasspath>
+        </junit>
+    </target>
+    <target name="TestRuleAlgebraParser.testValidRuleNoConditions_Variable_NegativeRational">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="Testing.TestRuleAlgebraParser" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="NewAntlr.classpath"/>
+            <bootclasspath>
+                <path refid="run.TestRuleAlgebraParser.testValidRuleNoConditions_Variable_NegativeRational.bootclasspath"/>
+            </bootclasspath>
+        </junit>
+    </target>
+    <target name="TestRuleAlgebraParser.testValidRuleNoConditions_Variable_Rational">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="Testing.TestRuleAlgebraParser" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="NewAntlr.classpath"/>
+            <bootclasspath>
+                <path refid="run.TestRuleAlgebraParser.testValidRuleNoConditions_Variable_Rational.bootclasspath"/>
+            </bootclasspath>
+        </junit>
+    </target>
+    <target name="TestRuleAlgebraParser.testValidRuleValidConditions_ConditionFunction_Depends">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="Testing.TestRuleAlgebraParser" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="NewAntlr.classpath"/>
+            <bootclasspath>
+                <path refid="run.TestRuleAlgebraParser.testValidRuleValidConditions_ConditionFunction_Depends.bootclasspath"/>
+            </bootclasspath>
+        </junit>
+    </target>
+    <target name="TestRuleAlgebraParser.testValidRuleValidConditions_ConditionFunction_is_literal">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="Testing.TestRuleAlgebraParser" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="NewAntlr.classpath"/>
+            <bootclasspath>
+                <path refid="run.TestRuleAlgebraParser.testValidRuleValidConditions_ConditionFunction_is_literal.bootclasspath"/>
+            </bootclasspath>
+        </junit>
+    </target>
+    <target name="TestRuleAlgebraParser.testValidRuleValidConditions_ConditionFunction_is_number">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="Testing.TestRuleAlgebraParser" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="NewAntlr.classpath"/>
+            <bootclasspath>
+                <path refid="run.TestRuleAlgebraParser.testValidRuleValidConditions_ConditionFunction_is_number.bootclasspath"/>
+            </bootclasspath>
+        </junit>
+    </target>
+    <target name="TestRuleAlgebraParser.testValidRuleValidConditions_ConditionFunction_no_underscore_depends_Exception">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="Testing.TestRuleAlgebraParser" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="NewAntlr.classpath"/>
+            <bootclasspath>
+                <path refid="run.TestRuleAlgebraParser.testValidRuleValidConditions_ConditionFunction_no_underscore_depends_Exception.bootclasspath"/>
+            </bootclasspath>
+        </junit>
+    </target>
+    <target name="TestRuleAlgebraParser.testValidRuleValidConditions_logical_OR">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="Testing.TestRuleAlgebraParser" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="NewAntlr.classpath"/>
+            <bootclasspath>
+                <path refid="run.TestRuleAlgebraParser.testValidRuleValidConditions_logical_OR.bootclasspath"/>
+            </bootclasspath>
+        </junit>
+    </target>
+    <target name="TestRuleAlgebraParser.testValidRuleValidConditions_Relop_Unary">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="Testing.TestRuleAlgebraParser" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="NewAntlr.classpath"/>
+            <bootclasspath>
+                <path refid="run.TestRuleAlgebraParser.testValidRuleValidConditions_Relop_Unary.bootclasspath"/>
+            </bootclasspath>
+        </junit>
+    </target>
+    <target name="TestRuleAlgebraParser.testValidRuleValidConditions_Relop_UnaryNumber">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="Testing.TestRuleAlgebraParser" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="NewAntlr.classpath"/>
+            <bootclasspath>
+                <path refid="run.TestRuleAlgebraParser.testValidRuleValidConditions_Relop_UnaryNumber.bootclasspath"/>
+            </bootclasspath>
+        </junit>
+    </target>
+    <target name="TestRuleAlgebraParserNew">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="Testing.TestRuleAlgebraParser" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="NewAntlr.classpath"/>
+            <bootclasspath>
+                <path refid="run.TestRuleAlgebraParserNew.bootclasspath"/>
+            </bootclasspath>
+        </junit>
+    </target>
+    <target name="TestSimplifyConditionNumericalExpressions">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="Testing.TestSimplifyConditionNumericalExpressions" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="NewAntlr.classpath"/>
+            <bootclasspath>
+                <path refid="run.TestSimplifyConditionNumericalExpressions.bootclasspath"/>
+            </bootclasspath>
+        </junit>
+    </target>
+    <target name="TestSimplifyConditionNumericalExpressions.testUnaryOperation">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="Testing.TestSimplifyConditionNumericalExpressions" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="NewAntlr.classpath"/>
+            <bootclasspath>
+                <path refid="run.TestSimplifyConditionNumericalExpressions.testUnaryOperation.bootclasspath"/>
+            </bootclasspath>
+        </junit>
+    </target>
+    <target name="TestSimplifyConditionNumericalExpressionsNew">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="Testing.TestSimplifyConditionNumericalExpressions" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="NewAntlr.classpath"/>
+            <bootclasspath>
+                <path refid="run.TestSimplifyConditionNumericalExpressionsNew.bootclasspath"/>
+            </bootclasspath>
+        </junit>
+    </target>
+    <target name="TestSimplifyNumericalOperations">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="Testing.TestSimplifyNumericalOperations" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="NewAntlr.classpath"/>
+            <bootclasspath>
+                <path refid="run.TestSimplifyNumericalOperations.bootclasspath"/>
+            </bootclasspath>
+        </junit>
+    </target>
+    <target name="TestSimplifyNumericalOperations.testSimpleDivision">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="Testing.TestSimplifyNumericalOperations" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="NewAntlr.classpath"/>
+            <bootclasspath>
+                <path refid="run.TestSimplifyNumericalOperations.testSimpleDivision.bootclasspath"/>
+            </bootclasspath>
+        </junit>
+    </target>
+    <target name="TestSimplifyNumericalOperations.testSimpleDivision_Integer_Integer_can_simplify_not_whole">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="Testing.TestSimplifyNumericalOperations" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="NewAntlr.classpath"/>
+            <bootclasspath>
+                <path refid="run.TestSimplifyNumericalOperations.testSimpleDivision_Integer_Integer_can_simplify_not_whole.bootclasspath"/>
+            </bootclasspath>
+        </junit>
+    </target>
+    <target name="TestSimplifyNumericalOperations.testSimpleExponentiation_NegativeIntegerPower">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="Testing.TestSimplifyNumericalOperations" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="NewAntlr.classpath"/>
+            <bootclasspath>
+                <path refid="run.TestSimplifyNumericalOperations.testSimpleExponentiation_NegativeIntegerPower.bootclasspath"/>
+            </bootclasspath>
+        </junit>
+    </target>
+    <target name="TestSimplifyNumericalOperations.testUnaryNumberAddition">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="Testing.TestSimplifyNumericalOperations" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="NewAntlr.classpath"/>
+            <bootclasspath>
+                <path refid="run.TestSimplifyNumericalOperations.testUnaryNumberAddition.bootclasspath"/>
+            </bootclasspath>
+        </junit>
+    </target>
+    <target name="TestSimplifyNumericalOperations.testUnaryUnaryAddition_cannot_simplify">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="Testing.TestSimplifyNumericalOperations" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="NewAntlr.classpath"/>
+            <bootclasspath>
+                <path refid="run.TestSimplifyNumericalOperations.testUnaryUnaryAddition_cannot_simplify.bootclasspath"/>
+            </bootclasspath>
+        </junit>
+    </target>
+    <target name="TestSimplifyNumericalOperations.testUnaryUnaryAddition_Decimal">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="Testing.TestSimplifyNumericalOperations" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="NewAntlr.classpath"/>
+            <bootclasspath>
+                <path refid="run.TestSimplifyNumericalOperations.testUnaryUnaryAddition_Decimal.bootclasspath"/>
+            </bootclasspath>
+        </junit>
+    </target>
+    <target name="TestSimplifyNumericalOperations.testUnaryUnarySubtraction">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="Testing.TestSimplifyNumericalOperations" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="NewAntlr.classpath"/>
+            <bootclasspath>
+                <path refid="run.TestSimplifyNumericalOperations.testUnaryUnarySubtraction.bootclasspath"/>
+            </bootclasspath>
+        </junit>
+    </target>
+    <target name="TestSimplifyNumericalOperationsNew">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="Testing.TestSimplifyNumericalOperations" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="NewAntlr.classpath"/>
+            <bootclasspath>
+                <path refid="run.TestSimplifyNumericalOperationsNew.bootclasspath"/>
+            </bootclasspath>
+        </junit>
+    </target>
+    <target name="TestSubstituteConditionRuleVariables">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="Testing.TestSubstituteConditionRuleVariables" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="NewAntlr.classpath"/>
+            <bootclasspath>
+                <path refid="run.TestSubstituteConditionRuleVariables.bootclasspath"/>
+            </bootclasspath>
+        </junit>
+    </target>
+    <target name="TestSubstituteRuleVariables">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="Testing.TestSubstituteRuleVariables" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="NewAntlr.classpath"/>
+            <bootclasspath>
+                <path refid="run.TestSubstituteRuleVariables.bootclasspath"/>
+            </bootclasspath>
+        </junit>
+    </target>
+    <target name="TestSuite">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="Testing.TestSuite" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="NewAntlr.classpath"/>
+            <bootclasspath>
+                <path refid="run.TestSuite.bootclasspath"/>
+            </bootclasspath>
+        </junit>
+    </target>
+    <target name="TestSuiteRunner">
+        <java classname="ComputerAlgebraSystem.TestSuiteRunner" failonerror="true" fork="yes">
+            <classpath refid="NewAntlr.classpath"/>
+            <bootclasspath>
+                <path refid="run.TestSuiteRunner.bootclasspath"/>
+            </bootclasspath>
+        </java>
+    </target>
+    <target name="TestTermAlgebraParser">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="Testing.TestTermAlgebraParser" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="NewAntlr.classpath"/>
+            <bootclasspath>
+                <path refid="run.TestTermAlgebraParser.bootclasspath"/>
+            </bootclasspath>
+        </junit>
+    </target>
+    <target name="TestTermAlgebraParser.testParseSimpleAddition">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="Testing.TestTermAlgebraParser" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="NewAntlr.classpath"/>
+            <bootclasspath>
+                <path refid="run.TestTermAlgebraParser.testParseSimpleAddition.bootclasspath"/>
+            </bootclasspath>
+        </junit>
+    </target>
+    <target name="TestTermAlgebraParser.testParseSimpleNumber_Decimal">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="Testing.TestTermAlgebraParser" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="NewAntlr.classpath"/>
+            <bootclasspath>
+                <path refid="run.TestTermAlgebraParser.testParseSimpleNumber_Decimal.bootclasspath"/>
+            </bootclasspath>
+        </junit>
+    </target>
+    <target name="TestTermAlgebraParser.testParseSimpleNumber_DecimalInteger">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="Testing.TestTermAlgebraParser" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="NewAntlr.classpath"/>
+            <bootclasspath>
+                <path refid="run.TestTermAlgebraParser.testParseSimpleNumber_DecimalInteger.bootclasspath"/>
+            </bootclasspath>
+        </junit>
+    </target>
+    <target name="TestTermAlgebraParser.testParseSimpleNumber_Integer">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="Testing.TestTermAlgebraParser" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="NewAntlr.classpath"/>
+            <bootclasspath>
+                <path refid="run.TestTermAlgebraParser.testParseSimpleNumber_Integer.bootclasspath"/>
+            </bootclasspath>
+        </junit>
+    </target>
+    <target name="TestTermAlgebraParser.testParseSimpleNumber_Rational">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="Testing.TestTermAlgebraParser" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="NewAntlr.classpath"/>
+            <bootclasspath>
+                <path refid="run.TestTermAlgebraParser.testParseSimpleNumber_Rational.bootclasspath"/>
+            </bootclasspath>
+        </junit>
+    </target>
+    <target name="TestTermAlgebraParser.testParseSimpleSubtraction">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="Testing.TestTermAlgebraParser" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="NewAntlr.classpath"/>
+            <bootclasspath>
+                <path refid="run.TestTermAlgebraParser.testParseSimpleSubtraction.bootclasspath"/>
+            </bootclasspath>
+        </junit>
+    </target>
+    <target name="TestTermAlgebraParserNew">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="Testing.TestTermAlgebraParser" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="NewAntlr.classpath"/>
+            <bootclasspath>
+                <path refid="run.TestTermAlgebraParserNew.bootclasspath"/>
+            </bootclasspath>
+        </junit>
+    </target>
+    <target name="UnitTesting">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="ComputerAlgebraSystem.UnitTesting" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="NewAntlr.classpath"/>
+            <bootclasspath>
+                <path refid="run.UnitTesting.bootclasspath"/>
+            </bootclasspath>
+        </junit>
+    </target>
+    <target name="junitreport">
+        <junitreport todir="${junit.output.dir}">
+            <fileset dir="${junit.output.dir}">
+                <include name="TEST-*.xml"/>
+            </fileset>
+            <report format="frames" todir="${junit.output.dir}"/>
+        </junitreport>
+    </target>
+</project>

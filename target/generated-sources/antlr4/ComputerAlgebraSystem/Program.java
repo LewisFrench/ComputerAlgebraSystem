@@ -318,7 +318,6 @@ public class Program {
 		} catch (ArithmeticException iae) {
 			throw new ArithmeticException("Algebraic term contains a division by zero.");
 		} catch (Exception e) {
-			System.out.println(e.getClass());
 			throw new Exception("Error when parsing algebraic term");
 		}
 

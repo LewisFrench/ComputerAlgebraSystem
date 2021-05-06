@@ -48,6 +48,7 @@ public class EvaluateConditions extends VisitConditionNodes<Boolean> {
 	public boolean evaluateRelop(RelopNode relopNode) throws Exception {
 
 		// Decide equivalence between any two nodes
+		
 		// Simplify numerical expressions for inequality comparison
 		ExpressionNode evaluatedLeft = new EvaluateNumericalOperations().Visit(relopNode.getLeft());
 		ExpressionNode evaluatedRight = new EvaluateNumericalOperations().Visit(relopNode.getRight());
@@ -58,10 +59,6 @@ public class EvaluateConditions extends VisitConditionNodes<Boolean> {
 		} else if (relopNode.getRelop() == ConditionsLexer.RELOP_NEQ) {
 			return !(treeMatcher.Visit(relopNode.getLeft(), relopNode.getRight()));
 		}
-
-		// Simplify numerical expressions for inequality comparison
-//		ExpressionNode evaluatedLeft = new EvaluateNumericalOperations().Visit(relopNode.getLeft());
-//		ExpressionNode evaluatedRight = new EvaluateNumericalOperations().Visit(relopNode.getRight());
 
 		// Throw exception if trying to compare non-numerical values
 		if (!(evaluatedLeft instanceof NumberNode && evaluatedRight instanceof NumberNode)) {

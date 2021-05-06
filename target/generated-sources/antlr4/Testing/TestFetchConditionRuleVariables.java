@@ -14,7 +14,7 @@ public class TestFetchConditionRuleVariables {
 
 	
 	@Test
-	public void testFetchSimpleRuleVariable() {
+	public void testFetchConditionRuleVariables_SimpleRuleVariable() {
 		ExpressionNode rv = new RuleVariableNode("n");
 		
 		FetchConditionRuleVariables f = new FetchConditionRuleVariables();
@@ -53,7 +53,7 @@ public class TestFetchConditionRuleVariables {
 	
 
 	@Test
-	public void testFetchComplexRuleVariable_Subtraction() {
+	public void testFetchConditionRuleVariables_ComplexRuleVariable_Subtraction() {
 		ExpressionNode rv = new RuleVariableNode("n");
 		ExpressionNode subtraction = new SubtractionNode(new VariableNode("x"), rv);
 		FetchConditionRuleVariables f = new FetchConditionRuleVariables();
@@ -66,7 +66,7 @@ public class TestFetchConditionRuleVariables {
 	}
 	
 	@Test
-	public void testFetchComplexRuleVariable_Multiplication() {
+	public void testFetchConditionRuleVariables_ComplexRuleVariable_Multiplication() {
 		ExpressionNode rv = new RuleVariableNode("n");
 		ExpressionNode multiplication = new MultiplicationNode(new VariableNode("x"), rv);
 		FetchConditionRuleVariables f = new FetchConditionRuleVariables();
@@ -79,7 +79,7 @@ public class TestFetchConditionRuleVariables {
 	}
 	
 	@Test
-	public void testFetchComplexRuleVariable_Division() {
+	public void testFetchConditionRuleVariables_ComplexRuleVariable_Division() {
 		ExpressionNode rv = new RuleVariableNode("n");
 		ExpressionNode division = new DivisionNode(new VariableNode("x"), rv);
 		FetchConditionRuleVariables f = new FetchConditionRuleVariables();
@@ -92,7 +92,7 @@ public class TestFetchConditionRuleVariables {
 	}
 	
 	@Test
-	public void testFetchComplexRuleVariable_Addition() {
+	public void testFetchConditionRuleVariables_ComplexRuleVariable_Addition() {
 		ExpressionNode rv = new RuleVariableNode("n");
 		ExpressionNode addition = new AdditionNode(new VariableNode("x"), rv);
 		FetchConditionRuleVariables f = new FetchConditionRuleVariables();
@@ -105,7 +105,7 @@ public class TestFetchConditionRuleVariables {
 	}
 	
 	@Test
-	public void testFetchComplexRuleVariable_Exponentiation() {
+	public void testFetchConditionRuleVariables_ComplexRuleVariable_Exponentiation() {
 		ExpressionNode rv = new RuleVariableNode("n");
 		ExpressionNode power = new PowerNode(new VariableNode("x"), rv);
 		FetchConditionRuleVariables f = new FetchConditionRuleVariables();
@@ -118,7 +118,7 @@ public class TestFetchConditionRuleVariables {
 	}
 
 	@Test
-	public void testFetchComplexRuleVariable_Function_no_variable() {
+	public void testFetchConditionRuleVariables_ComplexRuleVariable_Function_no_variable() {
 		ArrayList<ExpressionNode> arguments = new ArrayList<>();
 		ExpressionNode notRv =	new VariableNode("x");
 		arguments.add(notRv);
@@ -134,7 +134,7 @@ public class TestFetchConditionRuleVariables {
 	
 	
 	@Test
-	public void testFetchComplexRuleVariable_Unary() {
+	public void testFetchConditionRuleVariables_ComplexRuleVariable_Unary() {
 		ExpressionNode rv = new RuleVariableNode("n");
 		ExpressionNode unary = new UnaryNode(rv);
 		FetchConditionRuleVariables f = new FetchConditionRuleVariables();
@@ -148,7 +148,7 @@ public class TestFetchConditionRuleVariables {
 	
 
 	@Test
-	public void testFetchComplexRuleVariable_Function() {
+	public void testFetchConditionRuleVariables_ComplexRuleVariable_Function() {
 		ExpressionNode rv = new RuleVariableNode("n");
 		
 		ArrayList<ExpressionNode> arguments = new ArrayList<>();
@@ -165,7 +165,7 @@ public class TestFetchConditionRuleVariables {
 	}
 	
 	@Test
-	public void testFetchComplexRuleVariable_Relop() {
+	public void testFetchConditionRuleVariables_ComplexRuleVariable_Relop() {
 		ExpressionNode rv = new RuleVariableNode("n");
 		
 		ExpressionNode relop = new RelopNode(new NumberNode(BigInteger.valueOf(2)), rv, ConditionsLexer.RELOP_GT, ">");
@@ -182,7 +182,7 @@ public class TestFetchConditionRuleVariables {
 	
 	
 	@Test
-	public void testFetchComplexRuleVariable_Logical_NOT() {
+	public void testFetchConditionRuleVariables_ComplexRuleVariable_Logical_NOT() {
 		ExpressionNode rv = new RuleVariableNode("n");
 		
 		ExpressionNode relop = new RelopNode(new NumberNode(BigInteger.valueOf(2),BigInteger.valueOf(1)), rv, ConditionsLexer.RELOP_GT, ">");
@@ -197,7 +197,7 @@ public class TestFetchConditionRuleVariables {
 	}
 	
 	@Test
-	public void testFetchComplexRuleVariable_Logical_AND() {
+	public void testFetchConditionRuleVariables_ComplexRuleVariable_Logical_AND() {
 		ExpressionNode rv = new RuleVariableNode("n");
 		
 		ExpressionNode relop = new RelopNode(new NumberNode(BigInteger.valueOf(4)), rv, ConditionsLexer.RELOP_GT, ">");
@@ -214,7 +214,7 @@ public class TestFetchConditionRuleVariables {
 	}
 	
 	@Test
-	public void testFetchComplexRuleVariable_Logical_OR() {
+	public void testFetchConditionRuleVariables_ComplexRuleVariable_Logical_OR() {
 		ExpressionNode rv = new RuleVariableNode("n");
 		
 		ExpressionNode relop = new RelopNode(new RuleVariableNode("q"), rv, ConditionsLexer.RELOP_GT, ">");
@@ -233,7 +233,7 @@ public class TestFetchConditionRuleVariables {
 	}
 	
 	@Test
-	public void testFetchComplexRuleVariable_ConditionFunction() {
+	public void testFetchConditionRuleVariables_ComplexRuleVariable_ConditionFunction() {
 		ExpressionNode rv = new RuleVariableNode("n");
 		ArrayList<ExpressionNode > arguments = new ArrayList<ExpressionNode>();
 		arguments.add(rv);

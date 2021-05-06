@@ -19,6 +19,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.WindowConstants;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import org.antlr.v4.runtime.misc.ParseCancellationException;
 import Nodes.*;
@@ -173,7 +174,7 @@ public class GUI implements ActionListener {
 		c.gridwidth = 1;
 		panel.add(rewriteData, c);
 
-		
+		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		// Add all components to the frame
 		frame.add(panel);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -217,8 +218,7 @@ public class GUI implements ActionListener {
 				// Parse Term and begin Rewriting process if no errors occurred during parsing
 				if (rules != null) {
 					ExpressionNode term = p.parseTerm(enterTerm.getText());
-					String output = p.RewriteDeterministic(rules, term, ruleApplicationLimit);
-					//String output = p.RewriteDeterministic(rules, term, ruleApplicationLimit);
+					String output = p.Rewrite(rules, term, ruleApplicationLimit);
 					result.setText(output);
 					String timeTaken = "Time taken: ";
 					if (p.getExecutionTime() < 1) {
@@ -261,8 +261,6 @@ public class GUI implements ActionListener {
 				errorMessage.setText(re.getMessage());
 			// Unexpected error occurs during rewriting, less specific feedback can be given. 
 			} catch (Exception ex) {
-//				System.out.println(ex.getClass());
-//				ex.printStackTrace();
 				errorMessage.setText(ex.getMessage());
 			}
 		}

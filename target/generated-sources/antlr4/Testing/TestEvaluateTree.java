@@ -217,5 +217,14 @@ public class TestEvaluateTree {
 		assertThrows(Exception.class, () -> treeMatcher.Visit(l,r));
 		
 	}
+	
+	@Test
+	public void testEvaluateTree_IllegalNode_Exception () {
+		ExpressionNode l = new ConditionNotNode(new VariableNode("x"));
+		ExpressionNode r = new RuleVariableNode("x");
+		EvaluateTree treeMatcher = new EvaluateTree();
+		assertThrows(IllegalArgumentException.class, () -> treeMatcher.Visit(l,r));
+		
+	}
 
 }

@@ -12,11 +12,11 @@ import org.junit.Test;
 
 import ComputerAlgebraSystem.Program;
 import Nodes.*;
-public class TestTermAlgebraParser {
+public class TestTermParser {
 
 
 	@Test
-	public void testParseSimpleNumber_Integer() {
+	public void testTermParser_ParseSimpleNumber_Integer() {
 		Program p = new Program();
 		
 		
@@ -49,7 +49,7 @@ public class TestTermAlgebraParser {
 	}
 
 	@Test
-	public void testParseSimpleNumber_Rational() {
+	public void testTermParser_ParseSimpleNumber_Rational() {
 		Program p = new Program();
 		
 		try {
@@ -86,7 +86,7 @@ public class TestTermAlgebraParser {
 	}
 	
 	@Test
-	public void testParseSimpleNumber_DecimalInteger() {
+	public void testTermParser_ParseSimpleNumber_DecimalInteger() {
 		Program p = new Program();
 		
 		
@@ -121,14 +121,14 @@ public class TestTermAlgebraParser {
 	}
 
 	@Test
-	public void testParseSimpleNumber_Decimal() {
+	public void testTermParser_ParseSimpleNumber_Decimal() {
 		Program p = new Program();
 		
 		
 		try {
 			ExpressionNode n = p.parseTerm("3.7");
 			assertTrue(n instanceof NumberNode);
-			System.out.println(n.toString());
+
 			assertTrue(((NumberNode) n).getNumerator().compareTo(BigInteger.valueOf( 37))==0);
 			assertTrue(((NumberNode) n).getDenominator().compareTo(BigInteger.valueOf( 10))==0);
 			
@@ -148,7 +148,7 @@ public class TestTermAlgebraParser {
 	}
 	
 	@Test
-	public void testParseSimpleNumber_Rational_DenominatorZero() {
+	public void testTermParser_ParseSimpleNumber_Rational_DenominatorZero() {
 		Program p = new Program();		
 		try {
 			assertThrows(ArithmeticException.class, () -> p.parseTerm("1/0"));
@@ -164,9 +164,8 @@ public class TestTermAlgebraParser {
 	
 	
 	@Test
-	public void testParseSimpleVariable() {
+	public void testTermParser_ParseSimpleVariable() {
 		Program p = new Program();
-		
 		
 		try {
 			ExpressionNode n = p.parseTerm("a");
@@ -182,9 +181,8 @@ public class TestTermAlgebraParser {
 	}
 	
 	@Test
-	public void testParseSimpleAddition() {
+	public void testTermParser_ParseSimpleAddition() {
 		Program p = new Program();
-		
 		
 		try {
 			ExpressionNode n = p.parseTerm("a+1");
@@ -201,7 +199,7 @@ public class TestTermAlgebraParser {
 	}
 	
 	@Test
-	public void testParseSimpleSubtraction() {
+	public void testTermParser_ParseSimpleSubtraction() {
 		Program p = new Program();
 		
 		
@@ -220,7 +218,7 @@ public class TestTermAlgebraParser {
 	}
 	
 	@Test
-	public void testParseSimpleUnary_Negative() {
+	public void testTermParser_ParseSimpleUnary_Negative() {
 		Program p = new Program();
 		
 		try {
@@ -234,7 +232,20 @@ public class TestTermAlgebraParser {
 	}
 	
 	@Test
-	public void testParseSimpleUnary_Negative_Number() {
+	public void testTermParser_ParseSimpleUnary_Redundant() {
+		Program p = new Program();
+		
+		try {
+			ExpressionNode n = p.parseTerm("--x");
+			assertTrue(n instanceof VariableNode);
+		
+			assertTrue(((VariableNode) n).getValue().equals("x"));
+		} catch (ParseCancellationException e) {fail(); 
+		} catch (Exception e) { fail();}	
+	}
+	
+	@Test
+	public void testTermParser_ParseSimpleUnary_Negative_Number() {
 		Program p = new Program();
 		
 		try {
@@ -246,7 +257,7 @@ public class TestTermAlgebraParser {
 		} catch (Exception e) { fail();}	
 	}
 	@Test
-	public void testParseSimpleUnary_Positive() {
+	public void testTermParser_ParseSimpleUnary_Positive() {
 		Program p = new Program();
 		
 		try {
@@ -258,7 +269,7 @@ public class TestTermAlgebraParser {
 	}
 	
 	@Test
-	public void testParseSimpleFunction() {
+	public void testTermParser_ParseSimpleFunction() {
 		Program p = new Program();
 		
 		try {
@@ -274,9 +285,23 @@ public class TestTermAlgebraParser {
 		} catch (ParseCancellationException e) {fail(); 
 		} catch (Exception e) { fail();}	
 	}
+	@Test
+	public void testTermParser_ParseSimple_Parentheses() {
+		Program p = new Program();
+		
+		try {
+			ExpressionNode n = p.parseTerm("((x))");
+			assertTrue(n instanceof VariableNode);
+		
+			assertTrue(((VariableNode) n).getValue().equals("x"));
+		} catch (ParseCancellationException e) {fail(); 
+		} catch (Exception e) { fail();}	
+	}
+	
+	
 	
 	@Test
-	public void testParseSimpleMultiplication() {
+	public void testTermParser_ParseSimpleMultiplication() {
 		Program p = new Program();
 		
 		
@@ -296,7 +321,7 @@ public class TestTermAlgebraParser {
 	}
 	
 	@Test
-	public void testParseSimpleDivision() {
+	public void testTermParser_ParseSimpleDivision() {
 		Program p = new Program();
 		
 		
@@ -314,7 +339,7 @@ public class TestTermAlgebraParser {
 		} catch (Exception e) { fail();}	
 	}
 	@Test
-	public void testParseSimpleExponentiation() {
+	public void testTermParser_ParseSimpleExponentiation() {
 		Program p = new Program();
 		
 		
@@ -334,56 +359,56 @@ public class TestTermAlgebraParser {
 
 	
 	@Test
-	public void testParseSimpleRuleVariable_Exception() {
+	public void testTermParser_ParseSimpleRuleVariable_Exception() {
 		Program p = new Program();
 		assertThrows(ParseCancellationException.class, () ->p.parseTerm("$a"));
 
 	}
 
 	@Test
-	public void testParseInvalidVariable_Exception() {
+	public void testTermParser_ParseInvalidVariable_Exception() {
 		Program p = new Program();
 		assertThrows(ParseCancellationException.class, () ->p.parseTerm("a."));
 		
 	}
 	
 	@Test
-	public void testParseInvalidNumber_Exception() {
+	public void testTermParser_ParseInvalidNumber_Exception() {
 		Program p = new Program();
 		assertThrows(ParseCancellationException.class, () ->p.parseTerm("2f"));
 	}
 	
 	@Test
-	public void testParseInvalidParenthetical_Exception() {
+	public void testTermParser_ParseInvalidParenthetical_Exception() {
 		Program p = new Program();
 		assertThrows(ParseCancellationException.class, () ->p.parseTerm("(a"));
 	}
 	@Test
-	public void testParseInvalidUnary_Exception() {
+	public void testTermParser_ParseInvalidUnary_Exception() {
 		Program p = new Program();
 		assertThrows(ParseCancellationException.class, () ->p.parseTerm("-"));
 	}
 	@Test
-	public void testParseInvalidSubtractionException() {
+	public void testTermParser_ParseInvalidSubtractionException() {
 		Program p = new Program();
 		assertThrows(ParseCancellationException.class, () ->p.parseTerm("2-"));
 		assertThrows(ParseCancellationException.class, () ->p.parseTerm("2-."));
 	}
 	@Test
-	public void testParseInvalidMultiplicationException() {
+	public void testTermParser_ParseInvalidMultiplicationException() {
 		Program p = new Program();
 		assertThrows(ParseCancellationException.class, () ->p.parseTerm("2*"));
 		assertThrows(ParseCancellationException.class, () ->p.parseTerm("*2"));
 	}
 	@Test
-	public void testParseInvalidDivisionException() {
+	public void testTermParser_ParseInvalidDivisionException() {
 		Program p = new Program();
 		assertThrows(ParseCancellationException.class, () ->p.parseTerm("2.4/"));
 		assertThrows(ParseCancellationException.class, () ->p.parseTerm("2/."));
 	}
 
 	@Test
-	public void testParseInvalidFunction_Exception() {
+	public void testTermParser_ParseInvalidFunction_Exception() {
 		Program p = new Program();
 		assertThrows(ParseCancellationException.class, () ->p.parseTerm("func("));
 		assertThrows(ParseCancellationException.class, () ->p.parseTerm("func(x,"));

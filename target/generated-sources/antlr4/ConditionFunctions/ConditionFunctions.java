@@ -27,8 +27,8 @@ class is_literal extends ConditionFunction {
 class is_number extends ConditionFunction {
 	@Override
 	boolean function(ArrayList<ExpressionNode> arguments) throws Exception {
+		ExpressionNode argument = new EvaluateNumericalOperations().Visit(arguments.get(0));
 		if (arguments.size() == 1) {
-			ExpressionNode argument = new EvaluateNumericalOperations().Visit(arguments.get(0));
 			return (argument instanceof NumberNode);
 		}
 		throw new IllegalArgumentException(
@@ -40,8 +40,8 @@ class is_integer extends ConditionFunction {
 	@Override
 	boolean function(ArrayList<ExpressionNode> arguments) throws Exception {
 		if (arguments.size() == 1) {
-			if (arguments.get(0) instanceof NumberNode) {
-				ExpressionNode argument = new EvaluateNumericalOperations().Visit(arguments.get(0));
+			ExpressionNode argument = new EvaluateNumericalOperations().Visit(arguments.get(0));
+			if (argument instanceof NumberNode) {
 				return (((NumberNode) argument).getDenominator().compareTo(BigInteger.ONE) ==0);
 			} else {
 				return false;
@@ -52,7 +52,6 @@ class is_integer extends ConditionFunction {
 	}
 
 }
-
 
 class depends extends ConditionFunction {
 	@Override

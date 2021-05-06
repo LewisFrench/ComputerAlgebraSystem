@@ -17,7 +17,7 @@ import Nodes.*;
 public class TestRuleAlgebraParser {
 
 	@Test
-	public void testParseSimpleNumber_Integer() {
+	public void testRuleAlgebraParser_ParseSimpleNumber_Integer() {
 		Program p = new Program();
 
 		try {
@@ -54,7 +54,7 @@ public class TestRuleAlgebraParser {
 	}
 
 	@Test
-	public void testParseSimpleNumber_Rational() {
+	public void testRuleAlgebraParser_ParseSimpleNumber_Rational() {
 		Program p = new Program();
 
 		try {
@@ -108,7 +108,7 @@ public class TestRuleAlgebraParser {
 	}
 
 	@Test
-	public void testParseSimpleNumber_DecimalInteger() {
+	public void testRuleAlgebraParser_ParseSimpleNumber_DecimalInteger() {
 		Program p = new Program();
 
 		try {
@@ -154,7 +154,7 @@ public class TestRuleAlgebraParser {
 	}
 
 	@Test
-	public void testParseSimpleNumber_Decimal() {
+	public void testRuleAlgebraParser_ParseSimpleNumber_Decimal() {
 		Program p = new Program();
 
 		try {
@@ -193,7 +193,7 @@ public class TestRuleAlgebraParser {
 	}
 
 	@Test
-	public void testParseSimpleNumber_Rational_DenominatorZero() {
+	public void testRuleAlgebraParser_ParseSimpleNumber_Rational_DenominatorZero() {
 		Program p = new Program();		
 		try {
 			assertThrows(ArithmeticException.class, () -> p.parseRule("1/0 = 1"));
@@ -207,7 +207,7 @@ public class TestRuleAlgebraParser {
 	}
 	
 	@Test
-	public void testValidRuleNoConditions_Variable_Number() {
+	public void testRuleAlgebraParser_ValidRuleNoConditions_Variable_Number() {
 
 		Program p = new Program();
 		try {
@@ -222,7 +222,7 @@ public class TestRuleAlgebraParser {
 	}
 
 	@Test
-	public void testValidRuleNoConditions_Variable_NegativeNumber() {
+	public void testRuleAlgebraParser_ValidRuleNoConditions_Variable_NegativeNumber() {
 
 		Program p = new Program();
 		try {
@@ -240,7 +240,7 @@ public class TestRuleAlgebraParser {
 	
 	
 	@Test
-	public void testValidRuleNoConditions_Number_Variable() {
+	public void testRuleAlgebraParser_ValidRuleNoConditions_Number_Variable() {
 		Program p = new Program();
 		try {
 			Rule result = p.parseRule("1=x");
@@ -254,7 +254,7 @@ public class TestRuleAlgebraParser {
 	}
 
 	@Test
-	public void testValidRuleNoConditions_RuleVariable_Number() {
+	public void testRuleAlgebraParser_ValidRuleNoConditions_RuleVariable_Number() {
 
 		Program p = new Program();
 		try {
@@ -270,7 +270,7 @@ public class TestRuleAlgebraParser {
 	
 	
 	@Test
-	public void testValidRuleNoConditions_PositiveUnary() {
+	public void testRuleAlgebraParser_ValidRuleNoConditions_PositiveUnary() {
 
 		Program p = new Program();
 		try {
@@ -286,7 +286,22 @@ public class TestRuleAlgebraParser {
 	}
 	
 	@Test
-	public void testValidRuleNoConditions_PositiveUnary_Number() {
+	public void testRuleAlgebraParser_ValidRule_RedundantUnary() {
+
+		Program p = new Program();
+		try {
+			Rule result = p.parseRule("--x = --x : --x == --x");
+			assertTrue(result.getLhsNode() instanceof VariableNode);
+			
+			assertTrue(result.getRhsNode() instanceof VariableNode);
+
+		} catch (Exception e) {
+			fail();
+		}
+	}
+	
+	@Test
+	public void testRuleAlgebraParser_ValidRuleNoConditions_PositiveUnary_Number() {
 
 		Program p = new Program();
 		try {
@@ -301,7 +316,7 @@ public class TestRuleAlgebraParser {
 		}
 	}
 	@Test
-	public void testValidRuleNoConditions_Unary() {
+	public void testRuleAlgebraParser_ValidRuleNoConditions_Unary() {
 
 		Program p = new Program();
 		try {
@@ -317,7 +332,7 @@ public class TestRuleAlgebraParser {
 	}
 	
 	@Test
-	public void testValidRuleNoConditions_Parentheses() {
+	public void testRuleAlgebraParser_ValidRuleNoConditions_Parentheses() {
 
 		Program p = new Program();
 		try {
@@ -335,14 +350,14 @@ public class TestRuleAlgebraParser {
 	
 
 	@Test
-	public void testValidRuleNoConditions_RuleVariablesNotCorrespond_Exception() {
+	public void testRuleAlgebraParser_ValidRuleNoConditions_RuleVariablesNotCorrespond_Exception() {
 
 		Program p = new Program();
 		assertThrows(Exception.class, () -> p.parseRule("$x=$y"));
 	}
 
 	@Test
-	public void testValidRuleNoConditions_RuleVariable_RuleVariable() {
+	public void testRuleAlgebraParser_ValidRuleNoConditions_RuleVariable_RuleVariable() {
 
 		Program p = new Program();
 		try {
@@ -357,14 +372,14 @@ public class TestRuleAlgebraParser {
 	}
 
 	@Test
-	public void testValidRuleNoConditions_ConditionRuleVariablesNotCorrespond_Exception() {
+	public void testRuleAlgebraParser_ValidRuleNoConditions_ConditionRuleVariablesNotCorrespond_Exception() {
 
 		Program p = new Program();
 		assertThrows(Exception.class, () -> p.parseRule("$x=$x:$y>1"));
 	}
 
 	@Test
-	public void testValidRuleNoConditions_Addition_Subtraction() {
+	public void testRuleAlgebraParser_ValidRuleNoConditions_Addition_Subtraction() {
 
 		Program p = new Program();
 		try {
@@ -378,7 +393,7 @@ public class TestRuleAlgebraParser {
 	}
 
 	@Test
-	public void testValidRuleNoConditions_Subtraction_Addition() {
+	public void testRuleAlgebraParser_ValidRuleNoConditions_Subtraction_Addition() {
 
 		Program p = new Program();
 		try {
@@ -393,7 +408,7 @@ public class TestRuleAlgebraParser {
 	}
 
 	@Test
-	public void testValidRuleNoConditions_Multiplication_Division() {
+	public void testRuleAlgebraParser_ValidRuleNoConditions_Multiplication_Division() {
 
 		Program p = new Program();
 		try {
@@ -406,9 +421,25 @@ public class TestRuleAlgebraParser {
 			fail();
 		}
 	}
-
+	
 	@Test
-	public void testValidRuleNoConditions_Division_Multiplication() {
+	public void testRuleAlgebraParser_ValidRule_Multiplication_Division() {
+
+		Program p = new Program();
+		try {
+			Rule result = p.parseRule("x*1=1/x : x/2 == y/5");
+			assertTrue(result.getLhsNode() instanceof MultiplicationNode);
+			assertTrue(result.getRhsNode() instanceof DivisionNode);
+
+		} catch (Exception e) {
+			fail();
+		}
+	}
+	
+
+	
+	@Test
+	public void testRuleAlgebraParser_ValidRuleNoConditions_Division_Multiplication() {
 
 		Program p = new Program();
 		try {
@@ -423,7 +454,7 @@ public class TestRuleAlgebraParser {
 	}
 
 	@Test
-	public void testValidRuleNoConditions_Function_Exponentiation() {
+	public void testRuleAlgebraParser_ValidRuleNoConditions_Function_Exponentiation() {
 
 		Program p = new Program();
 		try {
@@ -438,7 +469,7 @@ public class TestRuleAlgebraParser {
 	}
 	
 	@Test
-	public void testValidRuleValidConditions_Relop_Rational() {
+	public void testRuleAlgebraParser_ValidRuleValidConditions_Relop_Rational() {
 
 		Program p = new Program();
 		try {
@@ -453,7 +484,7 @@ public class TestRuleAlgebraParser {
 		}
 	}
 	@Test
-	public void testValidRuleValidConditions_Relop_Decimal() {
+	public void testRuleAlgebraParser_ValidRuleValidConditions_Relop_Decimal() {
 
 		Program p = new Program();
 		try {
@@ -469,7 +500,7 @@ public class TestRuleAlgebraParser {
 	}
 	
 	@Test
-	public void testValidRuleValidConditions_Relop_UnaryNumber() {
+	public void testRuleAlgebraParser_ValidRuleValidConditions_Relop_UnaryNumber() {
 		Program p = new Program();
 		try {
 			Rule result = p.parseRule("x=1:-(1.0)>-00.20");
@@ -484,13 +515,11 @@ public class TestRuleAlgebraParser {
 	}
 	
 	@Test
-	public void testValidRuleValidConditions_Relop_Unary() {
+	public void testRuleAlgebraParser_ValidRuleValidConditions_Relop_Unary() {
 
 		Program p = new Program();
 		try {
 			Rule result = p.parseRule("x=1:-x==-x");
-			System.out.println(result.getConditionsNode().toString());
-			System.out.println(result.getConditionsNode().getClass());
 			
 			assertTrue(result.getConditionsNode() instanceof RelopNode);
 			assertEquals(UnaryNode.class,((RelopNode) result.getConditionsNode()).getLeft().getClass());
@@ -503,7 +532,7 @@ public class TestRuleAlgebraParser {
 	}
 
 	@Test
-	public void testValidRuleValidConditions_RelopGT() {
+	public void testRuleAlgebraParser_ValidRuleValidConditions_RelopGT() {
 
 		Program p = new Program();
 		try {
@@ -519,7 +548,7 @@ public class TestRuleAlgebraParser {
 	}
 
 	@Test
-	public void testValidRuleValidConditions_RelopGTE() {
+	public void testRuleAlgebraParser_ValidRuleValidConditions_RelopGTE() {
 
 		Program p = new Program();
 		try {
@@ -535,7 +564,7 @@ public class TestRuleAlgebraParser {
 	}
 
 	@Test
-	public void testValidRuleValidConditions_RelopLT() {
+	public void testRuleAlgebraParser_ValidRuleValidConditions_RelopLT() {
 
 		Program p = new Program();
 		try {
@@ -551,7 +580,7 @@ public class TestRuleAlgebraParser {
 	}
 
 	@Test
-	public void testValidRuleValidConditions_RelopLTE() {
+	public void testRuleAlgebraParser_ValidRuleValidConditions_RelopLTE() {
 
 		Program p = new Program();
 		try {
@@ -567,7 +596,7 @@ public class TestRuleAlgebraParser {
 	}
 
 	@Test
-	public void testValidRuleValidConditions_RelopEQ() {
+	public void testRuleAlgebraParser_ValidRuleValidConditions_RelopEQ() {
 
 		Program p = new Program();
 		try {
@@ -583,7 +612,7 @@ public class TestRuleAlgebraParser {
 	}
 
 	@Test
-	public void testValidRuleValidConditions_RelopNEQ() {
+	public void testRuleAlgebraParser_ValidRuleValidConditions_RelopNEQ() {
 
 		Program p = new Program();
 		try {
@@ -599,7 +628,7 @@ public class TestRuleAlgebraParser {
 	}
 
 	@Test
-	public void testValidRuleValidConditions_ConditionFunction_Depends() {
+	public void testRuleAlgebraParser_ValidRuleValidConditions_ConditionFunction_Depends() {
 
 		Program p = new Program();
 		try {
@@ -616,7 +645,7 @@ public class TestRuleAlgebraParser {
 	}
 
 	@Test
-	public void testValidRuleValidConditions_ConditionFunction_is_literal() {
+	public void testRuleAlgebraParser_ValidRuleValidConditions_ConditionFunction_is_literal() {
 
 		Program p = new Program();
 		try {
@@ -632,7 +661,7 @@ public class TestRuleAlgebraParser {
 	}
 
 	@Test
-	public void testValidRuleValidConditions_ConditionFunction_is_number() {
+	public void testRuleAlgebraParser_ValidRuleValidConditions_ConditionFunction_is_number() {
 
 		Program p = new Program();
 		try {
@@ -648,7 +677,7 @@ public class TestRuleAlgebraParser {
 	}
 
 	@Test
-	public void testValidRuleValidConditions_ConditionFunction_is_integer() {
+	public void testRuleAlgebraParser_ValidRuleValidConditions_ConditionFunction_is_integer() {
 
 		Program p = new Program();
 		try {
@@ -664,7 +693,7 @@ public class TestRuleAlgebraParser {
 	}
 
 	@Test
-	public void testValidRuleValidConditions_logical_OR() {
+	public void testRuleAlgebraParser_ValidRuleValidConditions_logical_OR() {
 
 		Program p = new Program();
 		try {
@@ -677,7 +706,7 @@ public class TestRuleAlgebraParser {
 	}
 
 	@Test
-	public void testValidRuleValidConditions_logical_AND() {
+	public void testRuleAlgebraParser_ValidRuleValidConditions_logical_AND() {
 
 		Program p = new Program();
 		try {
@@ -690,7 +719,7 @@ public class TestRuleAlgebraParser {
 	}
 
 	@Test
-	public void testValidRuleValidConditions_logical_NOT() {
+	public void testRuleAlgebraParser_ValidRuleValidConditions_logical_NOT() {
 
 		Program p = new Program();
 		try {
@@ -703,7 +732,7 @@ public class TestRuleAlgebraParser {
 	}
 
 	@Test
-	public void testValidRuleValidConditions_parenthetical_relop() {
+	public void testRuleAlgebraParser_ValidRuleValidConditions_parenthetical_relop() {
 
 		Program p = new Program();
 		try {
@@ -716,7 +745,7 @@ public class TestRuleAlgebraParser {
 	}
 
 	@Test
-	public void testValidRuleValidConditions_Addition_relop() {
+	public void testRuleAlgebraParser_ValidRuleValidConditions_Addition_relop() {
 
 		Program p = new Program();
 		try {
@@ -730,7 +759,7 @@ public class TestRuleAlgebraParser {
 	}
 
 	@Test
-	public void testValidRuleValidConditions_Subtraction_relop() {
+	public void testRuleAlgebraParser_ValidRuleValidConditions_Subtraction_relop() {
 
 		Program p = new Program();
 		try {
@@ -744,7 +773,7 @@ public class TestRuleAlgebraParser {
 	}
 
 	@Test
-	public void testValidRuleValidConditions_Multiplication_relop() {
+	public void testRuleAlgebraParser_ValidRuleValidConditions_Multiplication_relop() {
 
 		Program p = new Program();
 		try {
@@ -758,7 +787,7 @@ public class TestRuleAlgebraParser {
 	}
 
 	@Test
-	public void testValidRuleValidConditions_Division_relop_Rational() {
+	public void testRuleAlgebraParser_ValidRuleValidConditions_Division_relop_Rational() {
 
 		Program p = new Program();
 		try {
@@ -772,7 +801,7 @@ public class TestRuleAlgebraParser {
 	}
 	
 	@Test
-	public void testValidRuleValidConditions_Division_relop() {
+	public void testRuleAlgebraParser_ValidRuleValidConditions_Division_relop() {
 
 		Program p = new Program();
 		try {
@@ -786,7 +815,7 @@ public class TestRuleAlgebraParser {
 	}
 
 	@Test
-	public void testValidRuleValidConditions_Exponentiation_relop() {
+	public void testRuleAlgebraParser_ValidRuleValidConditions_Exponentiation_relop() {
 
 		Program p = new Program();
 		try {
@@ -800,12 +829,11 @@ public class TestRuleAlgebraParser {
 	}
 
 	@Test
-	public void testValidRuleValidConditions_Compare_EQ() {
+	public void testRuleAlgebraParser_ValidRuleValidConditions_Compare_EQ() {
 
 		Program p = new Program();
 		try {
-			Rule result = p.parseRule("+x=1:testFunc(x) == testFunc(x)");
-			System.out.println(result.toString());
+			Rule result = p.parseRule("+x=1:testRuleAlgebraParser_Func(x) == testRuleAlgebraParser_Func(x)");
 			assertTrue(result.getConditionsNode() instanceof RelopNode);
 			assertTrue(((RelopNode) result.getConditionsNode()).getLeft() instanceof FunctionNode);
 
@@ -815,12 +843,11 @@ public class TestRuleAlgebraParser {
 	}
 
 	@Test
-	public void testValidRuleValidConditions_Relop_RuleVariable() {
+	public void testRuleAlgebraParser_ValidRuleValidConditions_Relop_RuleVariable() {
 
 		Program p = new Program();
 		try {
 			Rule result = p.parseRule("$x^2 = 1 : $x > 1");
-			System.out.println(result.toString());
 			assertTrue(result.getConditionsNode() instanceof RelopNode);
 			assertTrue(((RelopNode) result.getConditionsNode()).getLeft() instanceof RuleVariableNode);
 
@@ -830,7 +857,7 @@ public class TestRuleAlgebraParser {
 	}
 
 	@Test
-	public void testValidRuleValidConditions_relop_containing_unary() {
+	public void testRuleAlgebraParser_ValidRuleValidConditions_relop_containing_unary() {
 
 		Program p = new Program();
 		try {
@@ -843,35 +870,35 @@ public class TestRuleAlgebraParser {
 	}
 
 	@Test
-	public void testValidRuleValidConditions_ConditionFunction_no_underscore_is_integer_Exception() {
+	public void testRuleAlgebraParser_ValidRuleValidConditions_ConditionFunction_no_underscore_is_integer_Exception() {
 
 		Program p = new Program();
 		assertThrows(ParseCancellationException.class, () -> p.parseRule("x=1:is_integer(x)"));
 	}
 
 	@Test
-	public void testValidRuleValidConditions_ConditionFunction_no_underscore_is_literal_Exception() {
+	public void testRuleAlgebraParser_ValidRuleValidConditions_ConditionFunction_no_underscore_is_literal_Exception() {
 
 		Program p = new Program();
 		assertThrows(ParseCancellationException.class, () -> p.parseRule("x=1:is_literal(x)"));
 	}
 
 	@Test
-	public void testValidRuleValidConditions_ConditionFunction_no_underscore_is_numberException() {
+	public void testRuleAlgebraParser_ValidRuleValidConditions_ConditionFunction_no_underscore_is_numberException() {
 
 		Program p = new Program();
 		assertThrows(ParseCancellationException.class, () -> p.parseRule("x=1:is_number(x)"));
 	}
 
 	@Test
-	public void testValidRuleValidConditions_ConditionFunction_no_underscore_depends_Exception() {
+	public void testRuleAlgebraParser_ValidRuleValidConditions_ConditionFunction_no_underscore_depends_Exception() {
 
 		Program p = new Program();
 		assertThrows(ParseCancellationException.class, () -> p.parseRule("x=1:depends(x)"));
 	}
 
 	@Test
-	public void testInvalidRuleNoConditions_NoRHS_NoEquals() {
+	public void testRuleAlgebraParser_InvalidRuleNoConditions_NoRHS_NoEquals() {
 
 		Program p = new Program();
 		assertThrows(Exception.class, () -> p.parseRule("f(x)"));
@@ -879,7 +906,7 @@ public class TestRuleAlgebraParser {
 	}
 
 	@Test
-	public void testInvalidRuleNoConditions_NoRHS() {
+	public void testRuleAlgebraParser_InvalidRuleNoConditions_NoRHS() {
 
 		Program p = new Program();
 		assertThrows(RewriteRuleFormatException.class, () -> p.parseRule("f(x)="));
@@ -887,21 +914,21 @@ public class TestRuleAlgebraParser {
 	}
 
 	@Test
-	public void testInvalidRuleNoConditions_NoLHS() {
+	public void testRuleAlgebraParser_InvalidRuleNoConditions_NoLHS() {
 
 		Program p = new Program();
 		assertThrows(Exception.class, () -> p.parseRule("=f(x)"));
 	}
 
 	@Test
-	public void testInvalidRuleNoConditions_NoConditions() {
+	public void testRuleAlgebraParser_InvalidRuleNoConditions_NoConditions() {
 
 		Program p = new Program();
 		assertThrows(Exception.class, () -> p.parseRule("x=f(x):"));
 	}
 
 	@Test
-	public void testInvalidRuleNoConditions_invalid_relop_exception() {
+	public void testRuleAlgebraParser_InvalidRuleNoConditions_invalid_relop_exception() {
 
 		Program p = new Program();
 		assertThrows(Exception.class, () -> p.parseRule("x=f(x): 1>"));
@@ -911,7 +938,7 @@ public class TestRuleAlgebraParser {
 	}
 
 	@Test
-	public void testInvalidRuleNoConditions_invalid_Equality_exception() {
+	public void testRuleAlgebraParser_InvalidRuleNoConditions_invalid_Equality_exception() {
 
 		Program p = new Program();
 		assertThrows(Exception.class, () -> p.parseRule("x=f(x): 1=="));
@@ -921,7 +948,7 @@ public class TestRuleAlgebraParser {
 	}
 
 	@Test
-	public void testInvalidRuleNoConditions_invalid_logical_AND_exception() {
+	public void testRuleAlgebraParser_InvalidRuleNoConditions_invalid_logical_AND_exception() {
 
 		Program p = new Program();
 		assertThrows(Exception.class, () -> p.parseRule("x=f(x): 1>0 &"));
@@ -931,7 +958,7 @@ public class TestRuleAlgebraParser {
 	}
 
 	@Test
-	public void testInvalidRuleNoConditions_invalid_logical_OR_exception() {
+	public void testRuleAlgebraParser_InvalidRuleNoConditions_invalid_logical_OR_exception() {
 
 		Program p = new Program();
 		assertThrows(Exception.class, () -> p.parseRule("x=f(x): 1>0 |"));

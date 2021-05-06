@@ -15,7 +15,7 @@ import VisitorClasses.SubstituteRuleVariables;
 public class TestSubstituteRuleVariables {
 
 	@Test
-	public void testSubstituteVariable() {
+	public void testSubstituteRuleVariables_SubstituteVariable() {
 		LinkedHashMap<String, ExpressionNode> variables = new LinkedHashMap<>();
 		variables.put("$n", new VariableNode("x"));
 		ExpressionNode rv = new RuleVariableNode("n");
@@ -31,10 +31,10 @@ public class TestSubstituteRuleVariables {
 	}
 
 	@Test
-	public void testSubstituteNumber() {
+	public void testSubstituteRuleVariables_SubstituteNumber() {
 		LinkedHashMap<String, ExpressionNode> variables = new LinkedHashMap<>();
-		variables.put("$test", new NumberNode(BigInteger.valueOf(1), BigInteger.valueOf(4)));
-		ExpressionNode rv = new RuleVariableNode("test");
+		variables.put("$testSubstituteRuleVariables_", new NumberNode(BigInteger.valueOf(1), BigInteger.valueOf(4)));
+		ExpressionNode rv = new RuleVariableNode("testSubstituteRuleVariables_");
 		SubstituteRuleVariables s = new SubstituteRuleVariables(variables);
 
 		try {
@@ -47,11 +47,11 @@ public class TestSubstituteRuleVariables {
 	}
 
 	@Test
-	public void testSubstituteAddition() {
+	public void testSubstituteRuleVariables_SubstituteAddition() {
 		LinkedHashMap<String, ExpressionNode> variables = new LinkedHashMap<>();
 
-		variables.put("$test", new AdditionNode(new NumberNode(BigInteger.valueOf(4)), new VariableNode("u")));
-		ExpressionNode rv = new RuleVariableNode("test");
+		variables.put("$testSubstituteRuleVariables_", new AdditionNode(new NumberNode(BigInteger.valueOf(4)), new VariableNode("u")));
+		ExpressionNode rv = new RuleVariableNode("testSubstituteRuleVariables_");
 		SubstituteRuleVariables s = new SubstituteRuleVariables(variables);
 
 		try {
@@ -66,10 +66,10 @@ public class TestSubstituteRuleVariables {
 	}
 
 	@Test
-	public void testSubstituteSubstitution() {
+	public void testSubstituteRuleVariables_SubstituteSubstitution() {
 		LinkedHashMap<String, ExpressionNode> variables = new LinkedHashMap<>();
-		variables.put("$test", new SubtractionNode(new NumberNode(BigInteger.valueOf(2)), new VariableNode("u")));
-		ExpressionNode rv = new RuleVariableNode("test");
+		variables.put("$testSubstituteRuleVariables_", new SubtractionNode(new NumberNode(BigInteger.valueOf(2)), new VariableNode("u")));
+		ExpressionNode rv = new RuleVariableNode("testSubstituteRuleVariables_");
 		SubstituteRuleVariables s = new SubstituteRuleVariables(variables);
 
 		try {
@@ -84,10 +84,10 @@ public class TestSubstituteRuleVariables {
 	}
 
 	@Test
-	public void testSubstituteMultiplication() {
+	public void testSubstituteRuleVariables_SubstituteMultiplication() {
 		LinkedHashMap<String, ExpressionNode> variables = new LinkedHashMap<>();
-		variables.put("$test", new MultiplicationNode(new NumberNode(BigInteger.valueOf(2)), new VariableNode("u")));
-		ExpressionNode rv = new RuleVariableNode("test");
+		variables.put("$testSubstituteRuleVariables_", new MultiplicationNode(new NumberNode(BigInteger.valueOf(2)), new VariableNode("u")));
+		ExpressionNode rv = new RuleVariableNode("testSubstituteRuleVariables_");
 		SubstituteRuleVariables s = new SubstituteRuleVariables(variables);
 
 		try {
@@ -102,10 +102,10 @@ public class TestSubstituteRuleVariables {
 	}
 
 	@Test
-	public void testSubstituteDivision() {
+	public void testSubstituteRuleVariables_SubstituteDivision() {
 		LinkedHashMap<String, ExpressionNode> variables = new LinkedHashMap<>();
-		variables.put("$test", new DivisionNode(new NumberNode(BigInteger.valueOf(2)), new VariableNode("u")));
-		ExpressionNode rv = new RuleVariableNode("test");
+		variables.put("$testSubstituteRuleVariables_", new DivisionNode(new NumberNode(BigInteger.valueOf(2)), new VariableNode("u")));
+		ExpressionNode rv = new RuleVariableNode("testSubstituteRuleVariables_");
 		SubstituteRuleVariables s = new SubstituteRuleVariables(variables);
 
 		try {
@@ -120,10 +120,10 @@ public class TestSubstituteRuleVariables {
 	}
 
 	@Test
-	public void testSubstituteExponentiation() {
+	public void testSubstituteRuleVariables_SubstituteExponentiation() {
 		LinkedHashMap<String, ExpressionNode> variables = new LinkedHashMap<>();
-		variables.put("$test", new PowerNode(new NumberNode(BigInteger.valueOf(2)), new VariableNode("u")));
-		ExpressionNode rv = new RuleVariableNode("test");
+		variables.put("$testSubstituteRuleVariables_", new PowerNode(new NumberNode(BigInteger.valueOf(2)), new VariableNode("u")));
+		ExpressionNode rv = new RuleVariableNode("testSubstituteRuleVariables_");
 		SubstituteRuleVariables s = new SubstituteRuleVariables(variables);
 
 		try {
@@ -138,10 +138,10 @@ public class TestSubstituteRuleVariables {
 	}
 
 	@Test
-	public void testSubstituteUnary() {
+	public void testSubstituteRuleVariables_SubstituteUnary() {
 		LinkedHashMap<String, ExpressionNode> variables = new LinkedHashMap<>();
-		variables.put("$test", new UnaryNode(new VariableNode("x")));
-		ExpressionNode rv = new RuleVariableNode("test");
+		variables.put("$testSubstituteRuleVariables_", new UnaryNode(new VariableNode("x")));
+		ExpressionNode rv = new RuleVariableNode("testSubstituteRuleVariables_");
 		SubstituteRuleVariables s = new SubstituteRuleVariables(variables);
 
 		try {
@@ -159,16 +159,15 @@ public class TestSubstituteRuleVariables {
 	}
 
 	@Test
-	public void testSubstituteUnary_Number() {
+	public void testSubstituteRuleVariables_SubstituteUnary_Number() {
 		LinkedHashMap<String, ExpressionNode> variables = new LinkedHashMap<>();
-		variables.put("$test", new UnaryNode(new NumberNode(BigInteger.valueOf(2))));
-		ExpressionNode rv = new RuleVariableNode("test");
+		variables.put("$testSubstituteRuleVariables_", new UnaryNode(new NumberNode(BigInteger.valueOf(2))));
+		ExpressionNode rv = new RuleVariableNode("testSubstituteRuleVariables_");
 		SubstituteRuleVariables s = new SubstituteRuleVariables(variables);
 
 		try {
 
 			ExpressionNode result = s.Visit(rv);
-			System.out.println(result.toString() + "   " + result.getClass());
 			assertTrue(result instanceof UnaryNode);
 			assertTrue(((UnaryNode) result).innerNode instanceof NumberNode);
 			ExpressionNode resultNode = (((UnaryNode) result).innerNode);
@@ -181,7 +180,7 @@ public class TestSubstituteRuleVariables {
 	}
 
 	@Test
-	public void testSubstituteFunction() {
+	public void testSubstituteRuleVariables_SubstituteFunction() {
 		LinkedHashMap<String, ExpressionNode> variables = new LinkedHashMap<>();
 
 		ArrayList<ExpressionNode> functionArguments = new ArrayList<ExpressionNode>();
@@ -189,8 +188,8 @@ public class TestSubstituteRuleVariables {
 		functionArguments.add(new VariableNode("xa"));
 		ExpressionNode functionNode = new FunctionNode("TestFunction", functionArguments);
 
-		variables.put("$test", functionNode);
-		ExpressionNode rv = new RuleVariableNode("test");
+		variables.put("$testSubstituteRuleVariables_", functionNode);
+		ExpressionNode rv = new RuleVariableNode("testSubstituteRuleVariables_");
 		SubstituteRuleVariables s = new SubstituteRuleVariables(variables);
 
 		try {
@@ -207,7 +206,7 @@ public class TestSubstituteRuleVariables {
 	}
 
 	@Test
-	public void testSubstituteNullVariables_Exception() {
+	public void testSubstituteRuleVariables_SubstituteNullVariables_Exception() {
 		LinkedHashMap<String, ExpressionNode> variables = new LinkedHashMap<>();
 		// variables.put("$n", new VariableNode("x"));
 		ExpressionNode rv = new RuleVariableNode("n");
@@ -218,7 +217,7 @@ public class TestSubstituteRuleVariables {
 	}
 
 	@Test
-	public void testSubstituteNullVariable_Node_Exception() {
+	public void testSubstituteRuleVariables_SubstituteNullVariable_Node_Exception() {
 		LinkedHashMap<String, ExpressionNode> variables = new LinkedHashMap<>();
 		variables.put("$n", null);
 		ExpressionNode rv = new RuleVariableNode("n");
@@ -342,6 +341,22 @@ public class TestSubstituteRuleVariables {
 			UnaryNode addResult = (UnaryNode) result;
 			assertTrue(addResult.innerNode instanceof VariableNode);
 
+		} catch (Exception e) {
+			fail();
+		}
+	}
+	
+	@Test
+	public void TestSubstituteIllegalNode() {
+		LinkedHashMap<String, ExpressionNode> variables = new LinkedHashMap<>();
+		variables.put("$n", new VariableNode("x"));
+
+		ExpressionNode unaryNode = new UnaryNode(new ConditionNotNode(new VariableNode("j")));
+		SubstituteRuleVariables s = new SubstituteRuleVariables(variables);
+
+		try {
+			assertThrows(IllegalArgumentException.class, ()-> s.Visit(unaryNode));
+			
 		} catch (Exception e) {
 			fail();
 		}

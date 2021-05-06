@@ -6,11 +6,11 @@ import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
 @SuiteClasses({ TestDependsEvaluator.class, TestEvaluateTree.class, TestRuleAlgebraParser.class,
-		TestSimplifyNumericalOperations.class, TestSubstituteRuleVariables.class, TestTermAlgebraParser.class,
+		TestSimplifyNumericalOperations.class, TestSubstituteRuleVariables.class, TestTermParser.class,
 		TestFetchRuleVariables.class, TestConditionFunctions.class, TestSubstituteConditionRuleVariables.class,
-		TestEvaluateExpressionVisitor.class, TestFetchConditionRuleVariables.class, TestEvaluateConditionsVisitor.class,
+		TestEvaluateTermOutput.class, TestFetchConditionRuleVariables.class, TestEvaluateConditionsVisitor.class,
 		TestRule.class, TestRewriteProcess.class, TestProgram.class, TestNumericalOperations.class,
-		TestRationalNumbers.class })
+		TestRationalNumbers.class, TestGUI.class, TestExpressionNodeOutput.class })
 public class TestSuite {
 
 }

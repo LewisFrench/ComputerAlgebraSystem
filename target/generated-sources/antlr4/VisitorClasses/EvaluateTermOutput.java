@@ -31,7 +31,6 @@ public class EvaluateTermOutput extends VisitTerm<String> {
 
 	@Override
 	public String Visit(AdditionNode node) throws Exception {
-//		System.out.println("\nVisiting Addition\nLeft: " + node.getLeft() + "\nRight: " + node.getRight());
 		String left = Visit(node.getLeft());
 		String right = Visit(node.getRight());
 		return  left + "+" + right ;
@@ -39,7 +38,6 @@ public class EvaluateTermOutput extends VisitTerm<String> {
 
 	@Override
 	public String Visit(SubtractionNode node) throws Exception {
-//		System.out.println("\nVisiting Subtraction\nLeft: " + node.getLeft() + "\nRight: " + node.getRight());
 		String left = Visit(node.getLeft());
 		String right = Visit(node.getRight());
 		return  left + "-" + right ;
@@ -47,7 +45,6 @@ public class EvaluateTermOutput extends VisitTerm<String> {
 
 	@Override
 	public String Visit(MultiplicationNode node) throws Exception {
-//		System.out.println("\nVisiting Multiplication\nLeft: " + node.getLeft() + "\nRight: " + node.getRight());
 		String left = Visit(node.getLeft());
 		String right = Visit(node.getRight());
 		if(node.getLeft() instanceof AdditionNode  || node.getLeft() instanceof SubtractionNode) {
@@ -56,18 +53,11 @@ public class EvaluateTermOutput extends VisitTerm<String> {
 		if(node.getRight() instanceof AdditionNode  || node.getRight() instanceof SubtractionNode) {
 			right = "(" + right + ")";
 		}
-		if (node.getLeft() instanceof MultiplicationNode) {
-			
-		}
-		if (node.getRight() instanceof DivisionNode) {
-			right = "(" + right + ")";
-		}
 		return  left + "*" + right ;
 	}
 
 	@Override
 	public String Visit(DivisionNode node) throws Exception {
-//		System.out.println("\nVisiting Division\nLeft: " + node.getLeft() + "\nRight: " + node.getRight());
 		String left = Visit(node.getLeft());
 		String right = Visit(node.getRight());
 		if(node.getLeft() instanceof AdditionNode  || node.getLeft() instanceof SubtractionNode) {

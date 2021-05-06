@@ -14,6 +14,7 @@ $A^1 = $A
 // IMPORTANT : This cleans up the issue of deep, non-associative trees in diffn(tan(x), x, 4)
 ($n*(($m*$B) * $A)) = ($n*$m)*$B*$A
 ($n*(($m*$B) * $A))*$A = ($n*$m)*$B * ($A*$A)
+$n*($A*$B)*$B = ($n*$A)*$B^2
 (2*((2*sec(x)^2) * tan(x)))*tan(x) = 2*2*sec(x)^2 * tan(x)^2
 // Probably Unnecessary
 ($n * $A) * $m = ($n * $m) * $A : _is_number($n) & _is_number($m)

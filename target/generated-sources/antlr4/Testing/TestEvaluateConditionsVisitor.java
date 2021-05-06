@@ -14,7 +14,7 @@ import VisitorClasses.EvaluateConditions;
 public class TestEvaluateConditionsVisitor {
 
 	@Test
-	public void testSimple_Relop_GT_Numerical_True() {
+	public void testEvaluateConditionsVisitor_Simple_Relop_GT_Numerical_True() {
 		EvaluateConditions e = new EvaluateConditions();
 		ExpressionNode relop = new RelopNode(new NumberNode(BigInteger.valueOf((1))), new NumberNode(BigInteger.valueOf((0))), ConditionsLexer.RELOP_GT, ">");
 
@@ -27,7 +27,7 @@ public class TestEvaluateConditionsVisitor {
 	}
 
 	@Test
-	public void testSimple_Relop_GT_Numerical_False() {
+	public void testEvaluateConditionsVisitor_Simple_Relop_GT_Numerical_False() {
 		EvaluateConditions e = new EvaluateConditions();
 		ExpressionNode relop = new RelopNode(new NumberNode(BigInteger.valueOf(1)), new NumberNode(BigInteger.valueOf((2))), ConditionsLexer.RELOP_GT, ">");
 
@@ -40,7 +40,7 @@ public class TestEvaluateConditionsVisitor {
 	}
 
 	@Test
-	public void testSimple_Relop_GTE_Numerical_True() {
+	public void testEvaluateConditionsVisitor_Simple_Relop_GTE_Numerical_True() {
 		EvaluateConditions e = new EvaluateConditions();
 		ExpressionNode relop = new RelopNode(new NumberNode(BigInteger.valueOf((1))), new NumberNode(BigInteger.valueOf((1))), ConditionsLexer.RELOP_GTE, ">=");
 
@@ -53,7 +53,7 @@ public class TestEvaluateConditionsVisitor {
 	}
 
 	@Test
-	public void testSimple_Relop_GTE_Numerical_False() {
+	public void testEvaluateConditionsVisitor_Simple_Relop_GTE_Numerical_False() {
 		EvaluateConditions e = new EvaluateConditions();
 		ExpressionNode relop = new RelopNode(new NumberNode(BigInteger.valueOf((1))), new NumberNode(BigInteger.valueOf((2))), ConditionsLexer.RELOP_GTE, ">=");
 
@@ -66,7 +66,7 @@ public class TestEvaluateConditionsVisitor {
 	}
 
 	@Test
-	public void testSimple_Relop_LT_Numerical_True() {
+	public void testEvaluateConditionsVisitor_Simple_Relop_LT_Numerical_True() {
 		EvaluateConditions e = new EvaluateConditions();
 		ExpressionNode relop = new RelopNode(new NumberNode(BigInteger.valueOf((1))), new NumberNode(BigInteger.valueOf((2))), ConditionsLexer.RELOP_LT, "<");
 
@@ -79,7 +79,7 @@ public class TestEvaluateConditionsVisitor {
 	}
 
 	@Test
-	public void testSimple_Relop_LT_Numerical_False() {
+	public void testEvaluateConditionsVisitor_Simple_Relop_LT_Numerical_False() {
 		EvaluateConditions e = new EvaluateConditions();
 		ExpressionNode relop = new RelopNode(new NumberNode(BigInteger.valueOf((3))), new NumberNode(BigInteger.valueOf((2))), ConditionsLexer.RELOP_LT, "<");
 
@@ -92,7 +92,7 @@ public class TestEvaluateConditionsVisitor {
 	}
 
 	@Test
-	public void testSimple_Relop_LTE_Numerical_True() {
+	public void testEvaluateConditionsVisitor_Simple_Relop_LTE_Numerical_True() {
 		EvaluateConditions e = new EvaluateConditions();
 		ExpressionNode relop = new RelopNode(new NumberNode(BigInteger.valueOf((1))), new NumberNode(BigInteger.valueOf((1))), ConditionsLexer.RELOP_LTE, "<=");
 
@@ -105,7 +105,7 @@ public class TestEvaluateConditionsVisitor {
 	}
 
 	@Test
-	public void testSimple_Relop_LTE_Numerical_False() {
+	public void testEvaluateConditionsVisitor_Simple_Relop_LTE_Numerical_False() {
 		EvaluateConditions e = new EvaluateConditions();
 		ExpressionNode relop = new RelopNode(new NumberNode(BigInteger.valueOf((3))), new NumberNode(BigInteger.valueOf((2))), ConditionsLexer.RELOP_LTE, "<=");
 
@@ -117,7 +117,7 @@ public class TestEvaluateConditionsVisitor {
 	}
 
 	@Test
-	public void testSimple_Relop_NonNumerical_Exception() {
+	public void testEvaluateConditionsVisitor_Simple_Relop_NonNumerical_Exception() {
 		EvaluateConditions e = new EvaluateConditions();
 		ExpressionNode relop = new RelopNode(new VariableNode("x"), new NumberNode(BigInteger.valueOf((0))), ConditionsLexer.RELOP_GT, ">");
 		ExpressionNode relop2 = new RelopNode(new NumberNode(BigInteger.valueOf((0))), new VariableNode("x"), ConditionsLexer.RELOP_GT,
@@ -128,7 +128,7 @@ public class TestEvaluateConditionsVisitor {
 	}
 
 	@Test
-	public void testSimple_Relop_EQ_Simple_True() {
+	public void testEvaluateConditionsVisitor_Simple_Relop_EQ_Simple_True() {
 		EvaluateConditions e = new EvaluateConditions();
 		ExpressionNode relop = new RelopNode(new VariableNode("x"), new VariableNode("x"), ConditionsLexer.RELOP_EQ,
 				"==");
@@ -145,7 +145,7 @@ public class TestEvaluateConditionsVisitor {
 	}
 
 	@Test
-	public void testSimple_Relop_EQ_Simple_False() {
+	public void testEvaluateConditionsVisitor_Simple_Relop_EQ_Simple_False() {
 		EvaluateConditions e = new EvaluateConditions();
 		ExpressionNode relop = new RelopNode(new NumberNode(BigInteger.valueOf((1))), new VariableNode("x"), ConditionsLexer.RELOP_EQ,
 				"==");
@@ -159,7 +159,7 @@ public class TestEvaluateConditionsVisitor {
 	}
 
 	@Test
-	public void testSimple_Relop_NEQ_Simple_True() {
+	public void testEvaluateConditionsVisitor_Simple_Relop_NEQ_Simple_True() {
 		EvaluateConditions e = new EvaluateConditions();
 		ExpressionNode relop = new RelopNode(new NumberNode(BigInteger.valueOf((1))), new VariableNode("x"), ConditionsLexer.RELOP_NEQ,
 				"!=");
@@ -173,7 +173,7 @@ public class TestEvaluateConditionsVisitor {
 	}
 
 	@Test
-	public void testSimple_Relop_NEQ_Simple_False() {
+	public void testEvaluateConditionsVisitor_Simple_Relop_NEQ_Simple_False() {
 		EvaluateConditions e = new EvaluateConditions();
 		ExpressionNode relop = new RelopNode(new VariableNode("x"), new VariableNode("x"), ConditionsLexer.RELOP_NEQ,
 				"!=");
@@ -190,7 +190,7 @@ public class TestEvaluateConditionsVisitor {
 	}
 
 	@Test
-	public void testSimple_Relop_LogicalNOT() {
+	public void testEvaluateConditionsVisitor_Simple_Relop_LogicalNOT() {
 		EvaluateConditions e = new EvaluateConditions();
 		ExpressionNode relop = new RelopNode(new NumberNode(BigInteger.valueOf((2))), new NumberNode(BigInteger.valueOf((0))), ConditionsLexer.RELOP_GT, ">");
 		ExpressionNode not = new ConditionNotNode(relop);
@@ -205,7 +205,7 @@ public class TestEvaluateConditionsVisitor {
 	}
 
 	@Test
-	public void testSimple_Relop_LogicalAND_True() {
+	public void testEvaluateConditionsVisitor_Simple_Relop_LogicalAND_True() {
 		EvaluateConditions e = new EvaluateConditions();
 		ExpressionNode relop = new RelopNode(new NumberNode(BigInteger.valueOf((2))), new NumberNode(BigInteger.valueOf((0))), ConditionsLexer.RELOP_GT, ">");
 		ExpressionNode relop2 = new RelopNode(new NumberNode(BigInteger.valueOf((2))), new NumberNode(BigInteger.valueOf((0))), ConditionsLexer.RELOP_GT, ">");
@@ -219,7 +219,7 @@ public class TestEvaluateConditionsVisitor {
 	}
 
 	@Test
-	public void testSimple_Relop_LogicalAND_False() {
+	public void testEvaluateConditionsVisitor_Simple_Relop_LogicalAND_False() {
 		EvaluateConditions e = new EvaluateConditions();
 		ExpressionNode relop = new RelopNode(new NumberNode(BigInteger.valueOf((2))), new NumberNode(BigInteger.valueOf((0))), ConditionsLexer.RELOP_GT, ">");
 		ExpressionNode relop2 = new RelopNode(new NumberNode(BigInteger.valueOf((2))), new NumberNode(BigInteger.valueOf((4))), ConditionsLexer.RELOP_GT, ">");
@@ -235,7 +235,7 @@ public class TestEvaluateConditionsVisitor {
 	}
 
 	@Test
-	public void testSimple_Relop_LogicalOR_True() {
+	public void testEvaluateConditionsVisitor_Simple_Relop_LogicalOR_True() {
 		EvaluateConditions e = new EvaluateConditions();
 		ExpressionNode relop = new RelopNode(new NumberNode(BigInteger.valueOf((2))), new NumberNode(BigInteger.valueOf((0))), ConditionsLexer.RELOP_GT, ">");
 		ExpressionNode relop2 = new RelopNode(new NumberNode(BigInteger.valueOf((2))), new NumberNode(BigInteger.valueOf((4))), ConditionsLexer.RELOP_GT, ">");
@@ -253,7 +253,7 @@ public class TestEvaluateConditionsVisitor {
 	}
 
 	@Test
-	public void testSimple_Relop_LogicalOR_False() {
+	public void testEvaluateConditionsVisitor_Simple_Relop_LogicalOR_False() {
 		EvaluateConditions e = new EvaluateConditions();
 		ExpressionNode relop = new RelopNode(new NumberNode(BigInteger.valueOf((2))), new NumberNode(BigInteger.valueOf((4))), ConditionsLexer.RELOP_GT, ">");
 		ExpressionNode relop2 = new RelopNode(new NumberNode(BigInteger.valueOf((2))), new NumberNode(BigInteger.valueOf((4))), ConditionsLexer.RELOP_GT, ">");
@@ -269,7 +269,7 @@ public class TestEvaluateConditionsVisitor {
 	}
 
 	@Test
-	public void testSimple_ConditionFunction_True() {
+	public void testEvaluateConditionsVisitor_Simple_ConditionFunction_True() {
 		EvaluateConditions e = new EvaluateConditions();
 		ArrayList<ExpressionNode> arguments = new ArrayList<>();
 		arguments.add(new NumberNode(BigInteger.valueOf((2))));
@@ -282,7 +282,7 @@ public class TestEvaluateConditionsVisitor {
 	}
 
 	@Test
-	public void testSimple_ConditionFunction_False() {
+	public void testEvaluateConditionsVisitor_Simple_ConditionFunction_False() {
 		EvaluateConditions e = new EvaluateConditions();
 		ArrayList<ExpressionNode> arguments = new ArrayList<>();
 		arguments.add(new VariableNode("x"));
@@ -295,7 +295,7 @@ public class TestEvaluateConditionsVisitor {
 	}
 
 	@Test
-	public void testSimple_ConditionFunction_ArgumentException() {
+	public void testEvaluateConditionsVisitor_Simple_ConditionFunction_ArgumentException() {
 		EvaluateConditions e = new EvaluateConditions();
 		ArrayList<ExpressionNode> arguments = new ArrayList<>();
 		ExpressionNode c = new ConditionFunctionNode("_is_number", arguments);
@@ -306,7 +306,7 @@ public class TestEvaluateConditionsVisitor {
 	}
 
 	@Test
-	public void testSimple_ConditionFunction_NameException() {
+	public void testEvaluateConditionsVisitor_Simple_ConditionFunction_NameException() {
 		EvaluateConditions e = new EvaluateConditions();
 		ArrayList<ExpressionNode> arguments = new ArrayList<>();
 		ExpressionNode c = new ConditionFunctionNode("is_number", arguments);
