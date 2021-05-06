@@ -15,7 +15,7 @@ import VisitorClasses.SubstituteConditionRuleVariables;
 public class TestSubstituteConditionRuleVariables {
 
 	@Test
-	public void TestSubstituteConditionRuleVariables_Relop_Operation() {
+	public void testSubstituteConditionRuleVariables_Relop_Operation() {
 		LinkedHashMap<String, ExpressionNode> variables = new LinkedHashMap<>();
 		variables.put("$n", new VariableNode("x"));
 		
@@ -33,7 +33,7 @@ public class TestSubstituteConditionRuleVariables {
 	}
 
 	@Test
-	public void TestSubstituteConditionRuleVariables_Not() {
+	public void testSubstituteConditionRuleVariables_Not() {
 		LinkedHashMap<String, ExpressionNode> variables = new LinkedHashMap<>();
 		variables.put("$n", new VariableNode("x"));
 		ExpressionNode subtraction = new SubtractionNode(new VariableNode("Var"), new RuleVariableNode("n"));
@@ -53,7 +53,7 @@ public class TestSubstituteConditionRuleVariables {
 
 	
 	@Test
-	public void TestSubstituteConditionRuleVariables_ConditionFunction() {
+	public void testSubstituteConditionRuleVariables_ConditionFunction() {
 		LinkedHashMap<String, ExpressionNode> variables = new LinkedHashMap<>();
 		variables.put("$n", new AdditionNode(new VariableNode("a"), new NumberNode(BigInteger.valueOf(2))));
 		
@@ -72,7 +72,7 @@ public class TestSubstituteConditionRuleVariables {
 	}	
 	
 	@Test
-	public void TestSubstituteConditionRuleVariables_Relop_Unary() {
+	public void testSubstituteConditionRuleVariables_Relop_Unary() {
 		LinkedHashMap<String, ExpressionNode> variables = new LinkedHashMap<>();
 		variables.put("$n", new VariableNode("x"));
 		
@@ -91,7 +91,7 @@ public class TestSubstituteConditionRuleVariables {
 	
 	
 	@Test
-	public void TestSubstituteConditionRuleVariables_logicalAND() {
+	public void testSubstituteConditionRuleVariables_logicalAND() {
 		LinkedHashMap<String, ExpressionNode> variables = new LinkedHashMap<>();
 		variables.put("$n", new VariableNode("x"));
 		
@@ -115,7 +115,7 @@ public class TestSubstituteConditionRuleVariables {
 	
 	
 	@Test
-	public void TestSubstituteConditionRuleVariables_logicalOR() {
+	public void testSubstituteConditionRuleVariables_logicalOR() {
 		LinkedHashMap<String, ExpressionNode> variables = new LinkedHashMap<>();
 		variables.put("$n", new VariableNode("x"));
 		
@@ -138,7 +138,7 @@ public class TestSubstituteConditionRuleVariables {
 	}
 	
 	@Test 
-	public void TestSubstitutionConditionRuleVariables_Visit_Invalid_RuleVariableNode_Exception() {
+	public void testSubstitutionConditionRuleVariables_Visit_Invalid_RuleVariableNode_Exception() {
 		LinkedHashMap<String, ExpressionNode> variables = new LinkedHashMap<>();
 		variables.put("$n", new VariableNode("x"));
 		

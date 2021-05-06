@@ -1,0 +1,952 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuites>
+  <testsuite errors="0" failures="0" hostname="LAPTOP-JBUP5AVO" id="0" name="TestSuite" package="Testing" skipped="0" tests="351" time="10.36" timestamp="2021-05-06T18:09:16">
+      <properties>
+          <property name="java.vendor" value="Oracle Corporation" />
+
+          <property name="env.USERDOMAIN_ROAMINGPROFILE" value="LAPTOP-JBUP5AVO" />
+
+          <property name="sun.java.launcher" value="SUN_STANDARD" />
+
+          <property name="eclipse.pdebuild.templates" value="C:\Users\lewis\eclipse\java-2018-09\eclipse\..\..\..\.p2\pool\plugins\org.eclipse.pde.build_3.10.100.v20180828-1915\templates" />
+
+          <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers" />
+
+          <property name="env.PROMPT" value="$P$G" />
+
+          <property name="env.DriverData" value="C:\Windows\System32\Drivers\DriverData" />
+
+          <property name="os.name" value="Windows 10" />
+
+          <property name="sun.boot.class.path" value="C:\Program Files\Java\jre1.8.0_191\lib\charsets.jar;C:\Program Files\Java\jre1.8.0_191\lib\deploy.jar;C:\Program Files\Java\jre1.8.0_191\lib\javaws.jar;C:\Program Files\Java\jre1.8.0_191\lib\jce.jar;C:\Program Files\Java\jre1.8.0_191\lib\jfr.jar;C:\Program Files\Java\jre1.8.0_191\lib\jfxswt.jar;C:\Program Files\Java\jre1.8.0_191\lib\jsse.jar;C:\Program Files\Java\jre1.8.0_191\lib\management-agent.jar;C:\Program Files\Java\jre1.8.0_191\lib\plugin.jar;C:\Program Files\Java\jre1.8.0_191\lib\resources.jar;C:\Program Files\Java\jre1.8.0_191\lib\rt.jar;C:\Program Files\Java\jre1.8.0_191\lib\ext\access-bridge-64.jar;C:\Program Files\Java\jre1.8.0_191\lib\ext\cldrdata.jar;C:\Program Files\Java\jre1.8.0_191\lib\ext\dnsns.jar;C:\Program Files\Java\jre1.8.0_191\lib\ext\jaccess.jar;C:\Program Files\Java\jre1.8.0_191\lib\ext\jfxrt.jar;C:\Program Files\Java\jre1.8.0_191\lib\ext\localedata.jar;C:\Program Files\Java\jre1.8.0_191\lib\ext\nashorn.jar;C:\Program Files\Java\jre1.8.0_191\lib\ext\sunec.jar;C:\Program Files\Java\jre1.8.0_191\lib\ext\sunjce_provider.jar;C:\Program Files\Java\jre1.8.0_191\lib\ext\sunmscapi.jar;C:\Program Files\Java\jre1.8.0_191\lib\ext\sunpkcs11.jar;C:\Program Files\Java\jre1.8.0_191\lib\ext\zipfs.jar" />
+
+          <property name="env.COMPUTERNAME" value="LAPTOP-JBUP5AVO" />
+
+          <property name="env.CommonProgramW6432" value="C:\Program Files\Common Files" />
+
+          <property name="env.ALLUSERSPROFILE" value="C:\ProgramData" />
+
+          <property name="sun.desktop" value="windows" />
+
+          <property name="java.vm.specification.vendor" value="Oracle Corporation" />
+
+          <property name="ant.home" value="C:\Users\lewis\.p2\pool\plugins\org.apache.ant_1.10.5.v20180808-0324" />
+
+          <property name="java.runtime.version" value="1.8.0_191-b12" />
+
+          <property name="env.HOMEPATH" value="\Users\lewis" />
+
+          <property name="user.name" value="lewis" />
+
+          <property name="user.language" value="en" />
+
+          <property name="sun.boot.library.path" value="C:\Program Files\Java\jre1.8.0_191\bin" />
+
+          <property name="ant.project.default-target" value="build" />
+
+          <property name="env.KMP_DUPLICATE_LIB_OK" value="TRUE" />
+
+          <property name="ant.project.name" value="NewAntlr" />
+
+          <property name="java.version" value="1.8.0_191" />
+
+          <property name="env.PROCESSOR_IDENTIFIER" value="Intel64 Family 6 Model 142 Stepping 9, GenuineIntel" />
+
+          <property name="user.timezone" value="" />
+
+          <property name="env.TEMP" value="C:\Users\lewis\AppData\Local\Temp" />
+
+          <property name="sun.arch.data.model" value="64" />
+
+          <property name="java.endorsed.dirs" value="C:\Program Files\Java\jre1.8.0_191\lib\endorsed" />
+
+          <property name="ant.file.NewAntlr" value="C:\Users\lewis\eclipse-workspace\NewAntlr\build.xml" />
+
+          <property name="sun.cpu.isalist" value="amd64" />
+
+          <property name="env.HOMEDRIVE" value="C:" />
+
+          <property name="sun.jnu.encoding" value="Cp1252" />
+
+          <property name="file.encoding.pkg" value="sun.io" />
+
+          <property name="ECLIPSE_HOME" value="../../eclipse/java-2018-09/eclipse/" />
+
+          <property name="file.separator" value="\" />
+
+          <property name="java.specification.name" value="Java Platform API Specification" />
+
+          <property name="java.class.version" value="52.0" />
+
+          <property name="user.country" value="GB" />
+
+          <property name="java.home" value="C:\Program Files\Java\jre1.8.0_191" />
+
+          <property name="env.PSModulePath" value="C:\Program Files\WindowsPowerShell\Modules;C:\WINDOWS\system32\WindowsPowerShell\v1.0\Modules" />
+
+          <property name="env.APPDATA" value="C:\Users\lewis\AppData\Roaming" />
+
+          <property name="env.PUBLIC" value="C:\Users\Public" />
+
+          <property name="java.vm.info" value="mixed mode" />
+
+          <property name="env.ComSpec" value="C:\WINDOWS\system32\cmd.exe" />
+
+          <property name="env.OS" value="Windows_NT" />
+
+          <property name="env.CommonProgramFiles" value="C:\Program Files\Common Files" />
+
+          <property name="ant.file" value="C:\Users\lewis\eclipse-workspace\NewAntlr\build.xml" />
+
+          <property name="os.version" value="10.0" />
+
+          <property name="env.ProgramW6432" value="C:\Program Files" />
+
+          <property name="env.configsetroot" value="C:\WINDOWS\ConfigSetRoot" />
+
+          <property name="path.separator" value=";" />
+
+          <property name="java.vm.version" value="25.191-b12" />
+
+          <property name="env.USERPROFILE" value="C:\Users\lewis" />
+
+          <property name="user.variant" value="" />
+
+          <property name="ant.library.dir" value="C:\Users\lewis\.p2\pool\plugins\org.apache.ant_1.10.5.v20180808-0324\lib" />
+
+          <property name="junit.output.dir" value="junit" />
+
+          <property name="java.awt.printerjob" value="sun.awt.windows.WPrinterJob" />
+
+          <property name="env.TMP" value="C:\Users\lewis\AppData\Local\Temp" />
+
+          <property name="env.FPS_BROWSER_USER_PROFILE_STRING" value="Default" />
+
+          <property name="sun.io.unicode.encoding" value="UnicodeLittle" />
+
+          <property name="awt.toolkit" value="sun.awt.windows.WToolkit" />
+
+          <property name="user.script" value="" />
+
+          <property name="eclipse.pdebuild.scripts" value="C:\Users\lewis\eclipse\java-2018-09\eclipse\..\..\..\.p2\pool\plugins\org.eclipse.pde.build_3.10.100.v20180828-1915\scripts" />
+
+          <property name="user.home" value="C:\Users\lewis" />
+
+          <property name="target" value="1.8" />
+
+          <property name="env.ProgramData" value="C:\ProgramData" />
+
+          <property name="env.SESSIONNAME" value="Console" />
+
+          <property name="env.ProgramFiles(x86)" value="C:\Program Files (x86)" />
+
+          <property name="java.specification.vendor" value="Oracle Corporation" />
+
+          <property name="java.vendor.url" value="http://java.oracle.com/" />
+
+          <property name="java.library.path" value="C:\Program Files\Java\jre1.8.0_191\bin;C:\WINDOWS\Sun\Java\bin;C:\WINDOWS\system32;C:\WINDOWS;C:/Program Files/Java/jre1.8.0_191/bin/server;C:/Program Files/Java/jre1.8.0_191/bin;C:/Program Files/Java/jre1.8.0_191/lib/amd64;C:\Program Files\Common Files\Oracle\Java\javapath;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\ProgramData\Oracle\Java\javapath;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\Program Files\Intel\WiFi\bin\;C:\Program Files\Common Files\Intel\WirelessCommon\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\Microsoft VS Code\bin;C:\Program Files\PuTTY\;C:\Program Files\Git\cmd;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files\dotnet\;C:\Program Files\Docker\Docker\resources\bin;C:\ProgramData\DockerDesktop\version-bin;C:\ProgramData\ComposerSetup\bin;C:\PHP7;C:\Users\lewis\AppData\Local\Programs\Python\Python37-32\Scripts\;C:\Users\lewis\AppData\Local\Programs\Python\Python37-32\;C:\Users\lewis\AppData\Local\Microsoft\WindowsApps;C:\Users\lewis\AppData\Local\GitHubDesktop\bin;C:\Users\lewis\AppData\Local\Microsoft\WindowsApps;C:\Users\lewis\.dotnet\tools;C:\Users\lewis\AppData\Roaming\Composer\vendor\bin;C:\JavaLib\antlr4\bin;;C:\Users\lewis\Desktop;;." />
+
+          <property name="env.NUMBER_OF_PROCESSORS" value="4" />
+
+          <property name="java.vm.vendor" value="Oracle Corporation" />
+
+          <property name="java.runtime.name" value="Java(TM) SE Runtime Environment" />
+
+          <property name="ant.version" value="Apache Ant(TM) version 1.10.5 compiled on July 10 2018" />
+
+          <property name="java.class.path" value="C:\Users\lewis\eclipse-workspace\NewAntlr\build\classes;C:\Users\lewis\Documents\A Third Year\Dissertation\antlr-4.9.1-complete.jar;C:\Users\lewis\.p2\pool\plugins\org.junit.jupiter.api_5.1.0.v20180327-1502.jar;C:\Users\lewis\.p2\pool\plugins\org.junit.jupiter.engine_5.1.0.v20180327-1502.jar;C:\Users\lewis\.p2\pool\plugins\org.junit.jupiter.migrationsupport_5.1.0.v20180327-1502.jar;C:\Users\lewis\.p2\pool\plugins\org.junit.jupiter.params_5.1.0.v20180327-1502.jar;C:\Users\lewis\.p2\pool\plugins\org.junit.platform.commons_1.1.0.v20180327-1502.jar;C:\Users\lewis\.p2\pool\plugins\org.junit.platform.engine_1.1.0.v20180327-1502.jar;C:\Users\lewis\.p2\pool\plugins\org.junit.platform.launcher_1.1.0.v20180327-1502.jar;C:\Users\lewis\.p2\pool\plugins\org.junit.platform.runner_1.1.0.v20180327-1502.jar;C:\Users\lewis\.p2\pool\plugins\org.junit.platform.suite.api_1.1.0.v20180327-1502.jar;C:\Users\lewis\.p2\pool\plugins\org.junit.vintage.engine_5.1.0.v20180327-1502.jar;C:\Users\lewis\.p2\pool\plugins\org.opentest4j_1.0.0.v20180327-1502.jar;C:\Users\lewis\.p2\pool\plugins\org.apiguardian_1.0.0.v20180327-1502.jar;C:\Users\lewis\.p2\pool\plugins\org.junit_4.12.0.v201504281640\junit.jar;C:\Users\lewis\.p2\pool\plugins\org.hamcrest.core_1.3.0.v20180420-1519.jar;C:\eclipse\plugins\org.junit_4.12.0.v201504281640\junit.jar;C:\Users\lewis\.p2\pool\plugins\org.apache.ant_1.10.5.v20180808-0324\lib\ant-launcher.jar;C:\Users\lewis\.p2\pool\plugins\org.apache.ant_1.10.5.v20180808-0324\lib\ant.jar;C:\Users\lewis\.p2\pool\plugins\org.apache.ant_1.10.5.v20180808-0324\lib\ant-junit.jar;C:\Users\lewis\.p2\pool\plugins\org.apache.ant_1.10.5.v20180808-0324\lib\ant-junit4.jar" />
+
+          <property name="sun.java.command" value="org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner Testing.TestSuite skipNonTests=false filtertrace=true haltOnError=false haltOnFailure=false formatter=org.apache.tools.ant.taskdefs.optional.junit.OutErrSummaryJUnitResultFormatter showoutput=false outputtoformatters=true logfailedtests=true threadid=0 logtestlistenerevents=false formatter=org.apache.tools.ant.taskdefs.optional.junit.XMLJUnitResultFormatter,C:\Users\lewis\eclipse-workspace\NewAntlr\junit\TEST-Testing.TestSuite.xml crashfile=C:\Users\lewis\eclipse-workspace\NewAntlr\junitvmwatcher5954154392723228399.properties propsfile=C:\Users\lewis\eclipse-workspace\NewAntlr\junit8689134970128655325.properties" />
+
+          <property name="java.vm.specification.name" value="Java Virtual Machine Specification" />
+
+          <property name="env.windir" value="C:\WINDOWS" />
+
+          <property name="env.LOGONSERVER" value="\\LAPTOP-JBUP5AVO" />
+
+          <property name="env.PROCESSOR_ARCHITECTURE" value="AMD64" />
+
+          <property name="java.vm.specification.version" value="1.8" />
+
+          <property name="sun.os.patch.level" value="" />
+
+          <property name="sun.cpu.endian" value="little" />
+
+          <property name="debuglevel" value="source,lines,vars" />
+
+          <property name="env.OneDrive" value="C:\Users\lewis\OneDrive" />
+
+          <property name="env.ProgramFiles" value="C:\Program Files" />
+
+          <property name="env.ANT_HOME" value="C:\Users\lewis\.p2\pool\plugins\org.apache.ant_1.10.5.v20180808-0324" />
+
+          <property name="java.io.tmpdir" value="C:\Users\lewis\AppData\Local\Temp\" />
+
+          <property name="env.PROCESSOR_REVISION" value="8e09" />
+
+          <property name="eclipse.pdebuild.home" value="C:\Users\lewis\eclipse\java-2018-09\eclipse\..\..\..\.p2\pool\plugins\org.eclipse.pde.build_3.10.100.v20180828-1915\." />
+
+          <property name="env.CommonProgramFiles(x86)" value="C:\Program Files (x86)\Common Files" />
+
+          <property name="java.vendor.url.bug" value="http://bugreport.sun.com/bugreport/" />
+
+          <property name="env.OneDriveConsumer" value="C:\Users\lewis\OneDrive" />
+
+          <property name="env.SystemRoot" value="C:\WINDOWS" />
+
+          <property name="env.FPS_BROWSER_APP_PROFILE_STRING" value="Internet Explorer" />
+
+          <property name="java.awt.graphicsenv" value="sun.awt.Win32GraphicsEnvironment" />
+
+          <property name="os.arch" value="amd64" />
+
+          <property name="java.ext.dirs" value="C:\Program Files\Java\jre1.8.0_191\lib\ext;C:\WINDOWS\Sun\Java\lib\ext" />
+
+          <property name="user.dir" value="C:\Users\lewis\eclipse-workspace\NewAntlr" />
+
+          <property name="env.LOCALAPPDATA" value="C:\Users\lewis\AppData\Local" />
+
+          <property name="env.ANTLR4_HOME" value="C:\JavaLib\antlr4" />
+
+          <property name="line.separator" value="&#xd;&#xa;" />
+
+          <property name="java.vm.name" value="Java HotSpot(TM) 64-Bit Server VM" />
+
+          <property name="env.PATHEXT" value=".COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC" />
+
+          <property name="env.Path" value="C:/Program Files/Java/jre1.8.0_191/bin/server;C:/Program Files/Java/jre1.8.0_191/bin;C:/Program Files/Java/jre1.8.0_191/lib/amd64;C:\Program Files\Common Files\Oracle\Java\javapath;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\ProgramData\Oracle\Java\javapath;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\Program Files\Intel\WiFi\bin\;C:\Program Files\Common Files\Intel\WirelessCommon\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\Microsoft VS Code\bin;C:\Program Files\PuTTY\;C:\Program Files\Git\cmd;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files\dotnet\;C:\Program Files\Docker\Docker\resources\bin;C:\ProgramData\DockerDesktop\version-bin;C:\ProgramData\ComposerSetup\bin;C:\PHP7;C:\Users\lewis\AppData\Local\Programs\Python\Python37-32\Scripts\;C:\Users\lewis\AppData\Local\Programs\Python\Python37-32\;C:\Users\lewis\AppData\Local\Microsoft\WindowsApps;C:\Users\lewis\AppData\Local\GitHubDesktop\bin;C:\Users\lewis\AppData\Local\Microsoft\WindowsApps;C:\Users\lewis\.dotnet\tools;C:\Users\lewis\AppData\Roaming\Composer\vendor\bin;C:\JavaLib\antlr4\bin;;C:\Users\lewis\Desktop;" />
+
+          <property name="basedir" value="C:\Users\lewis\eclipse-workspace\NewAntlr" />
+
+          <property name="ant.java.version" value="1.8" />
+
+          <property name="ant.core.lib" value="C:\Users\lewis\.p2\pool\plugins\org.apache.ant_1.10.5.v20180808-0324\lib\ant.jar" />
+
+          <property name="env.USERNAME" value="lewis" />
+
+          <property name="source" value="1.8" />
+
+          <property name="env.SystemDrive" value="C:" />
+
+          <property name="file.encoding" value="Cp1252" />
+
+          <property name="env.USERDOMAIN" value="LAPTOP-JBUP5AVO" />
+
+          <property name="java.specification.version" value="1.8" />
+
+          <property name="ant.file.type.NewAntlr" value="file" />
+
+          <property name="ant.project.invoked-targets" value="TestSuite,junitreport" />
+
+          <property name="env.PROCESSOR_LEVEL" value="6" />
+
+      </properties>
+
+      <testcase classname="Testing.TestDependsEvaluator" name="testDependsEvaluator_Multiplication" time="0.015" />
+
+      <testcase classname="Testing.TestDependsEvaluator" name="testDependsEvaluator_DivisionNode" time="0.0" />
+
+      <testcase classname="Testing.TestDependsEvaluator" name="testDependsEvaluator_FunctionArgument" time="0.001" />
+
+      <testcase classname="Testing.TestDependsEvaluator" name="testDependsEvaluator_Function" time="0.0" />
+
+      <testcase classname="Testing.TestDependsEvaluator" name="testDependsEvaluator_Exponentiation" time="0.001" />
+
+      <testcase classname="Testing.TestDependsEvaluator" name="testDependsEvaluator_Number" time="0.001" />
+
+      <testcase classname="Testing.TestDependsEvaluator" name="testDependsEvaluator_Subtraction" time="0.0" />
+
+      <testcase classname="Testing.TestDependsEvaluator" name="testDependsEvaluator_Unary" time="0.0" />
+
+      <testcase classname="Testing.TestDependsEvaluator" name="testDependsEvaluator_VisitRuleVariableNode_Exception" time="0.012" />
+
+      <testcase classname="Testing.TestDependsEvaluator" name="testDependsEvaluator_Variable" time="0.0" />
+
+      <testcase classname="Testing.TestDependsEvaluator" name="testDependsEvaluator_Addition" time="0.001" />
+
+      <testcase classname="Testing.TestEvaluateTree" name="testEvaluateTree_Subtraction" time="0.0" />
+
+      <testcase classname="Testing.TestEvaluateTree" name="testEvaluateTree_Exponentiation" time="0.0" />
+
+      <testcase classname="Testing.TestEvaluateTree" name="testEvaluateTree_Division" time="0.0" />
+
+      <testcase classname="Testing.TestEvaluateTree" name="testEvaluateTree_Function" time="0.0" />
+
+      <testcase classname="Testing.TestEvaluateTree" name="testEvaluateTree_Number" time="0.0" />
+
+      <testcase classname="Testing.TestEvaluateTree" name="testEvaluateTree_Multiplication" time="0.0" />
+
+      <testcase classname="Testing.TestEvaluateTree" name="testEvaluateTree_Unary" time="0.0" />
+
+      <testcase classname="Testing.TestEvaluateTree" name="testEvaluateTree_RuleVariable_Exception" time="0.003" />
+
+      <testcase classname="Testing.TestEvaluateTree" name="testEvaluateTree_IllegalNode_Exception" time="0.004" />
+
+      <testcase classname="Testing.TestEvaluateTree" name="testEvaluateTree_Variable" time="0.0" />
+
+      <testcase classname="Testing.TestEvaluateTree" name="testEvaluateTree_Addition" time="0.001" />
+
+      <testcase classname="Testing.TestRuleAlgebraParser" name="testRuleAlgebraParser_ValidRuleNoConditions_Division_Multiplication" time="0.128" />
+
+      <testcase classname="Testing.TestRuleAlgebraParser" name="testRuleAlgebraParser_ValidRuleNoConditions_Unary" time="0.007" />
+
+      <testcase classname="Testing.TestRuleAlgebraParser" name="testRuleAlgebraParser_ValidRuleValidConditions_relop_containing_unary" time="0.021" />
+
+      <testcase classname="Testing.TestRuleAlgebraParser" name="testRuleAlgebraParser_ValidRuleNoConditions_Parentheses" time="0.001" />
+
+      <testcase classname="Testing.TestRuleAlgebraParser" name="testRuleAlgebraParser_ParseSimpleNumber_Integer" time="0.003" />
+
+      <testcase classname="Testing.TestRuleAlgebraParser" name="testRuleAlgebraParser_ValidRuleNoConditions_RuleVariablesNotCorrespond_Exception" time="0.001" />
+
+      <testcase classname="Testing.TestRuleAlgebraParser" name="testRuleAlgebraParser_ValidRuleNoConditions_Subtraction_Addition" time="0.002" />
+
+      <testcase classname="Testing.TestRuleAlgebraParser" name="testRuleAlgebraParser_ValidRuleValidConditions_Relop_Decimal" time="0.002" />
+
+      <testcase classname="Testing.TestRuleAlgebraParser" name="testRuleAlgebraParser_ValidRuleNoConditions_Number_Variable" time="0.0" />
+
+      <testcase classname="Testing.TestRuleAlgebraParser" name="testRuleAlgebraParser_InvalidRuleNoConditions_invalid_logical_OR_exception" time="0.009" />
+
+      <testcase classname="Testing.TestRuleAlgebraParser" name="testRuleAlgebraParser_ValidRuleValidConditions_RelopGTE" time="0.001" />
+
+      <testcase classname="Testing.TestRuleAlgebraParser" name="testRuleAlgebraParser_ValidRuleValidConditions_RelopLTE" time="0.001" />
+
+      <testcase classname="Testing.TestRuleAlgebraParser" name="testRuleAlgebraParser_ValidRuleValidConditions_RelopNEQ" time="0.001" />
+
+      <testcase classname="Testing.TestRuleAlgebraParser" name="testRuleAlgebraParser_ValidRuleNoConditions_Addition_Subtraction" time="0.0" />
+
+      <testcase classname="Testing.TestRuleAlgebraParser" name="testRuleAlgebraParser_InvalidRuleNoConditions_invalid_logical_AND_exception" time="0.004" />
+
+      <testcase classname="Testing.TestRuleAlgebraParser" name="testRuleAlgebraParser_ValidRuleValidConditions_Relop_UnaryNumber" time="0.001" />
+
+      <testcase classname="Testing.TestRuleAlgebraParser" name="testRuleAlgebraParser_ValidRuleNoConditions_Multiplication_Division" time="0.0" />
+
+      <testcase classname="Testing.TestRuleAlgebraParser" name="testRuleAlgebraParser_ValidRuleNoConditions_Function_Exponentiation" time="0.002" />
+
+      <testcase classname="Testing.TestRuleAlgebraParser" name="testRuleAlgebraParser_ValidRuleValidConditions_Exponentiation_relop" time="0.001" />
+
+      <testcase classname="Testing.TestRuleAlgebraParser" name="testRuleAlgebraParser_ValidRuleValidConditions_ConditionFunction_is_integer" time="0.002" />
+
+      <testcase classname="Testing.TestRuleAlgebraParser" name="testRuleAlgebraParser_ValidRuleNoConditions_Variable_NegativeNumber" time="0.001" />
+
+      <testcase classname="Testing.TestRuleAlgebraParser" name="testRuleAlgebraParser_ValidRule_RedundantUnary" time="0.0" />
+
+      <testcase classname="Testing.TestRuleAlgebraParser" name="testRuleAlgebraParser_ValidRuleValidConditions_logical_AND" time="0.001" />
+
+      <testcase classname="Testing.TestRuleAlgebraParser" name="testRuleAlgebraParser_ValidRuleValidConditions_logical_NOT" time="0.0" />
+
+      <testcase classname="Testing.TestRuleAlgebraParser" name="testRuleAlgebraParser_ValidRuleValidConditions_ConditionFunction_no_underscore_is_integer_Exception" time="0.002" />
+
+      <testcase classname="Testing.TestRuleAlgebraParser" name="testRuleAlgebraParser_ValidRuleValidConditions_Compare_EQ" time="0.001" />
+
+      <testcase classname="Testing.TestRuleAlgebraParser" name="testRuleAlgebraParser_ValidRuleNoConditions_PositiveUnary_Number" time="0.001" />
+
+      <testcase classname="Testing.TestRuleAlgebraParser" name="testRuleAlgebraParser_ValidRuleNoConditions_PositiveUnary" time="0.001" />
+
+      <testcase classname="Testing.TestRuleAlgebraParser" name="testRuleAlgebraParser_ValidRuleValidConditions_RelopEQ" time="0.001" />
+
+      <testcase classname="Testing.TestRuleAlgebraParser" name="testRuleAlgebraParser_ValidRuleValidConditions_RelopGT" time="0.0" />
+
+      <testcase classname="Testing.TestRuleAlgebraParser" name="testRuleAlgebraParser_ValidRuleValidConditions_RelopLT" time="0.001" />
+
+      <testcase classname="Testing.TestRuleAlgebraParser" name="testRuleAlgebraParser_ParseSimpleNumber_Rational" time="0.002" />
+
+      <testcase classname="Testing.TestRuleAlgebraParser" name="testRuleAlgebraParser_ValidRuleNoConditions_Variable_Number" time="0.001" />
+
+      <testcase classname="Testing.TestRuleAlgebraParser" name="testRuleAlgebraParser_ValidRuleNoConditions_ConditionRuleVariablesNotCorrespond_Exception" time="0.002" />
+
+      <testcase classname="Testing.TestRuleAlgebraParser" name="testRuleAlgebraParser_ValidRuleNoConditions_RuleVariable_RuleVariable" time="0.001" />
+
+      <testcase classname="Testing.TestRuleAlgebraParser" name="testRuleAlgebraParser_ValidRuleValidConditions_ConditionFunction_no_underscore_is_literal_Exception" time="0.001" />
+
+      <testcase classname="Testing.TestRuleAlgebraParser" name="testRuleAlgebraParser_ValidRuleValidConditions_Subtraction_relop" time="0.001" />
+
+      <testcase classname="Testing.TestRuleAlgebraParser" name="testRuleAlgebraParser_InvalidRuleNoConditions_invalid_Equality_exception" time="0.003" />
+
+      <testcase classname="Testing.TestRuleAlgebraParser" name="testRuleAlgebraParser_ValidRuleValidConditions_Relop_Rational" time="0.001" />
+
+      <testcase classname="Testing.TestRuleAlgebraParser" name="testRuleAlgebraParser_ParseSimpleNumber_DecimalInteger" time="0.001" />
+
+      <testcase classname="Testing.TestRuleAlgebraParser" name="testRuleAlgebraParser_InvalidRuleNoConditions_NoLHS" time="0.0" />
+
+      <testcase classname="Testing.TestRuleAlgebraParser" name="testRuleAlgebraParser_InvalidRuleNoConditions_NoRHS" time="0.001" />
+
+      <testcase classname="Testing.TestRuleAlgebraParser" name="testRuleAlgebraParser_ValidRuleValidConditions_ConditionFunction_Depends" time="0.0" />
+
+      <testcase classname="Testing.TestRuleAlgebraParser" name="testRuleAlgebraParser_ValidRuleValidConditions_ConditionFunction_no_underscore_is_numberException" time="0.001" />
+
+      <testcase classname="Testing.TestRuleAlgebraParser" name="testRuleAlgebraParser_ValidRuleValidConditions_logical_OR" time="0.001" />
+
+      <testcase classname="Testing.TestRuleAlgebraParser" name="testRuleAlgebraParser_InvalidRuleNoConditions_NoRHS_NoEquals" time="0.001" />
+
+      <testcase classname="Testing.TestRuleAlgebraParser" name="testRuleAlgebraParser_ValidRuleValidConditions_Relop_Unary" time="0.001" />
+
+      <testcase classname="Testing.TestRuleAlgebraParser" name="testRuleAlgebraParser_ValidRuleValidConditions_Relop_RuleVariable" time="0.0" />
+
+      <testcase classname="Testing.TestRuleAlgebraParser" name="testRuleAlgebraParser_ParseSimpleNumber_Rational_DenominatorZero" time="0.003" />
+
+      <testcase classname="Testing.TestRuleAlgebraParser" name="testRuleAlgebraParser_ValidRuleValidConditions_Division_relop" time="0.001" />
+
+      <testcase classname="Testing.TestRuleAlgebraParser" name="testRuleAlgebraParser_ValidRuleValidConditions_parenthetical_relop" time="0.0" />
+
+      <testcase classname="Testing.TestRuleAlgebraParser" name="testRuleAlgebraParser_InvalidRuleNoConditions_NoConditions" time="0.001" />
+
+      <testcase classname="Testing.TestRuleAlgebraParser" name="testRuleAlgebraParser_InvalidRuleNoConditions_invalid_relop_exception" time="0.002" />
+
+      <testcase classname="Testing.TestRuleAlgebraParser" name="testRuleAlgebraParser_ValidRuleValidConditions_ConditionFunction_no_underscore_depends_Exception" time="0.001" />
+
+      <testcase classname="Testing.TestRuleAlgebraParser" name="testRuleAlgebraParser_ValidRuleValidConditions_Division_relop_Rational" time="0.001" />
+
+      <testcase classname="Testing.TestRuleAlgebraParser" name="testRuleAlgebraParser_ValidRule_Multiplication_Division" time="0.001" />
+
+      <testcase classname="Testing.TestRuleAlgebraParser" name="testRuleAlgebraParser_ValidRuleValidConditions_Addition_relop" time="0.001" />
+
+      <testcase classname="Testing.TestRuleAlgebraParser" name="testRuleAlgebraParser_ValidRuleNoConditions_RuleVariable_Number" time="0.0" />
+
+      <testcase classname="Testing.TestRuleAlgebraParser" name="testRuleAlgebraParser_ValidRuleValidConditions_ConditionFunction_is_number" time="0.001" />
+
+      <testcase classname="Testing.TestRuleAlgebraParser" name="testRuleAlgebraParser_ParseSimpleNumber_Decimal" time="0.001" />
+
+      <testcase classname="Testing.TestRuleAlgebraParser" name="testRuleAlgebraParser_ValidRuleValidConditions_ConditionFunction_is_literal" time="0.001" />
+
+      <testcase classname="Testing.TestRuleAlgebraParser" name="testRuleAlgebraParser_ValidRuleValidConditions_Multiplication_relop" time="0.001" />
+
+      <testcase classname="Testing.TestSimplifyNumericalOperations" name="testSimplifyNumericalOperations_ComplexAddition" time="0.001" />
+
+      <testcase classname="Testing.TestSimplifyNumericalOperations" name="testSimplifyNumericalOperations_SimpleMultiplication" time="0.0" />
+
+      <testcase classname="Testing.TestSimplifyNumericalOperations" name="testSimplifyNumericalOperations_SimpleDivision_DivideByZero" time="0.001" />
+
+      <testcase classname="Testing.TestSimplifyNumericalOperations" name="testSimplifyNumericalOperations_UnaryUnarySubtraction" time="0.0" />
+
+      <testcase classname="Testing.TestSimplifyNumericalOperations" name="testSimplifyNumericalOperations_SimpleExponentiation_IntegerPower" time="0.001" />
+
+      <testcase classname="Testing.TestSimplifyNumericalOperations" name="testSimplifyNumericalOperations_UnaryUnaryDivision" time="0.0" />
+
+      <testcase classname="Testing.TestSimplifyNumericalOperations" name="testSimplifyNumericalOperations_VisitRuleVariableNode_Exception" time="0.001" />
+
+      <testcase classname="Testing.TestSimplifyNumericalOperations" name="testSimplifyNumericalOperations_ComplexDivision_DivideByZero" time="0.001" />
+
+      <testcase classname="Testing.TestSimplifyNumericalOperations" name="testSimplifyNumericalOperations_SimpleAddition_can_simplify" time="0.0" />
+
+      <testcase classname="Testing.TestSimplifyNumericalOperations" name="testSimplifyNumericalOperations_SimpleDivision" time="0.001" />
+
+      <testcase classname="Testing.TestSimplifyNumericalOperations" name="testSimplifyNumericalOperations_UnaryNumberAddition" time="0.0" />
+
+      <testcase classname="Testing.TestSimplifyNumericalOperations" name="testSimplifyNumericalOperations_SimpleExponentiation_NegativeIntegerPower" time="0.0" />
+
+      <testcase classname="Testing.TestSimplifyNumericalOperations" name="testSimplifyNumericalOperations_SimpleExponentiation_cannot_Evaluate" time="0.0" />
+
+      <testcase classname="Testing.TestSimplifyNumericalOperations" name="testSimplifyNumericalOperations_SimpleSubtraction" time="0.0" />
+
+      <testcase classname="Testing.TestSimplifyNumericalOperations" name="testSimplifyNumericalOperations_UnaryUnaryMultiplication" time="0.0" />
+
+      <testcase classname="Testing.TestSimplifyNumericalOperations" name="testSimplifyNumericalOperations_SimpleSubtraction_cannot_simplify" time="0.0" />
+
+      <testcase classname="Testing.TestSimplifyNumericalOperations" name="testSimplifyNumericalOperations_UnaryUnaryAddition_cannot_simplify" time="0.0" />
+
+      <testcase classname="Testing.TestSimplifyNumericalOperations" name="testSimplifyNumericalOperations_SimpleDivision_cannot_simplify" time="0.001" />
+
+      <testcase classname="Testing.TestSimplifyNumericalOperations" name="testSimplifyNumericalOperations_UnaryUnaryAddition" time="0.001" />
+
+      <testcase classname="Testing.TestSimplifyNumericalOperations" name="testSimplifyNumericalOperations_SimpleMultiplication_cannot_simplify" time="0.001" />
+
+      <testcase classname="Testing.TestSimplifyNumericalOperations" name="testSimplifyNumericalOperations_Unary" time="0.0" />
+
+      <testcase classname="Testing.TestSimplifyNumericalOperations" name="testSimplifyNumericalOperations_SimpleAddition_cannot_simplify" time="0.0" />
+
+      <testcase classname="Testing.TestSimplifyNumericalOperations" name="testSimplifyNumericalOperations_SimpleExponentiation_cannot_Evaluate_FractionalPower" time="0.001" />
+
+      <testcase classname="Testing.TestSubstituteRuleVariables" name="testSubstituteRuleVariables_SubstituteNullVariable_Node_Exception" time="0.001" />
+
+      <testcase classname="Testing.TestSubstituteRuleVariables" name="TestSubstituteComplex_Exponentiation" time="0.0" />
+
+      <testcase classname="Testing.TestSubstituteRuleVariables" name="testSubstituteRuleVariables_SubstituteUnary" time="0.0" />
+
+      <testcase classname="Testing.TestSubstituteRuleVariables" name="testSubstituteRuleVariables_SubstituteDivision" time="0.0" />
+
+      <testcase classname="Testing.TestSubstituteRuleVariables" name="testSubstituteRuleVariables_SubstituteNullVariables_Exception" time="0.001" />
+
+      <testcase classname="Testing.TestSubstituteRuleVariables" name="TestSubstituteComplex_Unary" time="0.001" />
+
+      <testcase classname="Testing.TestSubstituteRuleVariables" name="testSubstituteRuleVariables_SubstituteExponentiation" time="0.0" />
+
+      <testcase classname="Testing.TestSubstituteRuleVariables" name="testSubstituteRuleVariables_SubstituteNumber" time="0.0" />
+
+      <testcase classname="Testing.TestSubstituteRuleVariables" name="TestSubstituteComplex_DivisionNode" time="0.0" />
+
+      <testcase classname="Testing.TestSubstituteRuleVariables" name="testSubstituteRuleVariables_SubstituteFunction" time="0.0" />
+
+      <testcase classname="Testing.TestSubstituteRuleVariables" name="TestSubstituteComplex_Multiplication" time="0.0" />
+
+      <testcase classname="Testing.TestSubstituteRuleVariables" name="testSubstituteRuleVariables_SubstituteSubstitution" time="0.0" />
+
+      <testcase classname="Testing.TestSubstituteRuleVariables" name="TestSubstituteComplex_Subtraction" time="0.004" />
+
+      <testcase classname="Testing.TestSubstituteRuleVariables" name="TestSubstituteIllegalNode" time="0.001" />
+
+      <testcase classname="Testing.TestSubstituteRuleVariables" name="TestSubstituteComplex_Addition" time="0.0" />
+
+      <testcase classname="Testing.TestSubstituteRuleVariables" name="TestSubstituteComplex_FunctionNode" time="0.0" />
+
+      <testcase classname="Testing.TestSubstituteRuleVariables" name="testSubstituteRuleVariables_SubstituteUnary_Number" time="0.0" />
+
+      <testcase classname="Testing.TestSubstituteRuleVariables" name="testSubstituteRuleVariables_SubstituteVariable" time="0.001" />
+
+      <testcase classname="Testing.TestSubstituteRuleVariables" name="testSubstituteRuleVariables_SubstituteAddition" time="0.0" />
+
+      <testcase classname="Testing.TestSubstituteRuleVariables" name="testSubstituteRuleVariables_SubstituteMultiplication" time="0.0" />
+
+      <testcase classname="Testing.TestTermParser" name="testTermParser_ParseInvalidMultiplicationException" time="0.007" />
+
+      <testcase classname="Testing.TestTermParser" name="testTermParser_ParseInvalidNumber_Exception" time="0.001" />
+
+      <testcase classname="Testing.TestTermParser" name="testTermParser_ParseSimpleNumber_Decimal" time="0.005" />
+
+      <testcase classname="Testing.TestTermParser" name="testTermParser_ParseSimpleDivision" time="0.001" />
+
+      <testcase classname="Testing.TestTermParser" name="testTermParser_ParseSimpleUnary_Redundant" time="0.0" />
+
+      <testcase classname="Testing.TestTermParser" name="testTermParser_ParseSimpleNumber_Integer" time="0.001" />
+
+      <testcase classname="Testing.TestTermParser" name="testTermParser_ParseSimpleMultiplication" time="0.001" />
+
+      <testcase classname="Testing.TestTermParser" name="testTermParser_ParseSimpleNumber_Rational" time="0.001" />
+
+      <testcase classname="Testing.TestTermParser" name="testTermParser_ParseInvalidParenthetical_Exception" time="0.001" />
+
+      <testcase classname="Testing.TestTermParser" name="testTermParser_ParseInvalidSubtractionException" time="0.003" />
+
+      <testcase classname="Testing.TestTermParser" name="testTermParser_ParseSimpleFunction" time="0.001" />
+
+      <testcase classname="Testing.TestTermParser" name="testTermParser_ParseInvalidFunction_Exception" time="0.002" />
+
+      <testcase classname="Testing.TestTermParser" name="testTermParser_ParseSimple_Parentheses" time="0.0" />
+
+      <testcase classname="Testing.TestTermParser" name="testTermParser_ParseInvalidVariable_Exception" time="0.001" />
+
+      <testcase classname="Testing.TestTermParser" name="testTermParser_ParseSimpleNumber_DecimalInteger" time="0.001" />
+
+      <testcase classname="Testing.TestTermParser" name="testTermParser_ParseSimpleRuleVariable_Exception" time="0.001" />
+
+      <testcase classname="Testing.TestTermParser" name="testTermParser_ParseSimpleSubtraction" time="0.001" />
+
+      <testcase classname="Testing.TestTermParser" name="testTermParser_ParseSimpleUnary_Positive" time="0.0" />
+
+      <testcase classname="Testing.TestTermParser" name="testTermParser_ParseSimpleExponentiation" time="0.001" />
+
+      <testcase classname="Testing.TestTermParser" name="testTermParser_ParseSimpleNumber_Rational_DenominatorZero" time="0.002" />
+
+      <testcase classname="Testing.TestTermParser" name="testTermParser_ParseSimpleUnary_Negative" time="0.0" />
+
+      <testcase classname="Testing.TestTermParser" name="testTermParser_ParseInvalidUnary_Exception" time="0.001" />
+
+      <testcase classname="Testing.TestTermParser" name="testTermParser_ParseSimpleVariable" time="0.001" />
+
+      <testcase classname="Testing.TestTermParser" name="testTermParser_ParseSimpleAddition" time="0.001" />
+
+      <testcase classname="Testing.TestTermParser" name="testTermParser_ParseSimpleUnary_Negative_Number" time="0.001" />
+
+      <testcase classname="Testing.TestTermParser" name="testTermParser_ParseInvalidDivisionException" time="0.001" />
+
+      <testcase classname="Testing.TestFetchRuleVariables" name="testFetchComplexRuleVariable_Division" time="0.0" />
+
+      <testcase classname="Testing.TestFetchRuleVariables" name="testFetchComplexRuleVariable_Function" time="0.0" />
+
+      <testcase classname="Testing.TestFetchRuleVariables" name="testFetchComplexRuleVariable_Unary" time="0.0" />
+
+      <testcase classname="Testing.TestFetchRuleVariables" name="testFetchSimpleRuleVariable" time="0.0" />
+
+      <testcase classname="Testing.TestFetchRuleVariables" name="testFetchComplexRuleVariable_Subtraction" time="0.0" />
+
+      <testcase classname="Testing.TestFetchRuleVariables" name="testNoRuleVariable_Variable" time="0.0" />
+
+      <testcase classname="Testing.TestFetchRuleVariables" name="testFetchComplexRuleVariable_Multiplication" time="0.001" />
+
+      <testcase classname="Testing.TestFetchRuleVariables" name="testFetchComplexRuleVariable_Addition" time="0.0" />
+
+      <testcase classname="Testing.TestFetchRuleVariables" name="testNoRuleVariable_Number" time="0.0" />
+
+      <testcase classname="Testing.TestFetchRuleVariables" name="testFetchComplexRuleVariable_Exponentiation" time="0.0" />
+
+      <testcase classname="Testing.TestConditionFunctions" name="testConditionFunctions__is_literal_valid_False" time="0.003" />
+
+      <testcase classname="Testing.TestConditionFunctions" name="testConditionFunctions_is_integer_invalid_arguments" time="0.0" />
+
+      <testcase classname="Testing.TestConditionFunctions" name="testConditionFunctions_depends_valid_False" time="0.0" />
+
+      <testcase classname="Testing.TestConditionFunctions" name="testConditionFunctions_is_literal_valid_true" time="0.0" />
+
+      <testcase classname="Testing.TestConditionFunctions" name="testConditionFunctions__is_number_valid_False" time="0.0" />
+
+      <testcase classname="Testing.TestConditionFunctions" name="testConditionFunctions__is_integer_valid_notNumber_False" time="0.0" />
+
+      <testcase classname="Testing.TestConditionFunctions" name="testConditionFunctions_is_function_invalid_arguments" time="0.001" />
+
+      <testcase classname="Testing.TestConditionFunctions" name="testConditionFunctions_depends_invalid_arguments" time="0.001" />
+
+      <testcase classname="Testing.TestConditionFunctions" name="testConditionFunctions_invalid_functionName_Exception" time="0.001" />
+
+      <testcase classname="Testing.TestConditionFunctions" name="testConditionFunctions_is_number_invalid_arguments" time="0.001" />
+
+      <testcase classname="Testing.TestConditionFunctions" name="testConditionFunctions_is_number_valid_true" time="0.0" />
+
+      <testcase classname="Testing.TestConditionFunctions" name="testConditionFunctions_is_integer_valid_true" time="0.0" />
+
+      <testcase classname="Testing.TestConditionFunctions" name="testConditionFunctions__is_integer_valid_False" time="0.0" />
+
+      <testcase classname="Testing.TestConditionFunctions" name="testConditionFunctions_depends_valid_true" time="0.0" />
+
+      <testcase classname="Testing.TestConditionFunctions" name="testConditionFunctions_is_literal_invalid_arguments" time="0.001" />
+
+      <testcase classname="Testing.TestSubstituteConditionRuleVariables" name="testSubstitutionConditionRuleVariables_Visit_Invalid_RuleVariableNode_Exception" time="0.001" />
+
+      <testcase classname="Testing.TestSubstituteConditionRuleVariables" name="testSubstituteConditionRuleVariables_logicalAND" time="0.0" />
+
+      <testcase classname="Testing.TestSubstituteConditionRuleVariables" name="testSubstituteConditionRuleVariables_Not" time="0.0" />
+
+      <testcase classname="Testing.TestSubstituteConditionRuleVariables" name="testSubstituteConditionRuleVariables_Relop_Unary" time="0.0" />
+
+      <testcase classname="Testing.TestSubstituteConditionRuleVariables" name="testSubstituteConditionRuleVariables_Relop_Operation" time="0.0" />
+
+      <testcase classname="Testing.TestSubstituteConditionRuleVariables" name="testSubstituteConditionRuleVariables_ConditionFunction" time="0.0" />
+
+      <testcase classname="Testing.TestSubstituteConditionRuleVariables" name="testSubstituteConditionRuleVariables_logicalOR" time="0.0" />
+
+      <testcase classname="Testing.TestEvaluateTermOutput" name="testEvaluateTermOutput_simple_Number" time="0.002" />
+
+      <testcase classname="Testing.TestEvaluateTermOutput" name="testEvaluateTermOutput_complex_Function_" time="0.001" />
+
+      <testcase classname="Testing.TestEvaluateTermOutput" name="testEvaluateTermOutput_parentheses_multiplication_precedence_left_operation" time="0.0" />
+
+      <testcase classname="Testing.TestEvaluateTermOutput" name="testEvaluateTermOutput_simple_Multiplication" time="0.0" />
+
+      <testcase classname="Testing.TestEvaluateTermOutput" name="testEvaluateTermOutput_parentheses_Division_precedence_right_subtraction" time="0.0" />
+
+      <testcase classname="Testing.TestEvaluateTermOutput" name="testEvaluateTermOutput_simple_Function_noArguments" time="0.001" />
+
+      <testcase classname="Testing.TestEvaluateTermOutput" name="testEvaluateTermOutput_simple_Variable" time="0.0" />
+
+      <testcase classname="Testing.TestEvaluateTermOutput" name="testEvaluateTermOutput_simple_Addition" time="0.0" />
+
+      <testcase classname="Testing.TestEvaluateTermOutput" name="testEvaluateTermOutput_parentheses_exponentiation_precedence_right_operation" time="0.0" />
+
+      <testcase classname="Testing.TestEvaluateTermOutput" name="testEvaluateTermOutput_parentheses_Division_precedence_left_subtraction" time="0.0" />
+
+      <testcase classname="Testing.TestEvaluateTermOutput" name="testEvaluateTermOutput_simple_Unary" time="0.0" />
+
+      <testcase classname="Testing.TestEvaluateTermOutput" name="testEvaluateTermOutput_parentheses_exponentiation_precedence_left_exponentiation" time="0.0" />
+
+      <testcase classname="Testing.TestEvaluateTermOutput" name="testEvaluateTermOutput_parentheses_Division_precedence_left_multiplication" time="0.0" />
+
+      <testcase classname="Testing.TestEvaluateTermOutput" name="testEvaluateTermOutput_simple_Exponentiation" time="0.0" />
+
+      <testcase classname="Testing.TestEvaluateTermOutput" name="testEvaluateTermOutput_simple_Subtraction" time="0.0" />
+
+      <testcase classname="Testing.TestEvaluateTermOutput" name="testEvaluateTermOutput_parentheses_Division_precedence_right_addition" time="0.0" />
+
+      <testcase classname="Testing.TestEvaluateTermOutput" name="testEvaluateTermOutput_parentheses_exponentiation_precedence_left_operation" time="0.0" />
+
+      <testcase classname="Testing.TestEvaluateTermOutput" name="testEvaluateTermOutput_simple_Division" time="0.0" />
+
+      <testcase classname="Testing.TestEvaluateTermOutput" name="testEvaluateTermOutput_parentheses_multiplication_precedence_right_operation" time="0.0" />
+
+      <testcase classname="Testing.TestEvaluateTermOutput" name="testEvaluateTermOutput_simple_Function_" time="0.001" />
+
+      <testcase classname="Testing.TestFetchConditionRuleVariables" name="testFetchConditionRuleVariables_ComplexRuleVariable_Division" time="0.0" />
+
+      <testcase classname="Testing.TestFetchConditionRuleVariables" name="testFetchConditionRuleVariables_ComplexRuleVariable_Logical_AND" time="0.0" />
+
+      <testcase classname="Testing.TestFetchConditionRuleVariables" name="testFetchConditionRuleVariables_ComplexRuleVariable_Logical_NOT" time="0.0" />
+
+      <testcase classname="Testing.TestFetchConditionRuleVariables" name="testFetchConditionRuleVariables_ComplexRuleVariable_Exponentiation" time="0.0" />
+
+      <testcase classname="Testing.TestFetchConditionRuleVariables" name="testFetchConditionRuleVariables_ComplexRuleVariable_Function" time="0.0" />
+
+      <testcase classname="Testing.TestFetchConditionRuleVariables" name="testFetchConditionRuleVariables_ComplexRuleVariable_Function_no_variable" time="0.001" />
+
+      <testcase classname="Testing.TestFetchConditionRuleVariables" name="testFetchConditionRuleVariables_ComplexRuleVariable_Relop" time="0.0" />
+
+      <testcase classname="Testing.TestFetchConditionRuleVariables" name="testFetchConditionRuleVariables_ComplexRuleVariable_Unary" time="0.001" />
+
+      <testcase classname="Testing.TestFetchConditionRuleVariables" name="testNoRuleVariable_Variable" time="0.0" />
+
+      <testcase classname="Testing.TestFetchConditionRuleVariables" name="testFetchConditionRuleVariables_ComplexRuleVariable_Subtraction" time="0.001" />
+
+      <testcase classname="Testing.TestFetchConditionRuleVariables" name="testFetchConditionRuleVariables_ComplexRuleVariable_Addition" time="0.0" />
+
+      <testcase classname="Testing.TestFetchConditionRuleVariables" name="testFetchConditionRuleVariables_ComplexRuleVariable_Multiplication" time="0.001" />
+
+      <testcase classname="Testing.TestFetchConditionRuleVariables" name="testFetchConditionRuleVariables_ComplexRuleVariable_Logical_OR" time="0.0" />
+
+      <testcase classname="Testing.TestFetchConditionRuleVariables" name="testNoRuleVariable_Number" time="0.0" />
+
+      <testcase classname="Testing.TestFetchConditionRuleVariables" name="testFetchConditionRuleVariables_SimpleRuleVariable" time="0.0" />
+
+      <testcase classname="Testing.TestFetchConditionRuleVariables" name="testFetchConditionRuleVariables_ComplexRuleVariable_ConditionFunction" time="0.0" />
+
+      <testcase classname="Testing.TestEvaluateConditionsVisitor" name="testEvaluateConditionsVisitor_Simple_ConditionFunction_True" time="0.0" />
+
+      <testcase classname="Testing.TestEvaluateConditionsVisitor" name="testEvaluateConditionsVisitor_Simple_Relop_GTE_Numerical_False" time="0.0" />
+
+      <testcase classname="Testing.TestEvaluateConditionsVisitor" name="testEvaluateConditionsVisitor_Simple_Relop_EQ_Simple_True" time="0.0" />
+
+      <testcase classname="Testing.TestEvaluateConditionsVisitor" name="testEvaluateConditionsVisitor_Simple_ConditionFunction_NameException" time="0.0" />
+
+      <testcase classname="Testing.TestEvaluateConditionsVisitor" name="testEvaluateConditionsVisitor_Simple_Relop_LTE_Numerical_False" time="0.0" />
+
+      <testcase classname="Testing.TestEvaluateConditionsVisitor" name="testEvaluateConditionsVisitor_Simple_Relop_LogicalAND_False" time="0.001" />
+
+      <testcase classname="Testing.TestEvaluateConditionsVisitor" name="testEvaluateConditionsVisitor_Simple_Relop_NonNumerical_Exception" time="0.001" />
+
+      <testcase classname="Testing.TestEvaluateConditionsVisitor" name="testEvaluateConditionsVisitor_Simple_Relop_LTE_Numerical_True" time="0.0" />
+
+      <testcase classname="Testing.TestEvaluateConditionsVisitor" name="testEvaluateConditionsVisitor_Simple_Relop_EQ_Simple_False" time="0.0" />
+
+      <testcase classname="Testing.TestEvaluateConditionsVisitor" name="testVisiting_Unavailable_Nodes_Exception" time="0.004" />
+
+      <testcase classname="Testing.TestEvaluateConditionsVisitor" name="testEvaluateConditionsVisitor_Simple_Relop_GT_Numerical_True" time="0.0" />
+
+      <testcase classname="Testing.TestEvaluateConditionsVisitor" name="testEvaluateConditionsVisitor_Simple_Relop_GTE_Numerical_True" time="0.0" />
+
+      <testcase classname="Testing.TestEvaluateConditionsVisitor" name="testEvaluateConditionsVisitor_Simple_Relop_LogicalOR_False" time="0.0" />
+
+      <testcase classname="Testing.TestEvaluateConditionsVisitor" name="testEvaluateConditionsVisitor_Simple_ConditionFunction_ArgumentException" time="0.0" />
+
+      <testcase classname="Testing.TestEvaluateConditionsVisitor" name="testEvaluateConditionsVisitor_Simple_Relop_LogicalNOT" time="0.0" />
+
+      <testcase classname="Testing.TestEvaluateConditionsVisitor" name="testEvaluateConditionsVisitor_Simple_Relop_LogicalAND_True" time="0.0" />
+
+      <testcase classname="Testing.TestEvaluateConditionsVisitor" name="testEvaluateConditionsVisitor_Simple_Relop_NEQ_Simple_False" time="0.0" />
+
+      <testcase classname="Testing.TestEvaluateConditionsVisitor" name="testEvaluateConditionsVisitor_Simple_Relop_LT_Numerical_False" time="0.0" />
+
+      <testcase classname="Testing.TestEvaluateConditionsVisitor" name="testEvaluateConditionsVisitor_Simple_ConditionFunction_False" time="0.0" />
+
+      <testcase classname="Testing.TestEvaluateConditionsVisitor" name="testEvaluateConditionsVisitor_Simple_Relop_LogicalOR_True" time="0.0" />
+
+      <testcase classname="Testing.TestEvaluateConditionsVisitor" name="testEvaluateConditionsVisitor_Simple_Relop_LT_Numerical_True" time="0.0" />
+
+      <testcase classname="Testing.TestEvaluateConditionsVisitor" name="testEvaluateConditionsVisitor_Simple_Relop_GT_Numerical_False" time="0.0" />
+
+      <testcase classname="Testing.TestEvaluateConditionsVisitor" name="testEvaluateConditionsVisitor_Simple_Relop_NEQ_Simple_True" time="0.0" />
+
+      <testcase classname="Testing.TestRule" name="testRule_toString_NoConditions" time="0.0" />
+
+      <testcase classname="Testing.TestRule" name="testRule_Creation_Conditions" time="0.0" />
+
+      <testcase classname="Testing.TestRule" name="testRule_toString_Conditions" time="0.0" />
+
+      <testcase classname="Testing.TestRule" name="testRule_Creation_No_Conditions" time="0.0" />
+
+      <testcase classname="Testing.TestRewriteProcess" name="testRewriteProcess_TraversalStopsAfterApplyingRuleExponentiation" time="0.001" />
+
+      <testcase classname="Testing.TestRewriteProcess" name="testRewriteProcess_RuleVariableTransformation_ArgumentsMatchTrue_RuleApplied" time="0.001" />
+
+      <testcase classname="Testing.TestRewriteProcess" name="testRewriteProcess_RuleVariableTransformation_Variable" time="0.001" />
+
+      <testcase classname="Testing.TestRewriteProcess" name="testRewriteProcess_RuleVariableTransformation_Addition" time="0.0" />
+
+      <testcase classname="Testing.TestRewriteProcess" name="testRewriteProcess_EmptyRuleSet" time="0.0" />
+
+      <testcase classname="Testing.TestRewriteProcess" name="testRewriteProcess_SimpleTransformation_Division" time="0.0" />
+
+      <testcase classname="Testing.TestRewriteProcess" name="testRewriteProcess_RuleVariableTransformation_Unary" time="0.0" />
+
+      <testcase classname="Testing.TestRewriteProcess" name="testRewriteProcess_SimpleTransformation_Multiplication" time="0.001" />
+
+      <testcase classname="Testing.TestRewriteProcess" name="testRewriteProcess_SimpleTransformation_Unary_Numerical" time="0.001" />
+
+      <testcase classname="Testing.TestRewriteProcess" name="testRewriteProcess_RuleVariableTransformation_Subtraction" time="0.0" />
+
+      <testcase classname="Testing.TestRewriteProcess" name="testRewriteProcess_TraversalStopsAfterApplyingRuleAddition" time="0.0" />
+
+      <testcase classname="Testing.TestRewriteProcess" name="testRewriteProcess_SimpleTransformation_Function" time="0.001" />
+
+      <testcase classname="Testing.TestRewriteProcess" name="testRewriteProcess_SimpleTransformation_Number" time="0.0" />
+
+      <testcase classname="Testing.TestRewriteProcess" name="testRewriteProcess_RuleVariableTransformation_Exponentiation" time="0.0" />
+
+      <testcase classname="Testing.TestRewriteProcess" name="testRewriteProcess_RuleVariableTransformation_ArgumentsMatchFalse_NoRuleApplied" time="0.0" />
+
+      <testcase classname="Testing.TestRewriteProcess" name="testRewriteProcess_RuleVariableTransformation_Division" time="0.001" />
+
+      <testcase classname="Testing.TestRewriteProcess" name="testRewriteProcess_TraversalStopsAfterApplyingRuleUnary" time="0.0" />
+
+      <testcase classname="Testing.TestRewriteProcess" name="testRewriteProcess_NullRuleSet" time="0.0" />
+
+      <testcase classname="Testing.TestRewriteProcess" name="testRewriteProcess_TraversalStopsAfterApplyingRuleMultiplication" time="0.0" />
+
+      <testcase classname="Testing.TestRewriteProcess" name="testRewriteProcess_RuleVariableTransformation_ConditionsHold_False" time="0.0" />
+
+      <testcase classname="Testing.TestRewriteProcess" name="testRewriteProcess_RuleVariableTransformation_Function" time="0.001" />
+
+      <testcase classname="Testing.TestRewriteProcess" name="testRewriteProcess_RuleVariableTransformation_ConditionsHold" time="0.0" />
+
+      <testcase classname="Testing.TestRewriteProcess" name="testRewriteProcess_SimpleTransformation_Exponentiation" time="0.0" />
+
+      <testcase classname="Testing.TestRewriteProcess" name="testRewriteProcess_SimpleTransformation_Subtraction" time="0.0" />
+
+      <testcase classname="Testing.TestRewriteProcess" name="testRewriteProcess_TraversalStopsAfterApplyingRuleDivision" time="0.0" />
+
+      <testcase classname="Testing.TestRewriteProcess" name="testRewriteProcess_TraversalStopsAfterApplyingRuleSubtraction" time="0.001" />
+
+      <testcase classname="Testing.TestRewriteProcess" name="testRewriteProcess_SimpleTransformation_Variable" time="0.0" />
+
+      <testcase classname="Testing.TestRewriteProcess" name="testRewriteProcess_SimpleTransformation_Addition" time="0.001" />
+
+      <testcase classname="Testing.TestRewriteProcess" name="testRewriteProcess_SimpleTransformation_Unary" time="0.0" />
+
+      <testcase classname="Testing.TestRewriteProcess" name="testRewriteProcess_RuleVariableTransformation_Multiplication" time="0.0" />
+
+      <testcase classname="Testing.TestRewriteProcess" name="testRewriteProcess_TraversalStopsAfterApplyingRuleFunction" time="0.0" />
+
+      <testcase classname="Testing.TestRewriteProcess" name="testRewriteProcess_CatchRewriteError" time="0.001" />
+
+      <testcase classname="Testing.TestProgram" name="testParseRule_ParseCancellationException_LHS" time="0.0" />
+
+      <testcase classname="Testing.TestProgram" name="testParseRule_ParseCancellationException_RHS" time="0.001" />
+
+      <testcase classname="Testing.TestProgram" name="testParseTerm_DivideByZero_Exception" time="0.001" />
+
+      <testcase classname="Testing.TestProgram" name="testParseRule_SplirError_ConditionsSymbolNoConditions" time="0.0" />
+
+      <testcase classname="Testing.TestProgram" name="testRewrite_Normal" time="0.0" />
+
+      <testcase classname="Testing.TestProgram" name="testRewriteDeterministic_Normal" time="0.001" />
+
+      <testcase classname="Testing.TestProgram" name="testRewriteDeterministic_InfiniteRecursion_StackOverFlow" time="3.794" />
+
+      <testcase classname="Testing.TestProgram" name="testParseTerm_Invalid_ParseCancellationException" time="0.001" />
+
+      <testcase classname="Testing.TestProgram" name="testParseRule_ParseCancellationException_Conditions" time="0.001" />
+
+      <testcase classname="Testing.TestProgram" name="testParseTerm_Normal" time="0.0" />
+
+      <testcase classname="Testing.TestProgram" name="testParseRule_EmptyLine_Exception" time="0.0" />
+
+      <testcase classname="Testing.TestProgram" name="testParseRule_RHSRuleVariables_Correspond_False" time="0.0" />
+
+      <testcase classname="Testing.TestProgram" name="testParseTerm_Null_Exception" time="0.0" />
+
+      <testcase classname="Testing.TestProgram" name="testRewrite_InfiniteRecursion_StackOverFlow" time="2.63" />
+
+      <testcase classname="Testing.TestProgram" name="testRewriteDeterministic_RewriteError" time="0.001" />
+
+      <testcase classname="Testing.TestProgram" name="testParseRule_ConditionRuleVairables_Exception" time="0.001" />
+
+      <testcase classname="Testing.TestProgram" name="testParseRule_ConditionRuleVariables_Correspond_False" time="0.001" />
+
+      <testcase classname="Testing.TestProgram" name="testParseRule_Normal_withConditions" time="0.0" />
+
+      <testcase classname="Testing.TestProgram" name="testRewrite_RewriteError" time="0.0" />
+
+      <testcase classname="Testing.TestProgram" name="testParseRule_Normal_noConditions" time="0.0" />
+
+      <testcase classname="Testing.TestProgram" name="testParseRule_SplitError_NoEquals" time="0.0" />
+
+      <testcase classname="Testing.TestProgram" name="testParseTerm_Empty_Exception" time="0.001" />
+
+      <testcase classname="Testing.TestProgram" name="testParseRule_SplitError_NoLHS" time="0.001" />
+
+      <testcase classname="Testing.TestProgram" name="testParseRule_SplitError_NoRHS" time="0.001" />
+
+      <testcase classname="Testing.TestProgram" name="testParseRule_DivisionByZero_Exception" time="0.001" />
+
+      <testcase classname="Testing.TestNumericalOperations" name="testNumericalOperations_RationalMultiplication_Negative" time="0.0" />
+
+      <testcase classname="Testing.TestNumericalOperations" name="testNumericalOperations_IntegerAddition" time="0.0" />
+
+      <testcase classname="Testing.TestNumericalOperations" name="testNumericalOperations_IntegerDivision_negative" time="0.001" />
+
+      <testcase classname="Testing.TestNumericalOperations" name="testNumericalOperations_IntegerMultiplication_negative" time="0.0" />
+
+      <testcase classname="Testing.TestNumericalOperations" name="testNumericalOperations_IntegerSubtraction" time="0.0" />
+
+      <testcase classname="Testing.TestNumericalOperations" name="testNumericalOperations_RationalExponentiation_ZeroExponent" time="0.0" />
+
+      <testcase classname="Testing.TestNumericalOperations" name="testNumericalOperations_RationalSubtraction" time="0.0" />
+
+      <testcase classname="Testing.TestNumericalOperations" name="testNumericalOperations_RationalExponentiation_FractionalExponent" time="0.0" />
+
+      <testcase classname="Testing.TestNumericalOperations" name="testNumericalOperations_IntegerExponentiation" time="0.0" />
+
+      <testcase classname="Testing.TestNumericalOperations" name="testNumericalOperations_IntegerAddition_negative" time="0.0" />
+
+      <testcase classname="Testing.TestNumericalOperations" name="testNumericalOperations_IntegerSubtraction_negative" time="0.0" />
+
+      <testcase classname="Testing.TestNumericalOperations" name="testNumericalOperations_IntegerDivision" time="0.0" />
+
+      <testcase classname="Testing.TestNumericalOperations" name="testNumericalOperations_RationalSubtraction_Negative" time="0.0" />
+
+      <testcase classname="Testing.TestNumericalOperations" name="testNumericalOperations_RationalExponentiation" time="0.0" />
+
+      <testcase classname="Testing.TestNumericalOperations" name="testNumericalOperations_RationalAddition" time="0.0" />
+
+      <testcase classname="Testing.TestNumericalOperations" name="testNumericalOperations_IntegerExponentiationNegative" time="0.0" />
+
+      <testcase classname="Testing.TestNumericalOperations" name="testNumericalOperations_RationalDivision_Negative" time="0.0" />
+
+      <testcase classname="Testing.TestNumericalOperations" name="testNumericalOperations_IntegerMultiplication" time="0.0" />
+
+      <testcase classname="Testing.TestNumericalOperations" name="testNumericalOperations_RationalExponentiationNegative" time="0.0" />
+
+      <testcase classname="Testing.TestNumericalOperations" name="testNumericalOperations_RationalAddition_Negative" time="0.0" />
+
+      <testcase classname="Testing.TestNumericalOperations" name="testNumericalOperations_RatinalDivision" time="0.0" />
+
+      <testcase classname="Testing.TestNumericalOperations" name="testNumericalOperations_RationalMultiplication" time="0.0" />
+
+      <testcase classname="Testing.TestRationalNumbers" name="testRationalNumbers__compareTo_EQ" time="0.0" />
+
+      <testcase classname="Testing.TestRationalNumbers" name="testRationalNumbers__compareTo_GT" time="0.0" />
+
+      <testcase classname="Testing.TestRationalNumbers" name="testRationalNumbers__compareTo_LT" time="0.0" />
+
+      <testcase classname="Testing.TestRationalNumbers" name="testRationalNumbers__getReciprocal_Normalises" time="0.0" />
+
+      <testcase classname="Testing.TestRationalNumbers" name="testRationalNumbers_Constructor_Numerator_DenominatorZero" time="0.001" />
+
+      <testcase classname="Testing.TestRationalNumbers" name="testRationalNumbers_Constructor_Numerator_Denominator" time="0.0" />
+
+      <testcase classname="Testing.TestRationalNumbers" name="testRationalNumbers__getReciprocal" time="0.0" />
+
+      <testcase classname="Testing.TestRationalNumbers" name="testRationalNumbers_Constructor_Numerator" time="0.0" />
+
+      <testcase classname="Testing.TestRationalNumbers" name="testRationalNumbers_Constructor_Numerator_Denominator_Simplifies" time="0.0" />
+
+      <testcase classname="Testing.TestRationalNumbers" name="testRationalNumbers_Constructor_Numerator_Denominator_Normalises" time="0.0" />
+
+      <testcase classname="Testing.TestGUI" name="testGUI_GetRules_FormatException" time="1.536" />
+
+      <testcase classname="Testing.TestGUI" name="testGUI_GetRules_ParseCancellation" time="0.979" />
+
+      <testcase classname="Testing.TestGUI" name="testGUI_GetRulesValid" time="0.73" />
+
+      <testcase classname="Testing.TestExpressionNodeOutput" name="testExpressionNodeOutput_ConditionFunctionNode" time="0.001" />
+
+      <testcase classname="Testing.TestExpressionNodeOutput" name="testExpressionNodeOutput_DivisionNode" time="0.0" />
+
+      <testcase classname="Testing.TestExpressionNodeOutput" name="testExpressionNodeOutput_ConditionOrNode" time="0.0" />
+
+      <testcase classname="Testing.TestExpressionNodeOutput" name="testExpressionNodeOutput_SubtractionNode" time="0.0" />
+
+      <testcase classname="Testing.TestExpressionNodeOutput" name="testExpressionNodeOutput_PowerNode" time="0.001" />
+
+      <testcase classname="Testing.TestExpressionNodeOutput" name="testExpressionNodeOutput_ConditionNotNode" time="0.0" />
+
+      <testcase classname="Testing.TestExpressionNodeOutput" name="testExpressionNodeOutput_UnaryNode" time="0.0" />
+
+      <testcase classname="Testing.TestExpressionNodeOutput" name="testExpressionNodeOutput_AdditionNode" time="0.0" />
+
+      <testcase classname="Testing.TestExpressionNodeOutput" name="testExpressionNodeOutput_FunctionNode" time="0.0" />
+
+      <testcase classname="Testing.TestExpressionNodeOutput" name="testExpressionNodeOutput_ConditionAndNode" time="0.001" />
+
+      <testcase classname="Testing.TestExpressionNodeOutput" name="testExpressionNodeOutput_MultiplicationNode" time="0.0" />
+
+      <system-out><![CDATA[]]></system-out>
+
+      <system-err><![CDATA[]]></system-err>
+
+  </testsuite>
+</testsuites>

@@ -15,7 +15,7 @@ public class TestSimplifyNumericalOperations {
 
 
 	@Test
-	public void testSimpleAddition_can_simplify() {
+	public void testSimplifyNumericalOperations_SimpleAddition_can_simplify() {
 		ExpressionNode addition = new AdditionNode(new NumberNode(BigInteger.valueOf(2),BigInteger.valueOf(1)), new NumberNode(BigInteger.valueOf(3),BigInteger.valueOf(2)));
 		EvaluateNumericalOperations s = new EvaluateNumericalOperations();
 
@@ -29,7 +29,7 @@ public class TestSimplifyNumericalOperations {
 	}
 
 	@Test
-	public void testSimpleAddition_cannot_simplify() {
+	public void testSimplifyNumericalOperations_SimpleAddition_cannot_simplify() {
 		ExpressionNode addition = new AdditionNode(new NumberNode(BigInteger.valueOf(2),BigInteger.valueOf(1)), new VariableNode("x"));
 		EvaluateNumericalOperations s = new EvaluateNumericalOperations();
 
@@ -43,7 +43,7 @@ public class TestSimplifyNumericalOperations {
 		}
 	}
 	@Test
-	public void testSimpleSubtraction() {
+	public void testSimplifyNumericalOperations_SimpleSubtraction() {
 		ExpressionNode subtraction = new SubtractionNode(new NumberNode(BigInteger.valueOf(2),BigInteger.valueOf(1)), new NumberNode(BigInteger.valueOf(3),BigInteger.valueOf(2)));
 		EvaluateNumericalOperations s = new EvaluateNumericalOperations();
 
@@ -57,7 +57,7 @@ public class TestSimplifyNumericalOperations {
 	}
 
 	@Test
-	public void testSimpleSubtraction_cannot_simplify() {
+	public void testSimplifyNumericalOperations_SimpleSubtraction_cannot_simplify() {
 		ExpressionNode subtraction = new SubtractionNode(new NumberNode(BigInteger.valueOf(2),BigInteger.valueOf(1)), new VariableNode("x"));
 		EvaluateNumericalOperations s = new EvaluateNumericalOperations();
 
@@ -72,7 +72,7 @@ public class TestSimplifyNumericalOperations {
 	}
 	
 	@Test
-	public void testSimpleMultiplication() {
+	public void testSimplifyNumericalOperations_SimpleMultiplication() {
 		ExpressionNode multiplication = new MultiplicationNode(new NumberNode(BigInteger.valueOf(2),BigInteger.valueOf(1)), new NumberNode(BigInteger.valueOf(3),BigInteger.valueOf(2)));
 		EvaluateNumericalOperations s = new EvaluateNumericalOperations();
 
@@ -85,7 +85,7 @@ public class TestSimplifyNumericalOperations {
 		}
 	}
 	@Test
-	public void testSimpleMultiplication_cannot_simplify() {
+	public void testSimplifyNumericalOperations_SimpleMultiplication_cannot_simplify() {
 		ExpressionNode multiplication = new MultiplicationNode(new NumberNode(BigInteger.valueOf(2),BigInteger.valueOf(1)), new VariableNode("x"));
 		EvaluateNumericalOperations s = new EvaluateNumericalOperations();
 
@@ -101,7 +101,7 @@ public class TestSimplifyNumericalOperations {
 	
 
 	@Test
-	public void testSimpleDivision() {
+	public void testSimplifyNumericalOperations_SimpleDivision() {
 		ExpressionNode division = new DivisionNode(new NumberNode(BigInteger.valueOf(2),BigInteger.valueOf(1)), new NumberNode(BigInteger.valueOf(3),BigInteger.valueOf(2)));
 		EvaluateNumericalOperations s = new EvaluateNumericalOperations();
 
@@ -115,7 +115,7 @@ public class TestSimplifyNumericalOperations {
 	}
 
 	@Test
-	public void testSimpleDivision_cannot_simplify() {
+	public void testSimplifyNumericalOperations_SimpleDivision_cannot_simplify() {
 		ExpressionNode division = new DivisionNode(new NumberNode(BigInteger.valueOf(2),BigInteger.valueOf(1)), new VariableNode("x"));
 		EvaluateNumericalOperations s = new EvaluateNumericalOperations();
 
@@ -130,7 +130,7 @@ public class TestSimplifyNumericalOperations {
 	}
 	
 	@Test
-	public void testSimpleDivision_DivideByZero() {
+	public void testSimplifyNumericalOperations_SimpleDivision_DivideByZero() {
 		ExpressionNode division = new DivisionNode(new NumberNode(BigInteger.valueOf(2),BigInteger.valueOf(1)), new NumberNode(BigInteger.valueOf(0),BigInteger.valueOf(2)));
 		EvaluateNumericalOperations s = new EvaluateNumericalOperations();
 
@@ -138,7 +138,7 @@ public class TestSimplifyNumericalOperations {
 	}
 	
 	@Test
-	public void testComplexDivision_DivideByZero() {
+	public void testSimplifyNumericalOperations_ComplexDivision_DivideByZero() {
 		AdditionNode add = new AdditionNode(new NumberNode(BigInteger.valueOf(2)) , new NumberNode(BigInteger.valueOf(3)));
 		SubtractionNode subtract = new SubtractionNode(add, new NumberNode(BigInteger.valueOf(10),BigInteger.valueOf(2)));
 		ExpressionNode division = new DivisionNode(new NumberNode(BigInteger.valueOf(2),BigInteger.valueOf(1)), subtract);
@@ -148,7 +148,7 @@ public class TestSimplifyNumericalOperations {
 	}
 	
 	@Test
-	public void testSimpleExponentiation_IntegerPower() {
+	public void testSimplifyNumericalOperations_SimpleExponentiation_IntegerPower() {
 		ExpressionNode exponentiation = new PowerNode(new NumberNode(BigInteger.valueOf(2),BigInteger.valueOf(3)), new NumberNode(BigInteger.valueOf(2)));
 		EvaluateNumericalOperations s = new EvaluateNumericalOperations();
 
@@ -164,13 +164,12 @@ public class TestSimplifyNumericalOperations {
 	}
 	
 	@Test
-	public void testSimpleExponentiation_NegativeIntegerPower() {
+	public void testSimplifyNumericalOperations_SimpleExponentiation_NegativeIntegerPower() {
 		ExpressionNode exponentiation = new PowerNode(new NumberNode(BigInteger.valueOf(2),BigInteger.valueOf(3)), new NumberNode(BigInteger.valueOf(-2),BigInteger.valueOf(1)));
 		EvaluateNumericalOperations s = new EvaluateNumericalOperations();
 
 		try {
 			ExpressionNode result = s.Visit(exponentiation);
-			System.out.println(result);
 			assertTrue(result.getClass() ==  NumberNode.class);
 			assertTrue(((NumberNode) result).getNumerator() .compareTo(BigInteger.valueOf( 9))==0);
 			assertTrue(((NumberNode) result).getDenominator() .compareTo(BigInteger.valueOf( 4))==0);
@@ -181,7 +180,7 @@ public class TestSimplifyNumericalOperations {
 	}
 
 	@Test
-	public void testSimpleExponentiation_cannot_Evaluate_FractionalPower() {
+	public void testSimplifyNumericalOperations_SimpleExponentiation_cannot_Evaluate_FractionalPower() {
 		ExpressionNode exponentiation = new PowerNode(new NumberNode(BigInteger.valueOf(2),BigInteger.valueOf(1)), new NumberNode(BigInteger.valueOf(1),BigInteger.valueOf(2)));
 		EvaluateNumericalOperations s = new EvaluateNumericalOperations();
 
@@ -196,7 +195,7 @@ public class TestSimplifyNumericalOperations {
 	}
 	
 	@Test
-	public void testSimpleExponentiation_cannot_Evaluate() {
+	public void testSimplifyNumericalOperations_SimpleExponentiation_cannot_Evaluate() {
 		ExpressionNode exponentiation = new PowerNode(new NumberNode(BigInteger.valueOf(2),BigInteger.valueOf(1)), new VariableNode("x"));
 		EvaluateNumericalOperations s = new EvaluateNumericalOperations();
 
@@ -211,7 +210,7 @@ public class TestSimplifyNumericalOperations {
 	}
 	
 	@Test
-	public void testComplexAddition() {
+	public void testSimplifyNumericalOperations_ComplexAddition() {
 
 		ExpressionNode subAddition = new AdditionNode(new NumberNode(BigInteger.valueOf(2),BigInteger.valueOf(1)), new NumberNode(BigInteger.valueOf(3),BigInteger.valueOf(2)));
 		ExpressionNode addition = new AdditionNode(new NumberNode(BigInteger.valueOf(1)), subAddition);
@@ -227,7 +226,7 @@ public class TestSimplifyNumericalOperations {
 	}
 
 	@Test
-	public void testUnary() {
+	public void testSimplifyNumericalOperations_Unary() {
 		UnaryNode unaryNode = new UnaryNode(new NumberNode(BigInteger.valueOf(1),BigInteger.valueOf(5)));
 
 		EvaluateNumericalOperations s = new EvaluateNumericalOperations();
@@ -244,7 +243,7 @@ public class TestSimplifyNumericalOperations {
 	}
 
 	@Test
-	public void testUnaryNumberAddition() {
+	public void testSimplifyNumericalOperations_UnaryNumberAddition() {
 		UnaryNode unaryNode = new UnaryNode(new NumberNode(BigInteger.valueOf(1),BigInteger.valueOf(6)));
 		AdditionNode unaryAddition = new AdditionNode(unaryNode, new NumberNode(BigInteger.valueOf(4),BigInteger.valueOf(6)));
 		EvaluateNumericalOperations s = new EvaluateNumericalOperations();
@@ -261,7 +260,7 @@ public class TestSimplifyNumericalOperations {
 	}
 
 	@Test
-	public void testUnaryUnaryAddition() {
+	public void testSimplifyNumericalOperations_UnaryUnaryAddition() {
 		UnaryNode unaryNode = new UnaryNode(new NumberNode(BigInteger.valueOf(1)));
 		UnaryNode unaryNode2 = new UnaryNode(new NumberNode(BigInteger.valueOf(2)));
 
@@ -280,7 +279,7 @@ public class TestSimplifyNumericalOperations {
 	}
 	
 	@Test
-	public void testUnaryUnaryAddition_cannot_simplify() {
+	public void testSimplifyNumericalOperations_UnaryUnaryAddition_cannot_simplify() {
 		UnaryNode unaryNode = new UnaryNode(new NumberNode(BigInteger.valueOf(1)));
 		UnaryNode unaryNode2 = new UnaryNode(new VariableNode("x"));
 
@@ -291,7 +290,7 @@ public class TestSimplifyNumericalOperations {
 	
 			assertTrue(result.getClass() == AdditionNode.class);
 		
-			// Further test: when using bigdecimal check value = 5.3
+			// Further testSimplifyNumericalOperations_: when using bigdecimal check value = 5.3
 		} catch (Exception e) {
 			e.printStackTrace();
 			fail();
@@ -301,7 +300,7 @@ public class TestSimplifyNumericalOperations {
 	
 
 	@Test
-	public void testUnaryUnarySubtraction() {
+	public void testSimplifyNumericalOperations_UnaryUnarySubtraction() {
 		UnaryNode unaryNode = new UnaryNode(new NumberNode(BigInteger.valueOf(1)));
 		UnaryNode unaryNode2 = new UnaryNode(new NumberNode(BigInteger.valueOf(2)));
 
@@ -309,11 +308,10 @@ public class TestSimplifyNumericalOperations {
 		EvaluateNumericalOperations s = new EvaluateNumericalOperations();
 		try {
 			ExpressionNode result = s.Visit(unarySubtraction);
-			System.out.println(result);
 			assertTrue(result.getClass() == NumberNode.class);
 			assertTrue(((NumberNode) result).getNumerator() .compareTo(BigInteger.valueOf( 1))==0);
 			assertTrue(((NumberNode) result).getDenominator() .compareTo(BigInteger.valueOf( 1))==0);
-			// Further test: when using bigdecimal check value = 5.3
+			// Further testSimplifyNumericalOperations_: when using bigdecimal check value = 5.3
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			fail();
@@ -322,7 +320,7 @@ public class TestSimplifyNumericalOperations {
 	}
 
 	@Test
-	public void testUnaryUnaryMultiplication() {
+	public void testSimplifyNumericalOperations_UnaryUnaryMultiplication() {
 		UnaryNode unaryNode = new UnaryNode(new NumberNode(BigInteger.valueOf(1)));
 		UnaryNode unaryNode2 = new UnaryNode(new NumberNode(BigInteger.valueOf(2)));
 
@@ -333,7 +331,7 @@ public class TestSimplifyNumericalOperations {
 			assertTrue(result.getClass() ==  NumberNode.class);
 			assertTrue(((NumberNode) result).getNumerator() .compareTo(BigInteger.valueOf( 2))==0);
 			assertTrue(((NumberNode) result).getDenominator() .compareTo(BigInteger.valueOf( 1))==0);
-			// Further test: when using bigdecimal check value = 5.3
+			// Further testSimplifyNumericalOperations_: when using bigdecimal check value = 5.3
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			fail();
@@ -342,7 +340,7 @@ public class TestSimplifyNumericalOperations {
 	}
 
 	@Test
-	public void testUnaryUnaryDivision() {
+	public void testSimplifyNumericalOperations_UnaryUnaryDivision() {
 		UnaryNode unaryNode = new UnaryNode(new NumberNode(BigInteger.valueOf(1)));
 		UnaryNode unaryNode2 = new UnaryNode(new NumberNode(BigInteger.valueOf(2)));
 
@@ -365,7 +363,7 @@ public class TestSimplifyNumericalOperations {
 	
 	
 	@Test
-	public void testVisitRuleVariableNode_Exception() {
+	public void testSimplifyNumericalOperations_VisitRuleVariableNode_Exception() {
 		
 		ExpressionNode rv = new RuleVariableNode("x");
 

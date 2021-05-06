@@ -16,7 +16,7 @@ public class TestDependsEvaluator {
 
 
 	@Test
-	public void testDependsEvaluatorVariable() {
+	public void testDependsEvaluator_Variable() {
 		ExpressionNode dependency = new VariableNode("x");
 		DependsEvaluator d = new DependsEvaluator(dependency);
 		assertTrue(d.Visit(new VariableNode("x")));
@@ -25,7 +25,7 @@ public class TestDependsEvaluator {
 	}
 
 	@Test
-	public void testDependsEvaluatorNumber() {
+	public void testDependsEvaluator_Number() {
 		ExpressionNode dependency = new NumberNode(BigInteger.valueOf(5),BigInteger.valueOf(4));
 		DependsEvaluator d = new DependsEvaluator(dependency);
 		assertTrue(d.Visit(new NumberNode(BigInteger.valueOf(5),BigInteger.valueOf(4))));
@@ -34,7 +34,7 @@ public class TestDependsEvaluator {
 	}
 
 	@Test
-	public void testDependsEvaluatorUnary() {
+	public void testDependsEvaluator_Unary() {
 		ExpressionNode innerNode = new VariableNode("x");
 		ExpressionNode dependency = new UnaryNode(innerNode);
 
@@ -49,9 +49,27 @@ public class TestDependsEvaluator {
 
 	}
 
+	@Test
+	public void testDependsEvaluator_FunctionArgument() {
+		ExpressionNode dependency = new VariableNode("x");
+		ArrayList<ExpressionNode> args = new ArrayList<>();
+		args.add(dependency);
+		FunctionNode f = new FunctionNode("func", args);
+		//ExpressionNode dependency = new UnaryNode(innerNode);
+
+		DependsEvaluator d = new DependsEvaluator(dependency);
+
+		try {
+			assertTrue(d.Visit(f));
+			
+		} catch (Exception e) {
+			fail();
+		}
+
+	}
 
 	@Test
-	public void testDependsEvaluatorAddition() {
+	public void testDependsEvaluator_Addition() {
 		ExpressionNode dependency = new AdditionNode(new NumberNode(BigInteger.valueOf(2),BigInteger.valueOf(1)), new VariableNode("x"));
 
 		DependsEvaluator d = new DependsEvaluator(dependency);
@@ -66,7 +84,7 @@ public class TestDependsEvaluator {
 	}
 
 	@Test
-	public void testDependsEvaluatorSubtraction() {
+	public void testDependsEvaluator_Subtraction() {
 		ExpressionNode dependency = new SubtractionNode(new NumberNode(BigInteger.valueOf(1),BigInteger.valueOf(2)), new VariableNode("x"));
 
 		DependsEvaluator d = new DependsEvaluator(dependency);
@@ -81,7 +99,7 @@ public class TestDependsEvaluator {
 	}
 
 	@Test
-	public void testDependsEvaluatorMultiplication() {
+	public void testDependsEvaluator_Multiplication() {
 		ExpressionNode dependency = new MultiplicationNode(new NumberNode(BigInteger.valueOf(2),BigInteger.valueOf(1)), new VariableNode("x"));
 
 		DependsEvaluator d = new DependsEvaluator(dependency);
@@ -96,7 +114,7 @@ public class TestDependsEvaluator {
 	}
 
 	@Test
-	public void testDependsEvaluatorDivisionNode() {
+	public void testDependsEvaluator_DivisionNode() {
 		ExpressionNode dependency = new DivisionNode(new NumberNode(BigInteger.valueOf(2),BigInteger.valueOf(1)), new VariableNode("x"));
 
 		DependsEvaluator d = new DependsEvaluator(dependency);
@@ -111,7 +129,7 @@ public class TestDependsEvaluator {
 	}
 
 	@Test
-	public void testDependsEvaluatorExponentiation() {
+	public void testDependsEvaluator_Exponentiation() {
 		ExpressionNode dependency = new PowerNode(new NumberNode(BigInteger.valueOf(2),BigInteger.valueOf(1)), new VariableNode("x"));
 
 		DependsEvaluator d = new DependsEvaluator(dependency);
@@ -126,7 +144,7 @@ public class TestDependsEvaluator {
 	}
 
 	@Test
-	public void testDependsEvaluatorFunction() {
+	public void testDependsEvaluator_Function() {
 		ArrayList<ExpressionNode> functionArguments = new ArrayList<>();
 		functionArguments.add(new NumberNode(BigInteger.valueOf(2),BigInteger.valueOf(1)));
 		functionArguments.add(new VariableNode("y"));

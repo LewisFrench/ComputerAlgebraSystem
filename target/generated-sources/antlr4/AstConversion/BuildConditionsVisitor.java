@@ -263,8 +263,8 @@ public class BuildConditionsVisitor extends ConditionsBaseVisitor<ExpressionNode
 			node = new DivisionNode(left, right);
 			break;
 
-		default:
-			return node;
+//		default:
+//			return node;
 		}
 
 		return node;

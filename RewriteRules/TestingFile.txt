@@ -1,2 +1,2 @@
-chainSubtract($value, 0) = $value
-chainSubtract($value, $count) = $value - chainSubtract($value, $count-1) : _is_integer($count) & $count > 0
+$x + 1 = z
+x + 1 = 3a

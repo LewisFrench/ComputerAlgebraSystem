@@ -81,7 +81,7 @@ public class Program {
 			// Evaluate numerical operations in case no rules are applied
 			ExpressionNode evaluatedTerm = new EvaluateNumericalOperations().Visit(term);
 			long endTime = System.nanoTime();
-			this.executionTime = endTime - startTime;
+			this.executionTime = (endTime - startTime)/1000000000;
 			this.rulesApplied = ruleApplicationCount;
 
 			return new EvaluateTermOutput().Visit(evaluatedTerm);
@@ -141,7 +141,7 @@ public class Program {
 			ExpressionNode evaluatedTerm = new EvaluateNumericalOperations().Visit(term);
 			long endTime = System.nanoTime();
 
-			this.executionTime = endTime - startTime;
+			this.executionTime = (endTime - startTime)/1000000000;
 			this.rulesApplied = ruleApplicationCount;
 
 			return new EvaluateTermOutput().Visit(evaluatedTerm);
@@ -318,7 +318,6 @@ public class Program {
 		} catch (ArithmeticException iae) {
 			throw new ArithmeticException("Algebraic term contains a division by zero.");
 		} catch (Exception e) {
-			System.out.println(e.getClass());
 			throw new Exception("Error when parsing algebraic term");
 		}
 

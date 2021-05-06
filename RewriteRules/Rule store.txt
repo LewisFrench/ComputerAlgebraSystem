@@ -1,0 +1,21 @@
+RULE STORE
+$n * (($A^$p + 1) * $A^$q) = $n * ($A^($p+$q) + 1*$A^$q)
+$n * (($A^$p + 1) * $A) = $n * ($A^($p+1) + 1*$A)
+$n * (($m *$A) + ($o * $B)) = ($n * $m) * $A + ($n*$o) * $B 
+
+($A+$n*($B+$C)) + $m*($B+$C) = $A + (($n+$m)*$B + ($n+$m)*$C) : _is_number($n) & _is_number($m)
+($n*($B+$C) + $A) + $m*($B+$C) = $A + (($n+$m)*$B + ($n+$m)*$C) : _is_number($n) & _is_number($m)
+
+// Even better
+($A + $n*$B) + ($m*$B + $C) = $A + $C + ($n+$m)*$B
+($A + $n*$B) + ($C+$m*$B) = $A + $C + ($n+$m)*$B
+
+($A + $n*$B) + ($m*$B + $C) = $A + $C + ($n+$m)*$B
+($A + $n*$B) + ($C+$m*$B) = $A + $C + ($n+$m)*$B
+
+
+
+// BEST, PERFECT
+$n*($A + $B) = $n*$A + $n*$B : _is_number($n)
+$n*$A + $B + ($m*$A + $C) = $B + ($n+$m)*$A + $C
+$B +$n*$A + ($m*$A + $C) = $B + ($n+$m)*$A + $C

@@ -50,6 +50,7 @@ public class RewriteProcess extends VisitTerm<ExpressionNode> {
 		if (this.ruleApplied) {
 			return node;
 		}
+	
 		ExpressionNode visitedLeft = (Visit(node.getLeft()));
 		ExpressionNode visitedRight = (Visit(node.getRight()));
 
@@ -187,7 +188,7 @@ public class RewriteProcess extends VisitTerm<ExpressionNode> {
 										.Visit(r.getRhsNode());
 								ExpressionNode solved = new EvaluateNumericalOperations().Visit(substituted);
 								this.setRuleApplied(true);
-								//System.out.println("\nApplied rule : " + r.toString() + "\nto Term : " + redex.toString());
+
 								return solved;
 							}
 

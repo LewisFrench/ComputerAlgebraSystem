@@ -15,33 +15,67 @@ public class EvaluateTermOutput extends VisitTerm<String> {
 
 	@Override
 	public String Visit(PowerNode node) throws Exception {
-
-		return Visit(node.getLeft()) + "^" + Visit(node.getRight());
+		String left = Visit(node.getLeft());
+		String right = Visit(node.getRight());
+		if (node.getLeft() instanceof OperationNode) {
+			left = "(" + left + ")";
+			
+		}
+		if (node.getRight() instanceof OperationNode) {
+			if (!(node.getRight() instanceof PowerNode)){
+				right = "(" + right + ")";
+			}
+		}
+		return left + "^" + right;
 	}
 
 	@Override
 	public String Visit(AdditionNode node) throws Exception {
-		return  "("+Visit(node.getLeft()) + "+" + Visit(node.getRight())+")" ;
+		String left = Visit(node.getLeft());
+		String right = Visit(node.getRight());
+		return  left + "+" + right ;
 	}
 
 	@Override
 	public String Visit(SubtractionNode node) throws Exception {
-		return Visit(node.getLeft()) + "-" + Visit(node.getRight());
+		String left = Visit(node.getLeft());
+		String right = Visit(node.getRight());
+		return  left + "-" + right ;
 	}
 
 	@Override
 	public String Visit(MultiplicationNode node) throws Exception {
-		return "(" + Visit(node.getLeft()) + "*" + Visit(node.getRight()) + ")";
+		String left = Visit(node.getLeft());
+		String right = Visit(node.getRight());
+		if(node.getLeft() instanceof AdditionNode  || node.getLeft() instanceof SubtractionNode) {
+			left = "(" + left + ")";
+		}
+		if(node.getRight() instanceof AdditionNode  || node.getRight() instanceof SubtractionNode) {
+			right = "(" + right + ")";
+		}
+		return  left + "*" + right ;
 	}
 
 	@Override
 	public String Visit(DivisionNode node) throws Exception {
-		return Visit(node.getLeft()) + "/" + Visit(node.getRight());
+		String left = Visit(node.getLeft());
+		String right = Visit(node.getRight());
+		if(node.getLeft() instanceof AdditionNode  || node.getLeft() instanceof SubtractionNode) {
+			left = "(" + left + ")";
+		}
+		if(node.getRight() instanceof AdditionNode  || node.getRight() instanceof SubtractionNode) {
+			right = "(" + right + ")";
+		}
+		if (node.getRight() instanceof MultiplicationNode) {
+			right = "(" + right + ")";
+		}
+		return  left + "/" + right ;
 	}
 
 
 	@Override
 	public String Visit(UnaryNode node) throws Exception {
+		
 		return ("-" + Visit(node.getInnerNode()).toString());
 	}
 

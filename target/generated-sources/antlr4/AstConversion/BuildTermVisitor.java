@@ -36,14 +36,6 @@ public class BuildTermVisitor extends AlgebraBaseVisitor<ExpressionNode> {
 		VariableNode node = new VariableNode(context.value.getText());
 		return node;
 	}
-//
-//	@Override
-//	public ExpressionNode visitRational(AlgebraParser.RationalContext context) {
-//		String[] split = context.getText().split("/");
-//		long numerator = Long.valueOf(split[0]);
-//		long denominator = Long.valueOf(split[1]);
-//		return new NumberNode(numerator, denominator);
-//	}
 
 	/**
 	 * Conversion of integer input to rational number
@@ -70,7 +62,6 @@ public class BuildTermVisitor extends AlgebraBaseVisitor<ExpressionNode> {
 		boolean removedTrailingZeros = false;
 		
 		// String trailing zeroes from decimal string
-		System.out.println(decimalString);
 		while (!(removedTrailingZeros)&& decimalString.length()>1 ) {
 			if (decimalString.endsWith("0") || decimalString.endsWith("."))
 			{
@@ -80,7 +71,6 @@ public class BuildTermVisitor extends AlgebraBaseVisitor<ExpressionNode> {
 			}
 		}
 		String formattedDecimal = decimalString;
-		System.out.println(formattedDecimal);
 		// process as integer if fractional part is zero
 		if (!(formattedDecimal.contains("."))) {
 			return new NumberNode(new BigInteger(formattedDecimal));
@@ -121,7 +111,7 @@ public class BuildTermVisitor extends AlgebraBaseVisitor<ExpressionNode> {
 		switch (context.op.getType()) {
 		// ignore hanging '+' symbols before expressions
 		case AlgebraLexer.OP_ADD:
-			return node;
+			break;
 		
 		case AlgebraLexer.OP_SUB:
 			if (node instanceof UnaryNode) {

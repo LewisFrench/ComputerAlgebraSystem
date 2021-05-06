@@ -721,7 +721,7 @@ public class ConditionsParser extends Parser {
 					consume();
 				}
 				setState(56);
-				expression(2);
+				expression(4);
 				}
 				break;
 			case 7:
@@ -787,7 +787,7 @@ public class ConditionsParser extends Parser {
 						((OperationContext)_localctx).left = _prevctx;
 						pushNewRecursionContext(_localctx, _startState, RULE_expression);
 						setState(74);
-						if (!(precpred(_ctx, 4))) throw new FailedPredicateException(this, "precpred(_ctx, 4)");
+						if (!(precpred(_ctx, 3))) throw new FailedPredicateException(this, "precpred(_ctx, 3)");
 						setState(75);
 						((OperationContext)_localctx).op = _input.LT(1);
 						_la = _input.LA(1);
@@ -800,7 +800,7 @@ public class ConditionsParser extends Parser {
 							consume();
 						}
 						setState(76);
-						((OperationContext)_localctx).right = expression(5);
+						((OperationContext)_localctx).right = expression(4);
 						}
 						break;
 					case 3:
@@ -809,7 +809,7 @@ public class ConditionsParser extends Parser {
 						((OperationContext)_localctx).left = _prevctx;
 						pushNewRecursionContext(_localctx, _startState, RULE_expression);
 						setState(77);
-						if (!(precpred(_ctx, 3))) throw new FailedPredicateException(this, "precpred(_ctx, 3)");
+						if (!(precpred(_ctx, 2))) throw new FailedPredicateException(this, "precpred(_ctx, 2)");
 						setState(78);
 						((OperationContext)_localctx).op = _input.LT(1);
 						_la = _input.LA(1);
@@ -822,7 +822,7 @@ public class ConditionsParser extends Parser {
 							consume();
 						}
 						setState(79);
-						((OperationContext)_localctx).right = expression(4);
+						((OperationContext)_localctx).right = expression(3);
 						}
 						break;
 					}
@@ -868,9 +868,9 @@ public class ConditionsParser extends Parser {
 		case 2:
 			return precpred(_ctx, 5);
 		case 3:
-			return precpred(_ctx, 4);
-		case 4:
 			return precpred(_ctx, 3);
+		case 4:
+			return precpred(_ctx, 2);
 		}
 		return true;
 	}
@@ -893,11 +893,11 @@ public class ConditionsParser extends Parser {
 		"\2\2)+\5\4\3\6*$\3\2\2\2*\'\3\2\2\2+.\3\2\2\2,*\3\2\2\2,-\3\2\2\2-\5\3"+
 		"\2\2\2.,\3\2\2\2/\60\b\4\1\2\60H\7\4\2\2\61\62\7\31\2\2\62H\7\4\2\2\63"+
 		"H\7\5\2\2\64H\7\6\2\2\65\66\7\26\2\2\66\67\5\6\4\2\678\7\27\2\28H\3\2"+
-		"\2\29:\t\3\2\2:H\5\6\4\4;<\7\4\2\2<=\7\26\2\2=B\5\6\4\2>?\7\25\2\2?A\5"+
+		"\2\29:\t\3\2\2:H\5\6\4\6;<\7\4\2\2<=\7\26\2\2=B\5\6\4\2>?\7\25\2\2?A\5"+
 		"\6\4\2@>\3\2\2\2AD\3\2\2\2B@\3\2\2\2BC\3\2\2\2CE\3\2\2\2DB\3\2\2\2EF\7"+
 		"\27\2\2FH\3\2\2\2G/\3\2\2\2G\61\3\2\2\2G\63\3\2\2\2G\64\3\2\2\2G\65\3"+
 		"\2\2\2G9\3\2\2\2G;\3\2\2\2HT\3\2\2\2IJ\f\7\2\2JK\7\20\2\2KS\5\6\4\7LM"+
-		"\f\6\2\2MN\t\4\2\2NS\5\6\4\7OP\f\5\2\2PQ\t\3\2\2QS\5\6\4\6RI\3\2\2\2R"+
+		"\f\5\2\2MN\t\4\2\2NS\5\6\4\6OP\f\4\2\2PQ\t\3\2\2QS\5\6\4\5RI\3\2\2\2R"+
 		"L\3\2\2\2RO\3\2\2\2SV\3\2\2\2TR\3\2\2\2TU\3\2\2\2U\7\3\2\2\2VT\3\2\2\2"+
 		"\n\35\"*,BGRT";
 	public static final ATN _ATN =
